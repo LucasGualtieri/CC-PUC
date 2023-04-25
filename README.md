@@ -10,4 +10,4 @@ Repositório de exercícios / projetos desenvolvidos no curso de Ciência da Com
 [Desenvolvimento de Interfaces Web](fonte/ajuda/java)
 
 ## ⚙️ Bibliotecas
-[Pasta com as minhas Bibliotecas personalizadas](Bibliotecas)
+[Minhas Bibliotecas personalizadas](Bibliotecas)
