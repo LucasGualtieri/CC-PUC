@@ -1,5 +1,5 @@
-- Exercícios e estudos desenvolvidos durante o semestre.
-- Em AEDs II aprendemos finalmente Algoritmos e Estruturas de dados:
+Exercícios e estudos desenvolvidos durante o semestre. <br>
+Em AEDs II aprendemos finalmente Algoritmos e Estruturas de dados:
    - Somatórios
    - Complexidade / Notações Ω Θ β
    - Algoritmos de ordenação:
