@@ -1,4 +1,4 @@
-#💻 CC-PUC 2/8
+# 💻 CC-PUC 2/8
 
 ## 📁 AEDs
 [Algorítmos e Estruturas de Dados](/AEDs/)
