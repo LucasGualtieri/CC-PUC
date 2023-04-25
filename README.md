@@ -1,5 +1,5 @@
 # 💻 CC-PUC 2/8
-Projetos / Exercícios desenvolvidos ao longo do curso
+Repositório de projetos / Exercícios desenvolvidos ao longo do curso
 
 ## 📁 AEDs
 [Algorítmos e Estruturas de Dados](/AEDs/)
