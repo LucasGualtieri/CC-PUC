@@ -11,8 +11,6 @@
 #include <time.h>
 // #include <windows.h>
 
-// Teste
-
 #define Infinity 2147483647
 #define arrayLength(array) (int)(sizeof(array) / sizeof(array[0]))
 #define RANDOM(minRange, maxRange) (rand() % ((maxRange + 1) - minRange)) + minRange
