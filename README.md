@@ -2,7 +2,7 @@
 Projetos / Exercícios desenvolvidos ao longo do curso
 
 ## 📁 AEDs I
-[](AEDsI/README.md)
+[](CC-PUC/AEDsI)
 
 ## 📁 AEDs II
 (fonte/ajuda/java)
