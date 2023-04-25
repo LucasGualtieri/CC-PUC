@@ -1,4 +1,4 @@
-# 💻 CC-PUC
+# 💻 CC-PUC 2/8
 Projetos / Exercícios desenvolvidos ao longo do curso
 
 ## 📁 AEDs
