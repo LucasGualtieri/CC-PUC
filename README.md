@@ -1,4 +1,4 @@
-# 💻 CC-PUC 2/8
+<p align=center> # 💻 CC-PUC 2/8 </p>
 Repositório de projetos / Exercícios desenvolvidos ao longo do curso
 
 ## 📁 AEDs
