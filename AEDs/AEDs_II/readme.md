@@ -11,7 +11,7 @@
       - Quicksort
       - Radixsort
       - Selecao
-      - Shellsort.java
+      - Shellsort
    - Estruturas de dados básicas Flexíveis e Lineares:
       - Lista Simples
       - Lista Duplamente Encadeada
