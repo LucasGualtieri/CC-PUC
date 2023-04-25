@@ -1,11 +1,8 @@
 # 💻 CC-PUC
 Projetos / Exercícios desenvolvidos ao longo do curso
 
-## 📁 AEDs I
-[Algorítmos e Estruturas de Dados I](/AEDsI/)
-
-## 📁 AEDs II
-(fonte/ajuda/java)
+## 📁 AEDs
+[Algorítmos e Estruturas de Dados](/AEDs/)
 
 ## 📁 DIW
 [Pasta com as bibliotecas usadas na disciplina](fonte/ajuda/java)
