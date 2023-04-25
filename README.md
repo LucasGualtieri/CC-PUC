@@ -5,7 +5,7 @@ Projetos / Exercícios desenvolvidos ao longo do curso
 [Algorítmos e Estruturas de Dados](/AEDs/)
 
 ## 📁 DIW
-[Pasta com as bibliotecas usadas na disciplina](fonte/ajuda/java)
+[Desenvolvimento de Interfaces Web](fonte/ajuda/java)
 
 ## ⚙️ Bibliotecas
 [Pasta com as minhas Bibliotecas personalizadas](Bibliotecas)
