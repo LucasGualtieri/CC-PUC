@@ -9,4 +9,3 @@
    - Ponteiros e alocação dinâmica de memória
    - Strings (char*) e vetores de strings (char**)
    - Intrução à POO em C++
-   - Entre outras coisas
