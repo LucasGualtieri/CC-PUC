@@ -1,7 +1,8 @@
 # 💻 CC-PUC
 Projetos / Exercícios desenvolvidos ao longo do curso
 
-[## 📁 AEDs I](AEDsI/README.md)
+## 📁 AEDs I
+[](AEDsI/README.md)
 
 ## 📁 AEDs II
 (fonte/ajuda/java)
