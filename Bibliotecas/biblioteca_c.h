@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include <windows.h>
+// #include <windows.h>
 
 #define Infinity 2147483647
 #define arrayLength(array) (int)(sizeof(array) / sizeof(array[0]))
@@ -17,6 +17,7 @@
 
 #define String char*
 
+#define endl "\n"
 #define AND &&
 // #define and &&
 #define OR ||
@@ -24,7 +25,7 @@
 
 // Pausa o código até o ENTER fecha o programa caso contrário
 void pause() {
-	// TEM arruma o clear buffer e seila oq
+	// Tenho que arrumar uma forma de clear o stdin
 	printf("Paused | Press ENTER to continue...");
 
 	if (getchar() != '\n') {
@@ -33,12 +34,27 @@ void pause() {
 	}
 }
 
+char toLower(char c) {
+	if (c >= 'A' AND c <= 'Z') return c += 32;
+	return c;
+}
+
+void toUpper(char* string) {
+	for (int i = 0; i < strlen(string); i++) {
+		if (string[i] >= 'a' AND string[i] <= 'z') {
+			string[i] -= 32;
+		}
+	}
+}
+
 // Returns 1 if number is prime.
 int isPrime(int n) {
 	if (n == 1) return 0;
+
 	for (int i = 2; i < n; i++) {
 		if (n % i == 0) return 0;
 	}
+
 	return 1;
 }
 
@@ -51,32 +67,32 @@ void IntArrayPrint(int* array, int arrayLength) {
 	}
 }
 
-// // ArrayFillRand para Inteiros - Linux
-// void IntArrayFillRand(int* array, int arrayLength, int minRange, int maxRange) {
-
-// 	if (minRange > maxRange) {
-// 		int aux = maxRange;
-// 		maxRange = minRange;
-// 		minRange = aux;
-// 	}
-
-// 	srand(time(NULL));
-// 	for (int i = 0; i < arrayLength; i++) {
-// 		array[i] = RANDOM(minRange, maxRange);
-// 	}
-// }
-
-// ArrayFillRand para Inteiros - Windows
+// ArrayFillRand para Inteiros - Linux
 void IntArrayFillRand(int* array, int arrayLength, int minRange, int maxRange) {
 
+	if (minRange > maxRange) {
+		int aux = maxRange;
+		maxRange = minRange;
+		minRange = aux;
+	}
+
 	srand(time(NULL));
-	srand(rand());
 	for (int i = 0; i < arrayLength; i++) {
-		array[i] = (rand() % ((maxRange + 1) - minRange)) + minRange;
-		srand(rand());
-		// printf("%d ", array[i]);
+		array[i] = RANDOM(minRange, maxRange);
 	}
 }
+
+// ArrayFillRand para Inteiros - Windows
+// void IntArrayFillRand(int* array, int arrayLength, int minRange, int maxRange) {
+
+// 	srand(time(NULL));
+// 	srand(rand());
+// 	for (int i = 0; i < arrayLength; i++) {
+// 		array[i] = (rand() % ((maxRange + 1) - minRange)) + minRange;
+// 		srand(rand());
+// 		// printf("%d ", array[i]);
+// 	}
+// }
 
 // Selection Sort para Inteiros em ordem Crescente
 void selectionSort(int* array, int arrayLength) {
@@ -106,25 +122,44 @@ void MaskCPF(char* CPF) {
 
 // Get Pointer String. Equivalente a um scanf mas para char*. Ótimo para strings em structs - getsptr(&p1.nome);
 void pscanf(char** string) {
-	*string = malloc(2000 * sizeof(char));
-	if (*string == NULL) printf("Falha na alocação de memório: Função 'pscanf'.\n");
+	*string = (char*)malloc(2000 * sizeof(char));
+	if (*string == NULL) printf("Falha na alocação de memória: Função 'pscanf'.\n");
 
 	fgets(*string, 2000, stdin);
 	*string[strcspn(*string, "\r\n")] = '\0';
 
 	*string = (char*)realloc(*string, (strlen(*string) + 1) * sizeof(char));
-	if (*string == NULL) printf("Falha na alocação de memório: Função 'pscanf'.\n");
+	if (*string == NULL) printf("Falha na alocação de memória: Função 'pscanf'.\n");
 }
 
 char* getstr() {
-	char* string = malloc(2000 * sizeof(char));
-	if (string == NULL) return NULL;
 
-	fgets(string, 2000, stdin);
+	const size_t maxStringLength = 2000;
+
+	// Limpando o STDIN
+	char c = getchar();
+	if (c != '\n') {
+		ungetc(c, stdin);
+	}
+
+	char* string = (char*)malloc(maxStringLength * sizeof(char));
+	if (string == NULL) {
+		fprintf(stderr, "getstr - malloc error");
+		return NULL;
+	}
+
+	if ((fgets(string, maxStringLength, stdin)) == NULL) {
+		fprintf(stderr, "getstr - fgets error");
+		return NULL;
+	}
+
 	string[strcspn(string, "\r\n")] = '\0';
 
-	string = realloc(string, (strlen(string) + 1) * sizeof(char));
-	if (string == NULL) return NULL;
+	string = (char*)realloc(string, (strlen(string) + 1) * sizeof(char));
+	if (string == NULL) {
+		fprintf(stderr, "getstr - realloc error");
+		return NULL;
+	}
 
 	/*
 		A função strcspn() é usada para determinar o comprimento
@@ -132,7 +167,7 @@ char* getstr() {
 		caracteres especificados em sua segunda entrada (neste caso, "\r\n").
 		Isso permite que a função determine a posição do primeiro
 		caractere de nova linha na string, para que ele possa ser
-		substituído pelo caractere nulo. - Chat GPT
+		substituído pelo caractere nulo. -Chat GPT
 	*/
 
 	return string;
@@ -145,14 +180,14 @@ char* readString(char* string) {
 
 // File Get Pointer String. Equivalente a um fscanf mas para char*. Ótimo para strings em structs - fgetsptr(&string, file);
 void fgetsptr(char** string, FILE* file) {
-	*string = malloc(2000 * sizeof(char));
-	if (*string == NULL) printf("Falha na alocação de memório: Função 'fgetsptr'.\n");
+	*string = (char*)malloc(2000 * sizeof(char));
+	if (*string == NULL) printf("Falha na alocação de memória: Função 'fgetsptr'.\n");
 
 	fgets(*string, 2000, file);
 	*string[strcspn(*string, "\r\n")] = '\0';
 
 	*string = (char*)realloc(*string, (strlen(*string) + 1) * sizeof(char));
-	if (string == NULL) printf("Falha na alocação de memório: Função 'fgetsptr'.\n");
+	if (string == NULL) printf("Falha na alocação de memória: Função 'fgetsptr'.\n");
 }
 
 // Pointer String Copy. Equivalente a um strcpy, mas para Pointer Strings. pstrcpy(&string, "New String");
