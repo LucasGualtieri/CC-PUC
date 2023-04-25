@@ -2,7 +2,7 @@
 Projetos / Exercícios desenvolvidos ao longo do curso
 
 ## 📁 AEDs I
-[teste](/AEDsI/)
+[Algorítmos e Estruturas de Dados I](/AEDsI/)
 
 ## 📁 AEDs II
 (fonte/ajuda/java)
