@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 class TP01Q01 {
 
 	public static boolean Palindromo(String nome) {
@@ -18,15 +20,11 @@ class TP01Q01 {
 	}
 
 	public static void main(String[] args) {
-		String entrada = new String("");
 
-		while (true) {
+		Scanner scanner = new Scanner(System.in);
+		String entrada = scanner.nextLine();
 
-			entrada = MyIO.readLine();
-
-			if (entrada.compareTo("FIM") == 0) {
-				break;
-			}
+		while (!entrada.equals("FIM")) {
 
 			if (Palindromo(entrada)) {
 				System.out.println("SIM");
@@ -34,6 +32,9 @@ class TP01Q01 {
 				System.out.println("NAO");
 			}
 
+			entrada = scanner.nextLine();
 		}
+
+		scanner.close();
 	}
 }
