@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-class TP01Q01 {
+class palindromo {
 
 	public static boolean Palindromo(String nome) {
 		String reversedString = "";
