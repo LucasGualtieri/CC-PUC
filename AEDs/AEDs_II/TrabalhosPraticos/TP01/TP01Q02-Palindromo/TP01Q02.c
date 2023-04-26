@@ -1,4 +1,4 @@
-#include "/home/lucas/AEDsII/Bibliotecas/biblioteca_c.h"
+#include "/home/lucas/CC-PUC/Bibliotecas/biblioteca_c.h"
 
 // clear && gcc palindromo.c -o palindromo && ./palindromo < pub.in > out.txt
 
