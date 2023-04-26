@@ -1,0 +1,14 @@
+Começar com letra,
+sem espaços em branco,
+sem acentos,
+não pode ter números
+
+//Biblioteca de comandos de manipulação de informações padronizadas na entrada (Input) e saída (Output) do programa. O que está entre <> é o Standard I/O (Input/Output).
+#include <nomeBiblioteca>
+
+//Main é o bloco principal, por onde inicia qualquer execução. O int está associado ao 0 de "return 0", se o retorno for de fato 0 quer dizer que não houve erro.
+int main(void)
+{
+  printf("Hello World\n"); //printf formata uma informação para um texto que será exibido na saída padrão ("console")
+  return 0;	//O (\n) é tipo um (<br>) ele dropa a linha.
+}

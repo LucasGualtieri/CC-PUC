@@ -1,0 +1,20 @@
+{
+	"Employee": [
+		{
+			"id": "1",
+			"name": "Lucas",
+			"admissionDate": "25/04/2002",
+			"cpf": "13605269605",
+			"role": "E",
+			"salary": 1200.0
+		},
+		{
+			"id": "2",
+			"name": "Arjuna",
+			"admissionDate": "06/12/2002",
+			"cpf": "13605269603",
+			"role": "E",
+			"salary": 1200.0
+		}
+	]
+}

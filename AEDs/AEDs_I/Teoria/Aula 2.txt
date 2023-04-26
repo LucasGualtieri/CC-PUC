@@ -1,0 +1,3 @@
+== e != são sempre equivalentes contanto que você inverta o else
+X<7  x<=6 < e <= não faz diferença para números inteiros, apenas para reais. Ex: ((6 < 7) == (6 <= 6)) Porém ((6.5 < 7) != (6.5 <= 6))
+Da pra fazer fazer uma boolen usando o esquema de par impar com %?

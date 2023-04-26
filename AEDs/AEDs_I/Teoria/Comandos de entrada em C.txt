@@ -1,0 +1,10 @@
+No comando scanf, é necessário indicar o tipo de variável que será lida: 
+%f números reais;
+%d números inteiros;
+%c armazena um único caractere;
+%s armazena um conjunto de caracteres.
+O comando scanf armazena em um buffer o conteúdo digitado pelo usuário e armazena também a
+tecla enter utilizada pelo usuário para encerrar a entrada de dados. Para que o buffer seja esvaziado depois
+da atribuição do conteúdo à variável, utiliza-se %*c.
+
+scanf("%d%*c",&X);
