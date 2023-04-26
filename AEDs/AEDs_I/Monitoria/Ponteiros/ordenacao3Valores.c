@@ -6,6 +6,7 @@ void LeiaValor(float* x) {
 }
 
 void OrdenaTresValores(float* Maior, float* Meio, float* Menor, float a, float b, float c) {
+	// Achando o Maior
 	if (a > b && a > c) {
 		*Maior = a;
 	} else if (b > a && b > c) {
@@ -14,6 +15,7 @@ void OrdenaTresValores(float* Maior, float* Meio, float* Menor, float a, float b
 		*Maior = c;
 	}
 
+	// Achando o Meio
 	if (a < b && a > c || a < c && a > b) {
 		*Meio = a;
 	} else if (b < a && b > c || b < c && b > a) {
@@ -22,6 +24,7 @@ void OrdenaTresValores(float* Maior, float* Meio, float* Menor, float a, float b
 		*Meio = c;
 	}
 
+	// Achando o Menor
 	if (a < b && a < c) {
 		*Menor = a;
 	} else if (b < a && b < c) {
@@ -42,8 +45,6 @@ int main() {
 	printf("%f,%f,%f", a, b, c);
 
 	OrdenaTresValores(&Maior, &Meio, &Menor, a, b, c);
-
-	// Meio();
 
 	return 0;
 }
