@@ -1,4 +1,4 @@
-#include "/home/lucas/AEDsII/Bibliotecas/biblioteca_c.h"
+#include "/home/lucas/CC-PUC/Bibliotecas/biblioteca_c.h"
 
 int fibonacciRecursivo(int n) { // Retorna o N-ésimo termo de Fibonacci
 	if (n <= 1) return n;

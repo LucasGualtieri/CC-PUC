@@ -1,4 +1,4 @@
-#include "../Bibliotecas/biblioteca_c.h"
+#include "/home/lucas/CC-PUC/Bibliotecas/biblioteca_c.h"
 
 int potenciacao(int base, int expo) {
 	int pot = base;

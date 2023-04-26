@@ -1,4 +1,4 @@
-#include "Bibliotecas/biblioteca_c.h"
+#include "/home/lucas/CC-PUC/Bibliotecas/biblioteca_c.h"
 
 int Calcule(int i, int s) {
 	if (i == s) return s;
