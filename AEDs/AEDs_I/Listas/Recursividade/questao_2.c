@@ -14,11 +14,14 @@
 // 	return (n == 1) ? 2 : (n == 2) ? 3 : 5 * n + pow(Rec(n - 1), n);
 // }
 
-int Rec(int n) {
-	if (n == 1) return 2;
-	if (n == 2) return 3;
+// int Rec(int n) {
+// 	if (n == 1 || n == 2) return n + 1;
 
-	return 5 * n + pow(Rec(n - 1), n);
+// 	return 5 * n + pow(Rec(n - 1), n);
+// }
+
+int Rec(int n) {
+	return (n == 1 || n == 2) ? n + 1 : 5 * n + pow(Rec(n - 1), n);
 }
 
 int main() {
