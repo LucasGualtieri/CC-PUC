@@ -23,9 +23,15 @@ typedef char* String;
 #define OR ||
 // #define or ||
 
+void flushStdin() {
+	while (getchar() != '\n') { }
+}
+
 // Pausa o código até o ENTER fecha o programa caso contrário
-void pause() {
-	// Tenho que arrumar uma forma de clear o stdin
+void pause(bool flush) {
+
+	if (flush) flushStdin(); // Preciso flushar somente se não estiver limpo
+
 	printf("Paused | Press ENTER to continue...");
 
 	if (getchar() != '\n') {
