@@ -21,6 +21,10 @@
 // }
 
 int Rec(int n) {
+	if (n < 1) {
+		printf("N não pode ser < 1!\n");
+		return 0;
+	}
 	return (n == 1 || n == 2) ? n + 1 : 5 * n + pow(Rec(n - 1), n);
 }
 
