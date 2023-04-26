@@ -15,11 +15,8 @@
 // }
 
 int Rec(int n) {
-	if (n == 1) {
-		return 2;
-	} else if (n == 2) {
-		return 3;
-	}
+	if (n == 1) return 2;
+	if (n == 2) return 3;
 
 	return 5 * n + pow(Rec(n - 1), n);
 }
