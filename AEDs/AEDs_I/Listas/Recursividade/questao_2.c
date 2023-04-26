@@ -6,7 +6,7 @@
 	e retorna o n-ésimo termo da equação de recorrência abaixo:
 	T(1) = 2
 	T(2) = 3
-	T(n) = 5 ∗ n + T(n − 1)n
+	T(n) = 5 ∗ n + T(n − 1)^n
 */
 
 // Eu concordo, essa alternativa aqui é coisa de maníaco do ternário...
