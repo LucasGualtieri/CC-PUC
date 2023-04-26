@@ -1,6 +1,7 @@
 import java.util.Scanner;
 
-// clear && javac Assassinos.java && java Assassinos < pub.in > alun.out
+// clear && javac Assassinos.java && java Assassinos < pub.in > out.txt
+
 class Assassino {
 	private String nome;
 	private int assassinatos;
@@ -120,22 +121,6 @@ class ListaAssassinados {
 
 public class Assassinos {
 
-	public static void selectionSort(ListaAssassinos assassinos) {
-		for (int i = 0; i < assassinos.getN(); i++) {
-			int menor = i;
-			for (int j = i + 1; j < assassinos.getN(); j++) {
-				// assassinos[menor] > assassinos[j])
-				if (ordermLexografica(assassinos.getArrayNome(menor), assassinos.getArrayNome(j))) {
-					menor = j;
-				}
-			}
-			// Swapping
-			Assassino swap = assassinos.getArray()[menor];
-			assassinos.getArray()[menor] = assassinos.getArray()[i];
-			assassinos.getArray()[i] = swap;
-		}
-	}
-
 	public static void main(String[] args) throws Exception {
 
 		Scanner scanner = new Scanner(System.in);
@@ -186,6 +171,22 @@ public class Assassinos {
 		}
 
 		scanner.close();
+	}
+
+	public static void selectionSort(ListaAssassinos assassinos) {
+		for (int i = 0; i < assassinos.getN(); i++) {
+			int menor = i;
+			for (int j = i + 1; j < assassinos.getN(); j++) {
+				// assassinos[menor] > assassinos[j])
+				if (ordermLexografica(assassinos.getArrayNome(menor), assassinos.getArrayNome(j))) {
+					menor = j;
+				}
+			}
+			// Swapping
+			Assassino swap = assassinos.getArray()[menor];
+			assassinos.getArray()[menor] = assassinos.getArray()[i];
+			assassinos.getArray()[i] = swap;
+		}
 	}
 
 	public static int idexOfNome(String nomeDoAssassino, ListaAssassinos assassinos) {
