@@ -1,8 +1,6 @@
 #ifndef BIBLIOTECA_C_H_
 #define BIBLIOTECA_C_H_
 
-// Comentário Teste
-
 #include <ctype.h>
 #include <limits.h>
 #include <math.h>
