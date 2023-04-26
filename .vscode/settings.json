@@ -1,5 +1,6 @@
 {
 	"files.associations": {
-		"biblioteca_c.h": "c"
+		"biblioteca_c.h": "c",
+		"stdio.h": "c"
 	}
 }

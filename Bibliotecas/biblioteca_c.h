@@ -15,7 +15,7 @@
 #define arrayLength(array) (int)(sizeof(array) / sizeof(array[0]))
 #define RANDOM(minRange, maxRange) (rand() % ((maxRange + 1) - minRange)) + minRange
 
-#define String char*
+typedef char* String;
 
 #define endl "\n"
 #define AND &&
