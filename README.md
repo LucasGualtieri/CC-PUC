@@ -4,7 +4,7 @@
 Repositório de exercícios / projetos desenvolvidos no curso de Ciência da Computação na PUC Minas.
 
 ## 📁 AEDs
-[Algorítmos e Estruturas de Dados](AEDs)
+[Algoritmos e Estruturas de Dados](AEDs) - [AEDs I](AEDs/AEDsI) / [AEDs II](AEDsII)
 
 ## 📁 DIW
 [Desenvolvimento de Interfaces Web](DIW)
