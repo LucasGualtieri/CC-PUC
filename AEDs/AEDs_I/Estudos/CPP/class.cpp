@@ -1,4 +1,4 @@
-#include "D:\Lucas\PUC\AED\workspace\C.CPP\Bibliotecas\biblioteca_cpp.h"
+#include "/home/lucas/CC-PUC/Bibliotecas/biblioteca_cpp.h"
 
 class Pessoa {
 private:
@@ -27,8 +27,6 @@ public:
 };
 
 int main() {
-	SetConsoleOutputCP(65001);
-
 	Pessoa Lucas;
 
 	Lucas.setIdade(20);
