@@ -3,20 +3,21 @@ O que define se um número é par?
     - TODO número ímpar dividido por 2 tem resto 1, ou seja resto != 0
     - Podemos observar isso printando esse resto. printf("%i", numero % 2);
 
-Se um número só poder ser PAR ou ÍMPAR, ou seja, não existe uma
-terceira opção, se um número NÃO é par posso concluir que... ele é ímpar.
+    Se um número só poder ser PAR ou ÍMPAR, ou seja, não existe uma
+    terceira opção, se um número NÃO é par posso concluir que... ele é ímpar.
 
-if (CONDIÇÃO / PERGUNTA) { // Obs importante: A resposta é SEMPRE sim OU não, não existe meio termo
-    Executado se a resposta for sim
-} else {
-    Executado se a resposta for não
-}
+    if (CONDIÇÃO / PERGUNTA) {
+        Executado se a resposta for sim
+    } else {
+        Executado se a resposta for não
+    }
 
-if (numero % 2 == 0) {
-    printf("Número é par");
-} else {
-    printf("Número é ímpar");
-}
+    if (numero % 2 == 0) {
+        printf("Número é par");
+    } else {
+        printf("Número é ímpar");
+    }
+    Obs importante: A resposta é SEMPRE sim OU não, não existe meio termo
 
 Quando usar ELSE IF? Quando preciso fazer mais de uma pergunta, pra tomar uma decisão ou pra ter certeza de algo, por exemplo:
     x é maior que y?
