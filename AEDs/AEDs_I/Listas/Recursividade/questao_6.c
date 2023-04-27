@@ -15,10 +15,10 @@ int main() {
 
 	int m, n;
 
-	printf("Digite um número natural*: ");
+	printf("1° número natural*: ");
 	scanf("%d", &m);
 
-	printf("Digite outro número natural*: ");
+	printf("2° número natural*: ");
 	scanf("%d", &n);
 
 	printf("O MDC de %d e %d é: %d", m, n, Mdc(m, n, m > n ? m : n));
