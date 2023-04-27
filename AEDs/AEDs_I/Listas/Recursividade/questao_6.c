@@ -21,8 +21,6 @@ int Mdc(int m, int n, int x) {
 		}
 */
 
-
-
 int main() {
 
 	int m, n, x;
