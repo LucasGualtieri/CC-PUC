@@ -13,15 +13,15 @@ int main() {
 
 	int n, nAux;
 
-	// printf("Digite um número: "), scanf("%d", &n);
+	printf("Digite um número: "), scanf("%d", &n);
 
-	// printf("O número %d %s\n", n, isPrime(n, n) == 1 ? "é primo" : "não é primo");
+	printf("O número %d %s\n", n, isPrime(n, n) == 1 ? "é primo" : "não é primo");
 
-	for (int i = 0; i < 100; i++) {
-		if (isPrime(i, i)) {
-			printf("O número %d %s\n", i, "é primo");
-		}
-	}
+	// for (int i = 0; i < 100; i++) {
+	// 	if (isPrime(i, i)) {
+	// 		printf("O número %d %s\n", i, "é primo");
+	// 	}
+	// }
 
 	puts("\n******* | FIM DO PROGRAMA | *******\n");
 	return 0;
