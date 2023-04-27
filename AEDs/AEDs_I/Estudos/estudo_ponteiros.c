@@ -1,4 +1,4 @@
-#include "D:\Lucas\PUC\AED\workspace\C.CPP\Bibliotecas\biblioteca_c.h"
+#include <biblioteca_c.h>
 
 int main() {
 	SetConsoleOutputCP(65001);

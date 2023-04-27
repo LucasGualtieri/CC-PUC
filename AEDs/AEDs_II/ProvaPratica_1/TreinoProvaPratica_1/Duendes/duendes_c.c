@@ -1,4 +1,4 @@
-#include "../../../Bibliotecas/biblioteca_c.h"
+#include <biblioteca_c.h>
 
 // clear && gcc duendes_c.c -o duendes_c && ./duendes_c < pub.in > out2.txt
 

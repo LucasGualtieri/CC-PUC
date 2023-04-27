@@ -1,4 +1,4 @@
-#include "/home/lucas/CC-PUC/Bibliotecas/biblioteca_c.h"
+#include <biblioteca_c.h>
 
 /*
 	Escreva um programa em C para contar a

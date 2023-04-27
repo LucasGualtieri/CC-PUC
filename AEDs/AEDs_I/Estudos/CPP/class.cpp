@@ -1,4 +1,4 @@
-#include "/home/lucas/CC-PUC/Bibliotecas/biblioteca_cpp.h"
+#include <biblioteca_cpp.h>
 
 class Pessoa {
 private:

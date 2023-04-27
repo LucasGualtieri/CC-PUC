@@ -1,8 +1,8 @@
 #ifndef CREATENEWEMP_H_
 #define CREATENEWEMP_H_
 
-#include "D:\Lucas\PUC\AED\workspace\C.CPP\Bibliotecas\biblioteca_cpp.h"
 #include "employee.h"
+#include <biblioteca_cpp.h>
 
 void CreateNewEmp() {
 	employee emp;

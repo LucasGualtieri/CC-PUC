@@ -1,4 +1,4 @@
-#include "/home/lucas/CC-PUC/Bibliotecas/biblioteca_c.h"
+#include <biblioteca_c.h>
 
 void MatrixFillRand(int row, int col, int matrix[row][col], int minRange, int maxRange) {
 

@@ -1,4 +1,4 @@
-#include "/home/lucas/CC-PUC/Bibliotecas/biblioteca_c.h"
+#include <biblioteca_c.h>
 
 void ArrayPrint(int* array, int arrayLength) {
 	printf("{ ");

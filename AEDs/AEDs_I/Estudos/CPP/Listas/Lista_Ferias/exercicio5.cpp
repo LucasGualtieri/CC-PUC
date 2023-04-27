@@ -1,4 +1,4 @@
-#include "D:\Lucas\PUC\AED\workspace\C.CPP\Bibliotecas\biblioteca_cpp.h"
+#include <biblioteca_cpp.h>
 
 typedef int lint; // Normal int -> 4 bytes
 #define int short // short or short int -> 2 bytes

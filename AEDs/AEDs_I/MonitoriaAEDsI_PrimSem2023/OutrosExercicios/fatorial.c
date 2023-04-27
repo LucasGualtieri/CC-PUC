@@ -1,4 +1,4 @@
-#include "/home/lucas/CC-PUC/Bibliotecas/biblioteca_c.h"
+#include <biblioteca_c.h>
 
 int fatorial(int n) {
 	if (n == 0) return 1;

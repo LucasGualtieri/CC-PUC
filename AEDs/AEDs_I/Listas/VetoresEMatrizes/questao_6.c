@@ -1,4 +1,4 @@
-#include "/home/lucas/CC-PUC/Bibliotecas/biblioteca_c.h"
+#include <biblioteca_c.h>
 
 int SumBelowMainDiagonal(int row, int col, int matrix[row][col]) {
 	int soma = 0, li = 1, co = 0;

@@ -1,7 +1,7 @@
 #ifndef EMPLOYEE_H_
 #define EMPLOYEE_H_
 
-#include "D:\Lucas\PUC\AED\workspace\C.CPP\Bibliotecas\biblioteca_cpp.h"
+#include <biblioteca_cpp.h>
 
 bool checkDate(string date) {
 	date = MaskDate(date);

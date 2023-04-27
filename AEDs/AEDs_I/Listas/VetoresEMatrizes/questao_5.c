@@ -1,4 +1,4 @@
-#include "/home/lucas/CC-PUC/Bibliotecas/biblioteca_c.h"
+#include <biblioteca_c.h>
 
 void IntMatrixPrint(int col, int row, int matrix[col][row]) {
 	for (int i = 0; i < col; i++) {

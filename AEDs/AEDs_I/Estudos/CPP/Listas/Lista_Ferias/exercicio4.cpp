@@ -1,4 +1,4 @@
-#include "D:\Lucas\PUC\AED\workspace\C.CPP\Bibliotecas\biblioteca_cpp.h"
+#include <biblioteca_cpp.h>
 
 typedef struct Endereco Endereco;
 struct Endereco {

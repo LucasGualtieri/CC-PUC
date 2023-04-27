@@ -1,4 +1,4 @@
-#include "/home/1431578/Documents/AEDsII/Bibliotecas/biblioteca_c.h"
+#include <biblioteca_c.h>
 
 // clear && gcc palindromo.c -o palindromo && ./palindromo < pub.in > out.txt
 

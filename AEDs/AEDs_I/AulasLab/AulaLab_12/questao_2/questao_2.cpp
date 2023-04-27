@@ -1,5 +1,5 @@
-#include "/home/lucas/CC-PUC/Bibliotecas/biblioteca_cpp.h"
 #include "classPonto.h"
+#include <biblioteca_cpp.h>
 
 int main() {
 	Ponto p1(2, 2), p2(3, 3);

@@ -1,7 +1,7 @@
 #ifndef CLASSLISTA_H_
 #define CLASSLISTA_H_
 
-#include "/home/lucas/CC-PUC/Bibliotecas/biblioteca_cpp.h"
+#include <biblioteca_cpp.h>
 
 class Lista {
 	float dados[10];

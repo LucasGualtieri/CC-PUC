@@ -1,4 +1,4 @@
-#include "/home/lucas/CC-PUC/Bibliotecas/biblioteca_c.h"
+#include <biblioteca_c.h>
 
 /*
 	Faca um programa em C para ler e manipular informações de um cadastro de automóveis
