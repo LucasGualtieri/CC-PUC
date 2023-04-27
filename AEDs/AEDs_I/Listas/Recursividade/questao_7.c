@@ -3,9 +3,7 @@
 /* Fazer um método recursivo que conte os dígitos de um determinado número. */
 
 int contagem(int n) {
-	int cont = 1;
-
-	return (n / 10 > 0) ? cont += contagem(n / 10) : 1;
+	return (n / 10 > 0) ? 1 + contagem(n / 10) : 1;
 }
 
 int main() {
@@ -22,6 +20,14 @@ int main() {
 }
 
 // Todas as alternativas das funções abaixo retornam o número certo de digitos de N.
+
+/*
+	int contagem(int n) {
+		int cont = 1;
+
+		return (n / 10 > 0) ? cont += contagem(n / 10) : 1;
+	}
+*/
 
 /*
 	int contagem(int n) {
