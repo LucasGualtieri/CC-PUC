@@ -1,0 +1,52 @@
+O que define se um número é par?
+    - TODO número par é divisível por 2, ou seja, resto 0.
+    - TODO número ímpar dividido por 2 tem resto 1, ou seja resto != 0
+    - Podemos observar isso printando esse resto. printf("%i", numero % 2);
+
+Se um número só poder ser PAR ou ÍMPAR, ou seja, não existe uma
+terceira opção, se um número NÃO é par posso concluir que... ele é ímpar.
+
+if (CONDIÇÃO / PERGUNTA) { // Obs importante: A resposta é SEMPRE sim OU não, não existe meio termo
+    Executado se a resposta for sim
+} else {
+    Executado se a resposta for não
+}
+
+if (numero % 2 == 0) {
+    printf("Número é par");
+} else {
+    printf("Número é ímpar");
+}
+
+Quando usar ELSE IF? Quando preciso fazer mais de uma pergunta, pra tomar uma decisão ou pra ter certeza de algo, por exemplo:
+    x é maior que y?
+    Se a resposta pra essa pergunta for SIM, posso afirmar que x é maior!
+    Mas se a resposta for não, posso afirmar que é menor? Não!
+    Pra ter certeza se é menor ou se é igual preciso fazer mais uma pergunta.
+
+        if (x > y) {
+            printf("X é maior que Y");
+        } else if (x < y) { // Minha segunda pergunta
+            printf("X é menor que Y");
+        } else {
+            printf("X e Y são iguais");
+        }
+
+    Obs: O else é opcional, se eu quisesse que no caso de x == y
+    nada fosse printado, eu poderia simplemente não escrever else {}.
+
+    Mais um exemplo:
+
+    cor == verde ?
+    Se sim posso afirmar que a cor é verde!
+    Se não, posso afirmar que a cor é amarelo?
+    Obviamente não, justamente pq tenho mais que duas cores.
+
+    if (cor == verde) {
+        printf("A cor é verde");
+    } else if (cor == amarelo) {
+        printf("A cor é amarelo");
+    } else {
+        printf("A cor não é verde, nem amarelo");
+        // Mas não sei qual é, para saber eu teria que ter um else if para todas as outras cores.
+    }
