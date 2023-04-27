@@ -11,18 +11,6 @@ int Mdc(int m, int n, int x) {
 	return Mdc(m, n, --x);
 }
 
-/*
-	Achei essa solução na internet, inverter o n com o m
-	em cada chamada é genial nunca teria pensado nisso,
-	porém a minha forma é mais legal, tem ternário...
-	
-		int Mdc(int m, int n) {
-			if (m == n) return m;
-			if (m < n) return Mdc(n, m);
-			return Mdc(m - n, n);
-		}
-*/
-
 int main() {
 
 	int m, n;
@@ -38,3 +26,15 @@ int main() {
 	printf("\n\n******* | FIM DO PROGRAMA | *******\n\n");
 	return 0;
 }
+
+/*
+	Achei essa solução na internet, inverter o n com o m
+	em cada chamada é genial nunca teria pensado nisso,
+	porém a minha forma é mais legal, tem ternário...
+
+	int Mdc(int m, int n) {
+		if (m == n) return m;
+		if (m < n) return Mdc(n, m);
+		return Mdc(m - n, n);
+	}
+*/
