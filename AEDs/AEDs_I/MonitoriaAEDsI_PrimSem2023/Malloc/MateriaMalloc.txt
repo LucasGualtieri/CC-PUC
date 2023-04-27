@@ -1,0 +1,20 @@
+Malloc é uma função que recebe um parâmetro o tamanho em Bytes.
+Ela usa esse tamanho em bytes pra allocar na memória um chunk de memória
+int = 4 bytes -> chunk de 4 inteiros = 4x4 = 16 bytes;
+	1° malloc(4 * sizeof(int))
+	2° malloc(4 * 4)
+	3° malloc(16) == int vetor[4];
+
+	malloc(8) == int vetor[2]; // Dois trens de 2 vagões
+	malloc(12) == int vetor[3]; // Dois trens de 3 vagões
+	malloc(16) == int vetor[4]; // Dois trens de 4 vagões
+ 
+Uma vez que a função malloc allocar esse chunk de memória
+ela vai retonar o endereço do começo desse chunk.
+
+Se armazenarmos esse endereço em um ponteiro podemos manipular
+esse ponteiro da MESMÍSSIMA forma que um vetor normal.
+
+int* vetorDeIdades = malloc(4 * sizeof(int));
+vetorDeIdades[0] = 20;
+printf("%i", vetorDeIdades[0]); // Será printado 20
