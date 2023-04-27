@@ -185,7 +185,7 @@ char* readString(char* string) {
 }
 
 // File Get Pointer String. Equivalente a um fscanf mas para char*. Ótimo para strings em structs - fgetsptr(&string, file);
-void fgetsptr(char** string, FILE* file) {
+void fgetsptr(FILE* file, char** string) {
 	*string = (char*)malloc(2000 * sizeof(char));
 	if (*string == NULL) printf("Falha na alocação de memória: Função 'fgetsptr'.\n");
 
@@ -203,9 +203,9 @@ void pstrcpy(char** strArg, char* string) {
 }
 
 // Pointer String Concat. Equivalente a um strcat, mas para Pointer Strings. pstrcat(&string, "New String");
-void pstrcat(char** strArg, char* string) {
-	*strArg = (char*)realloc(*strArg, strlen(*strArg) + strlen(string) + 1 * sizeof(char));
-	strcat(*strArg, string);
+char* pstrcat(char* source, char* append) {
+	source = (char*)realloc(source, strlen(source) + strlen(append) + 1 * sizeof(char));
+	return strcat(source, append);
 }
 
 // Create Pointer String. Cria um Pointer String a partir de um string hardcoded. createpstr(&string, "New String");
