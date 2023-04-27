@@ -13,17 +13,19 @@ int Mdc(int m, int n, int x) {
 
 /*
 	Achei essa solução na internet, inverter o n com o m
-	em cada chamada é genial nunca teria pensado nisso.
+	em cada chamada é genial nunca teria pensado nisso,
+	porém a minha forma é mais legal, tem ternário...
+	
 		int Mdc(int m, int n) {
 			if (m == n) return m;
 			if (m < n) return Mdc(n, m);
-		return Mdc(m - n, n);
+			return Mdc(m - n, n);
 		}
 */
 
 int main() {
 
-	int m, n, x;
+	int m, n;
 
 	printf("Digite um número natural*: ");
 	scanf("%d", &m);
@@ -31,9 +33,7 @@ int main() {
 	printf("Digite outro número natural*: ");
 	scanf("%d", &n);
 
-	x = m > n ? m : n;
-
-	printf("O MDC de %d e %d é: %d", m, n, Mdc(m, n, x));
+	printf("O MDC de %d e %d é: %d", m, n, Mdc(m, n, m > n ? m : n));
 
 	printf("\n\n******* | FIM DO PROGRAMA | *******\n\n");
 	return 0;
