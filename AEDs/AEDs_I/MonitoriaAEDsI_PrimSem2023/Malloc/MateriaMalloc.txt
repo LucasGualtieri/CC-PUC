@@ -1,4 +1,4 @@
-Malloc é uma função que recebe um parâmetro o tamanho em Bytes.
+Malloc é uma função que recebe um parâmetro (o tamanho em Bytes).
 Ela usa esse tamanho em bytes pra allocar na memória um chunk de memória
 int = 4 bytes -> chunk de 4 inteiros = 4x4 = 16 bytes;
 	1° malloc(4 * sizeof(int))
