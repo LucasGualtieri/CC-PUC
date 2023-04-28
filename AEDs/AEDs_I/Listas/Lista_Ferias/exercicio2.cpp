@@ -5,11 +5,10 @@ void isPositive(int number) {
 }
 
 int main() {
-	SetConsoleOutputCP(65001);
 
 	int number;
 
-	while (1) {
+	while (true) {
 		try {
 			number = readint("Digite um número positivo: ");
 			isPositive(number);
