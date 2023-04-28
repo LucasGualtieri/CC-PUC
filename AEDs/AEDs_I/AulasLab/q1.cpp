@@ -110,7 +110,6 @@ public:
 };
 
 int main() {
-	SetConsoleOutputCP(65001);
 
 	cout << fixed;
 	cout << setprecision(2);
