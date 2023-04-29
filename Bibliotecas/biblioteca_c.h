@@ -22,6 +22,7 @@ typedef char* String;
 // #define and &&
 #define OR ||
 // #define or ||
+#define MaxStringLength 2000
 
 char flushStdin() {
 	char c;
@@ -115,10 +116,68 @@ void selectionSort(int* array, int arrayLength) {
 	}
 }
 
-// Mascara a string CPF, caso não tenha mascara, e não mascara caso tenha.
-void MaskCPF(char* CPF) {
+// Confere se o CPF é válido ou não
+// bool checkCPF(String cpf) {
+
+// 	String cpfCopy = MaskCPF(cpf);
+
+// 	int soma = 0;
+
+// 	for (int i = 0, j = 10; j >= 2; i++) {
+// 		if (cpfCopy[i] != '.' && cpfCopy[i] != '-') {
+// 			soma += (cpfCopy[i] - '0') * j;
+// 			j--;
+// 		}
+// 	}
+
+// 	// Settando o primeiro dígito verificador
+// 	if (soma % 11 < 2) {
+// 		cpfCopy[cpfCopy.length() - 2] = '0';
+// 	} else {
+// 		sprintf(&cpfCopy[cpfCopy.length() - 2], "%d", 11 - (soma % 11));
+// 	}
+
+// 	soma = 0;
+
+// 	for (int i = 0, j = 11; j >= 2; i++) {
+// 		if (cpfCopy[i] != '.' && cpfCopy[i] != '-') {
+// 			soma += (cpfCopy[i] - '0') * j;
+// 			j--;
+// 		}
+// 	}
+
+// 	// Settando o segundo dígito verificador
+// 	if (soma % 11 < 2) {
+// 		cpfCopy[cpfCopy.length() - 1] = '0';
+// 	} else {
+// 		sprintf(&cpfCopy[cpfCopy.length() - 1], "%d", 11 - (soma % 11));
+// 	}
+
+// 	// cout << cpfCopy << endl;
+// 	// cout << cpf << endl;
+
+// 	return cpfCopy == MaskCPF(cpf) ? true : false;
+// }
+
+// Retorna uma string com mascara a partir de um long int.
+char* MaskCPF(unsigned long CPFNumber) {
+
+	if (0) { // !checkCPF(CPFNumber);
+		puts("CPF inválido!");
+		// return NULL;
+	}
+
+	String CPF = (String)malloc(15 * sizeof(char));
+	if (CPF == NULL) {
+		fprintf(stderr, "Error: Failed to allocate memory in MaskCPF()\n");
+		return NULL;
+	}
+
+	sprintf(CPF, "%ld", CPFNumber);
+
 	char CPFCopy[15] = "000.000.000-00";
 
+	// Apply mask
 	for (int i = 0, j = 0; CPF[i] != '\0'; i++, j++) {
 		if (CPF[i] == '.' || CPF[i] == '-') i++;
 		if (j == 3 || j == 7 || j == 11) j++;
@@ -126,6 +185,24 @@ void MaskCPF(char* CPF) {
 	}
 
 	strcpy(CPF, CPFCopy);
+
+	return CPF;
+
+	/*
+		There are a few potential issues with the code:
+
+		The function takes a long argument, but a CPF number is usually represented as a 11-digit integer. The long data type may not be sufficient to represent all possible CPF numbers, as it has a maximum value of 2^63-1. It would be better to use an unsigned integer data type, such as unsigned long long.
+
+		The code checks for an invalid CPF number using the expression if (0). This is always false and will never execute the code inside the block. It's unclear what the intention was here, but if the idea was to check for an invalid CPF number, a better approach would be to use the checkCPF function and return NULL if the number is invalid.
+
+		The function allocates memory for a String object, which is not a standard C data type. It's possible that this is a custom data type defined elsewhere in the code, but without knowing its implementation it's hard to tell if this allocation is correct. It would be safer to use a standard C string (char*) instead.
+
+		The function allocates memory for the CPF string, but it never frees that memory. This can lead to memory leaks if the function is called multiple times.
+
+		The CPFCopy array is initialized to "000.000.000-00", which assumes that all CPF numbers have this format. However, CPF numbers are sometimes represented without the punctuation, so this may not always be the case. It would be better to initialize the array to all zeros and let the mask be applied dynamically based on the length of the input string.
+
+		The function returns a pointer to the CPF string, which is allocated on the heap. This means that the caller of the function is responsible for freeing the memory when it's no longer needed. However, the caller may not be aware of this and may forget to free the memory, leading to memory leaks. A better approach would be to pass a pre-allocated buffer to the function, and have the function fill in that buffer with the masked CPF number. This way, the caller doesn't need to worry about memory management.
+	*/
 }
 
 /*!
@@ -133,8 +210,6 @@ void MaskCPF(char* CPF) {
  * @param file Pode ser substituido por stdin ou 0.
  */
 char* getstr(FILE* file) {
-
-	const size_t maxStringLength = 2000;
 
 	// Limpando o STDIN
 	char c = getchar();
@@ -145,14 +220,14 @@ char* getstr(FILE* file) {
 	if (file == 0) file = stdin;
 
 	// Allocate memory for string
-	char* string = (char*)malloc(maxStringLength * sizeof(char));
+	char* string = (char*)malloc(MaxStringLength * sizeof(char));
 	if (string == NULL) {
 		fprintf(stderr, "Error: Failed to allocate memory in getstr()\n");
 		return NULL;
 	}
 
 	// Read string from file
-	if (fgets(string, maxStringLength, file) == NULL) {
+	if (fgets(string, MaxStringLength, file) == NULL) {
 		fprintf(stderr, "Error: Failed to read string from file in getstr()\n");
 		free(string);
 		return NULL;
@@ -178,8 +253,6 @@ char* getstr(FILE* file) {
  */
 void fgetstr(char** string, FILE* file) {
 
-	const size_t maxStringLength = 2000;
-
 	// Limpando o STDIN
 	char c = getchar();
 	if (c != '\n' OR c != EOF) {
@@ -187,14 +260,14 @@ void fgetstr(char** string, FILE* file) {
 	}
 
 	// Allocate memory for string
-	*string = (char*)malloc(maxStringLength * sizeof(char));
+	*string = (char*)malloc(MaxStringLength * sizeof(char));
 	if (*string == NULL) {
 		fprintf(stderr, "Error: Failed to allocate memory in fgetstr()\n");
 		return;
 	}
 
 	// Read string from file
-	if (fgets(*string, maxStringLength, file) == NULL) {
+	if (fgets(*string, MaxStringLength, file) == NULL) {
 		fprintf(stderr, "Error: Failed to read string from file in fgetstr()\n");
 		free(*string);
 		*string = NULL;
@@ -302,92 +375,5 @@ char* replaceAll(char* string, char* regex, char* replacement) {
 
 	return (char*)realloc(aux, (strlen(aux) + 1) * sizeof(char));
 }
-
-/*
-	// char* substr(char* string, int beggining, int end) {
-	// 	int length = end - beggining;
-	// 	char* aux = (char*)malloc((length + 1) * sizeof(char));
-
-	// 	for (int i = 0; i < length; i++) {
-	// 		aux[i] = string[beggining + i];
-	// 	}
-
-	// 	aux[length] = '\0';
-
-	// 	return aux;
-	// }
-
-	// int indexOf(char* string, char* reference) {
-
-	// 	for (int i = 0; i <= strlen(string) - strlen(reference); i++) {
-	// 		char* substring = substr(string, i, strlen(reference) + i);
-
-	// 		if (!strcmp(substring, reference)) {
-	// 			return i;
-	// 		}
-	// 	}
-	// 	return -1;
-	// }
-
-	// char** split(char* string, char* regex) {
-	// 	int arraySize = 1;
-
-	// 	// Descobrindo o tamanho do nosso Array
-	// 	for (int i = 0; i < strlen(string) - strlen(regex); i++) {
-	// 		if (!strcmp(substr(string, i, i + strlen(regex)), regex)) {
-	// 			arraySize++;
-	// 		}
-	// 	}
-
-	// 	// Criando o array de strings
-	// 	char** array = (char**)malloc(arraySize * sizeof(char**));
-
-	// 	// Separando as substrings e atribuindo
-	// 	for (int i = 0; i < arraySize - 1; i++) {
-	// 		array[i] = (char*)malloc((indexOf(string, regex) - 1) * sizeof(char*));
-	// 		strcpy(array[i], substr(string, 0, indexOf(string, regex)));
-	// 		string += indexOf(string, regex) + strlen(regex);
-	// 	}
-	// 	array[arraySize - 1] = (char*)malloc((strlen(string) - 1) * sizeof(char*));
-	// 	strcpy(array[arraySize - 1], substr(string, 0, strlen(string)));
-
-	// 	return array;
-	// }
-
-	// char** split(char* string, char* regex) {
-
-	// 	// Criando o array de strings
-	// 	char** array = (char**)malloc(30 * sizeof(char**));
-
-	// 	int arraySize = 1;
-	// 	// Separando as substrings e atribuindo
-	// 	for (int i = 0; indexOf(string, regex) != strlen(string); i++, arraySize++) {
-	// 		array[i] = (char*)malloc((indexOf(string, regex) - 1) * sizeof(char));
-	// 		strcpy(array[i], substr(string, 0, indexOf(string, regex)));
-	// 		string += indexOf(string, regex) + strlen(regex);
-	// 	}
-
-	// 	array[arraySize - 1]++;
-
-	// 	return (char**)realloc(array, arraySize * sizeof(char**));
-	// }
-
-	// char** split(char* string, char* regex) {
-	// 	// Criando o array de strings
-	// 	char** array = (char**)malloc(50 * sizeof(char**));
-
-	// 	// Separando as substrings e atribuindo
-	// 	int i;
-	// 	for (i = 0; indexOf(string, regex) != -1; i++) {
-	// 		array[i] = (char*)malloc((indexOf(string, regex) - 1) * sizeof(char*));
-	// 		strcpy(array[i], substr(string, 0, indexOf(string, regex)));
-	// 		string += indexOf(string, regex) + 1;
-	// 		array[i + 1] = (char*)malloc((strlen(string) - 1) * sizeof(char*));
-	// 		strcpy(array[i + 1], substr(string, 0, strlen(string)));
-	// 	}
-
-	// 	return (char**)realloc(array, i + 1 * sizeof(char*));
-	// }
-*/
 
 #endif /* BIBLIOTECA_C_H_ */
