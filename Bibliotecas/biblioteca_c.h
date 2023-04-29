@@ -23,8 +23,10 @@ typedef char* String;
 #define OR ||
 // #define or ||
 
-void flushStdin() {
-	while (getchar() != '\n') { }
+char flushStdin() {
+	char c;
+	while ((c = getchar()) != '\n' || c != EOF) { }
+	return c;
 }
 
 // Pausa o código até o ENTER fecha o programa caso contrário
@@ -126,74 +128,93 @@ void MaskCPF(char* CPF) {
 	strcpy(CPF, CPFCopy);
 }
 
-// Get Pointer String. Equivalente a um scanf mas para char*. Ótimo para strings em structs - getsptr(&p1.nome);
-void pscanf(char** string) {
-	*string = (char*)malloc(2000 * sizeof(char));
-	if (*string == NULL) printf("Falha na alocação de memória: Função 'pscanf'.\n");
-
-	fgets(*string, 2000, stdin);
-	*string[strcspn(*string, "\r\n")] = '\0';
-
-	*string = (char*)realloc(*string, (strlen(*string) + 1) * sizeof(char));
-	if (*string == NULL) printf("Falha na alocação de memória: Função 'pscanf'.\n");
-}
-
-char* getstr() {
+/*!
+ * Retorna uma newline-terminated string.
+ * @param file Pode ser substituido por stdin ou 0.
+ */
+char* getstr(FILE* file) {
 
 	const size_t maxStringLength = 2000;
 
 	// Limpando o STDIN
 	char c = getchar();
-	if (c != '\n') {
+	if (c != '\n' && c != EOF) {
 		ungetc(c, stdin);
 	}
 
+	if (file == 0) file = stdin;
+
+	// Allocate memory for string
 	char* string = (char*)malloc(maxStringLength * sizeof(char));
 	if (string == NULL) {
-		fprintf(stderr, "getstr - malloc error");
+		fprintf(stderr, "Error: Failed to allocate memory in getstr()\n");
 		return NULL;
 	}
 
-	if ((fgets(string, maxStringLength, stdin)) == NULL) {
-		fprintf(stderr, "getstr - fgets error");
+	// Read string from file
+	if (fgets(string, maxStringLength, file) == NULL) {
+		fprintf(stderr, "Error: Failed to read string from file in getstr()\n");
+		free(string);
 		return NULL;
 	}
 
-	string[strcspn(string, "\r\n")] = '\0';
+	// *string[len] == *(string[len])
+	string[(int)strcspn(string, "\r\n")] = '\0';
 
+	// Reallocate memory to exact size of string
 	string = (char*)realloc(string, (strlen(string) + 1) * sizeof(char));
 	if (string == NULL) {
-		fprintf(stderr, "getstr - realloc error");
+		fprintf(stderr, "Error: Failed to reallocate memory in getstr()\n");
 		return NULL;
 	}
-
-	/*
-		A função strcspn() é usada para determinar o comprimento
-		da sequência inicial da string que não contém nenhum dos
-		caracteres especificados em sua segunda entrada (neste caso, "\r\n").
-		Isso permite que a função determine a posição do primeiro
-		caractere de nova linha na string, para que ele possa ser
-		substituído pelo caractere nulo. -Chat GPT
-	*/
 
 	return string;
 }
 
-char* readString(char* string) {
-	printf("%s", string);
-	return getstr();
+/*!
+ * Equivalente a um fgets, mas para char*.
+ * @param string Endereço do char* (buffer) que a string será armazenada.
+ * @param file Pode ser substituido por stdin.
+ */
+void fgetstr(char** string, FILE* file) {
+
+	const size_t maxStringLength = 2000;
+
+	// Limpando o STDIN
+	char c = getchar();
+	if (c != '\n' OR c != EOF) {
+		ungetc(c, stdin);
+	}
+
+	// Allocate memory for string
+	*string = (char*)malloc(maxStringLength * sizeof(char));
+	if (*string == NULL) {
+		fprintf(stderr, "Error: Failed to allocate memory in fgetstr()\n");
+		return;
+	}
+
+	// Read string from file
+	if (fgets(*string, maxStringLength, file) == NULL) {
+		fprintf(stderr, "Error: Failed to read string from file in fgetstr()\n");
+		free(*string);
+		*string = NULL;
+		return;
+	}
+
+	// *string[len] == *(string[len])
+	(*string)[(int)strcspn(*string, "\r\n")] = '\0';
+
+	// Reallocate memory to exact size of string
+	*string = (char*)realloc(*string, (strlen(*string) + 1) * sizeof(char));
+	if (*string == NULL) {
+		fprintf(stderr, "Error: Failed to reallocate memory in fgetstr()\n");
+		return;
+	}
 }
 
-// File Get Pointer String. Equivalente a um fscanf mas para char*. Ótimo para strings em structs - fgetsptr(&string, file);
-void fgetsptr(FILE* file, char** string) {
-	*string = (char*)malloc(2000 * sizeof(char));
-	if (*string == NULL) printf("Falha na alocação de memória: Função 'fgetsptr'.\n");
-
-	fgets(*string, 2000, file);
-	*string[strcspn(*string, "\r\n")] = '\0';
-
-	*string = (char*)realloc(*string, (strlen(*string) + 1) * sizeof(char));
-	if (string == NULL) printf("Falha na alocação de memória: Função 'fgetsptr'.\n");
+char* readString(char* string) {
+	printf("%s", string);
+	return getstr(stdin);
 }
 
 // Pointer String Copy. Equivalente a um strcpy, mas para Pointer Strings. pstrcpy(&string, "New String");
@@ -215,6 +236,8 @@ void createpstr(char** strArg, char* string) {
 }
 
 char* substr(char* string, int beginning, int end) {
+	if (end < 1) return string;
+
 	int length = end - beginning;
 
 	char* strAux = (char*)malloc((length + 1) * sizeof(char));
