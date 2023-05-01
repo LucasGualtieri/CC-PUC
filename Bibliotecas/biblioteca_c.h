@@ -17,6 +17,7 @@
 
 typedef char* String;
 
+#define CPF unsigned long
 #define endl "\n"
 #define AND &&
 // #define and &&
@@ -204,26 +205,26 @@ char* MaskCPF(unsigned long CPFNumber) {
 		// return NULL;
 	}
 
-	String CPF = (String)malloc(15 * sizeof(char));
-	if (CPF == NULL) {
+	String cpf = (String)malloc(15 * sizeof(char));
+	if (cpf == NULL) {
 		fprintf(stderr, "Error: Failed to allocate memory in MaskCPF()\n");
 		return NULL;
 	}
 
-	sprintf(CPF, "%ld", CPFNumber);
+	sprintf(cpf, "%ld", CPFNumber);
 
 	char CPFCopy[15] = "000.000.000-00";
 
 	// Apply mask
-	for (int i = 0, j = 0; CPF[i] != '\0'; i++, j++) {
-		if (CPF[i] == '.' || CPF[i] == '-') i++;
+	for (int i = 0, j = 0; cpf[i] != '\0'; i++, j++) {
+		if (cpf[i] == '.' || cpf[i] == '-') i++;
 		if (j == 3 || j == 7 || j == 11) j++;
-		CPFCopy[j] = CPF[i];
+		CPFCopy[j] = cpf[i];
 	}
 
-	strcpy(CPF, CPFCopy);
+	strcpy(cpf, CPFCopy);
 
-	return CPF;
+	return cpf;
 
 	/*
 		There are a few potential issues with the code:
@@ -291,45 +292,6 @@ char* getstr(FILE* stream) {
 	}
 
 	return string;
-}
-
-/*!
- * Equivalente a um fgets, mas para char*.
- * @param string Endereço do buffer que a string será armazenada.
- * @param file Pode ser substituido por stdin.
- */
-void fgetstr(char** string, FILE* file) {
-
-	// Limpando o STDIN
-	char c = getchar();
-	if (c != '\n' OR c != EOF) {
-		ungetc(c, stdin);
-	}
-
-	// Allocate memory for string
-	*string = (char*)malloc(MaxStringLength * sizeof(char));
-	if (*string == NULL) {
-		fprintf(stderr, "Error: Failed to allocate memory in fgetstr()\n");
-		return;
-	}
-
-	// Read string from file
-	if (fgets(*string, MaxStringLength, file) == NULL) {
-		fprintf(stderr, "Error: Failed to read string from file in fgetstr()\n");
-		free(*string);
-		*string = NULL;
-		return;
-	}
-
-	// *string[len] == *(string[len])
-	(*string)[(int)strcspn(*string, "\r\n")] = '\0';
-
-	// Reallocate memory to exact size of string
-	*string = (char*)realloc(*string, (strlen(*string) + 1) * sizeof(char));
-	if (*string == NULL) {
-		fprintf(stderr, "Error: Failed to reallocate memory in fgetstr()\n");
-		return;
-	}
 }
 
 char* readString(char* string) {
