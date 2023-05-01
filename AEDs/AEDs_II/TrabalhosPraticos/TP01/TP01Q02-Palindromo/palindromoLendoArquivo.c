@@ -24,8 +24,7 @@ bool isPalindromo(char* string) {
 int main() {
 
 	FILE* pubIn = fopen("pub.in", "r");
-	String string;
-	strcopy(&string, getstr(pubIn));
+	String string = getstr(pubIn);
 
 	while (strcmp(string, "FIM")) {
 		printf("%s\n", isPalindromo(string) ? "SIM" : "NAO");
