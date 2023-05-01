@@ -24,16 +24,23 @@ typedef char* String;
 // #define or ||
 #define MaxStringLength 2000
 
-char flushStdin() {
-	char c;
-	while ((c = getchar()) != '\n' || c != EOF) { }
-	return c;
+bool flushStdin(FILE* stream) {
+	int c = fgetc(stream);
+
+	if (c != '\n' && c != EOF) {
+		ungetc(c, stream);
+	}
 }
 
-// Pausa o código até o ENTER fecha o programa caso contrário
-void pause(bool flush) {
+/*!
+ * Pausa o programa até o usuario apertar ENTER.
+ * O programa termina caso algo além de ENTER for digitado.
+ * @param flush se == 1 limpará a entrada padrão.
+ * @param flush se == 0 não limpará a entrada padrão.
+ */
+void pause(bool flushing) {
 
-	if (flush) flushStdin(); // Preciso flushar somente se não estiver limpo
+	if (flushing) flushStdin(stdin);
 
 	printf("Paused | Press ENTER to continue...");
 
@@ -116,48 +123,78 @@ void selectionSort(int* array, int arrayLength) {
 	}
 }
 
-// Confere se o CPF é válido ou não
-// bool checkCPF(String cpf) {
+char* substr(char* string, int beginning, int end) {
+	if (end < 1) return string;
 
-// 	String cpfCopy = MaskCPF(cpf);
+	int length = end - beginning;
 
-// 	int soma = 0;
+	char* strAux = (char*)malloc((length + 1) * sizeof(char));
 
-// 	for (int i = 0, j = 10; j >= 2; i++) {
-// 		if (cpfCopy[i] != '.' && cpfCopy[i] != '-') {
-// 			soma += (cpfCopy[i] - '0') * j;
-// 			j--;
-// 		}
-// 	}
+	for (int i = 0; i < length; i++) {
+		strAux[i] = string[beginning++];
+	}
 
-// 	// Settando o primeiro dígito verificador
-// 	if (soma % 11 < 2) {
-// 		cpfCopy[cpfCopy.length() - 2] = '0';
-// 	} else {
-// 		sprintf(&cpfCopy[cpfCopy.length() - 2], "%d", 11 - (soma % 11));
-// 	}
+	strAux[length] = '\0';
 
-// 	soma = 0;
+	return strAux;
+}
 
-// 	for (int i = 0, j = 11; j >= 2; i++) {
-// 		if (cpfCopy[i] != '.' && cpfCopy[i] != '-') {
-// 			soma += (cpfCopy[i] - '0') * j;
-// 			j--;
-// 		}
-// 	}
+int indexOf(char* string, char* reference) {
 
-// 	// Settando o segundo dígito verificador
-// 	if (soma % 11 < 2) {
-// 		cpfCopy[cpfCopy.length() - 1] = '0';
-// 	} else {
-// 		sprintf(&cpfCopy[cpfCopy.length() - 1], "%d", 11 - (soma % 11));
-// 	}
+	for (int i = 0; i <= strlen(string) - strlen(reference); i++) {
+		char* substring = substr(string, i, strlen(reference) + i);
 
-// 	// cout << cpfCopy << endl;
-// 	// cout << cpf << endl;
+		if (!strcmp(substring, reference)) {
+			return i;
+		}
+	}
+	return -1;
+}
 
-// 	return cpfCopy == MaskCPF(cpf) ? true : false;
-// }
+/*
+	// Confere se o CPF é válido ou não
+	bool checkCPF(String cpf) {
+
+		String cpfCopy = MaskCPF(cpf);
+
+		int soma = 0;
+
+		for (int i = 0, j = 10; j >= 2; i++) {
+			if (cpfCopy[i] != '.' && cpfCopy[i] != '-') {
+				soma += (cpfCopy[i] - '0') * j;
+				j--;
+			}
+		}
+
+		// Settando o primeiro dígito verificador
+		if (soma % 11 < 2) {
+			// cpfCopy[cpfCopy.length() - 2] = '0';
+		} else {
+			// sprintf(&cpfCopy[cpfCopy.length() - 2], "%d", 11 - (soma % 11));
+		}
+
+		soma = 0;
+
+		for (int i = 0, j = 11; j >= 2; i++) {
+			if (cpfCopy[i] != '.' && cpfCopy[i] != '-') {
+				soma += (cpfCopy[i] - '0') * j;
+				j--;
+			}
+		}
+
+		// Settando o segundo dígito verificador
+		if (soma % 11 < 2) {
+			// cpfCopy[cpfCopy.length() - 1] = '0';
+		} else {
+			// sprintf(&cpfCopy[cpfCopy.length() - 1], "%d", 11 - (soma % 11));
+		}
+
+		// cout << cpfCopy << endl;
+		// cout << cpf << endl;
+
+		return cpfCopy == MaskCPF(cpf) ? true : false;
+	}
+*/
 
 // Retorna uma string com mascara a partir de um long int.
 char* MaskCPF(unsigned long CPFNumber) {
@@ -205,19 +242,29 @@ char* MaskCPF(unsigned long CPFNumber) {
 	*/
 }
 
+// Retorna uma ' '-terminated string.
+char* trim(char* string) {
+
+	int substringLength = indexOf(string, " ");
+
+	string[substringLength] = '\0';
+
+	string = (char*)realloc(string, substringLength * sizeof(char));
+
+	return string;
+}
+
 /*!
  * Retorna uma newline-terminated string.
  * @param file Pode ser substituido por stdin ou 0.
+ * @param file Se igual a 0 Retorna uma newline-terminated string lida do stdin.
  */
-char* getstr(FILE* file) {
+char* getstr(FILE* stream) {
+
+	if (stream == 0) stream = stdin;
 
 	// Limpando o STDIN
-	char c = getchar();
-	if (c != '\n' && c != EOF) {
-		ungetc(c, stdin);
-	}
-
-	if (file == 0) file = stdin;
+	flushStdin(stream);
 
 	// Allocate memory for string
 	char* string = (char*)malloc(MaxStringLength * sizeof(char));
@@ -226,8 +273,8 @@ char* getstr(FILE* file) {
 		return NULL;
 	}
 
-	// Read string from file
-	if (fgets(string, MaxStringLength, file) == NULL) {
+	// Reading string from file
+	if (fgets(string, MaxStringLength, stream) == NULL) {
 		fprintf(stderr, "Error: Failed to read string from file in getstr()\n");
 		free(string);
 		return NULL;
@@ -236,7 +283,7 @@ char* getstr(FILE* file) {
 	// *string[len] == *(string[len])
 	string[(int)strcspn(string, "\r\n")] = '\0';
 
-	// Reallocate memory to exact size of string
+	// Reallocating memory to exact size of string
 	string = (char*)realloc(string, (strlen(string) + 1) * sizeof(char));
 	if (string == NULL) {
 		fprintf(stderr, "Error: Failed to reallocate memory in getstr()\n");
@@ -248,7 +295,7 @@ char* getstr(FILE* file) {
 
 /*!
  * Equivalente a um fgets, mas para char*.
- * @param string Endereço do char* (buffer) que a string será armazenada.
+ * @param string Endereço do buffer que a string será armazenada.
  * @param file Pode ser substituido por stdin.
  */
 void fgetstr(char** string, FILE* file) {
@@ -290,10 +337,18 @@ char* readString(char* string) {
 	return getstr(stdin);
 }
 
-// Pointer String Copy. Equivalente a um strcpy, mas para Pointer Strings. pstrcpy(&string, "New String");
-void pstrcpy(char** strArg, char* string) {
-	*strArg = (char*)realloc(*strArg, strlen(string) + 1 * sizeof(char));
-	strcpy(*strArg, string);
+/*!
+ * Malloca uma string em um buffer. strcopy(&buffer, newString)
+ * @param buffer Endereço do buffer que a string será armazenada.
+ * @param string String já mallocada que será .
+ */
+void strcopy(char** buffer, char* string) {
+
+	if (*buffer != (void*)0x64) {
+		free(*buffer);
+	}
+
+	*buffer = string;
 }
 
 // Pointer String Concat. Equivalente a um strcat, mas para Pointer Strings. pstrcat(&string, "New String");
@@ -302,38 +357,10 @@ char* pstrcat(char* source, char* append) {
 	return strcat(source, append);
 }
 
-// Create Pointer String. Cria um Pointer String a partir de um string hardcoded. createpstr(&string, "New String");
-void createpstr(char** strArg, char* string) {
+// Create String. Cria um Pointer String a partir de um string hardcoded. createpstr(&string, "New String");
+void mallocstr(char** strArg, char* string) {
 	*strArg = (char*)malloc((strlen(string) + 1) * sizeof(char));
 	strcpy(*strArg, string);
-}
-
-char* substr(char* string, int beginning, int end) {
-	if (end < 1) return string;
-
-	int length = end - beginning;
-
-	char* strAux = (char*)malloc((length + 1) * sizeof(char));
-
-	for (int i = 0; i < length; i++) {
-		strAux[i] = string[beginning++];
-	}
-
-	strAux[length] = '\0';
-
-	return strAux;
-}
-
-int indexOf(char* string, char* reference) {
-
-	for (int i = 0; i <= strlen(string) - strlen(reference); i++) {
-		char* substring = substr(string, i, strlen(reference) + i);
-
-		if (!strcmp(substring, reference)) {
-			return i;
-		}
-	}
-	return -1;
 }
 
 char** split(char* string, char* regex) {

@@ -9,7 +9,7 @@ int CaractereEspecial(char c) {
 bool isPalindromo(char* string) {
 	for (int i = 0, j = strlen(string) - 1; i < j; i++, j--) {
 		if (CaractereEspecial(string[i])) {
-			if (string[i] != string[j - 1] && string[i + 1] != string[j]) {
+			if (string[i] != string[j - 1]) {
 				return false;
 			} else {
 				i++, j--;
@@ -25,11 +25,11 @@ int main() {
 
 	FILE* pubIn = fopen("pub.in", "r");
 	String string;
-	fgetstr(&string, pubIn);
+	strcopy(&string, getstr(pubIn));
 
 	while (strcmp(string, "FIM")) {
 		printf("%s\n", isPalindromo(string) ? "SIM" : "NAO");
-		fgetstr(&string, pubIn);
+		strcopy(&string, getstr(pubIn));
 	}
 
 	return 0;
