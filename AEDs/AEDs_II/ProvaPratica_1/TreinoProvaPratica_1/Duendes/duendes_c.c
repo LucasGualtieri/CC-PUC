@@ -47,7 +47,7 @@ int main() {
 
 	// Atribuindo os nomes e as idades aos Duendes
 	for (int i = 0; i < N; i++) {
-		String* nomeIdade = split(getstr(), " ");
+		String* nomeIdade = split(getstr(0), " ");
 		duendes[i].nome = nomeIdade[0];
 		duendes[i].idade = atoi(nomeIdade[1]);
 	}

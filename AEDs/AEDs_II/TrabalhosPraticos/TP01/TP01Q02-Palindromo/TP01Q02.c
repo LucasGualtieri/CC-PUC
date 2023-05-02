@@ -23,7 +23,7 @@ bool isPalindromo(char* string) {
 
 int main() {
 
-	char* string = getstr(0);
+	String string = getstr(0);
 
 	while (strcmp(string, "FIM")) {
 		printf("%s\n", isPalindromo(string) ? "SIM" : "NAO");

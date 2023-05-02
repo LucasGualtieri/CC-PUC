@@ -30,7 +30,7 @@ bool isPalindromo(char* string, int comeco, int fim) {
 
 int main() {
 
-	char* string = getstr();
+	char* string = getstr(0);
 
 	while (strcmp(string, "FIM")) {
 		if (isPalindromo(string, 0, strlen(string) - 1)) {
@@ -38,7 +38,7 @@ int main() {
 		} else {
 			printf("NAO\n");
 		}
-		string = getstr();
+		strcopy(&string, getstr(0));
 	}
 
 	return 0;
