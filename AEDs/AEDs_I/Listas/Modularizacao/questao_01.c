@@ -10,7 +10,7 @@ int par(int n) {
 	return n * 2;
 }
 
-int par(int n) {
+int parIterativo(int n) {
 	int par = 0;
 
 	for (int i = 0; i < n; i++) {
