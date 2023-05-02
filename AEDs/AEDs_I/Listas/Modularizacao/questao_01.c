@@ -1,8 +1,23 @@
 #include <stdio.h>
 
-// Essa função recebe um número inteiro n e retorna o n-ésimo termo da sequência { 2, 4, 6, 8, 10, 12... }
+/*
+	Essa função recebe um número inteiro n e retorna o
+	n-ésimo termo da sequência { 2, 4, 6, 8, 10, 12... }
+	ou seja, uma função que retorna o n-ésimo par.
+*/
+
 int par(int n) {
 	return n * 2;
+}
+
+int par(int n) {
+	int par = 0;
+
+	for (int i = 0; i < n; i++) {
+		par += 2;
+	}
+
+	return par;
 }
 
 // Esse procedimento lê o valor de n e chama a função.
