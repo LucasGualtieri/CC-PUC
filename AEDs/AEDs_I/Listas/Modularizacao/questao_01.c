@@ -14,7 +14,7 @@ int parIterativo(int n) {
 	int par = 0;
 
 	for (int i = 0; i < n; i++) {
-		par += 2;
+		par += 2; // par = par + 2;
 	}
 
 	return par;
