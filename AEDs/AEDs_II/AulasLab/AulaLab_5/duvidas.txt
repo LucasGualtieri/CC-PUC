@@ -1,0 +1,7 @@
+Qual o elemento "extra" da passagem por referência em relação à ponteiros?
+endereço "mallocado" em c++ tem que usar free()?
+O que é 'delete' em c++?
+Lista flexivel em C++ tem que usar ponteiro?
+
+Extra: Como o compilador sabe que int func(&a)
+recebe o "endereco" de a se não passo &a?
