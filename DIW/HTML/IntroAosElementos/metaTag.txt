@@ -1,0 +1,13 @@
+A tag <meta> nos permite criar palavras chave, por exemplo:
+
+<meta name = "author" content = "Lucas">  <!-- Não precisa ser fechada '</meta>' -->
+
+Essas palavras chave ajudam os mecanismos de busca a localizar essa página,
+ou seja, facilitam o site de ser achado.
+
+Também nos permite escolher o charset da página:
+<meta charset="UTF-8">
+
+Entre muitas outras coisas:
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
