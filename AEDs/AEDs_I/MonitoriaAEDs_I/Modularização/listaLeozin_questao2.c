@@ -6,7 +6,7 @@ int lerDimensoes(char* string) {
 
 	printf("%s: ", string);
 	do {
-		if (flag) printf("%s (o valor precisa ser > 0): ", string);
+		if (flag) printf("%s (o valor deve ser > 0): ", string);
 		scanf("%d", &dimensao);
 		flag = true;
 	} while (dimensao <= 0);
