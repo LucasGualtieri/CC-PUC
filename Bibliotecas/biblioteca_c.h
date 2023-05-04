@@ -26,6 +26,9 @@ typedef char* String;
 #define MaxStringLength 2000
 
 bool flushStdin(FILE* stream) {
+
+	// scanf("%d%*c", &idade);
+
 	int c = fgetc(stream);
 
 	if (c != '\n' && c != EOF) {

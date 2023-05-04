@@ -1,6 +1,6 @@
 #include <biblioteca_c.h>
 
-int lerDimensoes(char* string) {
+int lerDimensoes(const char* string) {
 	int dimensao;
 	bool flag = false;
 
