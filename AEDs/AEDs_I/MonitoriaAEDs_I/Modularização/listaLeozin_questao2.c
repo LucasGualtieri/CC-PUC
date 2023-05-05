@@ -2,14 +2,13 @@
 
 int lerDimensoes(const char* string) {
 	int dimensao;
-	bool flag = false;
+	bool invalid = false;
 
 	printf("%s: ", string);
 	do {
-		if (flag) printf("%s (o valor deve ser > 0): ", string);
+		if (invalid) printf("%s (o valor deve ser > 0): ", string);
 		scanf("%d", &dimensao);
-		flag = true;
-	} while (dimensao <= 0);
+	} while (invalid = dimensao <= 0);
 
 	return dimensao;
 }
