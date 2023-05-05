@@ -36,5 +36,7 @@ int main(void) {
 	int numeroDeDiasDoMesLido = arranjo(vetor, mesLido);
 
 	escreva(numeroDeDiasDoMesLido);
+
+	// escreva(arranjo(vetor, LerMes()));
 	return 0;
 }
