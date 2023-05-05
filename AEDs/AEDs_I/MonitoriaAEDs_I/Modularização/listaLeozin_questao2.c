@@ -4,9 +4,8 @@ int lerDimensoes(const char* string) {
 	int dimensao;
 	bool invalid = false;
 
-	printf("%s: ", string);
 	do {
-		if (invalid) printf("%s (o valor deve ser > 0): ", string);
+		printf("%s: %s", string, invalid ? "(valor deve ser > 0): " : "");
 		scanf("%d", &dimensao);
 	} while (invalid = dimensao <= 0);
 
