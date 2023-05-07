@@ -16,6 +16,10 @@ public class internet_v2 {
 			saldoAtual -= gastoNoMes;
 		}
 
+		// for (int i = 0; i < numeroDeMeses; i++) {
+		// saldoAtual += quotaMensalMB - scanner.nextInt();
+		// }
+
 		saldoAtual += quotaMensalMB; // numeroDeMeses + 1
 
 		System.out.print(saldoAtual);
