@@ -7,13 +7,17 @@
 #include <iostream>
 #include <limits>
 #include <math.h>
+#include <string.h>
 // #include <stdexcept>
+// #include <exception>
 #include <stdio.h>
 #include <string>
 
 #define Infinity 2147483647
 #define arrayLength(array) (sizeof(array) / sizeof(array[0]))
 #define RANDOM(minRange, maxRange) (rand() % ((maxRange + 1) - minRange)) + minRange
+
+#define MaxStringLength 2000
 
 #define AND &&
 // #define and &&
@@ -328,6 +332,49 @@ string MaskCep(string cep) {
 	}
 
 	return cepCopy;
+}
+
+void flushStdin(FILE* stream) {
+
+	int c = fgetc(stream);
+
+	if (c != '\n' && c != EOF) {
+		ungetc(c, stream);
+	}
+}
+
+char* getstr(FILE* stream) {
+
+	if (stream == 0) stream = stdin;
+
+	// Limpando o STDIN
+	flushStdin(stream);
+
+	// Allocate memory for string
+	char* str = (char*)malloc(MaxStringLength * sizeof(char));
+	if (str == NULL) {
+		fprintf(stderr, "Error: Failed to allocate memory in getstr()\n");
+		return NULL;
+	}
+
+	// Reading string from file
+	if (fgets(str, MaxStringLength, stream) == NULL) {
+		fprintf(stderr, "Error: Failed to read string from file in getstr()\n");
+		free(str);
+		return NULL;
+	}
+
+	// *string[len] == *(string[len])
+	str[(int)strcspn(str, "\r\n")] = '\0';
+
+	// Reallocating memory to exact size of string
+	str = (char*)realloc(str, (strlen(str) + 1) * sizeof(char));
+	if (str == NULL) {
+		fprintf(stderr, "Error: Failed to reallocate memory in getstr()\n");
+		return NULL;
+	}
+
+	return str;
 }
 
 #endif /* BIBLIOTECA_H_ */
