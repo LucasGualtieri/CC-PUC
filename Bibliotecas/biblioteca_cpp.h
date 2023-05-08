@@ -7,6 +7,7 @@
 #include <iostream>
 #include <limits>
 #include <math.h>
+// #include <stdexcept>
 #include <stdio.h>
 #include <string>
 
@@ -238,6 +239,16 @@ void ArrayAscendingOrder(float* array, int arrayLength) {
 // --------------------------------------------------------------
 
 // Mascara a string CPF, caso não tenha mascara, e não mascara caso tenha.
+string maskTelefone(long int telefone) {
+	string strTelefone = to_string(telefone);
+
+	strTelefone.insert(0, 1, '(');
+	strTelefone.insert(3, 1, ')');
+	strTelefone.insert(9, 1, '-');
+
+	return strTelefone;
+}
+
 string MaskCPF(string CPF) {
 	string CPFCopy = "000.000.000-00";
 
