@@ -1,12 +1,12 @@
 #include <biblioteca_c.h>
 
 void AtribuindoDiasAosMeses(int meses[]) {
-	for (int i = 1; i <= 12; i++) {
-		if (i < 8) {
+	for (int i = 0; i < 12; i++) {
+		if (i < 7) {
 			if (i == 2) {
 				// Se o mês for Fevereiro -> atribuímos 28
 				meses[i] = 28;
-			} else if (i % 2 != 0) {
+			} else if (i % 2 == 0) {
 				// Se o mês for ímpar -> atribuímos 31
 				meses[i] = 31;
 			} else {
@@ -15,7 +15,7 @@ void AtribuindoDiasAosMeses(int meses[]) {
 			}
 		} else {
 			// A partir do mês 8 a lógica muda
-			if (i % 2 == 0) {
+			if (i % 2 != 0) {
 				// Se o mês for par -> atribuímos 31
 				meses[i] = 31;
 			} else {
