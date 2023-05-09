@@ -3,12 +3,16 @@ Introdução à modularização:
 A modularização é feita a partir de métodos:
 	- Funções .......... Retornam valores (int, float, int*, etc...)
 	- Procedimentos .... Não retornam nada (void)
+	
+----------------------------------------------------------------------------------
 
 Sintaxe:
 	tipo nome(lista de parâmetros) {'corpo entre chaves'}
 	Exemplo: void soma() {} // Obs: A lista de parâmetros pode ser vazia.
 
 	TODO método deve seguir essa estrutura.
+
+----------------------------------------------------------------------------------
 
 Exemplo de procedimento:
 	void soma() {
@@ -22,6 +26,8 @@ Exemplo de procedimento:
 	que um mesmo código seja escrito mais de uma vez. Dessa forma fica muito
 	mais fácil de ser achar bugs, corrigi-los e desenvolver novas funcionalidades.
 
+----------------------------------------------------------------------------------
+
 Exemplo de função:
 	int soma() {
 		int x = 1, y = 2;
@@ -34,6 +40,8 @@ Exemplo de função:
 	Pode ser chamada 'N' vezes igual à um procedimento, sua única
 	diferença é que ela vai necessáriamente retornar um valor. O tipo
 	desse valor retornado é especificado no ²protótipo" da função.
+
+----------------------------------------------------------------------------------
 
 Entendendo parâmetros:
 	void procedimento(int x, int y) {
@@ -50,6 +58,8 @@ Entendendo parâmetros:
 
 	Obs: Observe bem a sintaxe. Na declaração dos parâmetros usamos
 	o tipo (Ex: int), mas não usamos o tipo na hora de *passar* o valor.
+
+----------------------------------------------------------------------------------
 
 Entendendo o retorno de funções:
 	// Print na tela x + y.
@@ -73,6 +83,7 @@ Entendendo o retorno de funções:
 		return 0;
 	}
 
+----------------------------------------------------------------------------------
 
 Uso de modularização na prática! Vamos re-implementar a função pow():
 	// Print na tela x^y (x elevado à y).
@@ -96,6 +107,8 @@ Uso de modularização na prática! Vamos re-implementar a função pow():
 
 		return 0;
 	}
+
+----------------------------------------------------------------------------------
 
 Dicionário {
 	1- Chamada ............... "nomeDoMetodo()" - Toda função precisa ser chamada, inclusive a main, mas quem a chama é o "compilador".
