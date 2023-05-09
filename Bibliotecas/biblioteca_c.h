@@ -24,6 +24,7 @@ typedef char* String;
 #define OR ||
 // #define or ||
 #define MaxStringLength 2000
+#define ends 2000
 
 bool flushStdin(FILE* stream) {
 
@@ -130,9 +131,12 @@ void selectionSort(int* array, int arrayLength) {
 char* substr(char* string, int beginning, int end) {
 	if (end < 1) return string;
 
+	if (end == ends) end = strlen(string);
+
 	int length = end - beginning;
 
-	char* strAux = (char*)malloc((length + 1) * sizeof(char));
+	static char strAux[MaxStringLength];
+	// char* strAux = (char*)malloc((length + 1) * sizeof(char));
 
 	for (int i = 0; i < length; i++) {
 		strAux[i] = string[beginning++];
@@ -143,13 +147,14 @@ char* substr(char* string, int beginning, int end) {
 	return strAux;
 }
 
-int indexOf(char* string, char* reference) {
+int indexOf(char* string, char* reference, int occurrence) {
 
 	for (int i = 0; i <= strlen(string) - strlen(reference); i++) {
 		char* substring = substr(string, i, strlen(reference) + i);
 
 		if (!strcmp(substring, reference)) {
-			return i;
+			occurrence--;
+			if (occurrence == 0) return i;
 		}
 	}
 	return -1;
@@ -249,7 +254,7 @@ char* MaskCPF(unsigned long CPFNumber) {
 // Retorna uma ' '-terminated string.
 char* trim(char* string) {
 
-	int substringLength = indexOf(string, " ");
+	int substringLength = indexOf(string, " ", 1);
 
 	string[substringLength] = '\0';
 
@@ -334,9 +339,9 @@ char** split(char* string, char* regex) {
 
 	while (true) {
 		array = (char**)realloc(array, (sizeOfArray + 1) * sizeof(char*));
-		if (indexOf(string, regex) != -1) {
-			array[sizeOfArray] = (char*)malloc(indexOf(string, regex) * sizeof(char));
-			strcpy(array[sizeOfArray], substr(string, 0, indexOf(string, regex)));
+		if (indexOf(string, regex, 1) != -1) {
+			array[sizeOfArray] = (char*)malloc(indexOf(string, regex, 1) * sizeof(char));
+			strcpy(array[sizeOfArray], substr(string, 0, indexOf(string, regex, 1)));
 		} else {
 			array[sizeOfArray] = (char*)malloc(strlen(array[sizeOfArray - 1]) * sizeof(char));
 			strcpy(array[sizeOfArray++], substr(string, 0, strlen(string)));
