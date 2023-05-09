@@ -1,0 +1,103 @@
+Introdução à modularização:
+
+A modularização é feita a partir de métodos:
+	- Funções .......... Retornam valores (int, float, int*, etc...)
+	- Procedimentos .... Não retornam nada (void)
+
+Sintaxe:
+	tipo nome(lista de parâmetros) {'corpo entre chaves'}
+	Exemplo: void soma() {} // Obs: A lista de parâmetros pode ser vazia.
+
+	TODO método deve seguir essa estrutura.
+
+Exemplo de procedimento:
+	void soma() {
+		int x = 1, y = 2;
+		int soma = x + y;
+		printf("x + y = %d", soma);
+	}
+
+	Um procedimento é simplemente um pedaço de código separado da main,
+	que pode ser ¹chamado quantas vezes forem necessárias, evitando assim
+	que um mesmo código seja escrito mais de uma vez. Dessa forma fica muito
+	mais fácil de ser achar bugs, corrigi-los e desenvolver novas funcionalidades.
+
+Exemplo de função:
+	int soma() {
+		int x = 1, y = 2;
+		int soma = x + y;
+		printf("x + y = %d", soma);
+		return soma;
+	}
+
+	Uma função também é apenas um pedaço de código separado da main.
+	Pode ser chamada 'N' vezes igual à um procedimento, sua única
+	diferença é que ela vai necessáriamente retornar um valor. O tipo
+	desse valor retornado é especificado no ²protótipo" da função.
+
+Entendendo parâmetros:
+	void procedimento(int x, int y) {
+		printf("%d e %d", x, y);
+		// Nesse caso estaríamos printando "1 e 2"
+		// Pois a variável x assume o primeiro valor passado por parâmetro (1)
+		// E a variável y assume o segundo valor passado por parâmetro (2)
+	}
+
+	int main() {
+		soma(1,2);
+		return 0;
+	}
+
+	Obs: Observe bem a sintaxe. Na declaração dos parâmetros usamos
+	o tipo (Ex: int), mas não usamos o tipo na hora de *passar* o valor.
+
+Entendendo o retorno de funções:
+	// Print na tela x + y.
+
+	int soma(int valor1, int valor2) {
+		int soma = valor1 + valor2;
+
+		return soma;
+	}
+
+	int main() { // A main sendo um método pode receber parâmetros se você quiser
+		int x = 5, y = 2;
+		
+		// Nesse caso a função soma está retornando 5 + 2 = 7, então result está recebendo 7;
+		int result = soma(x, y);
+		printf("%d", result); // Printando 7;
+
+		// Quando chamamos uma função (nesse caso, soma(x,y) é a chamada) seu retorno substitui a chamada.
+		// (int result = soma(x, y)) nesse caso é a MESMA coisa que (int result = 7)
+
+		return 0;
+	}
+
+
+Uso de modularização na prática! Vamos re-implementar a função pow():
+	// Print na tela x^y (x elevado à y).
+
+	int pow(int base, int expoente) {
+		int resultado = base;
+		for (int i = 1; i < expo; i++) {
+			resultado *= base;
+		}
+		return resultado;
+	}
+
+	int main() { // A main sendo um método pode receber parâmetros se você quiser
+		int x = 5, y = 2;
+		
+		// Quando chamamos uma função (pow(x,y) é a chamada) seu retorno substitui a chamada.
+		int result = pow(x, y); // Nesse caso a função pow está retornando 5^2 = 25, então result está recebendo 25;
+		// (int result = pow(x, y)) nesse caso é a MESMA coisa que (int result = 25)
+		
+		printf("%d", result); // Printando 25;
+
+		return 0;
+	}
+
+Dicionário {
+	1- Chamada ............... "nomeDoMetodo()" - Toda função precisa ser chamada, inclusive a main, mas quem a chama é o "compilador".
+	2- Protótipo ............. É a declaração da função. Ex: int soma();
+}

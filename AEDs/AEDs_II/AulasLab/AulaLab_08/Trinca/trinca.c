@@ -1,10 +1,5 @@
-// #include <biblioteca.h>
-#include <limits.h>
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include <biblioteca_c.h>
 
-// ./trinca.exe < pub.in > out.txt
 // clear && gcc trinca.c -lm -I /home/lucas/CC-PUC/Bibliotecas -o trinca.exe && ./trinca.exe < pub.in > out.txt
 
 void arrayRead(int* array, int arrayLength) {

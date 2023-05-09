@@ -1,5 +1,7 @@
-// #include <biblioteca_c.h>
-#include <stdio.h>
+#include <biblioteca_c.h>
+
+// clear && gcc trinca.c -lm -I /home/lucas/CC-PUC/Bibliotecas -o trinca.exe && ./trinca.exe < pub.in > out.txt
+// clear && gcc trinca.c -lm -o trinca.exe && ./trinca.exe < pub.in > out.txt
 
 int main() {
 
