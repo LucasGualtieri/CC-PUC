@@ -1,7 +1,8 @@
 #include <biblioteca_c.h>
 
-void alteraOPonteiro(int** ponteiro, int* peso) {
+void alteraPonteiro(int** ponteiro, int* peso) {
 	*ponteiro = peso;
+	// ponteiro = &peso;
 }
 
 int main() {
@@ -12,7 +13,7 @@ int main() {
 
 	printf("Ponteiro: %d\n", *ponteiro);
 
-	alteraOPonteiro(&ponteiro, &peso);
+	alteraPonteiro(&ponteiro, &peso);
 
 	printf("Ponteiro: %d\n", *ponteiro);
 
