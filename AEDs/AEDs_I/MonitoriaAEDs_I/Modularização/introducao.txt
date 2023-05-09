@@ -111,6 +111,6 @@ Uso de modularização na prática! Vamos re-implementar a função pow():
 ----------------------------------------------------------------------------------
 
 Dicionário {
-	1- Chamada ............... "nomeDoMetodo()" - Toda função precisa ser chamada, inclusive a main, mas quem a chama é o "compilador".
+	1- Chamada ............... "nomeDoMetodo(pode ou não ter parâmetros)" - Toda função precisa ser chamada, inclusive a main, mas quem a chama é o "compilador".
 	2- Protótipo ............. É a declaração da função. Ex: int soma();
 }
