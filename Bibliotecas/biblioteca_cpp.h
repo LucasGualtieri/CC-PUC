@@ -10,6 +10,7 @@
 #include <string.h>
 // #include <stdexcept>
 // #include <exception>
+// #include <biblioteca_c.h>
 #include <stdio.h>
 #include <string>
 
@@ -343,6 +344,46 @@ void flushStdin(FILE* stream) {
 	}
 }
 
+char* substr(char* string, int beginning, int end) {
+
+	const int ends = 2000;
+
+	if (end < 1) return string;
+
+	if (end == ends) end = strlen(string);
+
+	int length = end - beginning;
+
+	static char strAux[MaxStringLength];
+	// char* strAux = (char*)malloc((length + 1) * sizeof(char));
+
+	for (int i = 0; i < length; i++) {
+		strAux[i] = string[beginning++];
+	}
+
+	strAux[length] = '\0';
+
+	return strAux;
+}
+
+int indexOf(char* string, char* reference, int occurrence) {
+
+	for (int i = 0; i <= strlen(string) - strlen(reference); i++) {
+		char* substring = substr(string, i, strlen(reference) + i);
+
+		if (!strcmp(substring, reference)) {
+			occurrence--;
+			if (occurrence == 0) return i;
+		}
+	}
+	return -1;
+}
+
+/*!
+ * Retorna uma newline-terminated string.
+ * @param file Pode ser substituido por stdin ou 0.
+ * @param file Se igual a 0 Retorna uma newline-terminated string lida do stdin.
+ */
 char* getstr(FILE* stream) {
 
 	if (stream == 0) stream = stdin;
@@ -351,30 +392,30 @@ char* getstr(FILE* stream) {
 	flushStdin(stream);
 
 	// Allocate memory for string
-	char* str = (char*)malloc(MaxStringLength * sizeof(char));
-	if (str == NULL) {
+	char* string = (char*)malloc(MaxStringLength * sizeof(char));
+	if (string == NULL) {
 		fprintf(stderr, "Error: Failed to allocate memory in getstr()\n");
 		return NULL;
 	}
 
 	// Reading string from file
-	if (fgets(str, MaxStringLength, stream) == NULL) {
+	if (fgets(string, MaxStringLength, stream) == NULL) {
 		fprintf(stderr, "Error: Failed to read string from file in getstr()\n");
-		free(str);
+		free(string);
 		return NULL;
 	}
 
 	// *string[len] == *(string[len])
-	str[(int)strcspn(str, "\r\n")] = '\0';
+	string[(int)strcspn(string, "\r\n")] = '\0';
 
 	// Reallocating memory to exact size of string
-	str = (char*)realloc(str, (strlen(str) + 1) * sizeof(char));
-	if (str == NULL) {
+	string = (char*)realloc(string, (strlen(string) + 1) * sizeof(char));
+	if (string == NULL) {
 		fprintf(stderr, "Error: Failed to reallocate memory in getstr()\n");
 		return NULL;
 	}
 
-	return str;
+	return string;
 }
 
 #endif /* BIBLIOTECA_H_ */

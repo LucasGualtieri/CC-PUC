@@ -1,6 +1,10 @@
-#include <biblioteca_c.h>
+#include <limits.h>
+#include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 // clear && gcc trinca.c -lm -I /home/lucas/CC-PUC/Bibliotecas -o trinca.exe && ./trinca.exe < pub.in > out.txt
+// clear && gcc trinca.c -o trinca.exe && ./trinca.exe < pub.in > out.txt
 
 void arrayRead(int* array, int arrayLength) {
 	for (int j = 0; j < arrayLength; j++) {
@@ -20,19 +24,23 @@ void selectionSort(int* array, int arrayLength) {
 	}
 }
 
+bool threeConsectuive(int* array, int index) {
+	return array[index] == array[index + 1] && array[index] == array[index + 2];
+}
+
 int mostOcurrences(int* array, int arrayLength) {
 	if (arrayLength < 3) return -1;
+
 	int maior = INT_MIN;
 	bool flag = false;
 
 	for (int i = 0; i < arrayLength - 2; i++) {
-		if (array[i] == array[i + 1] && array[i] == array[i + 2]) {
-			if (array[i] > maior) {
-				flag = true;
-				maior = array[i];
-			}
+		if (threeConsectuive(array, i) && array[i] > maior) {
+			flag = true;
+			maior = array[i];
 		}
 	}
+
 	return flag ? maior : -1;
 }
 
