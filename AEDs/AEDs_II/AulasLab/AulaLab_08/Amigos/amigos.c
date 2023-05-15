@@ -17,6 +17,7 @@ int main() {
 	String amigo = getstr(0);
 
 	if (strcmp(amigo, "Nao")) {
+
 		char** position = listaAtual;
 		for (int i = 0; strcmp(listaAtual[i], amigo); i++) {
 			printf("%s ", listaAtual[i]);
@@ -24,7 +25,6 @@ int main() {
 		}
 
 		printLista(listaNova, " ");
-
 		printLista(position, "\n");
 
 	} else {
