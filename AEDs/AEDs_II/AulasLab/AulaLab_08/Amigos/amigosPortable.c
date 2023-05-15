@@ -51,7 +51,6 @@ int main() {
 	freeStringArray(listaAtual);
 	freeStringArray(listaNova);
 
-	puts("\n******* | FIM DO PROGRAMA | *******\n");
 	return 0;
 }
 
