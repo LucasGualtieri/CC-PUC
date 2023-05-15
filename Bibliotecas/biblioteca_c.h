@@ -333,22 +333,45 @@ void mallocstr(char** strArg, char* string) {
 	strcpy(*strArg, string);
 }
 
-char** split(char* string, char* regex) {
+// Returns the length of a null terminated array of strings
+int stringsArrayLen(String* listaAtual) {
+	int i;
+	for (i = 0; listaAtual[i] != NULL; i++) { }
+	return i;
+}
+
+// Frees every string of a null terminated array of strings
+void freeStringArray(String* arrayOfStrings) {
+	for (int i = 0; i < stringsArrayLen(arrayOfStrings); i++) {
+		free(arrayOfStrings[i]);
+	}
+}
+
+char** split(char* string, char* regex, bool freeBuffer) {
 	char** array = NULL;
 	int sizeOfArray = 0;
 
+	char* position = string; // Track the position within the buffer
+
 	while (true) {
 		array = (char**)realloc(array, (sizeOfArray + 1) * sizeof(char*));
-		if (indexOf(string, regex, 1) != -1) {
-			array[sizeOfArray] = (char*)malloc(indexOf(string, regex, 1) * sizeof(char));
-			strcpy(array[sizeOfArray], substr(string, 0, indexOf(string, regex, 1)));
+
+		if (indexOf(position, regex, 1) != -1) {
+			array[sizeOfArray] = (char*)malloc(indexOf(position, regex, 1) * sizeof(char));
+			strcpy(array[sizeOfArray], substr(position, 0, indexOf(position, regex, 1)));
 		} else {
 			array[sizeOfArray] = (char*)malloc(strlen(array[sizeOfArray - 1]) * sizeof(char));
-			strcpy(array[sizeOfArray++], substr(string, 0, strlen(string)));
+			strcpy(array[sizeOfArray++], substr(position, 0, strlen(position)));
 			break;
 		}
-		string += strlen(array[sizeOfArray++]) + 1;
+
+		position += strlen(array[sizeOfArray++]) + 1;
 	}
+
+	array = (char**)realloc(array, (sizeOfArray + 1) * sizeof(char*));
+	array[sizeOfArray] = NULL;
+
+	if (freeBuffer) free(string);
 
 	return array;
 }
