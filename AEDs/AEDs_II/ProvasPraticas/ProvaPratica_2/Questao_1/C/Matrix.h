@@ -12,13 +12,13 @@ typedef struct Matrix {
 
 // ----------------- Methods ----------------
 
-void MatrixAllocation(Matrix* matrix) {
+void MatrixAlloc(int rows, int columns, Matrix* matrix) {
 	matrix->primeiro = newCell(0);
 }
 
-void inserir();
-void inserirComco();
-void inserirFim(Matrix matrix, int value) {
+void MatrixInsert();
+void MatrixInsertBeg();
+void MatrixInsertEnd(Matrix matrix, int value) {
 
 	// if (matrix.ultimo->right )
 
@@ -27,12 +27,12 @@ void inserirFim(Matrix matrix, int value) {
 	// ultimo = ultimo->pro
 }
 
-// ------------ Helper Functions ------------
-
-void readDimensions(Matrix* matrix) {
-	scanf("%d", &matrix->rows);
-	scanf("%d%*c", &matrix->columns);
+int MatrixGet() {
+	int value;
+	return value;
 }
+
+// ------------ Helper Functions ------------
 
 // void printMatrix(Matrix matrix) {
 // 	for (int i = 0; i < matrix.rows; i++) {
@@ -43,7 +43,7 @@ void readDimensions(Matrix* matrix) {
 // 	}
 // }
 
-void fillMatrix(Matrix matrix) {
+void MatrixFill(Matrix matrix) {
 	int aux;
 	for (int i = 0; i < matrix.rows * matrix.columns; i++) {
 		scanf("%d", aux);

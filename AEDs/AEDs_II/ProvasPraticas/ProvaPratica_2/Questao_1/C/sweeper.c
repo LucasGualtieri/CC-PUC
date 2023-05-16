@@ -8,7 +8,7 @@ int main() {
 
 	readDimensions(&matrix);
 
-	readMatrix(matrix);
+	MatrixInserirFim(value, matrix);
 
 	// printMatrix(matrix);
 
