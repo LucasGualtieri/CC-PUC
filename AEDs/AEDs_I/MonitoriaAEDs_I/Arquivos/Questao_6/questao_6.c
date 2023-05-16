@@ -65,9 +65,9 @@ void CadastrarSenha() {
 	system("clear");
 
 	if (divergent) {
-		printf("------- Senha cadastrada com sucesso! -------\n\n");
-	} else {
 		printf("------- Falha no cadastro da senha! -------\n\n");
+	} else {
+		printf("------- Senha cadastrada com sucesso! -------\n\n");
 	}
 
 	FILE* passwordStorage = fopen("senha.dat", "w");
@@ -106,9 +106,9 @@ void ValidarSenha() {
 	} while (invalid);
 
 	if (invalid) {
-		printf("\n------- Validação bem-sucedida! -------\n\n");
-	} else {
 		printf("\n------- Validação mal-sucedida! -------\n\n");
+	} else {
+		printf("\n------- Validação bem-sucedida! -------\n\n");
 	}
 }
 
