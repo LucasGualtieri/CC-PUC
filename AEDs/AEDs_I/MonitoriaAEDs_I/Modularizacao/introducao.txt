@@ -45,19 +45,19 @@ Exemplo de função:
 
 Entendendo parâmetros:
 	void procedimento(int x, int y) {
-		printf("%d e %d", x, y);
+		printf("%d", x), printf(" e "), printf("%d", y);
 		// Nesse caso estaríamos printando "1 e 2"
 		// Pois a variável x assume o primeiro valor passado por parâmetro (1)
 		// E a variável y assume o segundo valor passado por parâmetro (2)
 	}
 
 	int main() {
-		soma(1,2);
+		procedimento(1, 2);
 		return 0;
 	}
 
 	Obs: Observe bem a sintaxe. Na declaração dos parâmetros usamos
-	o tipo (Ex: int), mas não usamos o tipo na hora de *passar* o valor.
+	o tipo (int x), mas não usamos o tipo na hora de *passar* o valor.
 
 ----------------------------------------------------------------------------------
 
@@ -77,7 +77,7 @@ Entendendo o retorno de funções:
 		int result = soma(x, y);
 		printf("%d", result); // Printando 7;
 
-		// Quando chamamos uma função (nesse caso, soma(x,y) é a chamada) seu retorno substitui a chamada.
+		// Quando chamamos uma função (soma(x, y) é a chamada) seu retorno "substitui" a chamada.
 		// (int result = soma(x, y)) nesse caso é a MESMA coisa que (int result = 7)
 
 		return 0;
@@ -96,11 +96,11 @@ Uso de modularização na prática! Vamos re-implementar a função pow():
 		return resultado;
 	}
 
-	int main() { // A main sendo um método pode receber parâmetros se você quiser
+	int main() { // Obs: A main também é um método! E pode até receber parâmetros se você quiser
 		int x = 5, y = 2;
 		
-		// Quando chamamos uma função (pow(x,y) é a chamada) seu retorno substitui a chamada.
-		int result = pow(x, y); // Nesse caso a função pow está retornando 5^2 = 25, então result está recebendo 25;
+		// Quando chamamos uma função (pow(x, y)) seu retorno "substitui" a chamada.
+		int result = pow(x, y); // Nesse caso a função pow está retornando 5^2 ou 25, então result está recebendo 25;
 		// (int result = pow(x, y)) nesse caso é a MESMA coisa que (int result = 25)
 		
 		printf("%d", result); // Printando 25;
@@ -111,6 +111,6 @@ Uso de modularização na prática! Vamos re-implementar a função pow():
 ----------------------------------------------------------------------------------
 
 Dicionário {
-	1- Chamada ............... "nomeDoMetodo(pode ou não ter parâmetros)" - Toda função precisa ser chamada, inclusive a main, mas quem a chama é o "compilador".
-	2- Protótipo ............. É a declaração da função. Ex: int soma();
+	1- Chamada ............... "nomeDoMetodo(pode ou não ter parâmetros)" - Toda função PRECISA ser *chamada* pra ser usada, inclusive a main, mas não é você quem a chama.
+	2- Protótipo ............. É a declaração da função. Ex: int soma(int x, int y) {}
 }

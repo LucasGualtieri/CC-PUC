@@ -360,8 +360,17 @@ char** split(char* string, char* regex, bool freeBuffer) {
 			array[sizeOfArray] = (char*)malloc(indexOf(position, regex, 1) * sizeof(char));
 			strcpy(array[sizeOfArray], substr(position, 0, indexOf(position, regex, 1)));
 		} else {
-			array[sizeOfArray] = (char*)malloc(strlen(array[sizeOfArray - 1]) * sizeof(char));
+
+			int sizeOfAllocation;
+			if (sizeOfArray == 0) {
+				sizeOfAllocation = strlen(string); //  Only string available
+			} else {
+				sizeOfAllocation = strlen(array[sizeOfArray - 1]); // Last string read
+			}
+
+			array[sizeOfArray] = (char*)malloc(sizeOfAllocation * sizeof(char));
 			strcpy(array[sizeOfArray++], substr(position, 0, strlen(position)));
+
 			break;
 		}
 

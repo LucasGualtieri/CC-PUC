@@ -27,9 +27,8 @@ void MatrixInsertEnd(Matrix matrix, int value) {
 	// ultimo = ultimo->pro
 }
 
-int MatrixGet() {
-	int value;
-	return value;
+int MatrixGet(int row, int column, Matrix matrix) {
+	return MatrixGetCell(row, col, matrix).value;
 }
 
 // ------------ Helper Functions ------------
@@ -47,7 +46,7 @@ void MatrixFill(Matrix matrix) {
 	int aux;
 	for (int i = 0; i < matrix.rows * matrix.columns; i++) {
 		scanf("%d", aux);
-		// inserirFim(matrix, aux);
+		inserirFim(matrix, aux); // To be created
 	}
 }
 
