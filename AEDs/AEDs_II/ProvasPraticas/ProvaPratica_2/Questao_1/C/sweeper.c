@@ -2,7 +2,7 @@
 #include "Matrix.h"
 #include <biblioteca_c.h>
 
-// clear && gcc sweeper.c -I /home/lucas/CC-PUC/Bibliotecas -o sweeper && ./sweeper < ../pub.in > out.txt
+// clear && gcc sweeper.c -I /home/lucas/CC-PUC/Bibliotecas -o sweeper.exe && ./sweeper.exe < ../pub.in > out.txt
 
 void MatrixFill(Matrix matrix) {
 

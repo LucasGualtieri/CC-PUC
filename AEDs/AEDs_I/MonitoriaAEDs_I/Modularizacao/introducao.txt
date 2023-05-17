@@ -88,6 +88,8 @@ Entendendo o retorno de funções:
 Uso de modularização na prática! Vamos re-implementar a função pow():
 	// Print na tela x^y (x elevado à y).
 
+	// Não se preocupe em entender o funcionamento dessa função
+	// Só aceite que ela retorna um número elavado a outro;
 	int pow(int base, int expoente) {
 		int resultado = base;
 		for (int i = 1; i < expo; i++) {
