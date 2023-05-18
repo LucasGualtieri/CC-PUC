@@ -1,6 +1,6 @@
 #include <biblioteca_c.h>
 
-// Crie uma função que retorne um pessoa.
+// Crie uma função que retorne uma pessoa.
 
 typedef struct pessoa Pessoa;
 typedef struct pessoa* PessoaPorReferencia;
@@ -23,6 +23,8 @@ int main() {
 	// pessoa* pessoa = CriaPessoa();
 
 	printf("Altura: %d\n", pessoa->altura); // printf("Altura: %d\n", (*pessoa).altura);
+
+	free(pessoa);
 
 	puts("\n******* | FIM DO PROGRAMA | *******\n");
 	return 0;

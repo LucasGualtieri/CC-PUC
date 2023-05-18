@@ -2,7 +2,7 @@
 
 typedef struct pessoa Pessoa; // Opcional -> Pessoa ciclano;
 
-struct pessoa { // struct pessoa fulano;
+struct pessoa { // Declaração de variável do tipo pessoa: "struct pessoa fulano";
 	int idade, altura;
 } globalPessoa;
 

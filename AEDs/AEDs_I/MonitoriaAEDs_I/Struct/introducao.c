@@ -1,6 +1,6 @@
 #include <biblioteca_c.h>
 
-typedef int* ints;
+typedef int* ints; // Theoldo tem isso no io.h
 
 typedef struct Pessoa {
 	char nome;
