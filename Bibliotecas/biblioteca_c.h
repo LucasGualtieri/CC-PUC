@@ -347,6 +347,13 @@ void freeStringArray(String* arrayOfStrings) {
 	}
 }
 
+void freeSplit(char** split) {
+	for (int i = 0; split[i] != NULL; i++) {
+		free(split[i]);
+	}
+	free(split);
+}
+
 char** split(char* string, char* regex, bool freeBuffer) {
 	char** array = NULL;
 	int sizeOfArray = 0;

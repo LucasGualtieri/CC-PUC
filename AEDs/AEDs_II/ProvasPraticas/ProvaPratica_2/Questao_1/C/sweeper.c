@@ -61,7 +61,7 @@ int main() {
 
 		MatrixFree(matrix); // To be created
 
-		free(dimensoes);
+		freeSplit(dimensoes);
 
 		dimensoes = split(getstr(0), " ", 1);
 	}
@@ -80,3 +80,4 @@ int main() {
 // Teria que implementar split para strings
 // Quem sabe uma classe "scanner"? pra usar um destrutor também pra dar free sempre, que maravilha seria!
 // Mas pensando bem, mais fácil fazer uma função que le uma string com cin >> string e retorna a string... :(
+// seria legal sim! Ai eu poderia ter um metodo split e o destrutor da um free no malloc inevitavel pra fazer o vetor de strings (que serao destruidas no escopo), mas n o vetor em si
