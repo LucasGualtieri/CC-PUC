@@ -4,23 +4,23 @@
 
 // clear && gcc sweeper.c -I /home/lucas/CC-PUC/Bibliotecas -o sweeper.exe && ./sweeper.exe < ../pub.in > out.txt
 
-void MatrixFill(Matrix matrix) {
+void MatrixFill(Matrix* matrix) {
 
-	int matrixTotalValues = matrix.columns * matrix.rows;
+	int matrixTotalValues = matrix->columns * matrix->rows;
 	for (int i = 0; i < matrixTotalValues; i++) {
 		int aux;
 		scanf("%d", &aux);
-		MatrixInserirFim(aux, matrix);
+		MatrixInsertEnd(aux, matrix);
 	}
 }
 
 int adjacentes(Cell* cell) {
 	int qtdAdjacentes = 0;
 
-	if (cell->above == 1) qtdAdjacentes++;
-	if (cell->below == 1) qtdAdjacentes++;
-	if (cell->left == 1) qtdAdjacentes++;
-	if (cell->right == 1) qtdAdjacentes++;
+	if (cell->above->value == 1) qtdAdjacentes++;
+	if (cell->below->value == 1) qtdAdjacentes++;
+	if (cell->left->value == 1) qtdAdjacentes++;
+	if (cell->right->value == 1) qtdAdjacentes++;
 
 	return qtdAdjacentes;
 }
@@ -55,11 +55,11 @@ int main() {
 
 		MatrixAlloc(rows, columns, &matrix); // To be created
 
-		MatrixFill(matrix); // To be created
+		// MatrixFill(matrix); // To be created
 
 		SweeperPrint(matrix);
 
-		MatrixFree(matrix); // To be created
+		// MatrixFree(matrix); // To be created
 
 		freeSplit(dimensoes);
 
