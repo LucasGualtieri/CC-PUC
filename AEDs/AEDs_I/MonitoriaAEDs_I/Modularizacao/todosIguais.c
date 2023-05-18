@@ -2,7 +2,8 @@
 
 bool iguais(int vetor[], int ultimo) {
 	bool iguais;
-	for (int i = 0; (iguais = (vetor[i++] == vetor[ultimo]) && i != ultimo); i++) { }
+	int busca = 0;
+	while (busca < ultimo && (iguais = vetor[busca++] == vetor[ultimo])) { }
 	return iguais;
 }
 

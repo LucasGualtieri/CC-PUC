@@ -1,33 +1,34 @@
 #include <biblioteca_c.h>
 
-bool Iguais(int vetor[], int busca, int ultimo) {
+// ........................  Começo   e  Fim -> da Busca
+bool Iguais(int vetor[], int comeco, int fim) {
 
-	if (busca < ultimo) { // Se ele não chegou no fim, faça...
-		if (vetor[busca] != vetor[ultimo]) {
-			return false;
-		} else {
-			return Iguais(vetor, busca + 1, ultimo);
+	if (comeco < fim) { // Se ele não chegou no fim, faça...
+		if (vetor[comeco] != vetor[fim]) { // Se é diferente, retorne que é diferente.
+			return false; // Condição de parada.
+		} else { // Se é igual, continue buscando.
+			return Iguais(vetor, comeco + 1, fim - 1); // Chamada recursiva. Aonde damos seguimento à nossa busca.
 		}
-	} else {
-		return true; // Condição de parada
+	} else { // Se chegou ao fim podemos concluir que todos são iguais!
+		return true; // Condição de parada.
 	}
 }
 
 int main() {
-	int tamanho = 3;
-	int vetor[3] = { 1, 1, 2 };
+	int vetor[] = { 1, 1, 1, 1 };
+	int tamanho = 4;
 
-	int ultimo = tamanho - 1;
-	int busca = 0; // O vetor começa no 0, então começamos a busca no começo
+	int primeiro = 0; // O vetor começa no 0, então começamos a busca no começo
+	int ultimo = tamanho - 1; // Último número do vetor
 
-	bool iguais = Iguais(vetor, busca, ultimo); // Retorna true se todos forem iguais
+	bool iguais = Iguais(vetor, primeiro, ultimo); // Retorna true se todos forem iguais
 
 	if (iguais == true) {
-		printf("Iguais\n");
+		printf("Todos os números são iguais\n");
 	} else {
-		printf("Diferentes\n");
+		printf("Nem todos os números são iguais\n");
 	}
 
-	puts("\n******* | FIM DO PROGRAMA | *******\n");
+	// puts("\n******* | FIM DO PROGRAMA | *******\n");
 	return 0;
 }
