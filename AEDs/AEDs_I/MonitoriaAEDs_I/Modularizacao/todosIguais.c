@@ -2,13 +2,13 @@
 
 bool iguais(int vetor[], int ultimo) {
 	int iguais, busca = 0;
-	while (busca != ultimo && (iguais = vetor[busca++] == vetor[ultimo--]));
+	while (busca < ultimo && (iguais = vetor[busca++] == vetor[ultimo--]));
 	return iguais;
 }
 
 int main() {
 
-	int vetor[] = { 1, 1, 1, 1, 1 };
+	int vetor[] = { 3, 3, 3, 3 };
 
 	if (iguais(vetor, arrayLength(vetor) - 1)) {
 		printf("Iguais\n");
