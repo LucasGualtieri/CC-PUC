@@ -32,11 +32,7 @@ void SweeperPrint(Matrix matrix) {
 				printf("9");
 			} else {
 				int qtdAdjacentes = adjacentes(MatrixGetCell(i, j, matrix));
-				if (qtdAdjacentes > 0) {
-					printf("%d", qtdAdjacentes);
-				} else {
-					printf("0");
-				}
+				printf("%d", qtdAdjacentes);
 			}
 		}
 	}

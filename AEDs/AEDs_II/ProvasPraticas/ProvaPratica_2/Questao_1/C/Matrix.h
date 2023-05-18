@@ -2,6 +2,7 @@
 #define MATRIX_H
 
 #include "Cell.h"
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -16,23 +17,32 @@ void MatrixAlloc(int rows, int columns, Matrix* matrix) {
 	matrix->rows = rows;
 	matrix->columns = columns;
 
-	matrix->first = newCell(0, NULL, NULL, NULL, NULL);
-	matrix->last = matrix->first;
+	matrix->first = NULL;
+	matrix->last = NULL;
 }
 
-// void MatrixInsert();
-void MatrixInsertBeg(int value, Matrix matrix) {
-	// matrix.first->value = value; // Criar nova celula valendo value
-}
+void MatrixInsert(int value, int row, int column);
+
+// void MatrixInsertBeg(int value, Matrix* matrix) {
+
+// 	Cell* newCell = NewCell(0, NULL, NULL, NULL, NULL);
+
+// 	matrixNext
+// 		matrix->first
+// 		= newCell;
+
+// 	if (matrix->first == NULL) {
+// 	}
+// }
 
 void MatrixInsertEnd(int value, Matrix* matrix) {
 
 	if (matrix->first == matrix->last) {
-		MatrixInsertBeg(value, *matrix);
+		MatrixInsertBeg(value, matrix);
 		return;
 	}
 
-	for (int i = 0; i < matrix->rows; i++) {
+	for (int i = 0; true; i++) {
 		Cell* search = matrix->first;
 
 		for (int j = 0; j < i; j++, search = search->below) {

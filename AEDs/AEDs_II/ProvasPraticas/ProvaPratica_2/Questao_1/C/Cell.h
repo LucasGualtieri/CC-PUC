@@ -10,7 +10,7 @@ typedef struct Cell {
 
 // ----------------- Methods ----------------
 
-Cell* newCell(int value, Cell* above, Cell* below, Cell* left, Cell* right) {
+Cell* NewCell(int value, Cell* above, Cell* below, Cell* left, Cell* right) {
 	Cell* cell = (Cell*)malloc(sizeof(Cell));
 
 	cell->value = value;
