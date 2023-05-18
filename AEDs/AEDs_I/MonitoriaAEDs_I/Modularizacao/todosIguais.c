@@ -1,8 +1,7 @@
 #include <biblioteca_c.h>
 
 bool iguais(int vetor[], int ultimo) {
-	bool iguais;
-	int busca = 0;
+	int iguais, busca = 0;
 	while (busca < ultimo && (iguais = vetor[busca++] == vetor[ultimo])) { }
 	return iguais;
 }
