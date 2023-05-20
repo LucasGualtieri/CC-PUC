@@ -137,7 +137,7 @@ int stringsArrayLen(String* listaAtual) {
 	return i;
 }
 
-// Frees every string of a null terminated array of strings
+// Frees every malloc'd string of a null terminated array of strings AND the buffer itself
 void freeSplit(char** split) {
 	for (int i = 0; split[i] != NULL; i++) {
 		free(split[i]);
