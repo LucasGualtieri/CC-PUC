@@ -131,7 +131,7 @@ char* getstr(FILE* stream) {
 }
 
 // Returns the length of a null terminated array of strings
-int stringsArrayLen(String* listaAtual) {
+int strArrayLen(String* listaAtual) {
 	int i;
 	for (i = 0; listaAtual[i] != NULL; i++) { }
 	return i;

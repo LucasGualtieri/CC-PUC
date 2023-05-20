@@ -334,10 +334,10 @@ void mallocstr(char** strArg, char* string) {
 }
 
 // Returns the length of a null terminated array of strings
-int stringsArrayLen(String* listaAtual) {
-	int i;
-	for (i = 0; listaAtual[i] != NULL; i++) { }
-	return i;
+int strArrayLen(String* listaAtual) {
+	int i = 0;
+	while (listaAtual[i++] != NULL) { }
+	return i - 1;
 }
 
 // Frees every malloc'd string of a null terminated array of strings AND the buffer itself
