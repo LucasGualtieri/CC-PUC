@@ -1,6 +1,6 @@
 #include <biblioteca_c.h>
 
-// clear && gcc trinca.c -lm -I /home/lucas/CC-PUC/Bibliotecas -o trinca.exe && ./trinca.exe < pub.in > out.txt
+// clear && gcc trinca.c -I /home/lucas/CC-PUC/Bibliotecas -o trinca.exe && ./trinca.exe < pub.in > out.txt
 // clear && gcc trinca.c -lm -o trinca.exe && ./trinca.exe < pub.in > out.txt
 
 void printLista(String* lista, String character) {
@@ -33,8 +33,8 @@ int main() {
 	}
 
 	free(amigo);
-	freeStringArray(listaAtual);
-	freeStringArray(listaNova);
+	freeSplit(listaAtual);
+	freeSplit(listaNova);
 
 	puts("\n******* | FIM DO PROGRAMA | *******\n");
 	return 0;

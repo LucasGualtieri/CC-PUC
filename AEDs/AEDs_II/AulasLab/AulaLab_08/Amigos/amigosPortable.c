@@ -39,7 +39,6 @@ int main() {
 		}
 
 		printLista(listaNova, " ");
-
 		printLista(position, "\n");
 
 	} else {
@@ -48,8 +47,8 @@ int main() {
 	}
 
 	free(amigo);
-	freeStringArray(listaAtual);
-	freeStringArray(listaNova);
+	freeSplit(listaAtual);
+	freeSplit(listaNova);
 
 	return 0;
 }
@@ -139,10 +138,11 @@ int stringsArrayLen(String* listaAtual) {
 }
 
 // Frees every string of a null terminated array of strings
-void freeStringArray(String* arrayOfStrings) {
-	for (int i = 0; i < stringsArrayLen(arrayOfStrings); i++) {
-		free(arrayOfStrings[i]);
+void freeSplit(char** split) {
+	for (int i = 0; split[i] != NULL; i++) {
+		free(split[i]);
 	}
+	free(split);
 }
 
 char** split(char* string, char* regex, bool freeBuffer) {
