@@ -69,14 +69,12 @@ void toUpper(char* string) {
 }
 
 // Returns 1 if number is prime.
-int isPrime(int n) {
-	if (n == 1) return 0;
-
-	for (int i = 2; i < n; i++) {
-		if (n % i == 0) return 0;
+bool isPrime(int inteiro) {
+	if (inteiro == 1) return false;
+	for (int i = inteiro - 1; i > 1; i--) {
+		if (inteiro % i == 0) return false;
 	}
-
-	return 1;
+	return true;
 }
 
 // arrayPrint para inteiros
