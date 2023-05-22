@@ -52,5 +52,6 @@ int main() {
 	PrintaVetor(vetorDeNegativos, qtdNegativos);
 
 	puts("\n******* | FIM DO PROGRAMA | *******\n");
+
 	return 0;
 }
