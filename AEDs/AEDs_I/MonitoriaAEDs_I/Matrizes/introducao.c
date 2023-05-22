@@ -5,12 +5,13 @@
 
 float Calcule(int turma[size][size]) {
 	int somaDasProvas = 0;
-	float media;
+
 	for (int i = 0; i < size; i++) {
 		for (int j = 0; j < size; j++) {
 			somaDasProvas += turma[i][j];
 		}
 	}
+
 	return somaDasProvas / (size * size);
 }
 
