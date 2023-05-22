@@ -17,7 +17,7 @@ int* metodo(int vetor[], int tamanhoVetor, int* qtdNegativos) {
 	for (int i = 0; i < tamanhoVetor; i++) {
 		if (vetor[i] < 0) {
 			vetorDeNegativos[*qtdNegativos] = vetor[i];
-			*qtdNegativos = *qtdNegativos + 1;
+			*qtdNegativos += 1;
 		}
 	}
 
