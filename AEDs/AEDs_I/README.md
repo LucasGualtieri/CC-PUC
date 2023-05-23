@@ -8,4 +8,5 @@
    - Vetores / Matrizes
    - Ponteiros e alocação dinâmica de memória
    - Strings (char*) e vetores de strings (char**)
+   - Struct
    - Intrução à POO em C++
