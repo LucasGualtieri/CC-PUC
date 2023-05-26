@@ -62,13 +62,20 @@ void MatrixPrint(Matrix* matrix) {
 		}
 	}
 
+	printf("    ");
+	for (int i = 0; i < matrix->columns; i++) {
+		printf("%*d ", maxElementWidth, i);
+	}
+	printf("\n");
+
 	// Print the matrix
 	// printf("Matrix:\n");
 	for (int i = 0; i < rows; i++) {
+		printf("%d { ", i);
 		for (int j = 0; j < cols; j++) {
 			printf("%*d ", maxElementWidth, matrixAux[i][j]);
 		}
-		printf("\n");
+		printf("}\n");
 	}
 }
 
