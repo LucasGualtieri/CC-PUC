@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// Usar os generics pra fazer funções pra float também, ou outros tipos
+
 typedef struct Matrix {
 	// matriz[ROWS][COLUMNS];
 	int** pointer;
