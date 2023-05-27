@@ -55,6 +55,10 @@ void pause(bool flushing) {
 	}
 }
 
+int SizeOfStr(char* string) {
+	return strlen(string) + 1;
+}
+
 char toLower(char c) {
 	if (c >= 'A' AND c <= 'Z') return c += 32;
 	return c;
