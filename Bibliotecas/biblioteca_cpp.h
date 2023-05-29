@@ -8,12 +8,13 @@
 #include <limits>
 #include <math.h>
 #include <memory>
+#include <stdio.h>
 #include <string.h>
+#include <string>
+#include <vector>
 // #include <stdexcept>
 // #include <exception>
 // #include <biblioteca_c.h>
-#include <stdio.h>
-#include <string>
 
 #define Infinity 2147483647
 #define arrayLength(array) (sizeof(array) / sizeof(array[0]))
