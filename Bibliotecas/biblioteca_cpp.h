@@ -7,6 +7,7 @@
 #include <iostream>
 #include <limits>
 #include <math.h>
+#include <memory>
 #include <string.h>
 // #include <stdexcept>
 // #include <exception>
