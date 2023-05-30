@@ -11,13 +11,14 @@ class List {
 
 public:
 	List() {
+		array = nullptr;
 		this->arraySize = 0;
 		this->size = 0;
 		this->initialized = false;
 	}
 
 	List(size_t arraySize) {
-		this->array = std::make_unique<T[]>(arraySize);
+		this->array = make_unique<T[]>(arraySize);
 		this->arraySize = arraySize;
 		size = 0;
 		initialized = true;
@@ -29,7 +30,7 @@ public:
 			return;
 		}
 
-		this->array = std::make_unique<T[]>(arraySize);
+		this->array = make_unique<T[]>(arraySize);
 		this->arraySize = arraySize;
 		size = 0;
 		initialized = true;
