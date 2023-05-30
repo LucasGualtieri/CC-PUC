@@ -110,6 +110,11 @@ public:
 	}
 
 	void print() {
+		if (size == 0) {
+			cout << "List is empty!" << endl;
+			return;
+		}
+
 		cout << "{ ";
 		for (int i = 0; i < size; i++) {
 			cout << array[i];
