@@ -4,9 +4,34 @@
 #include <biblioteca_cpp.h>
 
 template <typename T>
+void Delete(T array, int index) {
+	delete array[index];
+}
+
+template <>
+void Delete(int* array, int index) { }
+
+template <>
+void Delete(char* array, int index) { }
+
+template <>
+void Delete(float* array, int index) { }
+
+template <>
+void Delete(double* array, int index) { }
+
+template <typename T>
+void FullFree(T array, int size) {
+	for (int i = 0; i < size; i++) {
+		Delete(array, i);
+	}
+	delete[] array;
+}
+
+template <typename T>
 class List {
 	T* array;
-	int arraySize, size;
+	size_t arraySize, size;
 	bool initialized, fullFree;
 
 public:
@@ -17,7 +42,7 @@ public:
 		this->initialized = false;
 	}
 
-	List(int arraySize, bool fullFree = true) {
+	List(size_t arraySize, bool fullFree = true) {
 		this->array = new T[arraySize];
 		this->arraySize = arraySize;
 		this->size = 0;
@@ -27,13 +52,13 @@ public:
 
 	~List() {
 		if (fullFree) {
-			FullFree();
+			FullFree(array, size);
 		} else {
 			delete array;
 		}
 	}
 
-	void initialize(int arraySize, bool fullFree = true) {
+	void initialize(size_t arraySize, bool fullFree = true) {
 		if (initialized) {
 			cout << "List already initialized!" << endl;
 			return;
@@ -46,7 +71,7 @@ public:
 		this->fullFree = fullFree;
 	}
 
-	void insert(T value, int index) {
+	void insert(T value, size_t index) {
 
 		if (size >= arraySize || index < 0 || index > size) {
 			// throw new Exception("Erro ao inserir!"); // Java
@@ -54,7 +79,7 @@ public:
 		}
 
 		// levar elementos para o fim do array
-		for (int i = size; i > index; i--) {
+		for (size_t i = size; i > index; i--) {
 			array[i] = array[i - 1];
 		}
 
@@ -69,7 +94,7 @@ public:
 			return;
 		}
 
-		for (int i = size; i > 0; i--) {
+		for (size_t i = size; i > 0; i--) {
 			array[i] = array[i - 1];
 		}
 
@@ -87,17 +112,45 @@ public:
 		size++;
 	}
 
-	void remove(T value, int index) { }
-	void removeBeggining(T value) { }
-	void removeEnd(T value) {
+	void remove(int index) { }
+
+	void removeBeggining() {
+
+		// validar remocao
+		if (size == 0) {
+			// throw new Exception("Erro ao remover!");
+			return;
+		}
+
+		size--;
+
+		if (fullFree) {
+			Delete(array, 0);
+		}
+
+		for (int i = 0; i < size; i++) {
+			array[i] = array[i + 1];
+		}
+	}
+
+	void removeEnd() {
 		delete array[size - 1];
 		size--;
 	}
 
 	void move(T value, int index) { }
 
-	void FullFree() { }
-	void sort() { }
+	void sort() {
+		for (T i = 0; i < size - 1; i++) {
+			T menor = i;
+			for (T j = i + 1; j < size; j++) {
+				if (array[menor] > array[j]) menor = j;
+			}
+			T swap = array[menor];
+			array[menor] = array[i];
+			array[i] = swap;
+		}
+	}
 	void print() {
 		cout << "{ ";
 		for (int i = 0; i < size; i++) {
