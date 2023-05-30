@@ -11,14 +11,13 @@ class List {
 
 public:
 	List() {
-		this->array = nullptr;
 		this->arraySize = 0;
 		this->size = 0;
 		this->initialized = false;
 	}
 
 	List(size_t arraySize) {
-		array = make_unique<T[]>(arraySize);
+		this->array = std::make_unique<T[]>(arraySize);
 		this->arraySize = arraySize;
 		size = 0;
 		initialized = true;
@@ -30,7 +29,7 @@ public:
 			return;
 		}
 
-		array = make_unique<T[]>(arraySize);
+		this->array = std::make_unique<T[]>(arraySize);
 		this->arraySize = arraySize;
 		size = 0;
 		initialized = true;
@@ -60,10 +59,10 @@ public:
 		}
 
 		for (size_t i = size; i > 0; i--) {
-			array.get()[i] = array.get()[i - 1];
+			array[i] = array[i - 1];
 		}
 
-		array.get()[0] = value;
+		array[0] = value;
 		size++;
 	}
 
