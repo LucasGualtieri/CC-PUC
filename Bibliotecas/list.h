@@ -4,35 +4,10 @@
 #include <biblioteca_cpp.h>
 
 template <typename T>
-void Delete(T array, int index) {
-	delete array[index];
-}
-
-template <>
-void Delete(int* array, int index) { }
-
-template <>
-void Delete(char* array, int index) { }
-
-template <>
-void Delete(float* array, int index) { }
-
-template <>
-void Delete(double* array, int index) { }
-
-template <typename T>
-void FullFree(T array, int size) {
-	for (int i = 0; i < size; i++) {
-		Delete(array, i);
-	}
-	delete[] array;
-}
-
-template <typename T>
 class List {
-	T* array;
+	unique_ptr<T[]> array;
 	size_t arraySize, size;
-	bool initialized, fullFree;
+	bool initialized;
 
 public:
 	List() {
@@ -42,33 +17,23 @@ public:
 		this->initialized = false;
 	}
 
-	List(size_t arraySize, bool fullFree = true) {
-		this->array = new T[arraySize];
+	List(size_t arraySize) {
+		array = make_unique<T[]>(arraySize);
 		this->arraySize = arraySize;
-		this->size = 0;
-		this->initialized = true;
-		this->fullFree = fullFree;
+		size = 0;
+		initialized = true;
 	}
 
-	~List() {
-		if (fullFree) {
-			FullFree(array, size);
-		} else {
-			delete array;
-		}
-	}
-
-	void initialize(size_t arraySize, bool fullFree = true) {
+	void initialize(size_t arraySize) {
 		if (initialized) {
 			cout << "List already initialized!" << endl;
 			return;
 		}
 
-		this->array = new T[arraySize];
+		array = make_unique<T[]>(arraySize);
 		this->arraySize = arraySize;
-		this->size = 0;
-		this->initialized = true;
-		this->fullFree = fullFree;
+		size = 0;
+		initialized = true;
 	}
 
 	void insert(T value, size_t index) {
@@ -95,10 +60,10 @@ public:
 		}
 
 		for (size_t i = size; i > 0; i--) {
-			array[i] = array[i - 1];
+			array.get()[i] = array.get()[i - 1];
 		}
 
-		this->array[0] = value;
+		array.get()[0] = value;
 		size++;
 	}
 
@@ -124,26 +89,19 @@ public:
 
 		size--;
 
-		if (fullFree) {
-			Delete(array, 0);
-		}
-
 		for (int i = 0; i < size; i++) {
 			array[i] = array[i + 1];
 		}
 	}
 
-	void removeEnd() {
-		delete array[size - 1];
-		size--;
-	}
+	void removeEnd() { }
 
 	void move(T value, int index) { }
 
 	void sort() {
-		for (T i = 0; i < size - 1; i++) {
-			T menor = i;
-			for (T j = i + 1; j < size; j++) {
+		for (int i = 0; i < size - 1; i++) {
+			int menor = i;
+			for (int j = i + 1; j < size; j++) {
 				if (array[menor] > array[j]) menor = j;
 			}
 			T swap = array[menor];
@@ -151,6 +109,7 @@ public:
 			array[i] = swap;
 		}
 	}
+
 	void print() {
 		cout << "{ ";
 		for (int i = 0; i < size; i++) {
