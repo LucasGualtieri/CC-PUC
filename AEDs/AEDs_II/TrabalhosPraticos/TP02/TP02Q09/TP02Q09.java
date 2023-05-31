@@ -173,6 +173,7 @@ public class TP02Q09 {
 			} else {
 				MyIO.print(" ## " + String.format("%.0f", this.peso));
 			}
+			// System.out.printf("%g", peso);
 			MyIO.print(" ## " + this.corDoCabelo);
 			MyIO.print(" ## " + this.corDaPele);
 			MyIO.print(" ## " + this.corDosOlhos);
