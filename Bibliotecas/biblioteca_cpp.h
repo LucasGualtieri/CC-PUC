@@ -34,7 +34,7 @@
 using namespace std;
 
 void pause(string String = "") {
-	cout << "Paused " << String
+	cout << "Paused" << String
 		 << " | Press ENTER to continue...";
 
 	// cin.ignore(numeric_limits<streamsize>::max(), '\n');
