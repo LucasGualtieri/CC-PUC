@@ -5,7 +5,7 @@
 
 template <typename T>
 class List {
-	unique_ptr<T[]> array;
+	T* array;
 	size_t arraySize, size;
 	bool initialized;
 
@@ -18,10 +18,15 @@ public:
 	}
 
 	List(size_t arraySize) {
-		this->array = make_unique<T[]>(arraySize);
+		this->array = new T[arraySize];
 		this->arraySize = arraySize;
 		size = 0;
 		initialized = true;
+	}
+
+	~List() {
+		// cout << "List being deallocated." << endl;
+		delete[] array;
 	}
 
 	void initialize(size_t arraySize) {
@@ -97,6 +102,8 @@ public:
 	void removeEnd() { }
 
 	void move(T value, int index) { }
+
+	void populate() { }
 
 	void sort() {
 		for (int i = 0; i < size - 1; i++) {

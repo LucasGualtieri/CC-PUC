@@ -34,14 +34,39 @@
 using namespace std;
 
 void pause(string String = "") {
-	cout << "Paused" << String
-		 << " | Press ENTER to continue...";
+	cout << "Paused" << String << " | Press ENTER to continue...";
 
 	// cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
 	if (cin.get() != '\n') {
 		cout << "\n------- | PROGRAMA EXITADO | -------\n\n";
 		exit(0);
 	}
+}
+
+void ReplaceAll(string& str, string change, string replace) {
+	for (int i = 0; i < change.length(); i++) {
+		char charToChange = change.at(i);
+		for (int j = 0; j < str.length(); j++) {
+			if (str.at(j) == charToChange) {
+				str.erase(j, 1);
+				str.insert(j, replace);
+				j += replace.length();
+			}
+		}
+	}
+}
+
+string readString(istream& stream = cin) {
+	string aux;
+	getline(stream, aux);
+
+	size_t pos = aux.find_first_of("\r\n");
+	if (pos != string::npos) {
+		aux[pos] = '\0';
+	}
+
+	return aux;
 }
 
 int readint(string _String = "") {

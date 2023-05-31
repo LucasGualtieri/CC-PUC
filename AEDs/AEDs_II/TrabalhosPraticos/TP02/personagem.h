@@ -1,107 +1,146 @@
 #ifndef PERSONAGEM_H
 #define PERSONAGEM_H
 
+#include <fstream>
 #include <iostream>
+#include <list.h>
+#include <split.h>
 #include <string>
+
 using namespace std;
 
 class Personagem {
-	string nome;
-	int altura;
-	double peso;
-	string corDoCabelo;
-	string corDaPele;
-	string corDosOlhos;
-	string anoNascimento;
-	string genero;
+	string name;
+	int height;
+	double weight;
+	string hairColor;
+	string skinColor;
+	string eyeColor;
+	string birthYear;
+	string gender;
 	string homeworld;
 
 public:
 	Personagem() {
-		setNome("");
-		setAltura(0);
-		setPeso(0.0);
-		setCorDoCabelo("");
-		setCorDaPele("");
-		setCorDosOlhos("");
-		setAnoNascimento("");
-		setGenero("");
-		setHomeworld("");
+		setName("(null)");
+		setHeight(0);
+		setWeight(0.0);
+		setHairColor("(null)");
+		setSkinColor("(null)");
+		setEyeColor("(null)");
+		setBirthYear("(null)");
+		setGender("(null)");
+		setHomeworld("(null)");
 	}
 
-	// Setter e Getter para o atributo nome
-	void setNome(string nome) {
-		this->nome = nome;
+	Personagem(string fileDir) {
+
+		setName("(null)");
+		setHeight(0);
+		setWeight(0.0);
+		setHairColor("(null)");
+		setSkinColor("(null)");
+		setEyeColor("(null)");
+		setBirthYear("(null)");
+		setGender("(null)");
+		setHomeworld("(null)");
+
+		ReadData(fileDir);
 	}
 
-	string getNome() {
-		return nome;
+	~Personagem() {
+		// cout << "My name is " << getName() << " and I'm being deallocated!" << endl;
 	}
 
-	// Setter e Getter para o atributo altura
-	void setAltura(int altura) {
-		this->altura = altura;
+	// Setter and Getter of name
+	void setName(string name) {
+		this->name = name;
 	}
 
-	int getAltura() {
-		return altura;
+	string getName() {
+		return name;
 	}
 
-	// Setter e Getter para o atributo peso
-	void setPeso(double peso) {
-		this->peso = peso;
+	// -------------------------------
+
+	// Setter and Getter of height
+	void setHeight(int height) {
+		this->height = height;
 	}
 
-	double getPeso() {
-		return peso;
+	int getHeight() {
+		return height;
 	}
 
-	// Setter e Getter para o atributo corDoCabelo
-	void setCorDoCabelo(string corDoCabelo) {
-		this->corDoCabelo = corDoCabelo;
+	// -------------------------------
+
+	// Setter and Getter of weight
+	void setWeight(double weight) {
+		this->weight = weight;
 	}
 
-	string getCorDoCabelo() {
-		return corDoCabelo;
+	double getWeight() {
+		return weight;
 	}
 
-	// Setter e Getter para o atributo corDaPele
-	void setCorDaPele(string corDaPele) {
-		this->corDaPele = corDaPele;
+	// -------------------------------
+
+	// Setter and Getter of hairColor
+	void setHairColor(string hairColor) {
+		this->hairColor = hairColor;
 	}
 
-	string getCorDaPele() {
-		return corDaPele;
+	string getHairColor() {
+		return hairColor;
 	}
 
-	// Setter e Getter para o atributo corDosOlhos
-	void setCorDosOlhos(string corDosOlhos) {
-		this->corDosOlhos = corDosOlhos;
+	// -------------------------------
+
+	// Setter and Getter of skinColor
+	void setSkinColor(string skinColor) {
+		this->skinColor = skinColor;
 	}
 
-	string getCorDosOlhos() {
-		return corDosOlhos;
+	string getSkinColor() {
+		return skinColor;
 	}
 
-	// Setter e Getter para o atributo anoNascimento
-	void setAnoNascimento(string anoNascimento) {
-		this->anoNascimento = anoNascimento;
+	// -------------------------------
+
+	// Setter and Getter of eyeColor
+	void setEyeColor(string eyeColor) {
+		this->eyeColor = eyeColor;
 	}
 
-	string getAnoNascimento() {
-		return anoNascimento;
+	string getEyeColor() {
+		return eyeColor;
 	}
 
-	// Setter e Getter para o atributo genero
-	void setGenero(string genero) {
-		this->genero = genero;
+	// -------------------------------
+
+	// Setter and Getter of birthYear
+	void setBirthYear(string birthYear) {
+		this->birthYear = birthYear;
 	}
 
-	string getGenero() {
-		return genero;
+	string getBirthYear() {
+		return birthYear;
 	}
 
-	// Setter e Getter para o atributo homeworld
+	// -------------------------------
+
+	// Setter and Getter of gender
+	void setGender(string gender) {
+		this->gender = gender;
+	}
+
+	string getGender() {
+		return gender;
+	}
+
+	// -------------------------------
+
+	// Setter and Getter of homeworld
 	void setHomeworld(string homeworld) {
 		this->homeworld = homeworld;
 	}
@@ -110,80 +149,121 @@ public:
 		return homeworld;
 	}
 
-	// void Ler(string filePath) throws Exception {
+	// -------------------------------
 
-	// 	RandomAccessFile file = new RandomAccessFile(filePath, "r");
-	// 	// string jsonstring = file.readLine().replaceAll("é", "\u00e9");
-	// 	string jsonstring = file.readLine();
-	// 	file.close();
+	void ReadData(string fileDir) { // Um jeito meio cambiarroso de parsear o json
 
-	// 	// Separando keys e values e atribuindo a suas variaveis
-	// 	string[] pairs = jsonstring.substring(1, jsonstring.length() - 1).split(", '");
-	// 	for (string pair : pairs) {
-	// 		string[] keyValue = pair.split(":");
-	// 		string key = keyValue[0].replaceAll("\'", "");
-	// 		string value = keyValue[1].replaceAll("\'", "").trim();
+		ifstream file(fileDir);
+		string jsonstring = readString(file);
+		file.close();
 
-	// 		if (key.equals("name")) {
-	// 			setNome(value);
-	// 		} else if (key.equals("height")) {
-	// 			if (value.equals("unknown")) {
-	// 				setAltura(0);
-	// 				continue;
-	// 			}
-	// 			setAltura(Integer.parseInt(value));
-	// 		} else if (key.equals("mass")) {
-	// 			if (value.equals("unknown")) {
-	// 				setPeso(0);
-	// 				continue;
-	// 			}
-	// 			setPeso(Double.parseDouble(value.replaceAll(",", "")));
-	// 		} else if (key.equals("hair_color")) {
-	// 			setCorDoCabelo(value);
-	// 		} else if (key.equals("skin_color")) {
-	// 			setCorDaPele(value);
-	// 		} else if (key.equals("eye_color")) {
-	// 			setCorDosOlhos(value);
-	// 		} else if (key.equals("birth_year")) {
-	// 			setAnoNascimento(value);
-	// 		} else if (key.equals("gender")) {
-	// 			setGenero(value);
-	// 		} else if (key.equals("homeworld")) {
-	// 			setHomeworld(value);
-	// 		} else {
-	// 			break;
-	// 		}
-	// 	}
-	// }
+		// Separando keys e values e atribuindo a suas variaveis
+		ReplaceAll(jsonstring, "{}", "");
+		split pairs(jsonstring, ", '");
+		for (int i = 0; i < pairs.length(); i++) {
+
+			split keyValue(pairs[i], ": ");
+
+			string key = keyValue[0];
+			string value = keyValue[1];
+			ReplaceAll(key, "'", "");
+			ReplaceAll(value, "'", "");
+
+			if (!key.compare("name")) {
+				setName(value);
+			} else if (!key.compare("height")) {
+				if (value.compare("unknown")) {
+					setHeight(stoi(value));
+				}
+			} else if (!key.compare("mass")) {
+				if (value.compare("unknown")) {
+					ReplaceAll(value, ",", "");
+					setWeight(stod(value));
+				}
+			} else if (!key.compare("hair_color")) {
+				setHairColor(value);
+			} else if (!key.compare("skin_color")) {
+				setSkinColor(value);
+			} else if (!key.compare("eye_color")) {
+				setEyeColor(value);
+			} else if (!key.compare("birth_year")) {
+				setBirthYear(value);
+			} else if (!key.compare("gender")) {
+				setGender(value);
+			} else if (!key.compare("homeworld")) {
+				setHomeworld(value);
+			} else {
+				break;
+			}
+		}
+	}
 
 	void print() {
-		cout << " ## " << nome;
-		cout << " ## " << altura;
-		cout << " ## " << peso;
-		cout << " ## " << corDoCabelo;
-		cout << " ## " << corDaPele;
-		cout << " ## " << corDosOlhos;
-		cout << " ## " << anoNascimento;
-		cout << " ## " << genero;
+		cout << " ## " << name;
+		cout << " ## " << height;
+		cout << " ## " << weight;
+		cout << " ## " << hairColor;
+		cout << " ## " << skinColor;
+		cout << " ## " << eyeColor;
+		cout << " ## " << birthYear;
+		cout << " ## " << gender;
 		cout << " ## " << homeworld;
-		cout << " ## " << endl;
+		// cout << " ## " << endl;
+		cout << " ## ";
 	}
 
 	Personagem clone() {
 		Personagem clone;
 
-		clone.nome = this->nome;
-		clone.altura = this->altura;
-		clone.peso = this->peso;
-		clone.corDoCabelo = this->corDoCabelo;
-		clone.corDaPele = this->corDaPele;
-		clone.corDosOlhos = this->corDosOlhos;
-		clone.anoNascimento = this->anoNascimento;
-		clone.genero = this->genero;
+		clone.name = this->name;
+		clone.height = this->height;
+		clone.weight = this->weight;
+		clone.hairColor = this->hairColor;
+		clone.skinColor = this->skinColor;
+		clone.eyeColor = this->eyeColor;
+		clone.birthYear = this->birthYear;
+		clone.gender = this->gender;
 		clone.homeworld = this->homeworld;
 
 		return clone;
 	}
 };
+
+shared_ptr<Personagem> NewPersonagem() {
+	return make_shared<Personagem>();
+}
+
+shared_ptr<Personagem> NewPersonagem(string fileDir) {
+	return make_shared<Personagem>(fileDir);
+}
+
+template <>
+void List<shared_ptr<Personagem>>::populate() {
+	string fileDir;
+	while ((fileDir = readString()).compare("FIM")) {
+		insertEnd(NewPersonagem(fileDir));
+	}
+}
+
+template <>
+void List<shared_ptr<Personagem>>::print() {
+	for (int i = 0; i < size; i++) {
+		array[i]->print();
+		if (i < size - 1) cout << endl;
+	}
+}
+
+// template <>
+// void List<shared_ptr<Personagem>>::sort() {
+// 	for (int i = 0; i < size - 1; i++) {
+// 		int menor = i;
+// 		for (int j = i + 1; j < size; j++) {
+// 			if (array[menor]->getAge() > array[j]->getAge()) menor = j;
+// 		}
+// 		shared_ptr<Personagem> swap = array[menor];
+// 		array[menor] = array[i];
+// 		array[i] = swap;
+// 	}
+// }
 
 #endif
