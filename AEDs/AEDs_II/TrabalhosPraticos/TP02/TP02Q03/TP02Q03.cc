@@ -22,7 +22,7 @@ void InsertRemove(string action, List<shared_ptr<Personagem>>& list) {
 	} else if (actions[0] == "RF") {
 		cout << "(R) " << list.removeEnd()->getName() << endl;
 	} else {
-		throw string("Invalid action: " + actions[0]);
+		throw string("Invalid action: '" + actions[0] + "'");
 	}
 }
 
@@ -32,7 +32,7 @@ int main() {
 
 	list.populate();
 
-	int numberOfActions = 3;
+	int numberOfActions = stoi(readString());
 
 	for (int i = 0; i < numberOfActions; i++) {
 		try {

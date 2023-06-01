@@ -28,7 +28,7 @@ public:
 
 	string operator[](size_t index) {
 		string error = "Error: Index [" + to_string(index) + "] is out of bounds!";
-		if (index >= array.size() || index < 0) return error;
+		if (index >= array.size() || index < 0) throw error;
 
 		return array[index];
 	}

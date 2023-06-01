@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <string>
+#include <thread>
 #include <vector>
 // #include <stdexcept>
 // #include <exception>
@@ -67,6 +68,14 @@ void flushStdin() {
 int readInt() {
 	string aux;
 	getline(cin, aux);
+
+	size_t pos = aux.find_first_of("\r\n");
+
+	if (pos != string::npos) {
+		aux[pos] = '\0';
+		aux.resize(pos + 1);
+	}
+
 	return stoi(aux);
 }
 
@@ -75,12 +84,11 @@ string readString(istream& stream = cin) {
 	string aux;
 	getline(stream, aux);
 
-	// size_t pos = aux.find_first_of("\r\n.");
+	size_t pos = aux.find_first_of("\r\n");
 
-	// if (pos != string::npos) {
-	// 	aux[pos] = '\0';
-	// 	aux.resize(pos + 1);
-	// }
+	if (pos != string::npos) {
+		aux.erase(pos);
+	}
 
 	return aux;
 }

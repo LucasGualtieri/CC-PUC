@@ -237,17 +237,10 @@ shared_ptr<Personagem> NewPersonagem(string fileDir) {
 	return make_shared<Personagem>(fileDir);
 }
 
-bool isFim(string str) {
-	if (str.at(0) != 'F') return false;
-	if (str.at(1) != 'I') return false;
-	if (str.at(2) != 'M') return false;
-	return true;
-}
-
 template <>
 void List<shared_ptr<Personagem>>::populate() {
 	string fileDir;
-	while (cin >> fileDir && !isFim(fileDir)) {
+	while ((fileDir = readString()) != "FIM") {
 		insertEnd(NewPersonagem(fileDir));
 	}
 }

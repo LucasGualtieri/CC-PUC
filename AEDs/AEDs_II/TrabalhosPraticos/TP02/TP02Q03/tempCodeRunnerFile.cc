@@ -1,3 +1,1 @@
-	// for (int i = 0; i < numberOfActions; i++) {
-	// 	InsertRemove(readString(), list);
-	// }
+clear && g++ TP02Q03.cc -I /home/lucas/PC-HOME/CC-PUC/Bibliotecas -o TP02Q03.exe && ./TP02Q03.exe < pub.in
