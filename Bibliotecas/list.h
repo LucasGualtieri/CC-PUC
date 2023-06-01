@@ -119,7 +119,7 @@ public:
 		return array[--size];
 	}
 
-	void move(T value, int index) { }
+	void move(T value, int index) { } // Swap?
 
 	void populate() { }
 
