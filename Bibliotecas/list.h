@@ -119,6 +119,70 @@ public:
 		return array[--size];
 	}
 
+	template <typename U>
+	bool BinarySearch(U searching) {
+		bool found = false;
+
+		int start = 0, end = size - 1;
+
+		while (start <= end && !found) {
+			int middle = (start + end) / 2;
+
+			if (searching == array[middle]) {
+				found = true;
+			} else if (searching > array[middle]) {
+				start = ++middle;
+			} else {
+				end = --middle;
+			}
+		}
+
+		return found;
+	}
+
+	template <typename U>
+	bool BinarySearch(U searching, int& numberOfComparisons) {
+		bool found = false;
+
+		int start = 0, end = size - 1;
+
+		while (start <= end && !found) {
+			int middle = (start + end) / 2;
+
+			if (searching == array[middle]) {
+				found = true;
+				numberOfComparisons++;
+			} else if (searching > array[middle]) {
+				start = ++middle;
+				numberOfComparisons++;
+			} else {
+				end = --middle;
+			}
+
+			numberOfComparisons++;
+		}
+
+		return found;
+	}
+
+	template <typename U>
+	bool SequentialSearch(U searching) {
+		bool found = false;
+		for (int i = 0; i < size && !found; i++) {
+			found = array[i] == searching;
+		}
+		return found;
+	}
+
+	template <typename U>
+	bool SequentialSearch(U searching, int& numberOfComparisons) {
+		bool found = false;
+		for (int i = 0; i < size && !found; i++) {
+			found = array[i] == searching;
+		}
+		return found;
+	}
+
 	void move(T value, int index) { } // Swap?
 
 	void populate() { }

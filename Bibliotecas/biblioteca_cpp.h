@@ -2,6 +2,7 @@
 #ifndef BIBLIOTECA_H_
 #define BIBLIOTECA_H_
 
+#include <chrono>
 #include <ctime>
 #include <fstream>
 #include <iostream>

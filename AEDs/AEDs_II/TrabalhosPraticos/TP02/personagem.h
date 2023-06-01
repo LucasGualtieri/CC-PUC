@@ -208,8 +208,8 @@ public:
 		cout << " ## " << birthYear;
 		cout << " ## " << gender;
 		cout << " ## " << homeworld;
-		// cout << " ## " << endl;
-		cout << " ## ";
+		cout << " ## " << endl;
+		// cout << " ## ";
 	}
 
 	Personagem clone() {
@@ -238,6 +238,44 @@ shared_ptr<Personagem> NewPersonagem(string fileDir) {
 }
 
 template <>
+template <>
+bool List<shared_ptr<Personagem>>::BinarySearch(string searching, int& numberOfComparisons) {
+	bool found = false;
+
+	int start = 0, end = size - 1;
+
+	while (start <= end && !found) {
+		int middle = (start + end) / 2;
+
+		if (searching == array[middle]) {
+			found = true;
+			numberOfComparisons++;
+		} else if (searching > array[middle]) { // valorLexografico de um com o de outro telvez tenha função que faca isso e maneira facil em c e em c++ talvez o proprio strcmp
+			start = ++middle;
+			numberOfComparisons++;
+		} else {
+			end = --middle;
+		}
+
+		numberOfComparisons++;
+	}
+
+	return found;
+}
+
+template <>
+template <>
+bool List<shared_ptr<Personagem>>::SequentialSearch(string searching, int& numberOfComparisons) {
+
+	bool found = false;
+	for (int i = 0; i < size && !found; i++) {
+		found = array[i]->getName() == searching;
+		numberOfComparisons++;
+	}
+	return found;
+}
+
+template <>
 void List<shared_ptr<Personagem>>::populate() {
 	string fileDir;
 	while ((fileDir = readString()) != "FIM") {
@@ -250,7 +288,7 @@ void List<shared_ptr<Personagem>>::print() {
 	for (int i = 0; i < size; i++) {
 		printf("[%d] ", i);
 		array[i]->print();
-		if (i < size - 1) cout << endl;
+		// if (i < size - 1) cout << endl;
 	}
 }
 
