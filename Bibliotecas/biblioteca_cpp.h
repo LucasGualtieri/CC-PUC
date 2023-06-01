@@ -65,40 +65,45 @@ void flushStdin() {
 	getline(cin, dummy);
 }
 
-int readInt() {
-	string aux;
-	getline(cin, aux);
-
-	size_t pos = aux.find_first_of("\r\n");
-
-	if (pos != string::npos) {
-		aux[pos] = '\0';
-		aux.resize(pos + 1);
-	}
-
-	return stoi(aux);
-}
-
 string readString(istream& stream = cin) {
 
 	string aux;
-	getline(stream, aux);
 
-	size_t pos = aux.find_first_of("\r\n");
+	try {
 
-	if (pos != string::npos) {
-		aux.erase(pos);
+		getline(stream, aux);
+
+		size_t pos = aux.find_first_of("\r\n");
+
+		if (pos != string::npos) aux.erase(pos);
+
+	} catch (const ios_base::failure ex) {
+		cerr << "Error reading input: " << ex.what() << endl;
 	}
 
 	return aux;
 }
 
-int readint(string _String = "") {
-	int number;
-	cout << _String;
-	cin >> number;
-	return number;
-}
+// int readint(string _String = "") {
+// 	int number;
+// 	cout << _String;
+// 	cin >> number;
+// 	return number;
+// }
+
+// int readInt() {
+// 	string aux;
+// 	getline(cin, aux);
+
+// 	size_t pos = aux.find_first_of("\r\n");
+
+// 	if (pos != string::npos) {
+// 		aux[pos] = '\0';
+// 		aux.resize(pos + 1);
+// 	}
+
+// 	return stoi(aux);
+// }
 
 // Returns a random number, does not work wonderfully on windows.
 int Rand(int maxRange = Infinity, int minRange = 0) {

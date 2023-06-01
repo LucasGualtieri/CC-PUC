@@ -1,1 +1,0 @@
-clear && g++ TP02Q03.cc -I /home/lucas/PC-HOME/CC-PUC/Bibliotecas -o TP02Q03.exe && ./TP02Q03.exe < pub.in
