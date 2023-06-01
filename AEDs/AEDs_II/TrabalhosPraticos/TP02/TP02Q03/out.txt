@@ -1,0 +1,33 @@
+Invalid action: 
+Invalid action: 34
+[0]  ## (null) ## 0 ## 0 ## (null) ## (null) ## (null) ## (null) ## (null) ## (null) ## 
+[1]  ## Adi Gallia ## 184 ## 50 ## none ## dark ## blue ## unknown ## female ## Coruscant ## 
+[2]  ## Arvel Crynyd ## 0 ## 0 ## brown ## fair ## brown ## unknown ## male ## unknown ## 
+[3]  ## Ayla Secura ## 178 ## 55 ## none ## blue ## hazel ## 48BBY ## female ## Ryloth ## 
+[4]  ## BB8 ## 0 ## 0 ## none ## none ## black ## unknown ## none ## unknown ## 
+[5]  ## Barriss Offee ## 166 ## 50 ## black ## yellow ## blue ## 40BBY ## female ## Mirial ## 
+[6]  ## Beru Whitesun lars ## 165 ## 75 ## brown ## light ## blue ## 47BBY ## female ## Tatooine ## 
+[7]  ## Boba Fett ## 183 ## 78.2 ## black ## fair ## brown ## 31.5BBY ## male ## Kamino ## 
+[8]  ## C-3PO ## 167 ## 75 ## n/a ## gold ## yellow ## 112BBY ## n/a ## Tatooine ## 
+[9]  ## Dooku ## 193 ## 80 ## white ## fair ## brown ## 102BBY ## male ## Serenno ## 
+[10]  ## Dormé ## 165 ## 0 ## brown ## light ## brown ## unknown ## female ## Naboo ## 
+[11]  ## Gasgano ## 122 ## 0 ## none ## white, blue ## black ## unknown ## male ## Troiken ## 
+[12]  ## Han Solo ## 180 ## 80 ## brown ## fair ## brown ## 29BBY ## male ## Corellia ## 
+[13]  ## Jango Fett ## 183 ## 79 ## black ## tan ## brown ## 66BBY ## male ## Concord Dawn ## 
+[14]  ## Lama Su ## 229 ## 88 ## none ## grey ## black ## unknown ## male ## Kamino ## 
+[15]  ## Lando Calrissian ## 177 ## 79 ## black ## dark ## brown ## 31BBY ## male ## Socorro ## 
+[16]  ## Mace Windu ## 188 ## 84 ## none ## dark ## brown ## 72BBY ## male ## Haruun Kal ## 
+[17]  ## Mon Mothma ## 150 ## 0 ## auburn ## fair ## blue ## 48BBY ## female ## Chandrila ## 
+[18]  ## Owen Lars ## 178 ## 120 ## brown, grey ## light ## blue ## 52BBY ## male ## Tatooine ## 
+[19]  ## Poggle the Lesser ## 183 ## 80 ## none ## green ## yellow ## unknown ## male ## Geonosis ## 
+[20]  ## Quarsh Panaka ## 183 ## 0 ## black ## dark ## brown ## 62BBY ## male ## Naboo ## 
+[21]  ## R2-D2 ## 96 ## 32 ## n/a ## white, blue ## red ## 33BBY ## n/a ## Naboo ## 
+[22]  ## Raymus Antilles ## 188 ## 79 ## brown ## light ## brown ## unknown ## male ## Alderaan ## 
+[23]  ## Roos Tarpals ## 224 ## 82 ## none ## grey ## orange ## unknown ## male ## Naboo ## 
+[24]  ## Saesee Tiin ## 188 ## 0 ## none ## pale ## orange ## unknown ## male ## Iktotch ## 
+[25]  ## San Hill ## 191 ## 0 ## none ## grey ## gold ## unknown ## male ## Muunilinst ## 
+[26]  ## Sly Moore ## 178 ## 48 ## none ## pale ## white ## unknown ## female ## Umbara ## 
+[27]  ## Taun We ## 213 ## 0 ## none ## grey ## black ## unknown ## female ## Kamino ## 
+[28]  ## Watto ## 137 ## 0 ## black ## blue, grey ## yellow ## unknown ## male ## Toydaria ## 
+[29]  ## Wicket Systri Warrick ## 88 ## 20 ## brown ## brown ## brown ## 8BBY ## male ## Endor ## 
+[30]  ## Zam Wesell ## 168 ## 55 ## blonde ## fair, green, yellow ## yellow ## unknown ## female ## Zolan ## 

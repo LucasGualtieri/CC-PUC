@@ -41,14 +41,24 @@ public:
 		initialized = true;
 	}
 
+	size_t getSize() {
+		return size;
+	}
+
+	T operator[](size_t index) {
+		if (index >= size) {
+			throw string("Error: Index [" + to_string(index) + "] is out of bounds!");
+		}
+
+		return array[index];
+	}
+
 	void insert(T value, size_t index) {
 
 		if (size >= arraySize || index < 0 || index > size) {
-			// throw new Exception("Erro ao inserir!"); // Java
-			return;
+			throw string("Erro ao inserir!");
 		}
 
-		// levar elementos para o fim do array
 		for (size_t i = size; i > index; i--) {
 			array[i] = array[i - 1];
 		}
@@ -59,10 +69,7 @@ public:
 
 	void insertBeggining(T value) {
 
-		if (size >= arraySize) {
-			// throw new Exception("Erro ao inserir!"); // Java
-			return;
-		}
+		if (size >= arraySize) throw string("Erro ao inserir!");
 
 		for (size_t i = size; i > 0; i--) {
 			array[i] = array[i - 1];
@@ -73,33 +80,44 @@ public:
 	}
 
 	void insertEnd(T value) {
-		if (size >= arraySize) {
-			// throw new Exception("Erro ao inserir!"); // Java
-			return;
-		}
-
-		array[size] = value;
-		size++;
+		if (size >= arraySize) throw string("Erro ao inserir!");
+		array[size++] = value;
 	}
 
-	void remove(int index) { }
-
-	void removeBeggining() {
-
-		// validar remocao
-		if (size == 0) {
-			// throw new Exception("Erro ao remover!");
-			return;
+	T remove(int index) {
+		if (size == 0 || index < 0 || index >= size) {
+			throw string("Erro ao remover!");
 		}
 
+		T removed = array[index];
 		size--;
+
+		for (int i = index; i < size; i++) {
+			array[i] = array[i + 1];
+		}
+
+		return removed;
+	}
+
+	T removeBeggining() {
+
+		if (size == 0) throw string("Erro ao remover!");
+
+		size--;
+
+		T removed = array[0];
 
 		for (int i = 0; i < size; i++) {
 			array[i] = array[i + 1];
 		}
+
+		return removed;
 	}
 
-	void removeEnd() { }
+	T removeEnd() {
+		if (size == 0) throw string("Erro ao remover!");
+		return array[--size];
+	}
 
 	void move(T value, int index) { }
 

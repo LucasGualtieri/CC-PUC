@@ -1,64 +1,64 @@
-./personagens/AdiGallia.txt
-./personagens/ArvelCrynyd.txt
-./personagens/AylaSecura.txt
-./personagens/BB8.txt
-./personagens/BarrissOffee.txt
-./personagens/BeruWhitesunlars.txt
-./personagens/BobaFett.txt
-./personagens/C-3PO.txt
-./personagens/Dooku.txt
-./personagens/Dormé.txt
-./personagens/Gasgano.txt
-./personagens/HanSolo.txt
-./personagens/JangoFett.txt
-./personagens/LamaSu.txt
-./personagens/LandoCalrissian.txt
-./personagens/MaceWindu.txt
-./personagens/MonMothma.txt
-./personagens/OwenLars.txt
-./personagens/PoggletheLesser.txt
-./personagens/QuarshPanaka.txt
-./personagens/R2-D2.txt
-./personagens/RaymusAntilles.txt
-./personagens/RoosTarpals.txt
-./personagens/SaeseeTiin.txt
-./personagens/SanHill.txt
-./personagens/SlyMoore.txt
-./personagens/TaunWe.txt
-./personagens/Watto.txt
-./personagens/WicketSystriWarrick.txt
-./personagens/ZamWesell.txt
+../personagens/AdiGallia.txt
+../personagens/ArvelCrynyd.txt
+../personagens/AylaSecura.txt
+../personagens/BB8.txt
+../personagens/BarrissOffee.txt
+../personagens/BeruWhitesunlars.txt
+../personagens/BobaFett.txt
+../personagens/C-3PO.txt
+../personagens/Dooku.txt
+../personagens/Dormé.txt
+../personagens/Gasgano.txt
+../personagens/HanSolo.txt
+../personagens/JangoFett.txt
+../personagens/LamaSu.txt
+../personagens/LandoCalrissian.txt
+../personagens/MaceWindu.txt
+../personagens/MonMothma.txt
+../personagens/OwenLars.txt
+../personagens/PoggletheLesser.txt
+../personagens/QuarshPanaka.txt
+../personagens/R2-D2.txt
+../personagens/RaymusAntilles.txt
+../personagens/RoosTarpals.txt
+../personagens/SaeseeTiin.txt
+../personagens/SanHill.txt
+../personagens/SlyMoore.txt
+../personagens/TaunWe.txt
+../personagens/Watto.txt
+../personagens/WicketSystriWarrick.txt
+../personagens/ZamWesell.txt
 FIM
 34
-II ./personagens/Ackbar.txt
-IF ./personagens/Finn.txt
-II ./personagens/BibFortuna.txt
-II ./personagens/JarJarBinks.txt
-II ./personagens/DudBolt.txt
-II ./personagens/KitFisto.txt
-II ./personagens/DexterJettster.txt
-IF ./personagens/EethKoth.txt
-II ./personagens/ClieggLars.txt
-II ./personagens/Grievous.txt
-II ./personagens/Cordé.txt
-IF ./personagens/JocastaNu.txt
-IF ./personagens/PoeDameron.txt
+II ../personagens/Ackbar.txt
+IF ../personagens/Finn.txt
+II ../personagens/BibFortuna.txt
+II ../personagens/JarJarBinks.txt
+II ../personagens/DudBolt.txt
+II ../personagens/KitFisto.txt
+II ../personagens/DexterJettster.txt
+IF ../personagens/EethKoth.txt
+II ../personagens/ClieggLars.txt
+II ../personagens/Grievous.txt
+II ../personagens/Cordé.txt
+IF ../personagens/JocastaNu.txt
+IF ../personagens/PoeDameron.txt
 R* 12
 RI
 RF
 R* 13
-I* 13 ./personagens/R4-P17.txt
-I* 14 ./personagens/R5-D4.txt
-II ./personagens/TionMedon.txt
-II ./personagens/Sebulba.txt
+I* 13 ../personagens/R4-P17.txt
+I* 14 ../personagens/R5-D4.txt
+II ../personagens/TionMedon.txt
+II ../personagens/Sebulba.txt
 RF
-II ./personagens/Rey.txt
-II ./personagens/Tarfful.txt
-II ./personagens/WedgeAntilles.txt
-I* 20 ./personagens/MasAmedda.txt
-I* 20 ./personagens/Lobot.txt
-I* 21 ./personagens/RicOlié.txt
-I* 23 ./personagens/Palpatine.txt
+II ../personagens/Rey.txt
+II ../personagens/Tarfful.txt
+II ../personagens/WedgeAntilles.txt
+I* 20 ../personagens/MasAmedda.txt
+I* 20 ../personagens/Lobot.txt
+I* 21 ../personagens/RicOlié.txt
+I* 23 ../personagens/Palpatine.txt
 R* 10
 R* 10
 R* 11

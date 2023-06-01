@@ -36,9 +36,11 @@ using namespace std;
 void pause(string String = "") {
 	cout << "Paused" << String << " | Press ENTER to continue...";
 
-	// cin.ignore(numeric_limits<streamsize>::max(), '\n');
+	cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
-	if (cin.get() != '\n') {
+	char c = cin.get();
+	printf("%d", c);
+	if (c != '\n') {
 		cout << "\n------- | PROGRAMA EXITADO | -------\n\n";
 		exit(0);
 	}
@@ -57,14 +59,28 @@ void ReplaceAll(string& str, string change, string replace) {
 	}
 }
 
+void flushStdin() {
+	string dummy;
+	getline(cin, dummy);
+}
+
+int readInt() {
+	string aux;
+	getline(cin, aux);
+	return stoi(aux);
+}
+
 string readString(istream& stream = cin) {
+
 	string aux;
 	getline(stream, aux);
 
-	size_t pos = aux.find_first_of("\r\n");
-	if (pos != string::npos) {
-		aux[pos] = '\0';
-	}
+	// size_t pos = aux.find_first_of("\r\n.");
+
+	// if (pos != string::npos) {
+	// 	aux[pos] = '\0';
+	// 	aux.resize(pos + 1);
+	// }
 
 	return aux;
 }
@@ -362,14 +378,14 @@ string MaskCep(string cep) {
 	return cepCopy;
 }
 
-void flushStdin(FILE* stream) {
+// void flushStdin(FILE* stream) {
 
-	int c = fgetc(stream);
+// 	int c = fgetc(stream);
 
-	if (c != '\n' && c != EOF) {
-		ungetc(c, stream);
-	}
-}
+// 	if (c != '\n' && c != EOF) {
+// 		ungetc(c, stream);
+// 	}
+// }
 
 char* substr(char* string, int beginning, int end) {
 
@@ -416,7 +432,8 @@ char* getstr(FILE* stream) {
 	if (stream == 0) stream = stdin;
 
 	// Limpando o STDIN
-	flushStdin(stream);
+	// flushStdin(stream);
+	flushStdin();
 
 	// Allocate memory for string
 	char* string = (char*)malloc(MaxStringLength * sizeof(char));

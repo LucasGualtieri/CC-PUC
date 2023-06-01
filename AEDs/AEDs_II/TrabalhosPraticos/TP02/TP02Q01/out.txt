@@ -15,7 +15,7 @@
  ## C-3PO ## 167 ## 75 ## n/a ## gold ## yellow ## 112BBY ## n/a ## Tatooine ## 
  ## Chewbacca ## 228 ## 112 ## brown ## unknown ## blue ## 200BBY ## male ## Kashyyyk ## 
  ## Cliegg Lars ## 183 ## 0 ## brown ## fair ## blue ## 82BBY ## male ## Tatooine ## 
- ## Cordï¿½ ## 157 ## 0 ## brown ## light ## brown ## unknown ## female ## Naboo ## 
+ ## Cordé ## 157 ## 0 ## brown ## light ## brown ## unknown ## female ## Naboo ## 
  ## Darth Maul ## 175 ## 80 ## none ## red ## yellow ## 54BBY ## male ## Dathomir ## 
  ## Darth Vader ## 202 ## 136 ## none ## white ## yellow ## 41.9BBY ## male ## Tatooine ## 
  ## Dexter Jettster ## 198 ## 102 ## none ## brown ## yellow ## unknown ## male ## Ojom ## 

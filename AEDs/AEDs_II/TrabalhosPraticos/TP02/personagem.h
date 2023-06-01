@@ -237,10 +237,17 @@ shared_ptr<Personagem> NewPersonagem(string fileDir) {
 	return make_shared<Personagem>(fileDir);
 }
 
+bool isFim(string str) {
+	if (str.at(0) != 'F') return false;
+	if (str.at(1) != 'I') return false;
+	if (str.at(2) != 'M') return false;
+	return true;
+}
+
 template <>
 void List<shared_ptr<Personagem>>::populate() {
 	string fileDir;
-	while ((fileDir = readString()).compare("FIM")) {
+	while (cin >> fileDir && !isFim(fileDir)) {
 		insertEnd(NewPersonagem(fileDir));
 	}
 }
@@ -248,6 +255,7 @@ void List<shared_ptr<Personagem>>::populate() {
 template <>
 void List<shared_ptr<Personagem>>::print() {
 	for (int i = 0; i < size; i++) {
+		printf("[%d] ", i);
 		array[i]->print();
 		if (i < size - 1) cout << endl;
 	}
