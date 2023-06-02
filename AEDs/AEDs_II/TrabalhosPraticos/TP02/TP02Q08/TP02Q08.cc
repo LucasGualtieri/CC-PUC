@@ -5,6 +5,17 @@
 
 // clear && g++ TP02Q08.cc -I /home/lucas/PC-HOME/CC-PUC/Bibliotecas -o TP02Q08.exe && ./TP02Q08.exe < pub.in > out.txt
 
+void printLog(Timer timer, int numeroComparacoes) {
+
+	ofstream log("matricula_binaria.txt");
+
+	log << "Matrícula: 794989\t";
+	log << "Tempo de execução: " << timer.elapsed() << "ms\t";
+	log << "Número de comparações: " << numeroComparacoes << endl;
+
+	log.close();
+}
+
 int main() {
 
 	Timer timer;

@@ -6,6 +6,7 @@
 #include <list.h>
 #include <split.h>
 #include <string>
+#include <timer.h>
 
 using namespace std;
 
@@ -154,6 +155,7 @@ public:
 	void ReadData(string fileDir) { // Um jeito meio cambiarroso de parsear o json
 
 		ifstream file(fileDir);
+		if (!file.is_open()) throw runtime_error("Failed to open file: " + fileDir);
 		string jsonstring = readString(file);
 		file.close();
 
@@ -229,17 +231,6 @@ public:
 	}
 };
 
-void printLog(Timer timer, int numeroComparacoes) {
-
-	ofstream log("matricula_selecao.txt");
-
-	log << "Matrícula: 794989\t";
-	log << "Tempo Execucao: " << timer.elapsed() << "ms\t";
-	log << "Número de comparações: " + to_string(numeroComparacoes) << endl;
-
-	log.close();
-}
-
 shared_ptr<Personagem> NewPersonagem() {
 	return make_shared<Personagem>();
 }
@@ -249,29 +240,41 @@ shared_ptr<Personagem> NewPersonagem(string fileDir) {
 }
 
 template <>
-int List<shared_ptr<Personagem>>::SelectionRecSort() {
-	int numberOfComparisons = 2;
+int List<shared_ptr<Personagem>>::SelectionRecSort(int& numberOfSwaps, int minIndex, int i, int j) {
+	int numberOfComparisons = 0;
 
-	for (int i = 0; i < size - 1; i++) {
-		int minIndex = i;
-		for (int j = i + 1; j < size; j++) {
-			if (array[minIndex]->getName() > array[j]->getName()) minIndex = j;
-			numberOfComparisons += 2;
+	if (j < size) {
+		if (array[minIndex]->getName() > array[j]->getName()) {
+			minIndex = j;
 		}
-		shared_ptr<Personagem> swap = array[minIndex];
-		array[minIndex] = array[i];
-		array[i] = swap;
-
-		numberOfComparisons++;
+		if (++j < size) {
+			numberOfComparisons += SelectionRecSort(numberOfSwaps, minIndex, i, j);
+		}
+		numberOfComparisons += 2;
 	}
+	numberOfComparisons++;
 
-	return numberOfComparisons;
-	// Usar duas funções, uma pra dentro e outra pra fora (for de dentro e for de fora)
+	if (i < size - 1 && j == size) {
+		if (array[minIndex] != array[i]) {
+			shared_ptr<Personagem> swap = array[minIndex];
+			array[minIndex] = array[i];
+			array[i] = swap;
+
+			numberOfSwaps++;
+		}
+
+		if (++i < size - 1) {
+			numberOfComparisons += SelectionRecSort(numberOfSwaps, i, i, i + 1);
+		}
+		numberOfComparisons += 4;
+	}
+	return numberOfComparisons += (j == size) ? 2 : 1;
 }
 
 template <>
-int List<shared_ptr<Personagem>>::SelectionSort() {
-	int numberOfComparisons = 2;
+int List<shared_ptr<Personagem>>::SelectionSort(int& numberOfSwaps) {
+	int numberOfComparisons = 1;
+	numberOfSwaps = 0;
 
 	for (int i = 0; i < size - 1; i++) {
 		int minIndex = i;
@@ -279,11 +282,15 @@ int List<shared_ptr<Personagem>>::SelectionSort() {
 			if (array[minIndex]->getName() > array[j]->getName()) minIndex = j;
 			numberOfComparisons += 2;
 		}
-		shared_ptr<Personagem> swap = array[minIndex];
-		array[minIndex] = array[i];
-		array[i] = swap;
+		if (array[minIndex] != array[i]) {
+			shared_ptr<Personagem> swap = array[minIndex];
+			array[minIndex] = array[i];
+			array[i] = swap;
 
-		numberOfComparisons++;
+			numberOfSwaps++;
+		}
+
+		numberOfComparisons += 3;
 	}
 
 	return numberOfComparisons;
@@ -314,6 +321,8 @@ bool List<shared_ptr<Personagem>>::BinarySearch(string searching, int& numberOfC
 		// this_thread::sleep_for(chrono::milliseconds(1));
 	}
 
+	numberOfComparisons += found ? 1 : 2;
+
 	return found;
 }
 
@@ -324,9 +333,10 @@ bool List<shared_ptr<Personagem>>::SequentialSearch(string searching, int& numbe
 	bool found = false;
 	for (int i = 0; !found && i < size; i++) {
 		found = array[i]->getName() == searching;
-		numberOfComparisons += 2;
+		numberOfComparisons += 3;
 		// this_thread::sleep_for(chrono::milliseconds(1));
 	}
+	numberOfComparisons += found ? 1 : 2;
 	return found;
 }
 
@@ -339,9 +349,9 @@ void List<shared_ptr<Personagem>>::populate() {
 }
 
 template <>
-void List<shared_ptr<Personagem>>::print() {
+void List<shared_ptr<Personagem>>::print(bool printIndex) {
 	for (int i = 0; i < size; i++) {
-		printf("[%d] ", i);
+		if (printIndex) printf("[%d] ", i);
 		array[i]->print();
 		// if (i < size - 1) cout << endl;
 	}

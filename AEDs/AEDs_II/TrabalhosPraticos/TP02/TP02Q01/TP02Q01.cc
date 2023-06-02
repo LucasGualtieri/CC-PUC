@@ -10,10 +10,7 @@ int main() {
 
 	list.populate();
 
-	for (int i = 0; i < list.getSize(); i++) {
-		list[i]->print();
-		if (i < list.getSize() - 1) cout << endl;
-	}
+	list.print(false);
 
 	// cout << "\n******* | FIM DO PROGRAMA | *******\n\n";
 	return 0;

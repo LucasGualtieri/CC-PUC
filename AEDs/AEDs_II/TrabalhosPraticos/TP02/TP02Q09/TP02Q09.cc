@@ -4,6 +4,19 @@
 #include <timer.h>
 
 // clear && g++ TP02Q09.cc -I /home/lucas/PC-HOME/CC-PUC/Bibliotecas -o TP02Q09.exe && ./TP02Q09.exe < pub.in > out.txt
+// clear && g++ TP02Q09.cc -I /home/lucas/PC-HOME/CC-PUC/Bibliotecas -o TP02Q09.exe && ./TP02Q09.exe < unsorted.in > out.txt
+
+void printLog(Timer timer, int numeroComparacoes, int numberOfSwaps) {
+
+	ofstream log("matricula_selecao.txt");
+
+	log << "Matrícula: 794989\t";
+	log << "Tempo de execução: " << timer.elapsed() << "ms\t";
+	log << "Número de movimentações: " << numberOfSwaps << " \t";
+	log << "Número de comparações: " << numeroComparacoes << endl;
+
+	log.close();
+}
 
 int main() {
 
@@ -14,15 +27,14 @@ int main() {
 
 	timer.start();
 
-	int numberOfComparisons = list.SelectionSort();
+	int numberOfSwaps;
+	int numberOfComparisons = list.SelectionSort(numberOfSwaps);
 
 	timer.stop();
 
-	for (int i = 0; i < list.getSize(); i++) {
-		list[i]->print();
-	}
+	list.print(false);
 
-	printLog(timer, numberOfComparisons);
+	printLog(timer, numberOfComparisons, numberOfSwaps);
 
 	// cout << "\n******* | FIM DO PROGRAMA | *******\n\n";
 	return 0;

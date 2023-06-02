@@ -119,10 +119,40 @@ public:
 		return array[--size];
 	}
 
-	int SelectionRecSort() { }
+	int SelectionRecSort(int& numberOfSwaps, int minIndex = 0, int i = 0, int j = 1) {
+		int numberOfComparisons = 0;
 
-	int SelectionSort() {
-		int numberOfComparisons = 2;
+		if (j < size) {
+			if (array[minIndex] > array[j]) {
+				minIndex = j;
+			}
+			if (++j < size) {
+				numberOfComparisons += SelectionRecSort(numberOfSwaps, minIndex, i, j);
+			}
+			numberOfComparisons += 2;
+		}
+		numberOfComparisons++;
+
+		if (i < size - 1 && j == size) {
+			if (array[minIndex] != array[i]) {
+				T swap = array[minIndex];
+				array[minIndex] = array[i];
+				array[i] = swap;
+
+				numberOfSwaps++;
+			}
+
+			if (++i < size - 1) {
+				numberOfComparisons += SelectionRecSort(numberOfSwaps, i, i, i + 1);
+			}
+			numberOfComparisons += 4;
+		}
+		return numberOfComparisons += (j == size) ? 2 : 1;
+	}
+
+	int SelectionSort(int& numberOfSwaps) {
+		int numberOfComparisons = 1;
+		numberOfSwaps = 0;
 
 		for (int i = 0; i < size - 1; i++) {
 			int minIndex = i;
@@ -130,11 +160,15 @@ public:
 				if (array[minIndex] > array[j]) minIndex = j;
 				numberOfComparisons += 2;
 			}
-			T swap = array[minIndex];
-			array[minIndex] = array[i];
-			array[i] = swap;
+			if (array[minIndex] != array[i]) {
+				int swap = array[minIndex];
+				array[minIndex] = array[i];
+				array[i] = swap;
 
-			numberOfComparisons++;
+				numberOfSwaps++;
+			}
+
+			numberOfComparisons += 3;
 		}
 
 		return numberOfComparisons;
@@ -220,7 +254,7 @@ public:
 		}
 	}
 
-	void print() {
+	void print(bool printIndex = true) {
 		if (size == 0) {
 			cout << "List is empty!" << endl;
 			return;
