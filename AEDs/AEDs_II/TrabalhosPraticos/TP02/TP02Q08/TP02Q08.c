@@ -111,7 +111,7 @@ Personagem montaPersonagem(char caminhoArquivo[]) {
 	return personagem;
 }
 
-void criarLog(time_t inicio, int numeroComparacoes) {
+void printLog(time_t inicio, int numeroComparacoes) {
 	float tempo;
 	time_t final = time(NULL);
 
@@ -175,7 +175,7 @@ int main(void) {
 
 	numeroComparacoes++;
 
-	criarLog(inicio, numeroComparacoes);
+	printLog(inicio, numeroComparacoes);
 
 	return 0;
 }

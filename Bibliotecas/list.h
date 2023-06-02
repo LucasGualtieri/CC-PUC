@@ -119,6 +119,27 @@ public:
 		return array[--size];
 	}
 
+	int SelectionRecSort() { }
+
+	int SelectionSort() {
+		int numberOfComparisons = 2;
+
+		for (int i = 0; i < size - 1; i++) {
+			int minIndex = i;
+			for (int j = i + 1; j < size; j++) {
+				if (array[minIndex] > array[j]) minIndex = j;
+				numberOfComparisons += 2;
+			}
+			T swap = array[minIndex];
+			array[minIndex] = array[i];
+			array[i] = swap;
+
+			numberOfComparisons++;
+		}
+
+		return numberOfComparisons;
+	}
+
 	template <typename U>
 	bool BinarySearch(U searching) {
 		bool found = false;

@@ -5,17 +5,6 @@
 
 // clear && g++ TP02Q07.cc -I /home/lucas/PC-HOME/CC-PUC/Bibliotecas -o TP02Q07.exe && ./TP02Q07.exe < pub.in > out.txt
 
-void criarLog(Timer timer, int numeroComparacoes) {
-
-	ofstream log("matricula_sequencial.txt");
-
-	log << "Matrícula: 794989\t";
-	log << "Tempo Execucao: " << timer.elapsed() << "ms\t";
-	log << "Número de comparações: " + to_string(numeroComparacoes) << endl;
-
-	log.close();
-}
-
 int main() {
 
 	Timer timer;
@@ -37,7 +26,7 @@ int main() {
 
 	timer.stop();
 
-	criarLog(timer, numberOfComparisons);
+	printLog(timer, numberOfComparisons);
 
 	// cout << "\n******* | FIM DO PROGRAMA | *******\n\n";
 	return 0;

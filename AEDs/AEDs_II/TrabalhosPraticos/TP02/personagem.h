@@ -229,6 +229,17 @@ public:
 	}
 };
 
+void printLog(Timer timer, int numeroComparacoes) {
+
+	ofstream log("matricula_selecao.txt");
+
+	log << "Matrícula: 794989\t";
+	log << "Tempo Execucao: " << timer.elapsed() << "ms\t";
+	log << "Número de comparações: " + to_string(numeroComparacoes) << endl;
+
+	log.close();
+}
+
 shared_ptr<Personagem> NewPersonagem() {
 	return make_shared<Personagem>();
 }
@@ -238,26 +249,68 @@ shared_ptr<Personagem> NewPersonagem(string fileDir) {
 }
 
 template <>
+int List<shared_ptr<Personagem>>::SelectionRecSort() {
+	int numberOfComparisons = 2;
+
+	for (int i = 0; i < size - 1; i++) {
+		int minIndex = i;
+		for (int j = i + 1; j < size; j++) {
+			if (array[minIndex]->getName() > array[j]->getName()) minIndex = j;
+			numberOfComparisons += 2;
+		}
+		shared_ptr<Personagem> swap = array[minIndex];
+		array[minIndex] = array[i];
+		array[i] = swap;
+
+		numberOfComparisons++;
+	}
+
+	return numberOfComparisons;
+}
+
+template <>
+int List<shared_ptr<Personagem>>::SelectionSort() {
+	int numberOfComparisons = 2;
+
+	for (int i = 0; i < size - 1; i++) {
+		int minIndex = i;
+		for (int j = i + 1; j < size; j++) {
+			if (array[minIndex]->getName() > array[j]->getName()) minIndex = j;
+			numberOfComparisons += 2;
+		}
+		shared_ptr<Personagem> swap = array[minIndex];
+		array[minIndex] = array[i];
+		array[i] = swap;
+
+		numberOfComparisons++;
+	}
+
+	return numberOfComparisons;
+}
+
+template <>
 template <>
 bool List<shared_ptr<Personagem>>::BinarySearch(string searching, int& numberOfComparisons) {
 	bool found = false;
 
 	int start = 0, end = size - 1;
 
-	while (start <= end && !found) {
+	while (!found && start <= end) {
 		int middle = (start + end) / 2;
 
-		if (searching == array[middle]) {
+		if (searching == array[middle]->getName()) {
 			found = true;
 			numberOfComparisons++;
-		} else if (searching > array[middle]) { // valorLexografico de um com o de outro telvez tenha função que faca isso e maneira facil em c e em c++ talvez o proprio strcmp
+		} else if (searching > array[middle]->getName()) {
 			start = ++middle;
-			numberOfComparisons++;
+			numberOfComparisons += 2;
 		} else {
 			end = --middle;
+			numberOfComparisons += 2;
 		}
 
-		numberOfComparisons++;
+		numberOfComparisons += 2;
+		// this_thread::sleep_for(chrono::milliseconds(1));
 	}
 
 	return found;
@@ -268,9 +321,10 @@ template <>
 bool List<shared_ptr<Personagem>>::SequentialSearch(string searching, int& numberOfComparisons) {
 
 	bool found = false;
-	for (int i = 0; i < size && !found; i++) {
+	for (int i = 0; !found && i < size; i++) {
 		found = array[i]->getName() == searching;
-		numberOfComparisons++;
+		numberOfComparisons += 2;
+		// this_thread::sleep_for(chrono::milliseconds(1));
 	}
 	return found;
 }
