@@ -266,6 +266,7 @@ int List<shared_ptr<Personagem>>::SelectionRecSort() {
 	}
 
 	return numberOfComparisons;
+	// Usar duas funções, uma pra dentro e outra pra fora (for de dentro e for de fora)
 }
 
 template <>
