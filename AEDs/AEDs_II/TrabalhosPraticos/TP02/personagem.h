@@ -214,6 +214,14 @@ public:
 		// cout << " ## ";
 	}
 
+	// T operator<<() {
+	// 	if (index >= size) {
+	// 		throw string("Error: Index [" + to_string(index) + "] is out of bounds!");
+	// 	}
+
+	// 	print();
+	// }
+
 	Personagem clone() {
 		Personagem clone;
 
