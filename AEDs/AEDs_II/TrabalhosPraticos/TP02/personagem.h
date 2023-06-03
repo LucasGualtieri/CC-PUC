@@ -360,8 +360,9 @@ template <>
 void List<shared_ptr<Personagem>>::print(bool printIndex) {
 	for (int i = 0; i < size; i++) {
 		if (printIndex) printf("[%d] ", i);
-		array[i]->print();
-		// if (i < size - 1) cout << endl;
+		// array[i]; // once << overload is implemented
+		array[i]->print(); // ai esse vai de berço
+		// if (i < size - 1) cout << endl; // To ovoid /n at the very last print();
 	}
 }
 
