@@ -119,39 +119,9 @@ public:
 		return array[--size];
 	}
 
-	int SelectionRecSort(int& numberOfSwaps, int minIndex = 0, int i = 0, int j = 1) {
-		int numberOfComparisons = 0;
+	void InsertionSort(int& numberOfComparisons, int& numberOfSwaps) {
 
-		if (j < size) {
-			if (array[minIndex] > array[j]) {
-				minIndex = j;
-			}
-			if (++j < size) {
-				numberOfComparisons += SelectionRecSort(numberOfSwaps, minIndex, i, j);
-			}
-			numberOfComparisons += 2;
-		}
-		numberOfComparisons++;
-
-		if (i < size - 1 && j == size) {
-			if (array[minIndex] != array[i]) {
-				T swap = array[minIndex];
-				array[minIndex] = array[i];
-				array[i] = swap;
-
-				numberOfSwaps++;
-			}
-
-			if (++i < size - 1) {
-				numberOfComparisons += SelectionRecSort(numberOfSwaps, i, i, i + 1);
-			}
-			numberOfComparisons += 4;
-		}
-		return numberOfComparisons += (j == size) ? 2 : 1;
-	}
-
-	int SelectionSort(int& numberOfSwaps) {
-		int numberOfComparisons = 1;
+		numberOfComparisons = 1;
 		numberOfSwaps = 0;
 
 		for (int i = 0; i < size - 1; i++) {
@@ -170,8 +140,60 @@ public:
 
 			numberOfComparisons += 3;
 		}
+	}
 
-		return numberOfComparisons;
+	int RecursiveSelectionSort(int& numberOfSwaps, int minIndex = 0, int i = 0, int j = 1) {
+		int numberOfComparisons = 0;
+
+		if (j < size) {
+			if (array[minIndex] > array[j]) {
+				minIndex = j;
+			}
+			if (++j < size) {
+				numberOfComparisons += RecursiveSelectionSort(numberOfSwaps, minIndex, i, j);
+			}
+			numberOfComparisons += 2;
+		}
+		numberOfComparisons++;
+
+		if (i < size - 1 && j == size) {
+			if (array[minIndex] != array[i]) {
+				T swap = array[minIndex];
+				array[minIndex] = array[i];
+				array[i] = swap;
+
+				numberOfSwaps++;
+			}
+
+			if (++i < size - 1) {
+				numberOfComparisons += RecursiveSelectionSort(numberOfSwaps, i, i, i + 1);
+			}
+			numberOfComparisons += 4;
+		}
+		return numberOfComparisons += (j == size) ? 2 : 1;
+	}
+
+	void SelectionSort(int& numberOfComparisons, int& numberOfSwaps) {
+
+		numberOfComparisons = 1;
+		numberOfSwaps = 0;
+
+		for (int i = 0; i < size - 1; i++) {
+			int minIndex = i;
+			for (int j = i + 1; j < size; j++) {
+				if (array[minIndex] > array[j]) minIndex = j;
+				numberOfComparisons += 2;
+			}
+			if (array[minIndex] != array[i]) {
+				int swap = array[minIndex];
+				array[minIndex] = array[i];
+				array[i] = swap;
+
+				numberOfSwaps++;
+			}
+
+			numberOfComparisons += 3;
+		}
 	}
 
 	template <typename U>

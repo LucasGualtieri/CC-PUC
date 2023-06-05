@@ -214,26 +214,48 @@ public:
 		// cout << " ## ";
 	}
 
-	// T operator<<() {
-	// 	if (index >= size) {
-	// 		throw string("Error: Index [" + to_string(index) + "] is out of bounds!");
-	// 	}
+	friend ostream& operator<<(ostream& cout, const Personagem obj) {
+		cout << " ## " << obj.name;
+		cout << " ## " << obj.height;
+		cout << " ## " << obj.weight;
+		cout << " ## " << obj.hairColor;
+		cout << " ## " << obj.skinColor;
+		cout << " ## " << obj.eyeColor;
+		cout << " ## " << obj.birthYear;
+		cout << " ## " << obj.gender;
+		cout << " ## " << obj.homeworld;
+		cout << " ## ";
+		return cout;
+	}
 
-	// 	print();
-	// }
+	float birthYearValue() {
+		int end = getBirthYear().find("BB", 0, 2);
+		if (end == string::npos) end = getBirthYear().find("AB", 0, 2);
+		if (end == string::npos) return end;
 
-	Personagem clone() {
-		Personagem clone;
+		char beforeAfter = getBirthYear().at(end + 2);
 
-		clone.name = this->name;
-		clone.height = this->height;
-		clone.weight = this->weight;
-		clone.hairColor = this->hairColor;
-		clone.skinColor = this->skinColor;
-		clone.eyeColor = this->eyeColor;
-		clone.birthYear = this->birthYear;
-		clone.gender = this->gender;
-		clone.homeworld = this->homeworld;
+		float birthYear = stof(getBirthYear().substr(0, end));
+
+		if (beforeAfter == 'A') {
+			return birthYear;
+		} else {
+			return -birthYear;
+		}
+	}
+
+	shared_ptr<Personagem> clone() {
+		shared_ptr<Personagem> clone = make_shared<Personagem>();
+
+		clone->setName(this->name);
+		clone->setHeight(this->height);
+		clone->setWeight(this->weight);
+		clone->setHairColor(this->hairColor);
+		clone->setSkinColor(this->skinColor);
+		clone->setEyeColor(this->eyeColor);
+		clone->setBirthYear(this->birthYear);
+		clone->setGender(this->gender);
+		clone->setHomeworld(this->homeworld);
 
 		return clone;
 	}
@@ -248,7 +270,31 @@ shared_ptr<Personagem> NewPersonagem(string fileDir) {
 }
 
 template <>
-int List<shared_ptr<Personagem>>::SelectionRecSort(int& numberOfSwaps, int minIndex, int i, int j) {
+void List<shared_ptr<Personagem>>::InsertionSort(int& numberOfComparisons, int& numberOfSwaps) {
+
+	numberOfComparisons = 1;
+	numberOfSwaps = 0;
+
+	for (int i = 0; i < size - 1; i++) {
+		int minIndex = i;
+		for (int j = i + 1; j < size; j++) {
+			if (array[minIndex]->birthYearValue() > array[j]->birthYearValue()) minIndex = j;
+			numberOfComparisons += 2;
+		}
+		if (array[minIndex] != array[i]) {
+			shared_ptr<Personagem> swap = array[minIndex];
+			array[minIndex] = array[i];
+			array[i] = swap;
+
+			numberOfSwaps++;
+		}
+
+		numberOfComparisons += 3;
+	}
+}
+
+template <>
+int List<shared_ptr<Personagem>>::RecursiveSelectionSort(int& numberOfSwaps, int minIndex, int i, int j) {
 	int numberOfComparisons = 0;
 
 	if (j < size) {
@@ -256,7 +302,7 @@ int List<shared_ptr<Personagem>>::SelectionRecSort(int& numberOfSwaps, int minIn
 			minIndex = j;
 		}
 		if (++j < size) {
-			numberOfComparisons += SelectionRecSort(numberOfSwaps, minIndex, i, j);
+			numberOfComparisons += RecursiveSelectionSort(numberOfSwaps, minIndex, i, j);
 		}
 		numberOfComparisons += 2;
 	}
@@ -272,7 +318,7 @@ int List<shared_ptr<Personagem>>::SelectionRecSort(int& numberOfSwaps, int minIn
 		}
 
 		if (++i < size - 1) {
-			numberOfComparisons += SelectionRecSort(numberOfSwaps, i, i, i + 1);
+			numberOfComparisons += RecursiveSelectionSort(numberOfSwaps, i, i, i + 1);
 		}
 		numberOfComparisons += 4;
 	}
@@ -280,8 +326,9 @@ int List<shared_ptr<Personagem>>::SelectionRecSort(int& numberOfSwaps, int minIn
 }
 
 template <>
-int List<shared_ptr<Personagem>>::SelectionSort(int& numberOfSwaps) {
-	int numberOfComparisons = 1;
+void List<shared_ptr<Personagem>>::SelectionSort(int& numberOfComparisons, int& numberOfSwaps) {
+
+	numberOfComparisons = 1;
 	numberOfSwaps = 0;
 
 	for (int i = 0; i < size - 1; i++) {
@@ -300,8 +347,6 @@ int List<shared_ptr<Personagem>>::SelectionSort(int& numberOfSwaps) {
 
 		numberOfComparisons += 3;
 	}
-
-	return numberOfComparisons;
 }
 
 template <>
@@ -357,26 +402,24 @@ void List<shared_ptr<Personagem>>::populate() {
 }
 
 template <>
-void List<shared_ptr<Personagem>>::print(bool printIndex) {
+void List<shared_ptr<Personagem>>::print(bool printIndices) {
 	for (int i = 0; i < size; i++) {
-		if (printIndex) printf("[%d] ", i);
-		// array[i]; // once << overload is implemented
-		array[i]->print(); // ai esse vai de berço
+		if (printIndices) printf("[%d] ", i);
+		array[i]->print();
 		// if (i < size - 1) cout << endl; // To ovoid /n at the very last print();
 	}
 }
 
-// template <>
-// void List<shared_ptr<Personagem>>::sort() {
-// 	for (int i = 0; i < size - 1; i++) {
-// 		int menor = i;
-// 		for (int j = i + 1; j < size; j++) {
-// 			if (array[menor]->getAge() > array[j]->getAge()) menor = j;
-// 		}
-// 		shared_ptr<Personagem> swap = array[menor];
-// 		array[menor] = array[i];
-// 		array[i] = swap;
-// 	}
-// }
+void printLog(Timer timer, string fileName, int numberOfComparisons, int numberOfSwaps = -1) {
+
+	ofstream log(fileName);
+
+	log << "Matrícula: 794989\t";
+	log << "Tempo de execução: " << timer.result() << "ms\t";
+	if (numberOfComparisons >= 0) log << "Número de movimentações: " << numberOfSwaps << "\t";
+	log << "Número de comparações: " << numberOfComparisons;
+
+	log.close();
+}
 
 #endif

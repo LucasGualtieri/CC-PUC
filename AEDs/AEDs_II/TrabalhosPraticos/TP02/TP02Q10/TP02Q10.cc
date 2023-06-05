@@ -6,18 +6,6 @@
 // clear && g++ TP02Q10.cc -I /home/lucas/PC-HOME/CC-PUC/Bibliotecas -o TP02Q10.exe && ./TP02Q10.exe < pub.in > out.txt
 // clear && g++ TP02Q10.cc -I /home/lucas/PC-HOME/CC-PUC/Bibliotecas -o TP02Q10.exe && ./TP02Q10.exe < unsorted.in > out.txt
 
-void printLog(Timer timer, int numeroComparacoes, int numberOfSwaps) {
-
-	ofstream log("matricula_selecaoRecursiva.txt");
-
-	log << "Matrícula: 794989\t";
-	log << "Tempo de execução: " << timer.elapsed() << "ms\t";
-	log << "Número de movimentações: " << numberOfSwaps << " \t";
-	log << "Número de comparações: " << numeroComparacoes << endl;
-
-	log.close();
-}
-
 int main() {
 
 	Timer timer;
@@ -28,13 +16,13 @@ int main() {
 	timer.start();
 
 	int numberOfSwaps = 0;
-	int numberOfComparisons = list.SelectionRecSort(numberOfSwaps);
+	int numberOfComparisons = list.RecursiveSelectionSort(numberOfSwaps);
 
 	timer.stop();
 
 	list.print(false);
 
-	printLog(timer, numberOfComparisons, numberOfSwaps);
+	printLog(timer, "matricula_selecaoRecursiva.txt", numberOfComparisons, numberOfSwaps);
 
 	// cout << "\n******* | FIM DO PROGRAMA | *******\n\n";
 	return 0;
