@@ -43,7 +43,7 @@ bool flushStdin(FILE* stream) {
  * @param flush se == 1 limpará a entrada padrão.
  * @param flush se == 0 não limpará a entrada padrão.
  */
-void pause(bool flushing) {
+void Pause(bool flushing) {
 
 	if (flushing) flushStdin(stdin);
 
@@ -118,7 +118,7 @@ void IntArrayFillRand(int* array, int arrayLength, int minRange, int maxRange) {
 // }
 
 // Selection Sort para Inteiros em ordem Crescente
-void selectionSort(int* array, int arrayLength) {
+void SelectionSort(int* array, int arrayLength) {
 	for (int i = 0; i < arrayLength - 1; i++) {
 		int menor = i;
 		for (int j = i + 1; j < arrayLength; j++) {

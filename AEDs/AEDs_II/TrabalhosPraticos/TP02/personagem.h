@@ -278,7 +278,7 @@ void List<shared_ptr<Personagem>>::InsertionSort(int& numberOfComparisons, int& 
 	for (int i = 0; i < size - 1; i++) {
 		int minIndex = i;
 		for (int j = i + 1; j < size; j++) {
-			if (array[minIndex]->birthYearValue() > array[j]->birthYearValue()) minIndex = j;
+			if (array[minIndex]->getBirthYear() > array[j]->getBirthYear()) minIndex = j;
 			numberOfComparisons += 2;
 		}
 		if (array[minIndex] != array[i]) {
