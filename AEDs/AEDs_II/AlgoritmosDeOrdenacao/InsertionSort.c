@@ -20,20 +20,28 @@ void ArrayPrint(int* vetor, int size) {
 	}
 }
 
+// void InsertionSort(int* array, int size) {
+// 	for (int i = 1; i < size; i++) { // i = First Unsorted
+// 		int swap = i;
+// 		int temp = array[swap];
+// 		for (int j = i - 1; j >= 0 && array[j] > temp; j--) {
+// 			// Shifting to the right
+// 			array[j + 1] = array[j];
+// 			ArrayPrint(array, size);
+// 			swap = j;
+// 		}
+// 		array[swap] = temp;
+// 		ArrayPrint(array, size);
+// 	}
+// }
+
 void InsertionSort(int* array, int size) {
-	for (int i = 1; i < size; i++) { // i = First Unsorted
-		if (array[i - 1] > array[i]) {
-			int swap = i;
-			int temp = array[swap];
-			for (int j = i - 1; j >= 0 && array[j] > temp; j--) {
-				// Shifting to the right
-				array[j + 1] = array[j];
-				ArrayPrint(array, size);
-				swap = j;
-			}
-			array[swap] = temp;
-			ArrayPrint(array, size);
+	for (int i = 1, j; i < size; i++) {
+		int temp = array[i];
+		for (j = i - 1; array[j] > temp && j >= 0; j--) {
+			array[j + 1] = array[j];
 		}
+		array[j + 1] = temp;
 	}
 }
 
