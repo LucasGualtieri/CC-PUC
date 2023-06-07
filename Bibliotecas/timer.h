@@ -25,14 +25,13 @@ public:
 		running = false;
 	}
 
-	// int elapsed() {
+	// int result() {
 	// 	duration<double> duration = end - beginning;
 	// 	return static_cast<int>(duration.count() * 1000);
 	// }
 
 	double result() {
 		if (running) {
-			running = false;
 			stop();
 		}
 		duration<double, milli> duration = end - beginning;

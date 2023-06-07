@@ -18,15 +18,16 @@
  ## Palpatine ## 170 ## 75 ## grey ## pale ## yellow ## 82BBY ## male ## Naboo ## 
  ## Yoda ## 66 ## 17 ## white ## green ## brown ## 896BBY ## male ## unknown ## 
  ## Qui-Gon Jinn ## 193 ## 89 ## brown ## fair ## blue ## 92BBY ## male ## unknown ## 
- ## Arvel Crynyd ## 0 ## 0 ## brown ## fair ## brown ## unknown ## male ## unknown ## 
- ## Gregar Typho ## 185 ## 85 ## black ## dark ## brown ## unknown ## male ## Naboo ## 
- ## Dormé ## 165 ## 0 ## brown ## light ## brown ## unknown ## female ## Naboo ## 
  ## Adi Gallia ## 184 ## 50 ## none ## dark ## blue ## unknown ## female ## Coruscant ## 
+ ## Arvel Crynyd ## 0 ## 0 ## brown ## fair ## brown ## unknown ## male ## unknown ## 
+ ## Cordé ## 157 ## 0 ## brown ## light ## brown ## unknown ## female ## Naboo ## 
+ ## Dormé ## 165 ## 0 ## brown ## light ## brown ## unknown ## female ## Naboo ## 
  ## Dud Bolt ## 94 ## 45 ## none ## blue, grey ## yellow ## unknown ## male ## Vulpter ## 
+ ## Eeth Koth ## 171 ## 0 ## black ## brown ## brown ## unknown ## male ## Iridonia ## 
+ ## Finn ## 0 ## 0 ## black ## dark ## dark ## unknown ## male ## unknown ## 
+ ## Gregar Typho ## 185 ## 85 ## black ## dark ## brown ## unknown ## male ## Naboo ## 
  ## Poe Dameron ## 0 ## 0 ## brown ## light ## brown ## unknown ## male ## unknown ## 
  ## Poggle the Lesser ## 183 ## 80 ## none ## green ## yellow ## unknown ## male ## Geonosis ## 
- ## Eeth Koth ## 171 ## 0 ## black ## brown ## brown ## unknown ## male ## Iridonia ## 
- ## Cordé ## 157 ## 0 ## brown ## light ## brown ## unknown ## female ## Naboo ## 
  ## R5-D4 ## 97 ## 32 ## n/a ## white, red ## red ## unknown ## n/a ## Tatooine ## 
  ## Rey ## 0 ## 0 ## brown ## light ## hazel ## unknown ## female ## unknown ## 
  ## Sebulba ## 112 ## 40 ## none ## grey, red ## orange ## unknown ## male ## Malastare ## 
@@ -38,4 +39,3 @@
  ## Wat Tambor ## 193 ## 48 ## none ## green, grey ## unknown ## unknown ## male ## Skako ## 
  ## Watto ## 137 ## 0 ## black ## blue, grey ## yellow ## unknown ## male ## Toydaria ## 
  ## Yarael Poof ## 264 ## 0 ## none ## white ## yellow ## unknown ## male ## Quermia ## 
- ## Finn ## 0 ## 0 ## black ## dark ## dark ## unknown ## male ## unknown ## 

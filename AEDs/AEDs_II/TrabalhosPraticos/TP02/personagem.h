@@ -275,22 +275,31 @@ void List<shared_ptr<Personagem>>::InsertionSort(int& numberOfComparisons, int& 
 	numberOfComparisons = 1;
 	numberOfSwaps = 0;
 
-	for (int i = 0; i < size - 1; i++) {
-		int minIndex = i;
-		for (int j = i + 1; j < size; j++) {
-			if (array[minIndex]->getBirthYear() > array[j]->getBirthYear()) minIndex = j;
-			numberOfComparisons += 2;
+	for (int i = 1; i < size; i++) {
+		numberOfComparisons++;
+		if (array[i - 1]->getBirthYear() > array[i]->getBirthYear()) {
+			int swap = i;
+			shared_ptr<Personagem> temp = array[swap];
+			for (int j = i - 1; j >= 0; j--) {
+				numberOfComparisons++;
+				if (array[j]->getBirthYear() > temp->getBirthYear()) {
+					array[j + 1] = array[j];
+					swap = j;
+				} else {
+					break;
+				}
+				numberOfComparisons++;
+			}
+			numberOfComparisons++;
+			if (array[swap] != temp) {
+				array[swap] = temp;
+				numberOfSwaps++;
+			}
+			numberOfComparisons++;
 		}
-		if (array[minIndex] != array[i]) {
-			shared_ptr<Personagem> swap = array[minIndex];
-			array[minIndex] = array[i];
-			array[i] = swap;
-
-			numberOfSwaps++;
-		}
-
-		numberOfComparisons += 3;
+		numberOfComparisons++;
 	}
+	numberOfComparisons++;
 }
 
 template <>
