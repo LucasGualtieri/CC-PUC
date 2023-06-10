@@ -35,7 +35,8 @@ public:
 			return;
 		}
 
-		this->array = make_unique<T[]>(arraySize);
+		// this->array = make_unique<T[]>(arraySize);
+		this->array = new int[arraySize];
 		this->arraySize = arraySize;
 		size = 0;
 		initialized = true;
