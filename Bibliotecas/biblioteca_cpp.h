@@ -4,6 +4,7 @@
 
 #include <chrono>
 #include <ctime>
+#include <ctype.h>
 #include <fstream>
 #include <iostream>
 #include <limits>
@@ -45,6 +46,17 @@ void pause(string String = "") {
 	if (c != '\n') {
 		cout << "\n------- | PROGRAMA EXITADO | -------\n\n";
 		exit(0);
+	}
+}
+
+void trim(string& str) {
+
+	for (int i = 0; str.at(0) == ' '; i++) {
+		str.erase(0, 1);
+	}
+
+	for (int i = str.length() - 1; str.at(i) == ' '; i--) {
+		str.erase(i, 1);
 	}
 }
 
