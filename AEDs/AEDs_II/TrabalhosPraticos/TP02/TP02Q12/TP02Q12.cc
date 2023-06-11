@@ -6,6 +6,10 @@
 // clear && g++ TP02Q11.cc -I /home/lucas/PC-HOME/CC-PUC/Bibliotecas -o TP02Q11.exe && ./TP02Q11.exe < pub.in > out.txt
 // clear && g++ TP02Q11.cc -I /home/lucas/PC-HOME/CC-PUC/Bibliotecas -o TP02Q11.exe && ./TP02Q11.exe < unsorted.in > out.txt
 
+// Minha ideia atual é ter uma ter 3 classes, uma que herda da list original
+// que vai ser a list personagens e uma que vai herdar dessa listPersonagens
+// que vai ser a ListInsertion por exemplo
+
 class ListInsertion : public List<shared_ptr<Personagem>> {
 
 public:
