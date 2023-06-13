@@ -2,12 +2,9 @@
 #include <string.h>
 
 char convert(char c) {
-	if (c == '-') {
-		return '-';
-	}
-	if (strchr("abcABC", c)) {
-		return '2';
-	}
+	if (c == '-') return '-';
+	if (c >= '0' && c <= '9') return c;
+	if (strchr("abcABC", c)) return '2';
 	if (c >= 'D' && c <= 'F' || c >= 'd' && c <= 'f') {
 		return '3';
 	}
@@ -36,11 +33,7 @@ int main(void) {
 	char str[16];
 	scanf("%s", str);
 	for (int i = 0; i < strlen(str); i++) {
-		if (str[i] >= '0' && str[i] <= '9') {
-			printf("%c", str[i]);
-		} else {
 			printf("%c", convert(str[i]));
-		}
 	}
 	// printf("\n");
 	return 0;
