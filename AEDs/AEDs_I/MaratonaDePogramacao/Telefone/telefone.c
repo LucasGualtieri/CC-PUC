@@ -2,38 +2,23 @@
 #include <string.h>
 
 char convert(char c) {
-	if (c == '-') return '-';
-	if (c >= '0' && c <= '9') return c;
+	if (c >= '0' && c <= '9' || c == '-') return c;
 	if (strchr("abcABC", c)) return '2';
-	if (c >= 'D' && c <= 'F' || c >= 'd' && c <= 'f') {
-		return '3';
-	}
-	if (c >= 'G' && c <= 'I' || c >= 'g' && c <= 'i') {
-		return '4';
-	}
-	if (c >= 'J' && c <= 'L' || c >= 'j' && c <= 'l') {
-		return '5';
-	}
-	if (c >= 'M' && c <= 'O' || c >= 'm' && c <= 'o') {
-		return '6';
-	}
-	if (c >= 'P' && c <= 'S' || c >= 'p' && c <= 's') {
-		return '7';
-	}
-	if (c >= 'T' && c <= 'V' || c >= 't' && c <= 'v') {
-		return '8';
-	}
-	if (c >= 'W' && c <= 'Z' || c >= 'w' && c <= 'z') {
-		return '9';
-	}
+	if (strchr("defDEF", c)) return '3';
+	if (strchr("ghiGHI", c)) return '4';
+	if (strchr("jklJKL", c)) return '5';
+	if (strchr("mnoMNO", c)) return '6';
+	if (strchr("pqrsPQRS", c)) return '7';
+	if (strchr("tuvTUV", c)) return '8';
+	if (strchr("wxyzWXYZ", c)) return '9';
 	return 0;
 }
 
 int main(void) {
 	char str[16];
-	scanf("%s", str);
+	scanf("%15s", str);
 	for (int i = 0; i < strlen(str); i++) {
-			printf("%c", convert(str[i]));
+		printf("%c", convert(str[i]));
 	}
 	// printf("\n");
 	return 0;

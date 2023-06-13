@@ -4,20 +4,26 @@
 
 // clear && gcc soma.c -o soma.exe && ./soma.exe < pub.in > out.txt
 
-int metodo(int somaVal, int* ptrInicio, int* array, int arrayLength) {
+int metodo(int somaVal, int* array, int arrayLength) {
 	int soma = 0, qtdRetangulos = 0;
-	for (int i = *ptrInicio; i < arrayLength; i++) {
+	static int inicio = 0;
+
+	for (int i = inicio; i < arrayLength; i++) {
 		if (array[i] <= somaVal) {
 			if (array[i] + soma <= 4) {
 				soma += array[i];
 				if (soma == 4) qtdRetangulos++;
+				if (i == arrayLength - 1) {
+					inicio = i + 1;
+					return qtdRetangulos;
+				}
 			} else {
-				*ptrInicio = i;
+				inicio = i;
 				return qtdRetangulos;
 			}
 		} else {
-			*ptrInicio = i + 1;
-			return 0;
+			inicio = i + 1;
+			return qtdRetangulos;
 		}
 	}
 	return -1;
@@ -25,7 +31,7 @@ int metodo(int somaVal, int* ptrInicio, int* array, int arrayLength) {
 
 int main() {
 
-	int arrayLength, soma, qtdRetangulos = 0, inicio = 0;
+	int arrayLength, soma, qtdRetangulos = 0;
 
 	scanf("%d %d", &arrayLength, &soma);
 
@@ -37,11 +43,13 @@ int main() {
 	}
 
 	int resultado;
-	while ((resultado = metodo(soma, &inicio, array, arrayLength)) != -1) {
+	while ((resultado = metodo(soma, array, arrayLength)) != -1) {
 		qtdRetangulos += resultado;
 	}
 
-	printf("QtdRetangulos: %d\n", qtdRetangulos);
+	printf("qtdRetangulos: %d\n", qtdRetangulos);
+
+	free(array);
 
 	return 0;
 }

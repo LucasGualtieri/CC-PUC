@@ -1,35 +1,37 @@
 #include <stdio.h>
 // ./main < in.txt > out.txt
-// excessoQuota += quotaMbMensal - scanf("%d", &gastoMensal); Isso não funciona no verde
+// saldo += quotaMensalMB - scanf("%d", &gastoMensal); Isso não funciona no verde
 
 int main(void) {
-	int quotaMbMensal, numeroDeMeses, gastoMensal, excessoQuota = 0;
-	scanf("%d", &quotaMbMensal);
+	const int quotaMensalMB;
+	int numeroDeMeses, saldo = 0;
+	scanf("%d", &quotaMensalMB);
 	scanf("%d", &numeroDeMeses);
 
 	for (int i = 0; i < numeroDeMeses; i++) {
-		scanf("%d", &gastoMensal);
-		excessoQuota += quotaMbMensal - gastoMensal;
+		int gastoNoMes;
+		scanf("%d", &gastoNoMes);
+		saldo += quotaMensalMB - gastoNoMes;
 	}
 
-	printf("%d", excessoQuota + quotaMbMensal);
+	printf("%d", saldo + quotaMensalMB);
 	return 0;
 }
 
 // Alternativa com vetor
 // int main(void) {
-//     int quotaMbMensal, numeroDeMeses, excessoQuota = 0;
+//     int quotaMensalMB, numeroDeMeses, saldo = 0;
 
-//     scanf("%d", &quotaMbMensal);
+//     scanf("%d", &quotaMensalMB);
 //     scanf("%d", &numeroDeMeses);
 
 //     int vetorGastoMensal[numeroDeMeses];
 
 //     for (int i = 0; i < numeroDeMeses; i++) {
 //         scanf("%d", &vetorGastoMensal[i]);
-//         excessoQuota += quotaMbMensal - vetorGastoMensal[i];
+//         saldo += quotaMensalMB - vetorGastoMensal[i];
 //     }
 
-//     printf("%d", excessoQuota + quotaMbMensal);
+//     printf("%d", saldo + quotaMensalMB);
 //     return 0;
 // }

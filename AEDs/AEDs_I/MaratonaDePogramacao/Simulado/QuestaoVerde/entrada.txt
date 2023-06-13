@@ -1,0 +1,5 @@
+10 // quotaMensalMB
+3 // numeroDeMeses
+4 // gastoNoMes 1° vez
+6 // gastoNoMes 2° vez
+2 // gastoNoMes 3° vez
