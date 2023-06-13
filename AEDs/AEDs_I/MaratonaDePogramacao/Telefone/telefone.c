@@ -5,7 +5,7 @@ char convert(char c) {
 	if (c == '-') {
 		return '-';
 	}
-	if (c >= 'A' && c <= 'C' || c >= 'a' && c <= 'c') {
+	if (strchr("abcABC", c)) {
 		return '2';
 	}
 	if (c >= 'D' && c <= 'F' || c >= 'd' && c <= 'f') {
@@ -42,5 +42,6 @@ int main(void) {
 			printf("%c", convert(str[i]));
 		}
 	}
+	// printf("\n");
 	return 0;
 }
