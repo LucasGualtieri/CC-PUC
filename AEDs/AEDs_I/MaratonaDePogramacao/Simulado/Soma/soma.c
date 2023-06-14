@@ -4,19 +4,20 @@
 
 // clear && gcc soma.c -o soma.exe && ./soma.exe < pub.in > out.txt
 
-int metodo(int somaVal, int* array, int arrayLength) {
+// Essa questão está incompleta, a forma correta é MUITO mais difícil e eu não sei fazer :(
+// https://olimpiada.ic.unicamp.br/pratique/pu/2019/f1/soma/
+
+int metodo(int targetSoma, int* array, int arraySize) {
+
 	int soma = 0, qtdRetangulos = 0;
 	static int inicio = 0;
+	if (inicio >= arraySize) return -1;
 
-	for (int i = inicio; i < arrayLength; i++) {
-		if (array[i] <= somaVal) {
+	for (int i = inicio; i < arraySize; i++, inicio++) {
+		if (array[i] <= targetSoma) {
 			if (array[i] + soma <= 4) {
 				soma += array[i];
-				if (soma == 4) qtdRetangulos++;
-				if (i == arrayLength - 1) {
-					inicio = i + 1;
-					return qtdRetangulos;
-				}
+				if (soma == targetSoma) qtdRetangulos++;
 			} else {
 				inicio = i;
 				return qtdRetangulos;
@@ -26,30 +27,28 @@ int metodo(int somaVal, int* array, int arrayLength) {
 			return qtdRetangulos;
 		}
 	}
-	return -1;
+	return qtdRetangulos;
 }
 
 int main() {
 
-	int arrayLength, soma, qtdRetangulos = 0;
+	int arraySize, targetSoma, qtdRetangulos = 0;
 
-	scanf("%d %d", &arrayLength, &soma);
+	scanf("%d %d", &arraySize, &targetSoma);
 
-	// int array[arrayLength];
-	int* array = (int*)malloc(arrayLength * sizeof(int));
+	int array[arraySize];
 
-	for (int i = 0; i < arrayLength; i++) {
+	for (int i = 0; i < arraySize; i++) {
 		scanf("%d", &array[i]);
 	}
 
 	int resultado;
-	while ((resultado = metodo(soma, array, arrayLength)) != -1) {
+	while ((resultado = metodo(targetSoma, array, arraySize)) != -1) {
 		qtdRetangulos += resultado;
 	}
 
-	printf("qtdRetangulos: %d\n", qtdRetangulos);
-
-	free(array);
+	// printf("qtdRetangulos: %d\n", qtdRetangulos);
+	printf("%d", qtdRetangulos);
 
 	return 0;
 }
