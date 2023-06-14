@@ -2,11 +2,11 @@
 // ./main < in.txt > out.txt
 // saldo += quotaMensalMB - scanf("%d", &gastoMensal); Isso não funciona no verde
 
-int main(void) {
-	const int quotaMensalMB;
-	int numeroDeMeses, saldo = 0;
-	scanf("%d", &quotaMensalMB);
-	scanf("%d", &numeroDeMeses);
+int main() {
+
+	int quotaMensalMB, numeroDeMeses, saldo = 0;
+
+	scanf("%d %d", &quotaMensalMB, &numeroDeMeses);
 
 	for (int i = 0; i < numeroDeMeses; i++) {
 		int gastoNoMes;
@@ -15,6 +15,7 @@ int main(void) {
 	}
 
 	printf("%d", saldo + quotaMensalMB);
+
 	return 0;
 }
 

@@ -1,6 +1,5 @@
 *.exe
 *.o
-*.vscode
 *.class
 *replay_pid*
 *.Identifier

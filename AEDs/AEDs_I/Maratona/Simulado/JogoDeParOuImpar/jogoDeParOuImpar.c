@@ -13,7 +13,7 @@
 	}
 */
 
-int main(void) {
+int main() {
 	int escolha, jogador1, jogador2;
 
 	scanf("%d, %d, %d", &escolha, &jogador2);
