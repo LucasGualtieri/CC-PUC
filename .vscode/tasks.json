@@ -10,7 +10,7 @@
 				"${file}",
 				"-I/home/lucas/PC-HOME/CC-PUC/Bibliotecas",
 				"-o",
-				"${fileDirname}/${fileBasenameNoExtension}"
+				"/home/lucas/PC-HOME/OutputExe/${fileBasenameNoExtension}.exe" // .exe optional
 			],
 			"options": {
 				"cwd": "${fileDirname}"
