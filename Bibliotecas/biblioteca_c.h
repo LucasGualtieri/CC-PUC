@@ -30,11 +30,10 @@ bool flushStdin(FILE* stream) {
 
 	// scanf("%d%*c", &idade);
 
-	int c = fgetc(stream);
+	if (stream == 0) stream = stdin;
 
-	if (c != '\n' && c != EOF) {
-		ungetc(c, stream);
-	}
+	char c;
+	while ((c = fgetc(stream)) != '\n' && c != EOF) { }
 }
 
 /*!
@@ -43,9 +42,12 @@ bool flushStdin(FILE* stream) {
  * @param flush se == 1 limpará a entrada padrão.
  * @param flush se == 0 não limpará a entrada padrão.
  */
-void Pause(bool flushing) {
+void Pause(/*bool flushing*/) {
 
-	if (flushing) flushStdin(stdin);
+	// if (flushing) flushStdin(stdin);
+
+	// Importante to clear the STDIN BEFORE getting here
+	// So uso for example scanf("%d%*c", &var);
 
 	printf("Paused | Press ENTER to continue...");
 

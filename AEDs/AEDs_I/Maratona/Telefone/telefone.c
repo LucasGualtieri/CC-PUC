@@ -15,11 +15,13 @@ char convert(char c) {
 }
 
 int main(void) {
-	char str[16];
+
+	char str[16]; // 15 + 1 para considerar o '\0'
 	scanf("%15s", str);
+
 	for (int i = 0; i < strlen(str); i++) {
-		printf("%c", convert(str[i]));
+		putchar(convert(str[i]));
 	}
-	// printf("\n");
+
 	return 0;
 }

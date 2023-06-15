@@ -14,9 +14,10 @@
 */
 
 int main() {
+
 	int escolha, jogador1, jogador2;
 
-	scanf("%d, %d, %d", &escolha, &jogador2);
+	scanf("%d %d %d", &escolha, &jogador1, &jogador2);
 
 	if ((jogador1 + jogador2) % 2 == 0) {
 		printf("%c", escolha ? '1' : '0');
