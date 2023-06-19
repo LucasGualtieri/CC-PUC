@@ -2,7 +2,10 @@
 	"configurations": [
 		{
 			"name": "Linux",
-			"includePath": ["${workspaceFolder}/**", "../CC-PUC/Bibliotecas"],
+			"includePath": [
+				"${workspaceFolder}/**",
+				"/home/lucas/PC-HOME/CC-PUC/Bibliotecas"
+			],
 			"defines": [],
 			"compilerPath": "/usr/bin/gcc",
 			"cStandard": "c17",

@@ -11,7 +11,7 @@
 #include <time.h>
 // #include <windows.h>
 
-#define Infinity 2147483647
+#define Infinity 2'147'483'647
 #define arrayLength(array) (int)(sizeof(array) / sizeof(array[0]))
 #define RANDOM(minRange, maxRange) (rand() % ((maxRange + 1) - minRange)) + minRange
 
@@ -23,8 +23,8 @@ typedef char* String;
 // #define and &&
 #define OR ||
 // #define or ||
-#define MaxStringLength 2000
-#define ends 2000
+#define MaxStringLength 2'000
+#define ends 2'000
 
 bool flushStdin(FILE* stream) {
 	if (stream == 0) stream = stdin;
@@ -89,7 +89,7 @@ void IntArrayPrint(int* array, int arrayLength) {
 void IntArrayFillRand(int* array, int arrayLength, int minRange, int maxRange) {
 
 	if (minRange > maxRange) {
-		int aux = maxRange;
+		int aux	 = maxRange;
 		maxRange = minRange;
 		minRange = aux;
 	}
@@ -119,9 +119,9 @@ void SelectionSort(int* array, int arrayLength) {
 		for (int j = i + 1; j < arrayLength; j++) {
 			if (array[menor] > array[j]) menor = j;
 		}
-		int swap = array[menor];
+		int swap	 = array[menor];
 		array[menor] = array[i];
-		array[i] = swap;
+		array[i]	 = swap;
 	}
 }
 
@@ -301,18 +301,6 @@ char* getstr(FILE* stream) {
 	return string;
 }
 
-// Reading int from STDIN
-int readInt(const char* string) {
-	int integer;
-
-	printf("%s ", string);
-	scanf("%d", &integer);
-
-	flushStdin(0);
-
-	return integer;
-}
-
 char* readString(char* string) {
 	printf("%s", string);
 	return getstr(stdin);
@@ -360,8 +348,8 @@ void freeSplit(char** split) { // Better name? freeStringArray
 }
 
 char** split(char* string, char* regex, bool freeBuffer) {
-	char** array = NULL;
-	int sizeOfArray = 0;
+	char** array	   = NULL;
+	int	   sizeOfArray = 0;
 
 	char* position = string; // Track the position within the buffer
 
@@ -389,7 +377,7 @@ char** split(char* string, char* regex, bool freeBuffer) {
 		position += strlen(array[sizeOfArray++]) + 1;
 	}
 
-	array = (char**)realloc(array, (sizeOfArray + 1) * sizeof(char*));
+	array			   = (char**)realloc(array, (sizeOfArray + 1) * sizeof(char*));
 	array[sizeOfArray] = NULL;
 
 	if (freeBuffer) free(string);
@@ -398,7 +386,7 @@ char** split(char* string, char* regex, bool freeBuffer) {
 }
 
 char* replaceAll(char* string, char* regex, char* replacement) {
-	char* aux = (char*)malloc(2000 * sizeof(char));
+	char* aux = (char*)malloc(2'000 * sizeof(char));
 
 	for (int i = 0, j = 0; i < strlen(string);) {
 		if (!strcmp(substr(string, i, strlen(regex) + i), regex)) {
