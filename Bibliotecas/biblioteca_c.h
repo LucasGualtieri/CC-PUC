@@ -27,9 +27,9 @@ typedef char* String;
 #define ends 2000
 
 bool flushStdin(FILE* stream) {
-    if (stream == 0) stream = stdin;
-    char c;
-    while ((c = fgetc(stream)) != '\n' && c != EOF) {}
+	if (stream == 0) stream = stdin;
+	char c;
+	while ((c = fgetc(stream)) != '\n' && c != EOF) { }
 }
 
 /*!
@@ -40,64 +40,64 @@ bool flushStdin(FILE* stream) {
  */
 void Pause(bool flushing) {
 
-    if (flushing) flushStdin(stdin);
+	if (flushing) flushStdin(stdin);
 
-    printf("Paused | Press ENTER to continue...");
+	printf("Paused | Press ENTER to continue...");
 
-    if (getchar() != '\n') {
-        printf("\n------- | PROGRAMA EXITADO | -------\n\n");
-        exit(0);
-    }
+	if (getchar() != '\n') {
+		printf("\n------- | PROGRAMA EXITADO | -------\n\n");
+		exit(0);
+	}
 }
 
 int SizeOfStr(char* string) {
-    return strlen(string) + 1;
+	return strlen(string) + 1;
 }
 
 char toLower(char c) {
-    if (c >= 'A' AND c <= 'Z') return c += 32;
-    return c;
+	if (c >= 'A' AND c <= 'Z') return c += 32;
+	return c;
 }
 
 void toUpper(char* string) {
-    for (int i = 0; i < strlen(string); i++) {
-        if (string[i] >= 'a' AND string[i] <= 'z') {
-            string[i] -= 32;
-        }
-    }
+	for (int i = 0; i < strlen(string); i++) {
+		if (string[i] >= 'a' AND string[i] <= 'z') {
+			string[i] -= 32;
+		}
+	}
 }
 
 // Returns 1 if number is prime.
 bool isPrime(int inteiro) {
-    if (inteiro == 1) return false;
-    for (int i = inteiro - 1; i > 1; i--) {
-        if (inteiro % i == 0) return false;
-    }
-    return true;
+	if (inteiro == 1) return false;
+	for (int i = inteiro - 1; i > 1; i--) {
+		if (inteiro % i == 0) return false;
+	}
+	return true;
 }
 
 // arrayPrint para inteiros
 void IntArrayPrint(int* array, int arrayLength) {
-    printf("{ ");
-    for (int i = 0; i < arrayLength; i++) {
-        printf("%d", array[i]);
-        printf("%s", i < arrayLength - 1 ? ", " : " }\n");
-    }
+	printf("{ ");
+	for (int i = 0; i < arrayLength; i++) {
+		printf("%d", array[i]);
+		printf("%s", i < arrayLength - 1 ? ", " : " }\n");
+	}
 }
 
 // ArrayFillRand para Inteiros - Linux
 void IntArrayFillRand(int* array, int arrayLength, int minRange, int maxRange) {
 
-    if (minRange > maxRange) {
-        int aux  = maxRange;
-        maxRange = minRange;
-        minRange = aux;
-    }
+	if (minRange > maxRange) {
+		int aux = maxRange;
+		maxRange = minRange;
+		minRange = aux;
+	}
 
-    srand(time(NULL));
-    for (int i = 0; i < arrayLength; i++) {
-        array[i] = RANDOM(minRange, maxRange);
-    }
+	srand(time(NULL));
+	for (int i = 0; i < arrayLength; i++) {
+		array[i] = RANDOM(minRange, maxRange);
+	}
 }
 
 // ArrayFillRand para Inteiros - Windows
@@ -114,150 +114,150 @@ void IntArrayFillRand(int* array, int arrayLength, int minRange, int maxRange) {
 
 // Selection Sort para Inteiros em ordem Crescente
 void SelectionSort(int* array, int arrayLength) {
-    for (int i = 0; i < arrayLength - 1; i++) {
-        int menor = i;
-        for (int j = i + 1; j < arrayLength; j++) {
-            if (array[menor] > array[j]) menor = j;
-        }
-        int swap     = array[menor];
-        array[menor] = array[i];
-        array[i]     = swap;
-    }
+	for (int i = 0; i < arrayLength - 1; i++) {
+		int menor = i;
+		for (int j = i + 1; j < arrayLength; j++) {
+			if (array[menor] > array[j]) menor = j;
+		}
+		int swap = array[menor];
+		array[menor] = array[i];
+		array[i] = swap;
+	}
 }
 
 char* substr(char* string, int beginning, int end) {
-    if (end < 1) return string;
+	if (end < 1) return string;
 
-    if (end == ends) end = strlen(string);
+	if (end == ends) end = strlen(string);
 
-    int length = end - beginning;
+	int length = end - beginning;
 
-    static char strAux[MaxStringLength];
-    // char* strAux = (char*)malloc((length + 1) * sizeof(char));
+	static char strAux[MaxStringLength];
+	// char* strAux = (char*)malloc((length + 1) * sizeof(char));
 
-    for (int i = 0; i < length; i++) {
-        strAux[i] = string[beginning++];
-    }
+	for (int i = 0; i < length; i++) {
+		strAux[i] = string[beginning++];
+	}
 
-    strAux[length] = '\0';
+	strAux[length] = '\0';
 
-    return strAux;
+	return strAux;
 }
 
 int indexOf(char* string, char* reference, int occurrence) {
 
-    for (int i = 0; i <= strlen(string) - strlen(reference); i++) {
-        char* substring = substr(string, i, strlen(reference) + i);
+	for (int i = 0; i <= strlen(string) - strlen(reference); i++) {
+		char* substring = substr(string, i, strlen(reference) + i);
 
-        if (!strcmp(substring, reference)) {
-            occurrence--;
-            if (occurrence == 0) return i;
-        }
-    }
-    return -1;
+		if (!strcmp(substring, reference)) {
+			occurrence--;
+			if (occurrence == 0) return i;
+		}
+	}
+	return -1;
 }
 
 /*
-        // Confere se o CPF é válido ou não
-        bool checkCPF(String cpf) {
+		// Confere se o CPF é válido ou não
+		bool checkCPF(String cpf) {
 
-                String cpfCopy = MaskCPF(cpf);
+				String cpfCopy = MaskCPF(cpf);
 
-                int soma = 0;
+				int soma = 0;
 
-                for (int i = 0, j = 10; j >= 2; i++) {
-                        if (cpfCopy[i] != '.' && cpfCopy[i] != '-') {
-                                soma += (cpfCopy[i] - '0') * j;
-                                j--;
-                        }
-                }
+				for (int i = 0, j = 10; j >= 2; i++) {
+						if (cpfCopy[i] != '.' && cpfCopy[i] != '-') {
+								soma += (cpfCopy[i] - '0') * j;
+								j--;
+						}
+				}
 
-                // Settando o primeiro dígito verificador
-                if (soma % 11 < 2) {
-                        // cpfCopy[cpfCopy.length() - 2] = '0';
-                } else {
-                        // sprintf(&cpfCopy[cpfCopy.length() - 2], "%d", 11 - (soma % 11));
-                }
+				// Settando o primeiro dígito verificador
+				if (soma % 11 < 2) {
+						// cpfCopy[cpfCopy.length() - 2] = '0';
+				} else {
+						// sprintf(&cpfCopy[cpfCopy.length() - 2], "%d", 11 - (soma % 11));
+				}
 
-                soma = 0;
+				soma = 0;
 
-                for (int i = 0, j = 11; j >= 2; i++) {
-                        if (cpfCopy[i] != '.' && cpfCopy[i] != '-') {
-                                soma += (cpfCopy[i] - '0') * j;
-                                j--;
-                        }
-                }
+				for (int i = 0, j = 11; j >= 2; i++) {
+						if (cpfCopy[i] != '.' && cpfCopy[i] != '-') {
+								soma += (cpfCopy[i] - '0') * j;
+								j--;
+						}
+				}
 
-                // Settando o segundo dígito verificador
-                if (soma % 11 < 2) {
-                        // cpfCopy[cpfCopy.length() - 1] = '0';
-                } else {
-                        // sprintf(&cpfCopy[cpfCopy.length() - 1], "%d", 11 - (soma % 11));
-                }
+				// Settando o segundo dígito verificador
+				if (soma % 11 < 2) {
+						// cpfCopy[cpfCopy.length() - 1] = '0';
+				} else {
+						// sprintf(&cpfCopy[cpfCopy.length() - 1], "%d", 11 - (soma % 11));
+				}
 
-                // cout << cpfCopy << endl;
-                // cout << cpf << endl;
+				// cout << cpfCopy << endl;
+				// cout << cpf << endl;
 
-                return cpfCopy == MaskCPF(cpf) ? true : false;
-        }
+				return cpfCopy == MaskCPF(cpf) ? true : false;
+		}
 */
 
 // Retorna uma string com mascara a partir de um long int.
 char* MaskCPF(unsigned long CPFNumber) {
 
-    if (0) { // !checkCPF(CPFNumber);
-        puts("CPF inválido!");
-        // return NULL;
-    }
+	if (0) { // !checkCPF(CPFNumber);
+		puts("CPF inválido!");
+		// return NULL;
+	}
 
-    String cpf = (String)malloc(15 * sizeof(char));
-    if (cpf == NULL) {
-        fprintf(stderr, "Error: Failed to allocate memory in MaskCPF()\n");
-        return NULL;
-    }
+	String cpf = (String)malloc(15 * sizeof(char));
+	if (cpf == NULL) {
+		fprintf(stderr, "Error: Failed to allocate memory in MaskCPF()\n");
+		return NULL;
+	}
 
-    sprintf(cpf, "%ld", CPFNumber);
+	sprintf(cpf, "%ld", CPFNumber);
 
-    char CPFCopy[15] = "000.000.000-00";
+	char CPFCopy[15] = "000.000.000-00";
 
-    // Apply mask
-    for (int i = 0, j = 0; cpf[i] != '\0'; i++, j++) {
-        if (cpf[i] == '.' || cpf[i] == '-') i++;
-        if (j == 3 || j == 7 || j == 11) j++;
-        CPFCopy[j] = cpf[i];
-    }
+	// Apply mask
+	for (int i = 0, j = 0; cpf[i] != '\0'; i++, j++) {
+		if (cpf[i] == '.' || cpf[i] == '-') i++;
+		if (j == 3 || j == 7 || j == 11) j++;
+		CPFCopy[j] = cpf[i];
+	}
 
-    strcpy(cpf, CPFCopy);
+	strcpy(cpf, CPFCopy);
 
-    return cpf;
+	return cpf;
 
-    /*
-            There are a few potential issues with the code:
+	/*
+			There are a few potential issues with the code:
 
-            The function takes a long argument, but a CPF number is usually represented as a 11-digit integer. The long data type may not be sufficient to represent all possible CPF numbers, as it has a maximum value of 2^63-1. It would be better to use an unsigned integer data type, such as unsigned long long.
+			The function takes a long argument, but a CPF number is usually represented as a 11-digit integer. The long data type may not be sufficient to represent all possible CPF numbers, as it has a maximum value of 2^63-1. It would be better to use an unsigned integer data type, such as unsigned long long.
 
-            The code checks for an invalid CPF number using the expression if (0). This is always false and will never execute the code inside the block. It's unclear what the intention was here, but if the idea was to check for an invalid CPF number, a better approach would be to use the checkCPF function and return NULL if the number is invalid.
+			The code checks for an invalid CPF number using the expression if (0). This is always false and will never execute the code inside the block. It's unclear what the intention was here, but if the idea was to check for an invalid CPF number, a better approach would be to use the checkCPF function and return NULL if the number is invalid.
 
-            The function allocates memory for a String object, which is not a standard C data type. It's possible that this is a custom data type defined elsewhere in the code, but without knowing its implementation it's hard to tell if this allocation is correct. It would be safer to use a standard C string (char*) instead.
+			The function allocates memory for a String object, which is not a standard C data type. It's possible that this is a custom data type defined elsewhere in the code, but without knowing its implementation it's hard to tell if this allocation is correct. It would be safer to use a standard C string (char*) instead.
 
-            The function allocates memory for the CPF string, but it never frees that memory. This can lead to memory leaks if the function is called multiple times.
+			The function allocates memory for the CPF string, but it never frees that memory. This can lead to memory leaks if the function is called multiple times.
 
-            The CPFCopy array is initialized to "000.000.000-00", which assumes that all CPF numbers have this format. However, CPF numbers are sometimes represented without the punctuation, so this may not always be the case. It would be better to initialize the array to all zeros and let the mask be applied dynamically based on the length of the input string.
+			The CPFCopy array is initialized to "000.000.000-00", which assumes that all CPF numbers have this format. However, CPF numbers are sometimes represented without the punctuation, so this may not always be the case. It would be better to initialize the array to all zeros and let the mask be applied dynamically based on the length of the input string.
 
-            The function returns a pointer to the CPF string, which is allocated on the heap. This means that the caller of the function is responsible for freeing the memory when it's no longer needed. However, the caller may not be aware of this and may forget to free the memory, leading to memory leaks. A better approach would be to pass a pre-allocated buffer to the function, and have the function fill in that buffer with the masked CPF number. This way, the caller doesn't need to worry about memory management.
-    */
+			The function returns a pointer to the CPF string, which is allocated on the heap. This means that the caller of the function is responsible for freeing the memory when it's no longer needed. However, the caller may not be aware of this and may forget to free the memory, leading to memory leaks. A better approach would be to pass a pre-allocated buffer to the function, and have the function fill in that buffer with the masked CPF number. This way, the caller doesn't need to worry about memory management.
+	*/
 }
 
 // Retorna uma ' '-terminated string.
 char* trim(char* string) {
 
-    int substringLength = indexOf(string, " ", 1);
+	int substringLength = indexOf(string, " ", 1);
 
-    string[substringLength] = '\0';
+	string[substringLength] = '\0';
 
-    string = (char*)realloc(string, substringLength * sizeof(char));
+	string = (char*)realloc(string, substringLength * sizeof(char));
 
-    return string;
+	return string;
 }
 
 /*!
@@ -267,43 +267,55 @@ char* trim(char* string) {
  */
 char* getstr(FILE* stream) {
 
-    if (stream == 0) stream = stdin;
+	if (stream == 0) stream = stdin;
 
-    // Limpando o STDIN
-    // flushStdin(stream); // Since I changed the logic to flushStdin()
-    // it's not working as intended, maybe it'll be necessary to add a bool
-    // flush just like the pause() function
+	// Limpando o STDIN
+	// flushStdin(stream); // Since I changed the logic to flushStdin()
+	// it's not working as intended, maybe it'll be necessary to add a bool
+	// flush just like the pause() function
 
-    // Allocate memory for string
-    char* string = (char*)malloc(MaxStringLength * sizeof(char));
-    if (string == NULL) {
-        fprintf(stdin, "Error: Failed to allocate memory in getstr()\n");
-        return NULL;
-    }
+	// Allocate memory for string
+	char* string = (char*)malloc(MaxStringLength * sizeof(char));
+	if (string == NULL) {
+		fprintf(stdin, "Error: Failed to allocate memory in getstr()\n");
+		return NULL;
+	}
 
-    // Reading string from file
-    if (fgets(string, MaxStringLength, stream) == NULL) {
-        fprintf(stdin, "Error: Failed to read string from file in getstr()\n");
-        free(string);
-        return NULL;
-    }
+	// Reading string from file
+	if (fgets(string, MaxStringLength, stream) == NULL) {
+		fprintf(stdin, "Error: Failed to read string from file in getstr()\n");
+		free(string);
+		return NULL;
+	}
 
-    // *string[len] == *(string[len])
-    string[(int)strcspn(string, "\r\n")] = '\0';
+	// *string[len] == *(string[len])
+	string[(int)strcspn(string, "\r\n")] = '\0';
 
-    // Reallocating memory to exact size of string
-    string = (char*)realloc(string, (strlen(string) + 1) * sizeof(char));
-    if (string == NULL) {
-        fprintf(stdin, "Error: Failed to reallocate memory in getstr()\n");
-        return NULL;
-    }
+	// Reallocating memory to exact size of string
+	string = (char*)realloc(string, (strlen(string) + 1) * sizeof(char));
+	if (string == NULL) {
+		fprintf(stdin, "Error: Failed to reallocate memory in getstr()\n");
+		return NULL;
+	}
 
-    return string;
+	return string;
+}
+
+// Reading int from STDIN
+int readInt(const char* string) {
+	int integer;
+
+	printf("%s ", string);
+	scanf("%d", &integer);
+
+	flushStdin(0);
+
+	return integer;
 }
 
 char* readString(char* string) {
-    printf("%s", string);
-    return getstr(stdin);
+	printf("%s", string);
+	return getstr(stdin);
 }
 
 /*!
@@ -313,96 +325,96 @@ char* readString(char* string) {
  */
 void strcopy(char** buffer, char* string) {
 
-    if (*buffer != (void*)0x64) {
-        free(*buffer);
-    }
+	if (*buffer != (void*)0x64) {
+		free(*buffer);
+	}
 
-    *buffer = string;
+	*buffer = string;
 }
 
 // Pointer String Concat. Equivalente a um strcat, mas para Pointer Strings. pstrcat(&string, "New String");
 char* pstrcat(char* source, char* append) {
-    source = (char*)realloc(source, strlen(source) + strlen(append) + 1 * sizeof(char));
-    return strcat(source, append);
+	source = (char*)realloc(source, strlen(source) + strlen(append) + 1 * sizeof(char));
+	return strcat(source, append);
 }
 
 // Create String. Cria um Pointer String a partir de um string hardcoded. createpstr(&string, "New String");
 void mallocstr(char** strArg, char* string) {
-    *strArg = (char*)malloc((strlen(string) + 1) * sizeof(char));
-    strcpy(*strArg, string);
+	*strArg = (char*)malloc((strlen(string) + 1) * sizeof(char));
+	strcpy(*strArg, string);
 }
 
 // Returns the length of a null terminated array of strings
 int strArrayLen(String* listaAtual) {
-    int i = 0;
-    while (listaAtual[i++] != NULL) {}
-    return i - 1;
+	int i = 0;
+	while (listaAtual[i++] != NULL) { }
+	return i - 1;
 }
 
 // Frees every malloc'd string of a null terminated array of strings AND the buffer itself
 void freeSplit(char** split) { // Better name? freeStringArray
-    for (int i = 0; split[i] != NULL; i++) {
-        free(split[i]);
-    }
-    free(split);
+	for (int i = 0; split[i] != NULL; i++) {
+		free(split[i]);
+	}
+	free(split);
 }
 
 char** split(char* string, char* regex, bool freeBuffer) {
-    char** array       = NULL;
-    int    sizeOfArray = 0;
+	char** array = NULL;
+	int sizeOfArray = 0;
 
-    char* position = string; // Track the position within the buffer
+	char* position = string; // Track the position within the buffer
 
-    while (true) {
-        array = (char**)realloc(array, (sizeOfArray + 1) * sizeof(char*));
+	while (true) {
+		array = (char**)realloc(array, (sizeOfArray + 1) * sizeof(char*));
 
-        if (indexOf(position, regex, 1) != -1) {
-            array[sizeOfArray] = (char*)malloc(indexOf(position, regex, 1) * sizeof(char));
-            strcpy(array[sizeOfArray], substr(position, 0, indexOf(position, regex, 1)));
-        } else {
+		if (indexOf(position, regex, 1) != -1) {
+			array[sizeOfArray] = (char*)malloc(indexOf(position, regex, 1) * sizeof(char));
+			strcpy(array[sizeOfArray], substr(position, 0, indexOf(position, regex, 1)));
+		} else {
 
-            int sizeOfAllocation;
-            if (sizeOfArray == 0) {
-                sizeOfAllocation = strlen(string); //  Only string available
-            } else {
-                sizeOfAllocation = strlen(array[sizeOfArray - 1]); // Last string read
-            }
+			int sizeOfAllocation;
+			if (sizeOfArray == 0) {
+				sizeOfAllocation = strlen(string); //  Only string available
+			} else {
+				sizeOfAllocation = strlen(array[sizeOfArray - 1]); // Last string read
+			}
 
-            array[sizeOfArray] = (char*)malloc(sizeOfAllocation * sizeof(char));
-            strcpy(array[sizeOfArray++], substr(position, 0, strlen(position)));
+			array[sizeOfArray] = (char*)malloc(sizeOfAllocation * sizeof(char));
+			strcpy(array[sizeOfArray++], substr(position, 0, strlen(position)));
 
-            break;
-        }
+			break;
+		}
 
-        position += strlen(array[sizeOfArray++]) + 1;
-    }
+		position += strlen(array[sizeOfArray++]) + 1;
+	}
 
-    array              = (char**)realloc(array, (sizeOfArray + 1) * sizeof(char*));
-    array[sizeOfArray] = NULL;
+	array = (char**)realloc(array, (sizeOfArray + 1) * sizeof(char*));
+	array[sizeOfArray] = NULL;
 
-    if (freeBuffer) free(string);
+	if (freeBuffer) free(string);
 
-    return array;
+	return array;
 }
 
 char* replaceAll(char* string, char* regex, char* replacement) {
-    char* aux = (char*)malloc(2000 * sizeof(char));
+	char* aux = (char*)malloc(2000 * sizeof(char));
 
-    for (int i = 0, j = 0; i < strlen(string);) {
-        if (!strcmp(substr(string, i, strlen(regex) + i), regex)) {
-            strcat(aux, replacement);
-            j += strlen(replacement);
-            i += strlen(regex);
-        } else {
-            aux[j] = string[i];
-            j++;
-            i++;
-        }
-    }
+	for (int i = 0, j = 0; i < strlen(string);) {
+		if (!strcmp(substr(string, i, strlen(regex) + i), regex)) {
+			strcat(aux, replacement);
+			j += strlen(replacement);
+			i += strlen(regex);
+		} else {
+			aux[j] = string[i];
+			j++;
+			i++;
+		}
+	}
 
-    aux[strlen(aux) + 1] = '\0';
+	aux[strlen(aux) + 1] = '\0';
 
-    return (char*)realloc(aux, (strlen(aux) + 1) * sizeof(char));
+	return (char*)realloc(aux, (strlen(aux) + 1) * sizeof(char));
 }
 
 #endif /* BIBLIOTECA_C_H_ */
