@@ -73,12 +73,13 @@ void ReplaceAll(string& str, string change, string replace) {
 	}
 }
 
-void flushStdin() {
-	string dummy;
-	getline(cin, dummy);
+void flush() {
+	cin.ignore(numeric_limits<streamsize>::max(), '\n');
 }
 
-string readString(istream& stream = cin) {
+string readString(string msg = "", istream& stream = cin) {
+
+	cout << msg;
 
 	string aux;
 
@@ -97,12 +98,37 @@ string readString(istream& stream = cin) {
 	return aux;
 }
 
-// int readint(string _String = "") {
-// 	int number;
-// 	cout << _String;
-// 	cin >> number;
-// 	return number;
-// }
+string readString(istream& stream = cin, string msg = "") {
+
+	cout << msg;
+
+	string aux;
+
+	try {
+
+		getline(stream, aux);
+
+		size_t pos = aux.find_first_of("\r\n");
+
+		if (pos != string::npos) aux.erase(pos);
+
+	} catch (const ios_base::failure ex) {
+		cerr << "Error reading input: " << ex.what() << endl;
+	}
+
+	return aux;
+}
+
+int readInt(string msg = "") {
+	
+	cout << msg;
+
+	int integer;
+	cin >> integer;
+
+	cin.ignore(numeric_limits<streamsize>::max(), '\n');
+	return integer;
+}
 
 // int readInt() {
 // 	string aux;
@@ -446,46 +472,6 @@ int indexOf(char* string, char* reference, int occurrence) {
 		}
 	}
 	return -1;
-}
-
-/*!
- * Retorna uma newline-terminated string.
- * @param file Pode ser substituido por stdin ou 0.
- * @param file Se igual a 0 Retorna uma newline-terminated string lida do stdin.
- */
-char* getstr(FILE* stream) {
-
-	if (stream == 0) stream = stdin;
-
-	// Limpando o STDIN
-	// flushStdin(stream);
-	flushStdin();
-
-	// Allocate memory for string
-	char* string = (char*)malloc(MaxStringLength * sizeof(char));
-	if (string == NULL) {
-		fprintf(stderr, "Error: Failed to allocate memory in getstr()\n");
-		return NULL;
-	}
-
-	// Reading string from file
-	if (fgets(string, MaxStringLength, stream) == NULL) {
-		fprintf(stderr, "Error: Failed to read string from file in getstr()\n");
-		free(string);
-		return NULL;
-	}
-
-	// *string[len] == *(string[len])
-	string[(int)strcspn(string, "\r\n")] = '\0';
-
-	// Reallocating memory to exact size of string
-	string = (char*)realloc(string, (strlen(string) + 1) * sizeof(char));
-	if (string == NULL) {
-		fprintf(stderr, "Error: Failed to reallocate memory in getstr()\n");
-		return NULL;
-	}
-
-	return string;
 }
 
 #endif /* BIBLIOTECA_H_ */
