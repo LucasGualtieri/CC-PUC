@@ -36,14 +36,18 @@
 
 using namespace std;
 
-void pause(string String = "") {
-	cout << "Paused" << String << " | Press ENTER to continue...";
-
+void flush() {
 	cin.ignore(numeric_limits<streamsize>::max(), '\n');
+}
 
-	char c = cin.get();
-	printf("%d", c);
-	if (c != '\n') {
+void pause(string String = "") {
+	cout << "Paused";
+	cout << (String.length() > 0 ? " " : "");
+	cout << String << " | Press ENTER to continue...";
+
+	// flush();
+
+	if (cin.get() != '\n') {
 		cout << "\n------- | PROGRAMA EXITADO | -------\n\n";
 		exit(0);
 	}
@@ -71,10 +75,6 @@ void ReplaceAll(string& str, string change, string replace) {
 			}
 		}
 	}
-}
-
-void flush() {
-	cin.ignore(numeric_limits<streamsize>::max(), '\n');
 }
 
 string readString(string msg = "", istream& stream = cin) {
