@@ -26,10 +26,10 @@ typedef char* String;
 #define MaxStringLength 2'000
 #define ends 2'000
 
-bool flushStdin(FILE* stream) {
+void flushStdin(FILE* stream) {
 	if (stream == 0) stream = stdin;
 	char c;
-	while ((c = fgetc(stream)) != '\n' && c != EOF) { }
+	while ((c = fgetc(stream)) != '\n' && c != EOF) continue;
 }
 
 /*!
@@ -89,7 +89,7 @@ void IntArrayPrint(int* array, int arrayLength) {
 void IntArrayFillRand(int* array, int arrayLength, int minRange, int maxRange) {
 
 	if (minRange > maxRange) {
-		int aux	 = maxRange;
+		int aux = maxRange;
 		maxRange = minRange;
 		minRange = aux;
 	}
@@ -119,9 +119,9 @@ void SelectionSort(int* array, int arrayLength) {
 		for (int j = i + 1; j < arrayLength; j++) {
 			if (array[menor] > array[j]) menor = j;
 		}
-		int swap	 = array[menor];
+		int swap = array[menor];
 		array[menor] = array[i];
-		array[i]	 = swap;
+		array[i] = swap;
 	}
 }
 
@@ -348,8 +348,8 @@ void freeSplit(char** split) { // Better name? freeStringArray
 }
 
 char** split(char* string, char* regex, bool freeBuffer) {
-	char** array	   = NULL;
-	int	   sizeOfArray = 0;
+	char** array = NULL;
+	int sizeOfArray = 0;
 
 	char* position = string; // Track the position within the buffer
 
@@ -377,7 +377,7 @@ char** split(char* string, char* regex, bool freeBuffer) {
 		position += strlen(array[sizeOfArray++]) + 1;
 	}
 
-	array			   = (char**)realloc(array, (sizeOfArray + 1) * sizeof(char*));
+	array = (char**)realloc(array, (sizeOfArray + 1) * sizeof(char*));
 	array[sizeOfArray] = NULL;
 
 	if (freeBuffer) free(string);
