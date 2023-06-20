@@ -19,11 +19,11 @@
 // #include <exception>
 // #include <biblioteca_c.h>
 
-#define Infinity 2147483647
+#define Infinity 2'147'483'647
 #define arrayLength(array) (sizeof(array) / sizeof(array[0]))
 #define RANDOM(minRange, maxRange) (rand() % ((maxRange + 1) - minRange)) + minRange
 
-#define MaxStringLength 2000
+#define MaxStringLength 2'000
 
 #define AND &&
 // #define and &&
@@ -53,13 +53,13 @@ void pause(string String = "") {
 	}
 }
 
-void trim(string& str) {
+void trim(string& str, char trim = ' ') {
 
-	for (int i = 0; str.at(0) == ' '; i++) {
+	for (int i = 0; str.at(0) == trim; i++) {
 		str.erase(0, 1);
 	}
 
-	for (int i = str.length() - 1; str.at(i) == ' '; i--) {
+	for (int i = str.length() - 1; str.at(i) == trim; i--) {
 		str.erase(i, 1);
 	}
 }
@@ -120,7 +120,7 @@ string readString(istream& stream = cin, string msg = "") {
 }
 
 int readInt(string msg = "") {
-	
+
 	cout << msg;
 
 	int integer;
@@ -150,7 +150,7 @@ int Rand(int maxRange = Infinity, int minRange = 0) {
 	srand(time(NULL));
 
 	if (minRange > maxRange) {
-		int aux = maxRange;
+		int aux	 = maxRange;
 		maxRange = minRange;
 		minRange = aux;
 	}
@@ -233,7 +233,7 @@ void ArrayFillRand(int* array, int arrayLength, int maxRange, int minRange = 0) 
 	int min_range = minRange;
 	if (minRange > maxRange) {
 		min_range = maxRange;
-		maxRange = minRange;
+		maxRange  = minRange;
 	}
 
 	srand(time(NULL));
@@ -251,7 +251,7 @@ void ArrayFillRand(float* array, int arrayLength, int maxRange, int minRange = 0
 	int min_range = minRange;
 	if (minRange > maxRange) {
 		min_range = maxRange;
-		maxRange = minRange;
+		maxRange  = minRange;
 	}
 
 	srand(time(NULL));
@@ -273,7 +273,7 @@ void vetorCrescente(int* array, int arrayLength) {
 		for (int j = 0; j < arrayLength; j++) {
 			if (array[j] < smallestArrayVal) {
 				smallestArrayVal = array[j];
-				index = j;
+				index			 = j;
 			}
 		}
 		array[index] = Infinity;
@@ -288,14 +288,14 @@ void vetorCrescente(int* array, int arrayLength) {
 
 // vetorCrescente para Float
 void vetorCrescente(float* array, int arrayLength) {
-	int index;
+	int	  index;
 	float arrayCopy[arrayLength];
 	for (int i = 0; i < arrayLength; i++) {
 		int smallestArrayVal = Infinity;
 		for (int j = 0; j < arrayLength; j++) {
 			if (array[j] < smallestArrayVal) {
 				smallestArrayVal = array[j];
-				index = j;
+				index			 = j;
 			}
 		}
 		array[index] = Infinity;
@@ -314,7 +314,7 @@ void ArrayAscendingOrder(int* array, int arrayLength) {
 	for (int i = 0; i < arrayLength; i++) {
 		for (int j = i + 1; j < arrayLength; j++) {
 			if (array[i] > array[j]) {
-				a = array[i];
+				a		 = array[i];
 				array[i] = array[j];
 				array[j] = a;
 			}
@@ -328,7 +328,7 @@ void ArrayAscendingOrder(float* array, int arrayLength) {
 	for (int i = 0; i < arrayLength; i++) {
 		for (int j = i + 1; j < arrayLength; j++) {
 			if (array[i] > array[j]) {
-				a = array[i];
+				a		 = array[i];
 				array[i] = array[j];
 				array[j] = a;
 			}
@@ -441,7 +441,7 @@ string MaskCep(string cep) {
 
 char* substr(char* string, int beginning, int end) {
 
-	const int ends = 2000;
+	const int ends = 2'000;
 
 	if (end < 1) return string;
 
