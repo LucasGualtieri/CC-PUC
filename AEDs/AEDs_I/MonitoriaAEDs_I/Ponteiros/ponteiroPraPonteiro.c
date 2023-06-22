@@ -7,8 +7,8 @@ void alteraPonteiro(int** ponteiro, int* peso) {
 
 int main() {
 
-	int idade = 20;
-	int peso = 80;
+	int	 idade	  = 20;
+	int	 peso	  = 80;
 	int* ponteiro = &idade;
 
 	printf("Ponteiro: %d\n", *ponteiro);

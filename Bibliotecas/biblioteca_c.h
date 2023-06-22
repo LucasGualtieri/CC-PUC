@@ -26,7 +26,8 @@ typedef char* String;
 #define MaxStringLength 2'000
 #define ends 2'000
 
-void flushStdin(FILE* stream) {
+// FlushStream
+void flush(FILE* stream) {
 	if (stream == 0) stream = stdin;
 	char c;
 	while ((c = fgetc(stream)) != '\n' && c != EOF) continue;
@@ -40,7 +41,7 @@ void flushStdin(FILE* stream) {
  */
 void Pause(bool flushing) {
 
-	if (flushing) flushStdin(stdin);
+	if (flushing) flush(stdin);
 
 	printf("Paused | Press ENTER to continue...");
 
@@ -89,7 +90,7 @@ void IntArrayPrint(int* array, int arrayLength) {
 void IntArrayFillRand(int* array, int arrayLength, int minRange, int maxRange) {
 
 	if (minRange > maxRange) {
-		int aux = maxRange;
+		int aux	 = maxRange;
 		maxRange = minRange;
 		minRange = aux;
 	}
@@ -119,9 +120,9 @@ void SelectionSort(int* array, int arrayLength) {
 		for (int j = i + 1; j < arrayLength; j++) {
 			if (array[menor] > array[j]) menor = j;
 		}
-		int swap = array[menor];
+		int swap	 = array[menor];
 		array[menor] = array[i];
-		array[i] = swap;
+		array[i]	 = swap;
 	}
 }
 
@@ -144,7 +145,7 @@ char* substr(char* string, int beginning, int end) {
 	return strAux;
 }
 
-int indexOf(char* string, char* reference, int occurrence) {
+int indexOf(char* string, const char* reference, int occurrence) {
 
 	for (int i = 0; i <= strlen(string) - strlen(reference); i++) {
 		char* substring = substr(string, i, strlen(reference) + i);
@@ -348,8 +349,8 @@ void freeSplit(char** split) { // Better name? freeStringArray
 }
 
 char** split(char* string, char* regex, bool freeBuffer) {
-	char** array = NULL;
-	int sizeOfArray = 0;
+	char** array	   = NULL;
+	int	   sizeOfArray = 0;
 
 	char* position = string; // Track the position within the buffer
 
@@ -377,7 +378,7 @@ char** split(char* string, char* regex, bool freeBuffer) {
 		position += strlen(array[sizeOfArray++]) + 1;
 	}
 
-	array = (char**)realloc(array, (sizeOfArray + 1) * sizeof(char*));
+	array			   = (char**)realloc(array, (sizeOfArray + 1) * sizeof(char*));
 	array[sizeOfArray] = NULL;
 
 	if (freeBuffer) free(string);
