@@ -32,9 +32,11 @@ class Fracao {
 	}
 
 	ref_Fracao somar(ref_Fracao f) {
-		float soma = n / d;
-		soma += f->getN() / f->getD();
+		// float soma = n / d;
+		// soma += f->getN() / f->getD();
+		return this;
 	}
+
 	ref_Fracao simplificar() { }
 
 	ref_Fracao proxima() {
@@ -75,7 +77,7 @@ class Fracao {
 
 		int numerador, denominador;
 
-		for (int i = n - 1; i >= 0; i++) {
+		for (int i = n - 1; i >= 0; i--) {
 			file >> numerador;
 			file >> denominador;
 
@@ -88,13 +90,7 @@ class Fracao {
 	}
 
 	string to_String() {
-		string aux;
-
-		aux += to_string(n);
-		aux += '/';
-		aux += to_string(d);
-
-		return aux;
+		return to_string(n) + "/" + to_string(d);
 	}
 };
 
@@ -112,23 +108,23 @@ int main() {
 		f5 = f5->conectar(f4[x]); // f5 = f5->conectar(f4[4]);
 	}
 
-	cout << "01. f1=" << f1->to_String() << "\n";
-	cout << "02. f2=" << f2->to_String() << "\n";
-	cout << "02. f3=" << f3->to_String() << "\n";
+	cout << "01. f1 = " << f1->to_String() << "\n";
+	cout << "02. f2 = " << f2->to_String() << "\n";
+	cout << "03. f3 = " << f3->to_String() << "\n";
 
 	f3 = f3->somar(f1);
-	cout << "04. f3=" << f3->to_String() << "\n";
+	// cout << "04. f3 = " << f3->to_String() << "\n";
 	f3 = f3->somar(f2);
-	cout << "05. f3=" << f3->to_String() << "\n";
+	// cout << "05. f3 = " << f3->to_String() << "\n";
 
-	cout << "06. MDC=" << f3->mdc() << "\n";
-	cout << "07. f3=" << f3->simplificar()->to_String() << "\n";
+	cout << "06. MDC = " << f3->mdc() << "\n";
+	// cout << "07. f3 = " << f3->simplificar()->to_String() << "\n";
 
-	cout << "08. ? =" << f1->comparar(f2) << "\n";
-	cout << "09. > =" << f4[0]->maior(f4, 5)->to_String() << "\n";
+	cout << "08. ? = " << f1->comparar(f2) << "\n";
+	cout << "09. > = " << f4[0]->maior(f4, 5)->to_String() << "\n";
 
 	while (f5) { // while (f5 != nullptr)
-		cout << "10. f5=" << f5->to_String() << "\n";
+		cout << "10. f5 = " << f5->to_String() << "\n";
 		f5 = f5->proxima();
 	}
 

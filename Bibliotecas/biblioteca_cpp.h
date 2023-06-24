@@ -64,6 +64,13 @@ void trim(string& str, char trim = ' ') {
 	}
 }
 
+// The ideia is to replace a substring with a string like:
+// "Lucas Gualtieri" - Substr: "cas" - Replace: "Michael Jackson" -> "LuMichael Jackson Gualtieri"
+// "Lucas Gualtieri" - Substr: "cas" - Replace: "" -> "Lu Gualtieri"
+// "Lucas Gualtieri" - Substr: "cas" - Replace: "sac" -> "Lusac Gualtieri"
+// To be developed
+void ReplaceSubstr(string& str, string substr, string replace);
+
 void ReplaceAll(string& str, string change, string replace) {
 	for (int i = 0; i < change.length(); i++) {
 		char charToChange = change.at(i);
