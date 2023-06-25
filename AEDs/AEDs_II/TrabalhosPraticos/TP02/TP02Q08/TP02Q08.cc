@@ -7,16 +7,16 @@
 
 int main() {
 
-	Timer timer;
+	Timer						 timer;
 	List<shared_ptr<Personagem>> list(86);
 
 	list.populate();
 
 	timer.start();
 
-	int numberOfComparisons = 0;
+	int	   numberOfComparisons = 0;
 	string searching;
-	while ((searching = readString()) != "FIM") {
+	while ((searching = readString(cin)) != "FIM") {
 		if (list.BinarySearch(searching, numberOfComparisons)) {
 			cout << "SIM" << endl;
 		} else {

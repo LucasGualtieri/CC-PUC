@@ -12,7 +12,7 @@ using namespace std;
 
 class Personagem {
 	string name;
-	int height;
+	int	   height;
 	double weight;
 	string hairColor;
 	string skinColor;
@@ -21,7 +21,7 @@ class Personagem {
 	string gender;
 	string homeworld;
 
-public:
+  public:
 	Personagem() {
 		setName("(null)");
 		setHeight(0);
@@ -166,7 +166,7 @@ public:
 
 			split keyValue(pairs[i], ": ");
 
-			string key = keyValue[0];
+			string key	 = keyValue[0];
 			string value = keyValue[1];
 			ReplaceAll(key, "'", "");
 			ReplaceAll(value, "'", "");
@@ -273,7 +273,7 @@ template <>
 void List<shared_ptr<Personagem>>::InsertionSort(int& numberOfComparisons, int& numberOfSwaps) {
 
 	numberOfComparisons = 1;
-	numberOfSwaps = 0;
+	numberOfSwaps		= 0;
 
 	for (int i = 1, j; i < size; i++) {
 		numberOfComparisons++;
@@ -316,8 +316,8 @@ int List<shared_ptr<Personagem>>::RecursiveSelectionSort(int& numberOfSwaps, int
 	if (i < size - 1 && j == size) {
 		if (array[minIndex] != array[i]) {
 			shared_ptr<Personagem> swap = array[minIndex];
-			array[minIndex] = array[i];
-			array[i] = swap;
+			array[minIndex]				= array[i];
+			array[i]					= swap;
 
 			numberOfSwaps++;
 		}
@@ -334,7 +334,7 @@ template <>
 void List<shared_ptr<Personagem>>::SelectionSort(int& numberOfComparisons, int& numberOfSwaps) {
 
 	numberOfComparisons = 1;
-	numberOfSwaps = 0;
+	numberOfSwaps		= 0;
 
 	for (int i = 0; i < size - 1; i++) {
 		int minIndex = i;
@@ -344,8 +344,8 @@ void List<shared_ptr<Personagem>>::SelectionSort(int& numberOfComparisons, int& 
 		}
 		if (array[minIndex] != array[i]) {
 			shared_ptr<Personagem> swap = array[minIndex];
-			array[minIndex] = array[i];
-			array[i] = swap;
+			array[minIndex]				= array[i];
+			array[i]					= swap;
 
 			numberOfSwaps++;
 		}
@@ -401,7 +401,7 @@ bool List<shared_ptr<Personagem>>::SequentialSearch(string searching, int& numbe
 template <>
 void List<shared_ptr<Personagem>>::populate() {
 	string fileDir;
-	while ((fileDir = readString()) != "FIM") {
+	while ((fileDir = readString(cin)) != "FIM") {
 		insertEnd(NewPersonagem(fileDir));
 	}
 }
