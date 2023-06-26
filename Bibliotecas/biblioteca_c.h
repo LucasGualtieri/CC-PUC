@@ -14,6 +14,7 @@
 #define Infinity 2'147'483'647
 #define arrayLength(array) (int)(sizeof(array) / sizeof(array[0]))
 #define RANDOM(minRange, maxRange) (rand() % ((maxRange + 1) - minRange)) + minRange
+#define DEBUGGING (false)
 
 typedef char* String;
 
@@ -386,14 +387,20 @@ char** split(char* string, char* regex, bool freeBuffer) {
 	return array;
 }
 
-char* replaceAll(char* string, char* regex, char* replacement) {
+char* replaceAll(char* string, const char* regex, const char* replacement) {
 	char* aux = (char*)malloc(2'000 * sizeof(char));
 
-	for (int i = 0, j = 0; i < strlen(string);) {
-		if (!strcmp(substr(string, i, strlen(regex) + i), regex)) {
+	size_t regexLen		  = strlen(regex);
+	size_t replacementLen = strlen(replacement);
+	size_t stringLen	  = strlen(string);
+
+	// printf("replacement: %s\n", replacement);
+	for (int i = 0, j = 0; i < stringLen;) {
+		if (!strcmp(substr(string, i, regexLen + i), regex)) {
 			strcat(aux, replacement);
-			j += strlen(replacement);
-			i += strlen(regex);
+			// printf("aux: %s\n", aux);
+			j += replacementLen;
+			i += regexLen;
 		} else {
 			aux[j] = string[i];
 			j++;
@@ -403,7 +410,81 @@ char* replaceAll(char* string, char* regex, char* replacement) {
 
 	aux[strlen(aux) + 1] = '\0';
 
-	return (char*)realloc(aux, (strlen(aux) + 1) * sizeof(char));
+	aux = (char*)realloc(aux, strsize(aux));
+	if (!aux) {
+		fprintf(stdin, "Error: Failed to reallocate memory in replaceAll()\n");
+		return NULL;
+	}
+
+	memcpy(string, aux, strsize(aux));
+
+	free(aux);
+
+	return string;
 }
+
+char* ReplaceAll(char* str, const char* change, const char* replace) {
+	size_t changeLen  = strlen(change);
+	size_t replaceLen = strlen(replace);
+
+	for (int i = 0; i < changeLen; i++) {
+		char   charToChange = change[i];
+		size_t strLen		= strlen(str);
+
+		for (int j = 0; j < strLen; j++) {
+			if (str[j] == charToChange) {
+				memmove(&str[j + replaceLen], &str[j + 1], strLen - j); // Shift characters to the right
+				memcpy(&str[j], replace, replaceLen);					// Insert the replacement
+				j += replaceLen - 1;
+				strLen += replaceLen - 1;
+			}
+		}
+	}
+
+	return str;
+}
+
+// char* ReplaceAll(char* str, const char* change, const char* replace) {
+// 	size_t changeLen  = strlen(change);
+// 	size_t replaceLen = strlen(replace);
+// 	size_t strLen	  = strlen(str);
+
+// 	// Count the occurrences of 'change' in 'str'
+// 	int	  occurrences = 0;
+// 	char* pos		  = str;
+// 	while ((pos = strstr(pos, change)) != NULL) {
+// 		occurrences++;
+// 		pos += changeLen;
+// 	}
+
+// 	// Calculate the length of the resulting string
+// 	size_t resultLen = strLen + (replaceLen - changeLen) * occurrences;
+
+// 	// Allocate memory for the resulting string
+// 	char* result = (char*)malloc((resultLen + 1) * sizeof(char));
+// 	if (result == NULL) {
+// 		fprintf(stderr, "Memory allocation failed\n");
+// 		return NULL;
+// 	}
+
+// 	// Copy 'str' to 'result' with replacements
+// 	char* dest = result;
+// 	char* src  = str;
+// 	while ((pos = strstr(src, change)) != NULL) {
+// 		size_t segmentLen = pos - src;
+// 		strncpy(dest, src, segmentLen);
+// 		dest += segmentLen;
+// 		src += segmentLen;
+// 		strncpy(dest, replace, replaceLen);
+// 		dest += replaceLen;
+// 		src += changeLen;
+// 	}
+// 	strcpy(dest, src);
+
+// 	// Free the original 'str'
+// 	free(str);
+
+// 	return result;
+// }
 
 #endif /* BIBLIOTECA_C_H_ */
