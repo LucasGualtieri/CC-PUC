@@ -52,7 +52,7 @@ void Pause(bool flushing) {
 }
 
 int strsize(char* string) {
-	return strlen(string) + 1;
+	return (strlen(string) + 1) * sizeof(char);
 }
 
 char toLower(char c) {
