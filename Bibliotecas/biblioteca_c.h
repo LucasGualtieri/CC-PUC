@@ -51,7 +51,7 @@ void Pause(bool flushing) {
 	}
 }
 
-int SizeOfStr(char* string) {
+int strsize(char* string) {
 	return strlen(string) + 1;
 }
 
