@@ -243,21 +243,27 @@ class ListaVeiculos {
 
 	// ANCHOR - GetDataBase
 	void getDataBase() {
-		FILE* DB = fopen("veiculos.txt", "r");
+		FILE* DB = fopen("DB.txt", "r");
 
 		// char carroX[500];
 
-		bool fim = false;
+		char  placa[10], modelo[50], marca[50], obs[50];
+		char  tipo[6];
+		int	  ano;
+		float preco;
+		bool  fim = false;
 
 		for (int i = 0; !feof(DB); i++) {
 
-			char  placa[10], modelo[50], marca[50], obs[50];
-			char  tipo;
-			int	  ano;
-			float preco;
+			fscanf(DB, "%[^;]%*c", placa);
+			fscanf(DB, "%d%*c", &ano);
+			fscanf(DB, "%f%*c", &preco);
+			fscanf(DB, "%[^;]%*c", marca);
+			fscanf(DB, "%[^;]%*c", modelo);
+			fscanf(DB, "%[^;]%*c", tipo);
+			fscanf(DB, "%[^;]%*c", obs);
 
-			fscanf(DB, "%[^;]%*c %d%*c %f%*c %[^;]%*c %[^;]%*c %c%*c %[^;]%*c", placa, &ano, &preco, marca, modelo, &tipo, obs);
-			getc(DB);
+			if (getc(DB) == EOF) break; // para comer o '\n'
 
 			// printf("%s\n", placa);
 
@@ -274,7 +280,7 @@ class ListaVeiculos {
 			string objModelo(modelo);
 			array[i].setModelo(objModelo);
 
-			array[i].setTipo(tipo);
+			array[i].setTipo(tipo[0]);
 
 			string objObs(obs);
 			array[i].setObs(objObs);
@@ -387,7 +393,7 @@ class ListaVeiculos {
 	// ANCHOR - Save
 	void save() {
 		// para printar no arquivo
-		FILE* arquivo = fopen("veiculos.txt", "w");
+		FILE* arquivo = fopen("DB.txt", "w");
 		for (int i = 0; i < Veiculo::contador; i++) {
 			fprintf(arquivo, "%s;", array[i].getPlaca().c_str());
 			fprintf(arquivo, "%d;", array[i].getAno());

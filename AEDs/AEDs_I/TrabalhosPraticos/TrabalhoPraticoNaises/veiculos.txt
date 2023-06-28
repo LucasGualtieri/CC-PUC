@@ -1,5 +1,0 @@
-BRA2E19;2010;49000.50;Hyundai;HB20;Carro;Carro Top;
-LSN4I49;2015;25000.50;Volkswagen;GOL;Carro;Carro médio;
-NULL;1925;1000000.00;RAIZ;FORD;Carro;Carro Vei;
-1234567;123;123.00;123;123;Carro; sçdkfl;
-sl~kdfj;1123;1234.00;123;123;Carro;123;
