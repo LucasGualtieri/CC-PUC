@@ -37,35 +37,35 @@
 // #define int short // short or short int -> 2 bytes
 // typedef long long llint; // long int or long long -> 8 bytes
 
-#define RED "\x1b[31m"
-#define GREEN "\x1b[32m"
-#define YELLOW "\x1b[33m"
-#define BLUE "\x1b[34m"
-#define MAGENTA "\x1b[35m"
-#define CYAN "\x1b[36m"
-#define RESET "\x1b[0m"
-#define BOLD "\033[1m"
+#define RED (string) "\x1b[31m"
+#define GREEN (string) "\x1b[32m"
+#define YELLOW (string) "\x1b[33m"
+#define BLUE (string) "\x1b[34m"
+#define MAGENTA (string) "\x1b[35m"
+#define CYAN (string) "\x1b[36m"
+#define RESET (string) "\x1b[0m"
+#define BOLD (string) "\033[1m"
 
-void printColorLn(string msg, string color) {
+using namespace std;
+
+void printColorLn(string msg, string color = RESET) {
 	cout << color << msg << RESET << endl;
 }
 
-void printColor(string msg, string color) {
+void printColor(string msg, string color = RESET) {
 	cout << color << msg << RESET;
 }
 
-// void printColorBold(const char* msg, const char* color) {
-// 	printf(BOLD "%s%s%s", color, msg, RESET);
-// }
-// void printColorBoldLn(const char* msg, const char* color) {
-// 	printf(BOLD "%s%s%s\n", color, msg, RESET);
-// }
+void printColorBold(string msg, string color = RESET) {
+	cout << color << BOLD << msg << RESET;
+}
+void printColorBoldLn(string msg, string color = RESET) {
+	cout << color << BOLD << msg << RESET << endl;
+}
 
 void clrscreen() {
 	system("clear");
 }
-
-using namespace std;
 
 void flush() {
 	cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -157,15 +157,54 @@ string readString(istream& stream = cin, string msg = "") {
 	return aux;
 }
 
-int readInt(string msg = "") {
+int readInt(string msg = "", string errorMsg = "DEFAULT") {
+
+	if (errorMsg == "DEFAULT") {
+		errorMsg = RED + "Invalid input, " + RESET + "try again: ";
+	}
 
 	cout << msg;
 
-	int integer;
-	cin >> integer;
+	bool invalid = false;
+	int	 integer;
 
-	cin.ignore(numeric_limits<streamsize>::max(), '\n');
+	do {
+		if (invalid) {
+			cout << errorMsg;
+			std::cin.clear();
+			flush();
+		}
+		cin >> integer;
+	} while ((invalid = cin.fail()));
+
+	flush();
+
 	return integer;
+}
+
+int readFloat(string msg = "", string errorMsg = "DEFAULT") {
+
+	if (errorMsg == "DEFAULT") {
+		errorMsg = RED + "Invalid input, " + RESET + "try again: ";
+	}
+
+	cout << msg;
+
+	bool invalid = false;
+	int	 floatValue;
+
+	do {
+		if (invalid) {
+			cout << errorMsg;
+			std::cin.clear();
+			flush();
+		}
+		cin >> floatValue;
+	} while ((invalid = cin.fail()));
+
+	flush();
+
+	return floatValue;
 }
 
 // int readInt() {

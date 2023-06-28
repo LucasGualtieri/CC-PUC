@@ -1,0 +1,3 @@
+BRA2E19;2010;49000.50;HB20;Hyundai;C;Carro Top;
+LSN4I49;2015;25000.50;GOL;Volkswagen;C;Carro médio;
+NULL;1925;1000000.00;FORD;RAIZ;C;Carro Vei;
