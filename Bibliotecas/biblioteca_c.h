@@ -16,6 +16,15 @@
 #define RANDOM(minRange, maxRange) (rand() % ((maxRange + 1) - minRange)) + minRange
 #define DEBUGGING (false)
 
+#define RED "\x1b[31m"
+#define GREEN "\x1b[32m"
+#define YELLOW "\x1b[33m"
+#define BLUE "\x1b[34m"
+#define MAGENTA "\x1b[35m"
+#define CYAN "\x1b[36m"
+#define RESET "\x1b[0m"
+#define BOLD "\033[1m"
+
 typedef char* String;
 
 #define CPF unsigned long
@@ -32,6 +41,26 @@ void flush(FILE* stream) {
 	if (stream == 0) stream = stdin;
 	char c;
 	while ((c = fgetc(stream)) != '\n' && c != EOF) continue;
+}
+
+void printColor(const char* msg, const char* color) {
+	printf("%s%s%s", color, msg, RESET);
+}
+
+void printColorBold(const char* msg, const char* color) {
+	printf(BOLD "%s%s%s", color, msg, RESET);
+}
+
+void printColorLn(const char* msg, const char* color) {
+	printf("%s%s%s\n", color, msg, RESET);
+}
+
+void printColorBoldLn(const char* msg, const char* color) {
+	printf(BOLD "%s%s%s\n", color, msg, RESET);
+}
+
+void clrscreen() {
+	system("clear");
 }
 
 /*!
