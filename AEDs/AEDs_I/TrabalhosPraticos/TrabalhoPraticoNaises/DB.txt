@@ -1,3 +1,5 @@
-BRA2E19;2010;49000.50;Hyundai;HB20;Carro;Carro Top;
-LSN4I49;2015;25000.50;Volkswagen;GOL;Carro;Carro médio;
-NULL;1925;1000000.00;RAIZ;FORD;Carro;Carro Vei;
+PLACA   | ANO  | PREÇO    | MARCA | MODELO | TIPO | OBSERVAÇÃO
+BRA2E19 | 2010 | 49000.00 | 2     | 2      | Moto | Carro baum
+LSN4I49 | 2015 | 25000.00 | 2     | 2      | Moto | Carro médio
+1231231 | 1234 | 1.00     | 1     | 1      | Moto | 123
+1234567 | 1234 | 1.00     | 1     | 1      | Carro     | 123

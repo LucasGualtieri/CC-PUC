@@ -1,31 +1,15 @@
 #include <biblioteca_cpp.h>
 #include <iomanip>
-
-typedef struct Larguras {
-	size_t placa, ano, marca, modelo, preco, tipo, obs;
-} Larguras;
-
-Larguras setLarguras() {
-	Larguras larguras;
-
-	larguras.placa	= 10;
-	larguras.ano	= 10;
-	larguras.marca	= 10;
-	larguras.modelo = 10;
-	larguras.preco	= 10;
-	larguras.tipo	= 10;
-	larguras.obs	= 10;
-
-	return larguras;
-}
+#include <split.h>
 
 // ANCHOR - Class Veiculo
 class Veiculo {
 
-	string placa, modelo, marca, obs;
+	string placa, marca, modelo, obs;
 	char   tipo;
 	int	   ano;
 	float  preco;
+	size_t precoLen, marcaLen, modeloLen, tipoLen;
 
   public:
 	static int contador;
@@ -91,10 +75,23 @@ class Veiculo {
 		} while ((invalid = preco <= 0.0));
 
 		this->preco = preco;
+
+		ostringstream oss;
+		oss << fixed << setprecision(2) << preco;
+
+		setPrecoLen(oss.str().length());
 	}
 
 	void setPreco(float preco) {
 		this->preco = preco;
+	}
+
+	void setPrecoLen(size_t precoLen) {
+		this->precoLen = precoLen;
+	}
+
+	size_t getPrecoLen() {
+		return precoLen;
 	}
 
 	float getPreco() { return preco; }
@@ -114,10 +111,20 @@ class Veiculo {
 		} while ((invalid = marca.length() == 0));
 
 		this->marca = marca;
+
+		setMarcaLen(marca.length());
 	}
 
 	void setMarca(string marca) {
 		this->marca = marca;
+	}
+
+	void setMarcaLen(size_t marcaLen) {
+		this->marcaLen = marcaLen;
+	}
+
+	size_t getMarcaLen() {
+		return marcaLen;
 	}
 
 	string getMarca() { return marca; }
@@ -137,10 +144,20 @@ class Veiculo {
 		} while ((invalid = modelo.length() == 0));
 
 		this->modelo = modelo;
+
+		setModeloLen(modelo.length());
 	}
 
 	void setModelo(string modelo) {
 		this->modelo = modelo;
+	}
+
+	void setModeloLen(size_t modeloLen) {
+		this->modeloLen = modeloLen;
+	}
+
+	size_t getModeloLen() {
+		return modeloLen;
 	}
 
 	string getModelo() { return modelo; }
@@ -164,8 +181,16 @@ class Veiculo {
 		this->tipo = tipo;
 	}
 
-	void setTipo(char tipo) {
-		this->tipo = tipo;
+	void setTipo(char tipoLen) {
+		this->tipoLen = tipoLen;
+	}
+
+	void setTipoLen(size_t tipoLen) {
+		this->tipoLen = tipoLen;
+	}
+
+	size_t getTipoLen() {
+		return tipoLen;
 	}
 
 	string getTipo() {
@@ -196,14 +221,15 @@ class Veiculo {
 
 		cout << "Placa: " << getPlaca();
 		cout << " | Ano de fabricação: " << getAno();
-		printf(" | Preço: %.2lf", getPreco());
-		// cout << " | Preço: " << getPreco();
+		cout << " | Preço: " << fixed << setprecision(2) << getPreco();
 		cout << " | Marca: " << getMarca();
 		cout << " | Modelo: " << getModelo();
 		cout << " | Tipo: " << getTipo();
-		string obs;
-		if ((obs = getObs()).length() > 0) {
-			cout << " | Observação: " << obs;
+		cout << " | Observação: ";
+		if (!getObs().empty()) {
+			cout << getObs();
+		} else {
+			cout << "Sem observações";
 		}
 		cout << endl;
 
@@ -224,6 +250,7 @@ int Veiculo::contador = 0;
 
 class ListaVeiculos {
 	Veiculo* array;
+	size_t	 larguraPreco, larguraMarca, larguraModelo, larguraTipo;
 
   public:
 	ListaVeiculos() {
@@ -241,8 +268,62 @@ class ListaVeiculos {
 
 	// falta o editar e o ler do arquivo e passar para o vetor
 
+	// ANCHOR - SetLarguras
+	void setLarguras() {
+
+		larguraPreco  = 0;
+		larguraMarca  = 7; // Não pode ser menor que 7???
+		larguraModelo = 8; // Não pode ser menor que 8???
+		larguraTipo	  = 0; // Não pode ser menor que 8???
+
+		for (int i = 0; i < Veiculo::contador; i++) {
+			size_t len;
+			if ((len = array[i].getPrecoLen()) > larguraPreco) larguraPreco = len;
+			if ((len = array[i].getMarcaLen()) > larguraMarca) larguraMarca = len;
+			if ((len = array[i].getModeloLen()) > larguraModelo) larguraModelo = len;
+			if ((len = array[i].getTipoLen()) > larguraTipo) larguraTipo = len;
+		}
+
+		larguraPreco++;
+		larguraMarca++;
+		larguraModelo++;
+		larguraTipo++;
+	}
+
 	// ANCHOR - GetDataBase
 	void getDataBase() {
+		fstream dataBase("DB.txt");
+
+		readString(dataBase); // Skipping header
+
+		for (int i = 0; !dataBase.eof(); i++) {
+
+			Split veiculo(readString(dataBase), "|");
+
+			veiculo.trimAll();
+
+			array[i].setPlaca(veiculo[0]);
+			array[i].setAno(stoi(veiculo[1]));
+			array[i].setPreco(stof(veiculo[2]));
+			array[i].setPrecoLen(veiculo[2].length());
+			array[i].setMarca(veiculo[3]);
+			array[i].setMarcaLen(veiculo[3].length());
+			array[i].setModelo(veiculo[4]);
+			array[i].setModeloLen(veiculo[4].length());
+			array[i].setTipo(veiculo[5][0]);
+			array[i].setTipoLen(veiculo[5].length());
+			array[i].setObs(veiculo[6]);
+
+			Veiculo::contador++;
+		}
+
+		setLarguras();
+
+		dataBase.close();
+	}
+
+	// ANCHOR - GetFromFile
+	void getFromFile() {
 		FILE* DB = fopen("DB.txt", "r");
 
 		// char carroX[500];
@@ -323,6 +404,8 @@ class ListaVeiculos {
 
 		Veiculo::contador++;
 
+		setLarguras();
+
 		clrscreen();
 
 		printColorBoldLn("------- Veículo cadastrado com sucesso! -------\n", GREEN);
@@ -392,19 +475,35 @@ class ListaVeiculos {
 
 	// ANCHOR - Save
 	void save() {
-		// para printar no arquivo
-		FILE* arquivo = fopen("DB.txt", "w");
+		fstream dataBase("DB.txt", ios::out);
+
+		dataBase << "PLACA" << right << setw(5) << "| ";
+		dataBase << "ANO" << right << setw(4) << "| ";
+		dataBase << "PREÇO" << right << setw(larguraPreco - 3) << " | ";
+		dataBase << "MARCA" << right << setw(larguraMarca - 5) << " | ";
+		dataBase << "MODELO" << right << setw(larguraModelo - 6) << "| ";
+		dataBase << "TIPO" << right << setw(larguraPreco - 6) << " | ";
+		dataBase << "OBSERVAÇÃO";
+		dataBase << endl;
+
 		for (int i = 0; i < Veiculo::contador; i++) {
-			fprintf(arquivo, "%s;", array[i].getPlaca().c_str());
-			fprintf(arquivo, "%d;", array[i].getAno());
-			fprintf(arquivo, "%.2f;", array[i].getPreco());
-			fprintf(arquivo, "%s;", array[i].getModelo().c_str());
-			fprintf(arquivo, "%s;", array[i].getMarca().c_str());
-			fprintf(arquivo, "%s;", array[i].getTipo().c_str());
-			fprintf(arquivo, "%s;\n", array[i].getObs().c_str());
+
+			dataBase << array[i].getPlaca() << " | ";
+			dataBase << array[i].getAno() << " | ";
+			dataBase << fixed << setprecision(2) << array[i].getPreco() << right << setw(larguraPreco - array[i].getPrecoLen() + 2) << "| ";
+			dataBase << array[i].getMarca() << right << setw(larguraMarca - array[i].getMarcaLen()) << " | ";
+			dataBase << array[i].getModelo() << right << setw(larguraModelo - array[i].getModeloLen()) << " | ";
+			dataBase << array[i].getTipo() << right << setw(larguraPreco - array[i].getTipoLen() - 2) << " | ";
+			if (array[i].getObs().length() > 0) {
+				dataBase << array[i].getObs();
+			} else {
+				dataBase << "Sem observações";
+			}
+
+			if (i < Veiculo::contador - 1) dataBase << endl;
 		}
 
-		fclose(arquivo);
+		dataBase.close();
 	}
 
 	// ANCHOR - Pesquisar
