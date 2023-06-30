@@ -63,8 +63,8 @@ void printColorBoldLn(string msg, string color = RESET) {
 	cout << color << BOLD << msg << RESET << endl;
 }
 
-void clrscreen() {
-	system("clear");
+void clear() {
+	system("clear"); // Linux - system("cls"); // Windows
 }
 
 void flush() {
