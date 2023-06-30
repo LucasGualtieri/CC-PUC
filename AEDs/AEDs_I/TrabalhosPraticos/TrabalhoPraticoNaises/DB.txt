@@ -1,2 +1,3 @@
-PLACA   | ANO  | PREÇO | MARCA | MODELO | TIPO  | OBSERVAÇÃO
-1234567 | 1955 | 1.00  | teste | teste  | Carro | Sem observações
+PLACA   | ANO  | PREÇO    | MARCA | MODELO     | TIPO  | OBSERVAÇÃO
+BRA2E19 | 2010 | 49000.00 | HB20  | Hyundai    | Carro | Carro baum
+LSN4I49 | 2015 | 25000.00 | GOL   | Volkswagen | Moto  | Carro médio

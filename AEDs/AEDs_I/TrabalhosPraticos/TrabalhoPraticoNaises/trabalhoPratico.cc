@@ -54,7 +54,14 @@ int main() {
 		case 2:
 			try {
 				lista.listar();
-				lista.pesquisar().print();
+				Veiculo temp = lista.pesquisar();
+				clear();
+				printColorBoldLn("------------ Veículo encontrado com sucesso! ------------\n", GREEN);
+				lista.printHeader();
+				temp.print(cout, lista.getLarguras());
+				cout << endl;
+				cout << endl;
+
 			} catch (string erro) {
 				cout << erro << endl;
 			}
@@ -89,3 +96,4 @@ int main() {
 }
 
 // Possível forma de imterromper o cadastro o pesquisar e o remover no meio
+// Na hora de printar o carro depois da pesquisa por exemplo achar um jeito de printar as dimensoes correspondentes ao carro mostrado only

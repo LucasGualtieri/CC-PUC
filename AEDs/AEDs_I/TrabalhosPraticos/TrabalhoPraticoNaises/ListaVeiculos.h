@@ -33,9 +33,9 @@ class ListaVeiculos {
 	// ANCHOR - SetLarguras
 	void setLarguras() {
 
-		larguras.preco	= 5; // Não pode ser menor que 6
-		larguras.marca	= 5; // Não pode ser menor que 6
-		larguras.modelo = 6; // Não pode ser menor que 7
+		larguras.preco	= 5; // Não pode ser menor que 5
+		larguras.marca	= 5; // Não pode ser menor que 5
+		larguras.modelo = 6; // Não pode ser menor que 6
 		larguras.tipo	= 4; // Não pode ser menor que 4
 
 		for (int i = 0; i < Veiculo::contador; i++) {
@@ -50,6 +50,10 @@ class ListaVeiculos {
 		if (larguras.marca >= 5) larguras.marca++;
 		if (larguras.modelo >= 6) larguras.modelo++;
 		larguras.tipo++; // Doesn't need an if statement because the minimum size is the same size as the TIPO.len() ???
+	}
+
+	Larguras getLarguras() {
+		return larguras;
 	}
 
 	// ANCHOR - GetDataBase
@@ -172,7 +176,7 @@ class ListaVeiculos {
 	// ANCHOR - Remover
 	void remover(Veiculo remover) {
 
-		remover.print();
+		// remover.print();
 
 		// deletar o carro do arquivo
 		if (Veiculo::contador == 0) {
@@ -193,9 +197,10 @@ class ListaVeiculos {
 
 		clear();
 
-		printColorBoldLn("------------ Carro removido com sucesso! ------------\n", GREEN);
+		printColorBoldLn("--------- Carro removido com sucesso! ---------\n", GREEN);
 	}
 
+	// ANCHOR - Editar
 	void editar(Veiculo& veiculo) {
 		clear();
 
@@ -217,8 +222,11 @@ class ListaVeiculos {
 
 		veiculo.setObs();
 
-		printColorBoldLn("------------ Editado com sucesso ------------\n", GREEN);
+		setLarguras();
+
 		clear();
+
+		printColorBoldLn("--------- Veículo editado com sucesso ---------\n", GREEN);
 	}
 
 	void listarDep() {
@@ -280,6 +288,8 @@ class ListaVeiculos {
 		}
 	}
 
+	// uma funcao pra tirar a repeticao desses dois ^^ vv
+
 	// ANCHOR - Save
 	void save() {
 		fstream dataBase("DB.txt", ios::out);
@@ -307,7 +317,7 @@ class ListaVeiculos {
 			}
 		}
 
-		throw string("\n" + RED + "Erro: " + RESET + "Carro não encontrado!\n");
+		throw string(RED + BOLD + "\nErro: " + RESET + "Veículo não encontrado!\n");
 	}
 };
 
