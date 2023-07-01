@@ -38,6 +38,10 @@ class Split {
 		return array.size();
 	}
 
+	int size() {
+		return array.size();
+	}
+
 	void trimAll(char trimC = ' ') {
 		for (int i = 0; i < array.size(); i++) {
 			trim(array[i], trimC);
@@ -46,14 +50,16 @@ class Split {
 
 	void trim(string& str, char trim = ' ') {
 
-		if (str.empty()) return;
+		if (str.empty()) {
+			cout << "Trim: String's empty" << endl;
+		}
 
-		for (int i = 0; str.at(0) == trim; i++) {
+		while (str.at(0) == trim) {
 			str.erase(0, 1);
 		}
 
-		for (int i = str.length() - 1; str.at(i) == trim; i--) {
-			str.erase(i, 1);
+		while (str.at(str.length() - 1) == trim) {
+			str.erase(str.length() - 1, 1);
 		}
 	}
 

@@ -86,12 +86,16 @@ void pause(string String = "") {
 
 void trim(string& str, char trim = ' ') {
 
-	for (int i = 0; str.at(0) == trim; i++) {
+	if (str.empty()) {
+		cout << "Trim: String's empty" << endl;
+	}
+
+	while (str.at(0) == trim) {
 		str.erase(0, 1);
 	}
 
-	for (int i = str.length() - 1; str.at(i) == trim; i--) {
-		str.erase(i, 1);
+	while (str.at(str.length() - 1) == trim) {
+		str.erase(str.length() - 1, 1);
 	}
 }
 
@@ -157,13 +161,36 @@ string readString(istream& stream = cin, string msg = "") {
 	return aux;
 }
 
-int readInt(string msg = "", string errorMsg = "DEFAULT") {
+int readInt(const char* msg = "", string errorMsg = "DEFAULT") {
 
 	if (errorMsg == "DEFAULT") {
 		errorMsg = RED + "Invalid input, " + RESET + "try again: ";
 	}
 
 	cout << msg;
+
+	bool invalid = false;
+	int	 integer;
+
+	do {
+		if (invalid) {
+			cout << errorMsg;
+			std::cin.clear();
+			flush();
+		}
+		cin >> integer;
+	} while ((invalid = cin.fail()));
+
+	flush();
+
+	return integer;
+}
+
+int readInt(string errorMsg = "DEFAULT") {
+
+	if (errorMsg == "DEFAULT") {
+		errorMsg = RED + "Invalid input, " + RESET + "try again: ";
+	}
 
 	bool invalid = false;
 	int	 integer;

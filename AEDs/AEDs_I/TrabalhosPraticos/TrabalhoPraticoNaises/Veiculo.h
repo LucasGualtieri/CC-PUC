@@ -11,14 +11,23 @@ typedef struct Larguras {
 class Veiculo {
 
 	// ANCHOR - Atributos
-	string placa, marca, modelo, obs;
-	char   tipo;
-	int	   ano;
-	float  preco;
-	size_t precoLen, marcaLen, modeloLen, tipoLen;
+	string		  placa, marca, modelo, obs;
+	char		  tipo;
+	int			  ano;
+	float		  preco;
+	size_t		  precoLen, marcaLen, modeloLen, tipoLen;
+	static size_t contador;
 
   public:
-	static int contador;
+	static void incrementCount() {
+		contador++;
+	}
+	static void decrementCount() {
+		contador--;
+	}
+	static size_t getCount() {
+		return contador;
+	}
 
 	// ANCHOR - Set / Get Placa
 	void setPlaca() {
@@ -56,7 +65,7 @@ class Veiculo {
 		cout << "Ano de fabricação: ";
 		do {
 			if (invalid) cout << errorMsg;
-			ano = readInt("", errorMsg);
+			ano = readInt(errorMsg);
 		} while ((invalid = ano < 1'886 || ano > 2'023));
 
 		this->ano = ano;
@@ -232,7 +241,7 @@ class Veiculo {
 	// -----------------------------------------
 
 	// ANCHOR - Print
-	void print(ostream& stream = cout, Larguras larguras = Larguras()) {
+	void print(Larguras larguras, ostream& stream = cout) {
 
 		stream << setw(8) << left << getPlaca();
 		stream << "| " << setw(5) << left << getAno();
@@ -248,6 +257,14 @@ class Veiculo {
 	}
 };
 
-int Veiculo::contador = 0;
+// Contador is private, so it's only accessable outside of the scope of the classe in its initialization
+size_t Veiculo::contador; // default initialization to zero
+
+/*
+	In this case, Veiculo::contador is zero-initialized because
+	it was not explicitly initialized. However, it's generally
+	a good practice to explicitly initialize static data members
+	to avoid potential bugs and make the code more readable.
+*/
 
 #endif

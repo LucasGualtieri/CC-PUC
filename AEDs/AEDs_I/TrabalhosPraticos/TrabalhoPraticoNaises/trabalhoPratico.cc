@@ -14,7 +14,7 @@ int ReadingChoice() {
 		if (invalid) {
 			cout << "Valor inválido, tente novamente: ";
 		}
-		choice = readInt("", errorMsg);
+		choice = readInt(errorMsg);
 	} while ((invalid = choice < 0 || choice > 5));
 
 	return choice;
@@ -48,20 +48,14 @@ int main() {
 		switch (escolha) {
 		case 1:
 			lista.listar();
-			cout << endl;
-			cout << endl;
 			break;
 		case 2:
 			try {
 				lista.listar();
 				Veiculo temp = lista.pesquisar();
-				clear();
-				printColorBoldLn("------------ Veículo encontrado com sucesso! ------------\n", GREEN);
 				lista.printHeader();
-				temp.print(cout, lista.getLarguras());
-				cout << endl;
-				cout << endl;
-
+				temp.print(lista.getLarguras());
+				cout << "\n\n";
 			} catch (string erro) {
 				cout << erro << endl;
 			}
@@ -72,7 +66,7 @@ int main() {
 		case 4:
 			try {
 				lista.listar();
-				lista.editar(lista.pesquisar("\n\nDigite a placa do veículo à ser editado: "));
+				lista.editar(lista.pesquisar("Digite a placa do veículo à ser editado: "));
 			} catch (string erro) {
 				cout << erro << endl;
 			}
@@ -80,7 +74,7 @@ int main() {
 		case 5:
 			try {
 				lista.listar();
-				lista.remover(lista.pesquisar("\n\nDigite a placa do veículo à ser removido: "));
+				lista.remover(lista.pesquisar("Digite a placa do veículo à ser removido: "));
 			} catch (string erro) {
 				cout << erro << endl;
 			}
@@ -97,3 +91,5 @@ int main() {
 
 // Possível forma de imterromper o cadastro o pesquisar e o remover no meio
 // Na hora de printar o carro depois da pesquisa por exemplo achar um jeito de printar as dimensoes correspondentes ao carro mostrado only
+// Known bugs
+// User can add empty (meaning only spaces) marca and modelo, that crashes split.trim()

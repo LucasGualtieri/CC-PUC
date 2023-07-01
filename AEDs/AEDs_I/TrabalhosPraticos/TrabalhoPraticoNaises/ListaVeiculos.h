@@ -38,7 +38,7 @@ class ListaVeiculos {
 		larguras.modelo = 6; // Não pode ser menor que 6
 		larguras.tipo	= 4; // Não pode ser menor que 4
 
-		for (int i = 0; i < Veiculo::contador; i++) {
+		for (int i = 0; i < Veiculo::getCount(); i++) {
 			size_t len;
 			if ((len = array[i].getPrecoLen()) > larguras.preco) larguras.preco = len;
 			if ((len = array[i].getMarcaLen()) > larguras.marca) larguras.marca = len;
@@ -46,7 +46,8 @@ class ListaVeiculos {
 			if ((len = array[i].getTipoLen()) > larguras.tipo) larguras.tipo = len;
 		}
 
-		if (larguras.preco >= 5) larguras.preco++; // ++ para considerar o espaço
+		// ++ para considerar o espaço
+		if (larguras.preco >= 5) larguras.preco++;
 		if (larguras.marca >= 5) larguras.marca++;
 		if (larguras.modelo >= 6) larguras.modelo++;
 		larguras.tipo++; // Doesn't need an if statement because the minimum size is the same size as the TIPO.len() ???
@@ -80,7 +81,7 @@ class ListaVeiculos {
 			array[i].setTipoLen(veiculo[5].length());
 			array[i].setObs(veiculo[6]);
 
-			Veiculo::contador++;
+			Veiculo::incrementCount();
 		}
 
 		setLarguras();
@@ -128,7 +129,7 @@ class ListaVeiculos {
 			string objObs(obs);
 			array[i].setObs(objObs);
 
-			Veiculo::contador++;
+			Veiculo::incrementCount();
 		}
 
 		fclose(DB);
@@ -139,7 +140,7 @@ class ListaVeiculos {
 
 		// array = realloc(array, (size + 1) * sizeof(veiculos));
 
-		if (Veiculo::contador == 500) { // cont == size ARRUMAR
+		if (Veiculo::getCount() == 500) { // cont == size ARRUMAR
 			printColorLn("atingiu o maximo de veiculos cadastrados", RED);
 			return;
 		}
@@ -150,21 +151,21 @@ class ListaVeiculos {
 
 		cout << "Preencha as especificações do veículo: \n\n";
 
-		array[Veiculo::contador].setPlaca();
+		array[Veiculo::getCount()].setPlaca();
 
-		array[Veiculo::contador].setAno();
+		array[Veiculo::getCount()].setAno();
 
-		array[Veiculo::contador].setPreco();
+		array[Veiculo::getCount()].setPreco();
 
-		array[Veiculo::contador].setMarca();
+		array[Veiculo::getCount()].setMarca();
 
-		array[Veiculo::contador].setModelo();
+		array[Veiculo::getCount()].setModelo();
 
-		array[Veiculo::contador].setTipo();
+		array[Veiculo::getCount()].setTipo();
 
-		array[Veiculo::contador].setObs();
+		array[Veiculo::getCount()].setObs();
 
-		Veiculo::contador++;
+		Veiculo::incrementCount();
 
 		setLarguras();
 
@@ -179,7 +180,7 @@ class ListaVeiculos {
 		// remover.print();
 
 		// deletar o carro do arquivo
-		if (Veiculo::contador == 0) {
+		if (Veiculo::getCount() == 0) {
 			printColorLn("erro lista vazia", RED);
 			return;
 		}
@@ -187,13 +188,13 @@ class ListaVeiculos {
 		// buscando a posicao do carro a ser excluido
 		bool found = false;
 		int	 i;
-		for (i = 0; !found && i < Veiculo::contador - 1; i++) {
+		for (i = 0; !found && i < Veiculo::getCount() - 1; i++) {
 			if (array[i].getPlaca() == remover.getPlaca()) {
 				found	 = true;
-				array[i] = array[Veiculo::contador - 1];
+				array[i] = array[Veiculo::getCount() - 1];
 			}
 		}
-		Veiculo::contador--;
+		Veiculo::decrementCount;
 
 		clear();
 
@@ -208,18 +209,12 @@ class ListaVeiculos {
 
 		cout << "Preencha as especificações do veículo: \n\n";
 
-		// array[Veiculo::contador].setPlaca();
-
+		// veiculo.setPlaca();
 		veiculo.setAno();
-
 		veiculo.setPreco();
-
 		veiculo.setMarca();
-
 		veiculo.setModelo();
-
 		veiculo.setTipo();
-
 		veiculo.setObs();
 
 		setLarguras();
@@ -233,7 +228,7 @@ class ListaVeiculos {
 
 		// Larguras larguras = setLarguras();
 
-		if (Veiculo::contador == 0) {
+		if (Veiculo::getCount() == 0) {
 			cout << "Não há carros cadastrados no sistema." << endl;
 			return;
 		}
@@ -253,9 +248,9 @@ class ListaVeiculos {
 
 		clear();
 
-		for (int i = 0; i < Veiculo::contador; i++) {
+		for (int i = 0; i < Veiculo::getCount(); i++) {
 			// cout << "[" << i + 1 << "] - ";
-			array[i].print();
+			// array[i].print();
 		}
 		cout << endl;
 
@@ -265,7 +260,7 @@ class ListaVeiculos {
 	void printHeader(ostream& stream = cout) {
 		stream << setw(8) << left << "PLACA";
 		stream << "| " << setw(5) << left << "ANO";
-		stream << "| " << setw(larguras.preco + 1) << left << "PREÇO";
+		stream << "| " << setw(larguras.preco + 1) << left << "PREÇO"; // Precisa do + 1 pra alinhar direitinho mas n entendo pq n funcionaria sem
 		stream << "| " << setw(larguras.marca) << left << "MARCA";
 		stream << "| " << setw(larguras.modelo) << left << "MODELO";
 		stream << "| " << setw(larguras.tipo) << left << "TIPO";
@@ -282,10 +277,11 @@ class ListaVeiculos {
 
 		printHeader(cout);
 
-		for (int i = 0; i < Veiculo::contador; i++) {
-			array[i].print(cout, larguras);
-			if (i < Veiculo::contador - 1) cout << endl;
+		for (int i = 0; i < Veiculo::getCount(); i++) {
+			array[i].print(larguras);
+			cout << endl;
 		}
+		cout << endl;
 	}
 
 	// uma funcao pra tirar a repeticao desses dois ^^ vv
@@ -296,23 +292,25 @@ class ListaVeiculos {
 
 		printHeader(dataBase);
 
-		for (int i = 0; i < Veiculo::contador; i++) {
-			array[i].print(dataBase, larguras);
-			if (i < Veiculo::contador - 1) dataBase << endl;
+		for (int i = 0; i < Veiculo::getCount(); i++) {
+			array[i].print(larguras, dataBase);
+			if (i < Veiculo::getCount() - 1) dataBase << endl;
 		}
 
 		dataBase.close();
 	}
 
 	// ANCHOR - Pesquisar
-	Veiculo& pesquisar(string msg = "\n\nDigite a placa do veículo à ser encontrado: ") {
+	Veiculo& pesquisar(string msg = "Digite a placa do veículo à ser encontrado: ") {
 
 		printColorBold(msg);
 
 		string placa = readString(cin);
 
-		for (int i = 0; i < Veiculo::contador; i++) {
+		for (int i = 0; i < Veiculo::getCount(); i++) {
 			if (array[i].getPlaca() == placa) {
+				clear();
+				printColorBoldLn("------------ Veículo encontrado com sucesso! ------------\n", GREEN);
 				return array[i];
 			}
 		}
