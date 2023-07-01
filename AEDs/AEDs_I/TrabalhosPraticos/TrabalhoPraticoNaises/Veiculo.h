@@ -93,23 +93,16 @@ class Veiculo {
 		} while ((invalid = preco <= 0.0));
 
 		this->preco = preco;
-
-		ostringstream oss;
-		oss << fixed << setprecision(2) << preco;
-
-		setPrecoLen(oss.str().length());
 	}
 
 	void setPreco(float preco) {
 		this->preco = preco;
 	}
 
-	void setPrecoLen(size_t precoLen) {
-		this->precoLen = precoLen;
-	}
-
 	size_t getPrecoLen() {
-		return precoLen;
+		ostringstream oss;
+		oss << fixed << setprecision(2) << getPreco();
+		return oss.str().length();
 	}
 
 	float getPreco() { return preco; }
@@ -130,20 +123,10 @@ class Veiculo {
 		} while ((invalid = marca.length() == 0));
 
 		this->marca = marca;
-
-		setMarcaLen(marca.length());
 	}
 
 	void setMarca(string marca) {
 		this->marca = marca;
-	}
-
-	void setMarcaLen(size_t marcaLen) {
-		this->marcaLen = marcaLen;
-	}
-
-	size_t getMarcaLen() {
-		return marcaLen;
 	}
 
 	string getMarca() { return marca; }
@@ -164,20 +147,10 @@ class Veiculo {
 		} while ((invalid = modelo.length() == 0));
 
 		this->modelo = modelo;
-
-		setModeloLen(modelo.length());
 	}
 
 	void setModelo(string modelo) {
 		this->modelo = modelo;
-	}
-
-	void setModeloLen(size_t modeloLen) {
-		this->modeloLen = modeloLen;
-	}
-
-	size_t getModeloLen() {
-		return modeloLen;
 	}
 
 	string getModelo() { return modelo; }
@@ -200,20 +173,10 @@ class Veiculo {
 		} while ((invalid = !strchr("CcMm", tipo)));
 
 		this->tipo = tipo;
-
-		setTipoLen(getTipo().length());
 	}
 
 	void setTipo(char tipo) {
 		this->tipo = tipo;
-	}
-
-	void setTipoLen(size_t tipoLen) {
-		this->tipoLen = tipoLen;
-	}
-
-	size_t getTipoLen() {
-		return tipoLen;
 	}
 
 	string getTipo() {

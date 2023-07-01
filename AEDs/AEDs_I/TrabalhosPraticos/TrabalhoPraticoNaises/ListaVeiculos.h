@@ -41,9 +41,9 @@ class ListaVeiculos {
 		for (int i = 0; i < Veiculo::getCount(); i++) {
 			size_t len;
 			if ((len = array[i].getPrecoLen()) > larguras.preco) larguras.preco = len;
-			if ((len = array[i].getMarcaLen()) > larguras.marca) larguras.marca = len;
-			if ((len = array[i].getModeloLen()) > larguras.modelo) larguras.modelo = len;
-			if ((len = array[i].getTipoLen()) > larguras.tipo) larguras.tipo = len;
+			if ((len = array[i].getMarca().length()) > larguras.marca) larguras.marca = len;
+			if ((len = array[i].getModelo().length()) > larguras.modelo) larguras.modelo = len;
+			if ((len = array[i].getTipo().length()) > larguras.tipo) larguras.tipo = len;
 		}
 
 		// ++ para considerar o espaço
@@ -72,13 +72,9 @@ class ListaVeiculos {
 			array[i].setPlaca(veiculo[0]);
 			array[i].setAno(stoi(veiculo[1]));
 			array[i].setPreco(stof(veiculo[2]));
-			array[i].setPrecoLen(veiculo[2].length());
 			array[i].setMarca(veiculo[3]);
-			array[i].setMarcaLen(veiculo[3].length());
 			array[i].setModelo(veiculo[4]);
-			array[i].setModeloLen(veiculo[4].length());
 			array[i].setTipo(veiculo[5][0]);
-			array[i].setTipoLen(veiculo[5].length());
 			array[i].setObs(veiculo[6]);
 
 			Veiculo::incrementCount();
