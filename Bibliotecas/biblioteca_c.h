@@ -26,6 +26,7 @@
 #define BOLD "\033[1m"
 
 typedef char* String;
+typedef const char* literal;
 
 #define CPF unsigned long
 #define endl "\n"
@@ -40,7 +41,8 @@ typedef char* String;
 void flush(FILE* stream) {
 	if (stream == 0) stream = stdin;
 	char c;
-	while ((c = fgetc(stream)) != '\n' && c != EOF) continue;
+	while ((c = fgetc(stream)) != '\n' && c != EOF)
+		continue;
 }
 
 void printColor(const char* msg, const char* color) {
@@ -120,7 +122,7 @@ void IntArrayPrint(int* array, int arrayLength) {
 void IntArrayFillRand(int* array, int arrayLength, int minRange, int maxRange) {
 
 	if (minRange > maxRange) {
-		int aux	 = maxRange;
+		int aux = maxRange;
 		maxRange = minRange;
 		minRange = aux;
 	}
@@ -150,9 +152,9 @@ void SelectionSort(int* array, int arrayLength) {
 		for (int j = i + 1; j < arrayLength; j++) {
 			if (array[menor] > array[j]) menor = j;
 		}
-		int swap	 = array[menor];
+		int swap = array[menor];
 		array[menor] = array[i];
-		array[i]	 = swap;
+		array[i] = swap;
 	}
 }
 
@@ -379,8 +381,8 @@ void freeSplit(char** split) { // Better name? freeStringArray
 }
 
 char** split(char* string, char* regex, bool freeBuffer) {
-	char** array	   = NULL;
-	int	   sizeOfArray = 0;
+	char** array = NULL;
+	int sizeOfArray = 0;
 
 	char* position = string; // Track the position within the buffer
 
@@ -408,7 +410,7 @@ char** split(char* string, char* regex, bool freeBuffer) {
 		position += strlen(array[sizeOfArray++]) + 1;
 	}
 
-	array			   = (char**)realloc(array, (sizeOfArray + 1) * sizeof(char*));
+	array = (char**)realloc(array, (sizeOfArray + 1) * sizeof(char*));
 	array[sizeOfArray] = NULL;
 
 	if (freeBuffer) free(string);
@@ -419,9 +421,9 @@ char** split(char* string, char* regex, bool freeBuffer) {
 char* replaceAll(char* string, const char* regex, const char* replacement) {
 	char* aux = (char*)malloc(2'000 * sizeof(char));
 
-	size_t regexLen		  = strlen(regex);
+	size_t regexLen = strlen(regex);
 	size_t replacementLen = strlen(replacement);
-	size_t stringLen	  = strlen(string);
+	size_t stringLen = strlen(string);
 
 	// printf("replacement: %s\n", replacement);
 	for (int i = 0, j = 0; i < stringLen;) {
@@ -453,17 +455,17 @@ char* replaceAll(char* string, const char* regex, const char* replacement) {
 }
 
 char* ReplaceAll(char* str, const char* change, const char* replace) {
-	size_t changeLen  = strlen(change);
+	size_t changeLen = strlen(change);
 	size_t replaceLen = strlen(replace);
 
 	for (int i = 0; i < changeLen; i++) {
-		char   charToChange = change[i];
-		size_t strLen		= strlen(str);
+		char charToChange = change[i];
+		size_t strLen = strlen(str);
 
 		for (int j = 0; j < strLen; j++) {
 			if (str[j] == charToChange) {
 				memmove(&str[j + replaceLen], &str[j + 1], strLen - j); // Shift characters to the right
-				memcpy(&str[j], replace, replaceLen);					// Insert the replacement
+				memcpy(&str[j], replace, replaceLen); // Insert the replacement
 				j += replaceLen - 1;
 				strLen += replaceLen - 1;
 			}

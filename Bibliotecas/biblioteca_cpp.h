@@ -34,6 +34,8 @@
 #define OR ||
 // #define or ||
 
+typedef const char* literal;
+
 // typedef int lint; // Normal int -> 4 bytes
 // #define int short // short or short int -> 2 bytes
 // typedef long long llint; // long int or long long -> 8 bytes
@@ -171,7 +173,7 @@ int readInt(const char* msg = "", string errorMsg = "DEFAULT") {
 	cout << msg;
 
 	bool invalid = false;
-	int	 integer;
+	int integer;
 
 	do {
 		if (invalid) {
@@ -194,7 +196,7 @@ int readInt(string errorMsg = "DEFAULT") {
 	}
 
 	bool invalid = false;
-	int	 integer;
+	int integer;
 
 	do {
 		if (invalid) {
@@ -219,7 +221,7 @@ int readFloat(string msg = "", string errorMsg = "DEFAULT") {
 	cout << msg;
 
 	bool invalid = false;
-	int	 floatValue;
+	int floatValue;
 
 	do {
 		if (invalid) {
@@ -255,7 +257,7 @@ int Rand(int maxRange = Infinity, int minRange = 0) {
 	srand(time(NULL));
 
 	if (minRange > maxRange) {
-		int aux	 = maxRange;
+		int aux = maxRange;
 		maxRange = minRange;
 		minRange = aux;
 	}
@@ -338,7 +340,7 @@ void ArrayFillRand(int* array, int arrayLength, int maxRange, int minRange = 0) 
 	int min_range = minRange;
 	if (minRange > maxRange) {
 		min_range = maxRange;
-		maxRange  = minRange;
+		maxRange = minRange;
 	}
 
 	srand(time(NULL));
@@ -356,7 +358,7 @@ void ArrayFillRand(float* array, int arrayLength, int maxRange, int minRange = 0
 	int min_range = minRange;
 	if (minRange > maxRange) {
 		min_range = maxRange;
-		maxRange  = minRange;
+		maxRange = minRange;
 	}
 
 	srand(time(NULL));
@@ -378,7 +380,7 @@ void vetorCrescente(int* array, int arrayLength) {
 		for (int j = 0; j < arrayLength; j++) {
 			if (array[j] < smallestArrayVal) {
 				smallestArrayVal = array[j];
-				index			 = j;
+				index = j;
 			}
 		}
 		array[index] = Infinity;
@@ -393,14 +395,14 @@ void vetorCrescente(int* array, int arrayLength) {
 
 // vetorCrescente para Float
 void vetorCrescente(float* array, int arrayLength) {
-	int	  index;
+	int index;
 	float arrayCopy[arrayLength];
 	for (int i = 0; i < arrayLength; i++) {
 		int smallestArrayVal = Infinity;
 		for (int j = 0; j < arrayLength; j++) {
 			if (array[j] < smallestArrayVal) {
 				smallestArrayVal = array[j];
-				index			 = j;
+				index = j;
 			}
 		}
 		array[index] = Infinity;
@@ -419,7 +421,7 @@ void ArrayAscendingOrder(int* array, int arrayLength) {
 	for (int i = 0; i < arrayLength; i++) {
 		for (int j = i + 1; j < arrayLength; j++) {
 			if (array[i] > array[j]) {
-				a		 = array[i];
+				a = array[i];
 				array[i] = array[j];
 				array[j] = a;
 			}
@@ -433,7 +435,7 @@ void ArrayAscendingOrder(float* array, int arrayLength) {
 	for (int i = 0; i < arrayLength; i++) {
 		for (int j = i + 1; j < arrayLength; j++) {
 			if (array[i] > array[j]) {
-				a		 = array[i];
+				a = array[i];
 				array[i] = array[j];
 				array[j] = a;
 			}
