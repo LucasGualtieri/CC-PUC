@@ -1,7 +1,6 @@
 #include "ListaVeiculos.h"
 #include "Veiculo.h"
 #include <biblioteca_cpp.h>
-#include <iomanip>
 
 // ANCHOR - ReadingChoice
 int ReadingChoice() {
