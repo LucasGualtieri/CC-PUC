@@ -1,8 +1,9 @@
 #ifndef SPLIT_H
 #define SPLIT_H
 
-#include <string>
-#include <vector>
+#include <biblioteca_cpp.h>
+// #include <string>
+// #include <vector>
 
 using namespace std;
 
