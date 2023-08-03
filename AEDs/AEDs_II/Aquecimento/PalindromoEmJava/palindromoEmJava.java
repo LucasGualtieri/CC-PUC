@@ -20,15 +20,3 @@ class palindromoEmJava {
 		scanner.close();
 	}
 }
-
-/*
- * "a�a" - SIM
- * "a��a" - SIM
- * "aça" - SIM
- * "açça" - SIM
- * "açaça" - SIM
- * "açéa" - NAO
- * "açéaaéça" - SIM
- * "açéaéça" - SIM
- * "marrocos - socorram" - SIM
- */
