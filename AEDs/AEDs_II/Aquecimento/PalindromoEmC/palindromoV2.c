@@ -22,7 +22,11 @@ bool isPalindromo(string str) {
 		}
 	}
 
-	return !strcmp(str, copy);
+	bool result = !strcmp(str, copy);
+
+	free(copy);
+
+	return result;
 }
 
 int main() {
