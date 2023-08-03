@@ -1,17 +1,5 @@
 import java.util.Scanner;
 
-/*
-	"a�a"					- SIM
-	"a��a"					- SIM
-	"aça"					- SIM
-	"açça"					- SIM
-	"açaça"					- SIM
-	"açéa"					- NAO
-	"açéaaéça"				- SIM
-	"açéaéça"				- SIM
-	"marrocos - socorram" 	- SIM
-*/
-
 class palindromoEmJava {
 
 	public static boolean isPalin(String input) {
@@ -26,10 +14,21 @@ class palindromoEmJava {
 		String input = new String();
 
 		while (!(input = scanner.nextLine()).equals("FIM")) {
-			// System.out.println(input);
 			System.out.println(isPalin(input) ? "SIM" : "NAO");
 		}
 
 		scanner.close();
 	}
 }
+
+/*
+ * "a�a" - SIM
+ * "a��a" - SIM
+ * "aça" - SIM
+ * "açça" - SIM
+ * "açaça" - SIM
+ * "açéa" - NAO
+ * "açéaaéça" - SIM
+ * "açéaéça" - SIM
+ * "marrocos - socorram" - SIM
+ */
