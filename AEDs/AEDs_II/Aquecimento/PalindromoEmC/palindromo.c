@@ -8,6 +8,7 @@
 
 /*
 	a�a                 - SIM
+	a��a                - SIM
 	aça                 - SIM
 	açça                - SIM
 	açaça               - SIM
