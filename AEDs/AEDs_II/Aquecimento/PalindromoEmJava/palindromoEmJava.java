@@ -3,8 +3,8 @@ import java.util.Scanner;
 class palindromoEmJava {
 
 	public static boolean isPalin(String input) {
-		String reversed = new StringBuilder(input).reverse().toString();
-		return input.equals(reversed);
+		StringBuilder reversed = new StringBuilder(input);
+		return input.equals(reversed.reverse().toString());
 	}
 
 	public static void main(String[] args) {
