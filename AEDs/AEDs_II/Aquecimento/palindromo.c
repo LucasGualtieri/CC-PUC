@@ -11,7 +11,7 @@
 
 typedef char* string;
 
-// clear && gcc palindromoFunc.c -o palindromoFunc && ./palindromoFunc < pub.in > alun.out
+// clear && gcc palindromo.c -o palindromo && ./palindromo < pub.in > alun.out
 
 bool isSpecialChar(char c) {
 	return !(isalnum(c) || c == ' ' || c == '-');
@@ -28,6 +28,7 @@ bool isPalindromo(char* str) {
 			left += 2, right -= 2;
 		} else if (isSpecialChar(str[left])) {
 			if (str[left++] != str[--right]) return false;
+			left++, right--;
 		} else {
 			if (str[left++] != str[right--]) return false;
 		}
