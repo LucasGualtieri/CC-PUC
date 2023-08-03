@@ -6,8 +6,6 @@
 #include <unistd.h>
 
 #define STRING_MAX_LEN 150
-#define UNKNOWN_CHAR_BEG -17
-#define UNKNOWN_CHAR_END -67
 
 typedef char* string;
 
@@ -17,24 +15,17 @@ bool isSpecialChar(char c) {
 	return !(isalnum(c) || c == ' ' || c == '-');
 }
 
-bool isPalindromo(char* str) {
+bool isPalindromo(string str) {
 
-	int left = 0, right = strlen(str) - 1;
+	string copy = strdup(str);
 
-	while (left <= right) {
-
-		if (str[left] == UNKNOWN_CHAR_BEG) {
-			if (str[right] != UNKNOWN_CHAR_END) return false;
-			left += 2, right -= 2;
-		} else if (isSpecialChar(str[left])) {
-			if (str[left++] != str[--right]) return false;
-			left++, right--;
-		} else {
-			if (str[left++] != str[right--]) return false;
+	for (int i = 0; i < strlen(str); i++) {
+		if (!isSpecialChar(str[i])) {
+			copy[i] = str[strlen(str) - 1 - i];
 		}
 	}
 
-	return true;
+	return !strcmp(str, copy);
 }
 
 int main() {
