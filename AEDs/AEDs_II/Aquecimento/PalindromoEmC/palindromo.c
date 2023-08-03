@@ -7,14 +7,14 @@
 // clear && gcc palindromo.c -o palindromo && ./palindromo < pub.in > alun.out
 
 /*
-	a�a                 - SIM
-	a��a                - SIM
-	aça                 - SIM
-	açça                - SIM
-	açaça               - SIM
-	açéa                - NAO
-	açéaaéça            - SIM
-	açéaéça             - SIM
+	a�a					- SIM
+	a��a				- SIM
+	aça					- SIM
+	açça				- SIM
+	açaça				- SIM
+	açéa				- NAO
+	açéaaéça			- SIM
+	açéaéça				- SIM
 	marrocos - socorram - SIM
 */
 
