@@ -7,15 +7,15 @@
 // clear && gcc palindromo.c -o palindromo && ./palindromo < pub.in > alun.out
 
 /*
-	a�a					- SIM
-	a��a				- SIM
-	aça					- SIM
-	açça				- SIM
-	açaça				- SIM
-	açéa				- NAO
-	açéaaéça			- SIM
-	açéaéça				- SIM
-	marrocos - socorram - SIM
+	"a�a"					- SIM
+	"a��a"					- SIM
+	"aça"					- SIM
+	"açça"					- SIM
+	"açaça"					- SIM
+	"açéa"					- NAO
+	"açéaaéça"				- SIM
+	"açéaéça"				- SIM
+	"marrocos - socorram" 	- SIM
 */
 
 #define STRING_MAX_LEN 500
@@ -30,12 +30,14 @@ bool isPalindromo(char* str) {
 
 	while (left <= right) {
 
+		// Conferindo caracteres Alphanuméricos.
 		if (str[left] != SPECIAL_CHAR && !UNKNOW_CHAR(str[left])) {
 			if (str[left] != str[right]) return false;
 		} else {
+			// Conferindo characteres especias (e.g., ç, á, à, ã, etc).
 			if (!UNKNOW_CHAR(str[left])) {
 				if (str[++left] != str[right--]) return false;
-			} else {
+			} else { // Conferindo characteres não reconhecidos.
 				if (!UNKNOW_CHAR(str[right])) return false;
 				left += 2, right -= 2;
 			}
