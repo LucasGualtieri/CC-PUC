@@ -18,13 +18,13 @@
 	"marrocos - socorram" 	- SIM
 */
 
-#define STRING_MAX_LEN 500
+#define STR_MAX_LEN 500
 #define SPECIAL_CHAR -61
 #define UNKNOW_CHAR(value) ((value == -17 || value == -67) ? true : false)
 
 typedef char* string;
 
-bool isPalindromo(char* str) {
+bool isPalindromo(string str) {
 
 	int left = 0, right = strlen(str) - 1;
 
@@ -51,7 +51,7 @@ bool isPalindromo(char* str) {
 
 int main() {
 
-	string str = (string)malloc(STRING_MAX_LEN * sizeof(char));
+	string str = (string)malloc(STR_MAX_LEN * sizeof(char));
 
 	scanf("%[^\r\n]", str);
 

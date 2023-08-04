@@ -1,4 +1,6 @@
-import java.util.Scanner;
+import java.util.*;
+
+// clear && javac palindromoEmJava.java && java palindromoEmJava < pub.in > alun.out
 
 class palindromoEmJava {
 
@@ -10,8 +12,7 @@ class palindromoEmJava {
 	public static void main(String[] args) {
 
 		Scanner scanner = new Scanner(System.in);
-
-		String input = new String();
+		String input;
 
 		while (!(input = scanner.nextLine()).equals("FIM")) {
 			System.out.println(isPalin(input) ? "SIM" : "NAO");

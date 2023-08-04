@@ -6,6 +6,13 @@
 	"configurations": [
 		{
 			"type": "java",
+			"name": "palindromoEmJavaMyIO",
+			"request": "launch",
+			"mainClass": "palindromoEmJavaMyIO",
+			"projectName": "CC-PUC_cc5a22eb"
+		},
+		{
+			"type": "java",
 			"name": "palindromoEmJava",
 			"request": "launch",
 			"mainClass": "palindromoEmJava",
