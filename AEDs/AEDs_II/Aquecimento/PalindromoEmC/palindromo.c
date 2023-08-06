@@ -24,6 +24,12 @@
 
 typedef char* string;
 
+string getstr(string str) {
+	fgets(str, STR_MAX_LEN, stdin);
+	str[strcspn(str, "\r\n")] = '\0';
+	return str;
+}
+
 bool isPalindromo(string str) {
 
 	int left = 0, right = strlen(str) - 1;
@@ -53,11 +59,8 @@ int main() {
 
 	string str = (string)malloc(STR_MAX_LEN * sizeof(char));
 
-	scanf("%[^\r\n]", str);
-
-	while (strcmp(str, "FIM")) {
+	while (strcmp(getstr(str), "FIM")) {
 		printf("%s\n", isPalindromo(str) ? "SIM" : "NAO");
-		scanf(" %[^\r\n]", str);
 	}
 
 	free(str);
