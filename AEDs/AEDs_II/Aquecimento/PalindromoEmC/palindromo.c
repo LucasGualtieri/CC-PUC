@@ -18,9 +18,10 @@
 	"marrocos - socorram" 	- SIM
 */
 
-#define STR_MAX_LEN 500
-#define SPECIAL_CHAR -61
-#define UNKNOW_CHAR(value) ((value == -17 || value == -67) ? true : false)
+#define STR_MAX_LEN 400
+#define SPECIAL_CHAR -61 // characteres especias (e.g., ç, á, à, ã, etc)
+#define UNKNOW_CHAR -67	 // �
+#define isSingleChar(c) (isalnum(c) || c == ' ' || c == '-')
 
 typedef char* string;
 
@@ -37,14 +38,14 @@ bool isPalindromo(string str) {
 	while (left <= right) {
 
 		// Conferindo caracteres Alphanuméricos.
-		if (str[left] != SPECIAL_CHAR && !UNKNOW_CHAR(str[left])) {
+		if (isSingleChar(str[left])) {
 			if (str[left] != str[right]) return false;
 		} else {
 			// Conferindo characteres especias (e.g., ç, á, à, ã, etc).
-			if (!UNKNOW_CHAR(str[left])) {
+			if (str[left] == SPECIAL_CHAR) {
 				if (str[++left] != str[right--]) return false;
 			} else { // Conferindo characteres não reconhecidos.
-				if (!UNKNOW_CHAR(str[right])) return false;
+				if (str[right] != UNKNOW_CHAR) return false;
 				left += 2, right -= 2;
 			}
 		}
@@ -57,13 +58,11 @@ bool isPalindromo(string str) {
 
 int main() {
 
-	string str = (string)malloc(STR_MAX_LEN * sizeof(char));
+	char str[STR_MAX_LEN];
 
 	while (strcmp(getstr(str), "FIM")) {
 		printf("%s\n", isPalindromo(str) ? "SIM" : "NAO");
 	}
-
-	free(str);
 
 	return 0;
 }
