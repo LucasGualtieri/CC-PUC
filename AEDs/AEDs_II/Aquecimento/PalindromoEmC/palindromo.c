@@ -20,7 +20,6 @@
 
 #define STR_MAX_LEN 400
 #define SPECIAL_CHAR -61 // characteres especias (e.g., ç, á, à, ã, etc)
-#define UNKNOW_CHAR -67	 // �
 #define isSingleChar(c) (isalnum(c) || c == ' ' || c == '-')
 
 typedef char* string;
@@ -36,20 +35,16 @@ bool isPalindromo(string str) {
 	int left = 0, right = strlen(str) - 1;
 
 	while (left <= right) {
-
 		// Conferindo caracteres Alphanuméricos.
 		if (isSingleChar(str[left])) {
 			if (str[left] != str[right]) return false;
 		} else {
 			// Conferindo characteres especias (e.g., ç, á, à, ã, etc).
-			if (str[left] == SPECIAL_CHAR) {
-				if (str[++left] != str[right--]) return false;
-			} else { // Conferindo characteres não reconhecidos.
-				if (str[right] != UNKNOW_CHAR) return false;
-				left += 2, right -= 2;
-			}
+			int scLen; // Special Character Length
+			scLen = (str[left] == SPECIAL_CHAR) ? 1 : 2;
+			if (str[left + scLen] != str[right]) return false;
+			left += scLen, right -= scLen;
 		}
-
 		left++, right--;
 	}
 

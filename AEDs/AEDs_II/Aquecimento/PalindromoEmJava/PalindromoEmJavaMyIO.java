@@ -1,6 +1,6 @@
 // clear && javac palindromoEmJavaMyIO.java && java palindromoEmJavaMyIO < pub.in > alun.out
 
-class palindromoEmJavaMyIO {
+class PalindromoEmJavaMyIO {
 
 	public static boolean isPalin(String input) {
 		StringBuilder reversed = new StringBuilder(input);
