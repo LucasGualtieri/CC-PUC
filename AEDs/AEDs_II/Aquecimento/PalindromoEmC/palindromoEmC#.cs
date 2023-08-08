@@ -15,8 +15,8 @@ class Program {
 	}
 	
 	public static void Main (string[] args) {
-		string input;
 
+		string input;
 		while(!(input = Console.ReadLine()).Equals("FIM")) {
 			Console.WriteLine(isPalin(input) ? "SIM" : "NAO");
 		}
