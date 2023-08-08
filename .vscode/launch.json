@@ -6,6 +6,41 @@
 	"configurations": [
 		{
 			"type": "java",
+			"name": "Ex3",
+			"request": "launch",
+			"mainClass": "Ex3",
+			"projectName": "CC-PUC_cc5a22eb"
+		},
+		{
+			"type": "java",
+			"name": "Ex2",
+			"request": "launch",
+			"mainClass": "Ex2",
+			"projectName": "CC-PUC_cc5a22eb"
+		},
+		{
+			"type": "java",
+			"name": "Ex1",
+			"request": "launch",
+			"mainClass": "Ex1",
+			"projectName": "CC-PUC_cc5a22eb"
+		},
+		{
+			"type": "java",
+			"name": "Ex1",
+			"request": "launch",
+			"mainClass": "AEDs.AEDs_II.TrabalhosTeoricos.TT01.Ex1",
+			"projectName": "CC-PUC_cc5a22eb"
+		},
+		{
+			"type": "java",
+			"name": "Palindromo",
+			"request": "launch",
+			"mainClass": "Palindromo",
+			"projectName": "CC-PUC_cc5a22eb"
+		},
+		{
+			"type": "java",
 			"name": "palindromoEmJavaMyIO",
 			"request": "launch",
 			"mainClass": "palindromoEmJavaMyIO",

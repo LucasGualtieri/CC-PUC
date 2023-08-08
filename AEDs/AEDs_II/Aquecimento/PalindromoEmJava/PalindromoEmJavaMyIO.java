@@ -9,6 +9,7 @@ class PalindromoEmJavaMyIO {
 
 	public static void main(String[] args) {
 
+		MyIO.setCharset("UTF-8");
 		String input;
 
 		while (!(input = MyIO.readLine()).equals("FIM")) {

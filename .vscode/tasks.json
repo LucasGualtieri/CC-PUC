@@ -9,16 +9,16 @@
 				"-g",
 				"${file}",
 				"-I",
-				// "/home/lucas/PC-HOME/CC-PUC/Bibliotecas", // Casa
-				"/home/1431578/Documents/CC-PUC/Bibliotecas", // Faculdade
+				"/home/lucas/PC-HOME/CC-PUC/Bibliotecas", // Casa
+				// "/home/1431578/Documents/CC-PUC/Bibliotecas", // Faculdade
 				"-o",
-				// "/home/lucas/PC-HOME/OutputExe/${fileBasenameNoExtension}.out", // Casa
-				"/home/1431578/Documents/OutputExe/${fileBasenameNoExtension}.out", // Faculdade
+				"/home/lucas/PC-HOME/OutputExe/${fileBasenameNoExtension}.out", // Casa
+				// "/home/1431578/Documents/OutputExe/${fileBasenameNoExtension}.out", // Faculdade
 				"&&",
 				"clear",
 				"&&",
-				// "/home/lucas/PC-HOME/OutputExe/${fileBasenameNoExtension}.out" // Casa
-				"/home/1431578/Documents/OutputExe/${fileBasenameNoExtension}.out" // Faculdade
+				"/home/lucas/PC-HOME/OutputExe/${fileBasenameNoExtension}.out" // Casa
+				// "/home/1431578/Documents/OutputExe/${fileBasenameNoExtension}.out" // Faculdade
 			],
 			"options": {
 				"cwd": "${fileDirname}"
@@ -36,11 +36,11 @@
 				"-g",
 				"${file}",
 				"-I",
-				// "/home/lucas/PC-HOME/CC-PUC/Bibliotecas", // Casa
-				"/home/1431578/Documents/CC-PUC/Bibliotecas", // Faculdade
+				"/home/lucas/PC-HOME/CC-PUC/Bibliotecas", // Casa
+				// "/home/1431578/Documents/CC-PUC/Bibliotecas", // Faculdade
 				"-o",
-				// "/home/lucas/PC-HOME/OutputExe/${fileBasenameNoExtension}.out" // Casa
-				"/home/1431578/Documents/OutputExe/${fileBasenameNoExtension}.out" // Faculdade
+				"/home/lucas/PC-HOME/OutputExe/${fileBasenameNoExtension}.out" // Casa
+				// "/home/1431578/Documents/OutputExe/${fileBasenameNoExtension}.out" // Faculdade
 			],
 			"options": {
 				"cwd": "${fileDirname}"

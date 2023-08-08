@@ -10,7 +10,7 @@ typedef char* string;
 
 // clear && gcc palindromo.c -o palindromo && ./palindromo < pub.in > alun.out
 
-bool isSpecialChar(char c) { return !(isalnum(c) || c == ' ' || c == '-'); }
+#define isSpecialChar(c) !(isalnum(c) || c == ' ' || c == '-')
 
 bool isPalindromo(string str) {
 

@@ -2,7 +2,7 @@ import java.util.*;
 
 // clear && javac palindromoEmJava.java && java palindromoEmJava < pub.in > alun.out
 
-class palindromoEmJava {
+class PalindromoEmJava {
 
 	public static boolean isPalin(String input) {
 		StringBuilder reversed = new StringBuilder(input);
