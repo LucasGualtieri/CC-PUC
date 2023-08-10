@@ -32,20 +32,18 @@ string getstr(string str) {
 
 bool isPalindromo(string str) {
 
-	int left = 0, right = strlen(str) - 1;
+	int left = -1, right = strlen(str);
 
-	while (left <= right) {
+	while (left++ <= right--) {
 		// Conferindo caracteres Alphanuméricos.
 		if (isSingleChar(str[left])) {
 			if (str[left] != str[right]) return false;
 		} else {
 			// Conferindo characteres especias (e.g., ç, á, à, ã, etc).
-			int scLen; // Special Character Length
-			scLen = (str[left] == SPECIAL_CHAR) ? 1 : 2;
+			int scLen = (str[left] == SPECIAL_CHAR) ? 1 : 2; // Special Character Length
 			if (str[left + scLen] != str[right]) return false;
 			left += scLen, right -= scLen;
 		}
-		left++, right--;
 	}
 
 	return true;
