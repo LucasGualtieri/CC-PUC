@@ -72,7 +72,7 @@ class Ex5 {
 
 	static boolean optionsMenu() {
 
-		System.out.println("Ex3 letras a) -> c)\n");
+		System.out.println("Ex5 letras a) -> c)\n");
 		System.out.println("0 - Sair do programa");
 		System.out.println("1 - a)");
 		System.out.println("2 - b)");

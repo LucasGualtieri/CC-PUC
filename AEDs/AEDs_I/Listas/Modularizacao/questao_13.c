@@ -9,6 +9,7 @@ int fibonacci(int n) {
 		a = b;
 		b = c;
 	}
+
 	return c;
 }
 

@@ -3,21 +3,17 @@
 // Essa função recebe um número inteiro n e retorna ->
 // o maior elemento da sequência de Fibonacci que seja menor que n.
 int fibonacci(int n) {
-	int a = 0, b = 1, c, res;
+	int a = 0, b = 1, c, res = 0;
 
-	for (int i = 2; i < n; i++) {
-
-		if (c < n) {
-			res = c;
-			c = a + b;
-			a = b;
-			b = c;
-		} else {
-			break;
-		}
+	for (int i = 1; i < n; i++) {
+		res = c;
+		c	= a + b;
+		a	= b;
+		b	= c;
+		if (c >= n) return res;
 	}
 
-	return res;
+	return c;
 }
 
 // Esse procedimento lê o valor de n e chama a função.

@@ -50,14 +50,13 @@ class Ex2 {
 
 		System.out.println("\nLetra b):\n");
 
-		int[] array = new int[10];
 		int maior = Integer.MIN_VALUE;
 
-		for (int i = 0; i < array.length; i++) {
+		for (int i = 0; i < 10; i++) {
 			System.out.print(10 - i + "° valor inteiro: ");
-			array[i] = scanner.nextInt();
-			if (array[i] > maior) {
-				maior = array[i];
+			int value = scanner.nextInt();
+			if (value > maior) {
+				maior = value;
 			}
 		}
 
