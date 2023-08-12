@@ -6,6 +6,20 @@
 	"configurations": [
 		{
 			"type": "java",
+			"name": "Ex5",
+			"request": "launch",
+			"mainClass": "Ex5",
+			"projectName": "CC-PUC_cc5a22eb"
+		},
+		{
+			"type": "java",
+			"name": "Ex2",
+			"request": "launch",
+			"mainClass": "AEDs.AEDs_II.TrabalhosTeoricos.TT01.IntroducaoAoJava.Ex2",
+			"projectName": "CC-PUC_cc5a22eb"
+		},
+		{
+			"type": "java",
 			"name": "Ex3",
 			"request": "launch",
 			"mainClass": "Ex3",

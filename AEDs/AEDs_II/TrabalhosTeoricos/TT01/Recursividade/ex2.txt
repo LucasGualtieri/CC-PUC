@@ -1,0 +1,5 @@
+Após as sucessivas chamas recursivas printarem na
+tela 2, 1, 0, 0 as instâncias das funções começam
+a retornar para as instâncias que a chamaram, sendo
+assim, terminado de executar cada uma delas, pritando 
+a tela os mesmos números na ordem inversa.
