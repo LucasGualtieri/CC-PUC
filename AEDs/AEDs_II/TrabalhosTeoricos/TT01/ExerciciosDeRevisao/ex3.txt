@@ -1,0 +1,1 @@
+A função booleana "doidao" recebe um charactere por parâmetro e retorna true se for uma vogal

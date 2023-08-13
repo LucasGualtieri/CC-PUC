@@ -1,0 +1,3 @@
+Os operadores shift right e left (>> e <<) deslocam os bits
+para direita e esquerda e inserem um zero na posição vazia
+Na prática, temos uma divisão ou multiplicação por dois

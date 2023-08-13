@@ -1,0 +1,2 @@
+Na primeira iteração do while será mostrado na tela "1 1 1 1"
+Na segunda interação "2 2 2 2", e assim por diante

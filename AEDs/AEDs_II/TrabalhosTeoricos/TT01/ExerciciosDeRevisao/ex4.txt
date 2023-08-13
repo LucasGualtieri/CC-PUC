@@ -1,0 +1,2 @@
+Em M1 retornamos i--, ou seja, retornamos i e depois decrementamos o valor de i, pois estamos efetuando um pós-decremento
+Em M2 retornamos --i, ou seja, decrementamos o valor de i e depois retornamos i, pois estamos efetuando um pré-incremento
