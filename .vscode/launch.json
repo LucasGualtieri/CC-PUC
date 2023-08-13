@@ -6,6 +6,55 @@
 	"configurations": [
 		{
 			"type": "java",
+			"name": "Ex18",
+			"request": "launch",
+			"mainClass": "Ex18",
+			"projectName": "CC-PUC_cc5a22eb"
+		},
+		{
+			"type": "java",
+			"name": "Ex16",
+			"request": "launch",
+			"mainClass": "Ex16",
+			"projectName": "CC-PUC_cc5a22eb"
+		},
+		{
+			"type": "java",
+			"name": "Ex15",
+			"request": "launch",
+			"mainClass": "Ex15",
+			"projectName": "CC-PUC_cc5a22eb"
+		},
+		{
+			"type": "java",
+			"name": "Ex14",
+			"request": "launch",
+			"mainClass": "Ex14",
+			"projectName": "CC-PUC_cc5a22eb"
+		},
+		{
+			"type": "java",
+			"name": "Ex13",
+			"request": "launch",
+			"mainClass": "Ex13",
+			"projectName": "CC-PUC_cc5a22eb"
+		},
+		{
+			"type": "java",
+			"name": "Ex12",
+			"request": "launch",
+			"mainClass": "Ex12",
+			"projectName": "CC-PUC_cc5a22eb"
+		},
+		{
+			"type": "java",
+			"name": "Ex11",
+			"request": "launch",
+			"mainClass": "Ex11",
+			"projectName": "CC-PUC_cc5a22eb"
+		},
+		{
+			"type": "java",
 			"name": "Ex10",
 			"request": "launch",
 			"mainClass": "Ex10",

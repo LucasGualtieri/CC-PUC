@@ -9,23 +9,23 @@
 typedef struct Matrix {
 	// matriz[ROWS][COLUMNS];
 	int** pointer;
-	int rows;
-	int columns;
+	int	  rows;
+	int	  columns;
 } Matrix;
 
 Matrix* NewMatrix(int rows, int columns) {
-	Matrix* new = (Matrix*)malloc(sizeof(Matrix));
+	Matrix* newMatrix = (Matrix*)malloc(sizeof(Matrix));
 
-	new->rows = rows;
-	new->columns = columns;
+	newMatrix->rows	   = rows;
+	newMatrix->columns = columns;
 
-	new->pointer = (int**)malloc(rows * sizeof(int*));
+	newMatrix->pointer = (int**)malloc(rows * sizeof(int*));
 
 	for (int i = 0; i < rows; i++) {
-		new->pointer[i] = (int*)malloc(columns * sizeof(int));
+		newMatrix->pointer[i] = (int*)malloc(columns * sizeof(int));
 	}
 
-	return new;
+	return newMatrix;
 }
 
 // void MatrixAlloc(Matrix* matrix, int rows, int columns) { // Deprecated
@@ -39,15 +39,15 @@ Matrix* NewMatrix(int rows, int columns) {
 // }
 
 void MatrixPrint(Matrix* matrix) {
-	int rows = matrix->rows;
-	int cols = matrix->columns;
+	int	  rows		= matrix->rows;
+	int	  cols		= matrix->columns;
 	int** matrixAux = matrix->pointer;
 
 	int maxElementWidth = 0;
 	// Find the maximum width of matrix elements
 	for (int i = 0; i < rows; i++) {
 		for (int j = 0; j < cols; j++) {
-			int element = matrixAux[i][j];
+			int element		 = matrixAux[i][j];
 			int elementWidth = 0;
 
 			// Calculate the number of digits in the element
