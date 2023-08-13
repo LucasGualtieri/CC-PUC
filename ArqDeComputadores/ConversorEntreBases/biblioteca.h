@@ -17,6 +17,12 @@ void clrscreen() {
 	system("clear");
 }
 
+void replaceAllCommas(string str) {
+	for (int i = 0; i < strlen(str); i++) {
+		if (str[i] == ',') str[i] = '.';
+	}
+}
+
 string getstr() {
 
 	string str = (string)malloc(50 * sizeof(char));
@@ -28,12 +34,6 @@ string getstr() {
 	replaceAllCommas(str);
 
 	return str;
-}
-
-void replaceAllCommas(string str) {
-	for (int i = 0; i < strlen(str); i++) {
-		if (str[i] == ',') str[i] = '.';
-	}
 }
 
 #endif /* BIBLIOTECA_H */

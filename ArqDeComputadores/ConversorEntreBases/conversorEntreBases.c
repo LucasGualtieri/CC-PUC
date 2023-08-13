@@ -1,5 +1,42 @@
 #include "biblioteca.h"
 
+void conversor(int baseOrigem, int baseFinal) {
+	clrscreen();
+
+	printf("Convertendo da base %d para base %d\n", baseOrigem, baseFinal);
+
+	printf("Digite o valor a ser convertido: ");
+	string valorOriginal   = getstr();
+	string valorConvertido = strdup(valorOriginal);
+
+	// switch (baseOrigem) {
+	// case 2:
+	// 	valorConvertido = baseXParaDec(2, valorOriginal);
+	// 	break;
+	// case 8:
+	// 	valorConvertido = baseXParaDec(8, valorOriginal);
+	// 	break;
+	// case 10:
+	// 	if (baseFinal == 16) {
+	// 		valorConvertido = decParaHex(valorOriginal);
+	// 	} else {
+	// 		valorConvertido = decParaBaseX(valorOriginal, baseFinal);
+	// 	}
+	// 	break;
+	// case 16:
+	// 	valorConvertido = hexParaDec(valorOriginal);
+	// 	break;
+	// }
+
+	clrscreen();
+
+	// if (baseFinal != 10 && baseOrigem != 10) valorConvertido = DecParaBaseX(valorConvertido, baseFinal);
+	// printf("O valor %s(%d) convertido para base %d é: %s\n", valorOriginal, baseOrigem, baseFinal, valorConvertido);
+
+	free(valorOriginal);
+	free(valorConvertido);
+}
+
 int ReadingChoice() {
 	int	 choice;
 	bool invalid = false;
@@ -13,41 +50,6 @@ int ReadingChoice() {
 	} while ((invalid = choice < 0 || 4 < choice));
 
 	return choice;
-}
-
-void conversor(int baseOrigem, int baseFinal) {
-	printf("Convertendo da base %d para -> %s\n", baseOrigem, baseFinal);
-
-	printf("Digite o valor a ser convertido: ");
-	string valorOriginal   = getstr();
-	string valorConvertido = strdup(valorOriginal);
-
-	switch (baseOrigem) {
-	case 2:
-		valorConvertido = baseXParaDec(2, valorOriginal);
-		break;
-	case 8:
-		valorConvertido = baseXParaDec(8, valorOriginal);
-		break;
-	case 10:
-		if (baseFinal == 16) {
-			valorConvertido = decParaHex(valorOriginal);
-		} else {
-			valorConvertido = decParaBaseX(valorOriginal, baseFinal);
-		}
-		break;
-	case 16:
-		valorConvertido = hexParaDec(valorOriginal);
-		break;
-	}
-
-	clrscreen();
-
-	if (baseFinal != 10 && baseOrigem != 10) valorConvertido = DecParaBaseX(valorConvertido, baseFinal);
-	printf("O valor %s(%d) convertido para base %d é: %s\n", valorOriginal, baseOrigem, baseFinal, valorConvertido);
-
-	free(valorOriginal);
-	free(valorConvertido);
 }
 
 int escolhaBaseFinal(int baseOrigem) {

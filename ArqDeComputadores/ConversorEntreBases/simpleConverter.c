@@ -39,6 +39,8 @@ string decimalParaBin(float decVal) {
 
 int main() {
 
+	// Testes
+
 	string str = decimalParaBin(240.1920);
 
 	printf("Res: %s\n", str);
