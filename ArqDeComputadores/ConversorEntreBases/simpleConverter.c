@@ -1,4 +1,4 @@
-#include <biblioteca_c.h>
+#include "biblioteca.h"
 
 string decimalParaBin(float decVal) {
 	string str = (string)malloc(50 * sizeof(char));
@@ -41,7 +41,17 @@ int main() {
 
 	// Testes
 
-	string str = decimalParaBin(240.1920);
+	printf("ctoi('A'): %d\n", ctoi('A'));
+	printf("ctoi('B'): %d\n", ctoi('B'));
+	printf("ctoi('C'): %d\n", ctoi('C'));
+	printf("ctoi('D'): %d\n", ctoi('D'));
+	printf("ctoi('E'): %d\n", ctoi('E'));
+	printf("ctoi('F'): %d\n", ctoi('F'));
+
+	const char* hex = "AAF23";
+	printf("atof(valor): %f\n", atof(hex));
+
+	string str = decimalParaBin(240.1);
 
 	printf("Res: %s\n", str);
 

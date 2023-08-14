@@ -1,6 +1,7 @@
 #ifndef BIBLIOTECA_H
 #define BIBLIOTECA_H
 
+#include <math.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -34,6 +35,38 @@ string getstr() {
 	replaceAllCommas(str);
 
 	return str;
+}
+
+char toUpper(char c) {
+	return (char)('a' <= c && c <= 'z' ? c - 32 : c);
+}
+
+int indexOf(string str, char reference) {
+
+	for (int i = 0; i < strlen(str); i++) {
+		if (str[i] == reference) return i;
+	}
+	return -1;
+}
+
+int ctoi(char c) {
+	return 'A' <= (c = toUpper(c)) && c <= 'F' ? c - 55 : c - 48;
+}
+
+void trim(string str) {
+
+	int ponto = indexOf(str, '.');
+
+	if (ponto == -1) return;
+
+	for (int i = strlen(str) - 1; i >= ponto; i--) {
+		if (str[i] == '0') {
+			str[i] = 0;
+			if (str[i - 1] == '.') str[i - 1] = 0;
+		} else {
+			break;
+		}
+	}
 }
 
 #endif /* BIBLIOTECA_H */
