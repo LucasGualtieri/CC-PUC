@@ -1,0 +1,6 @@
+O programa declara um ponteiro (vet), alloca 5 inteiros na heap
+e printa na tela o endereço do primeiro inteiro.
+
+Depois o programa alloca mais 5 inteiros e aponta vet para
+esse novo array, em seguida printa na tela o endereço do
+primeiro inteiro do novo array.
