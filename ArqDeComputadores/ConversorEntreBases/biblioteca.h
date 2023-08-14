@@ -11,7 +11,8 @@ typedef char* string;
 
 void flush() {
 	char c;
-	while ((c = fgetc(stdin)) != '\n' && c != '\r') continue;
+	while ((c = fgetc(stdin)) != '\n' && c != '\r')
+		continue;
 }
 
 void clrscreen() {
@@ -51,6 +52,10 @@ int indexOf(string str, char reference) {
 
 int ctoi(char c) {
 	return 'A' <= (c = toUpper(c)) && c <= 'F' ? c - 55 : c - 48;
+}
+
+char itoa(int val) {
+	return 10 <= val && val <= 15 ? val + 55 : val + 48;
 }
 
 void trim(string str) {

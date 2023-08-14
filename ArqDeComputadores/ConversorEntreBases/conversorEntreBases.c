@@ -1,17 +1,12 @@
 #include "biblioteca.h"
 
-string decParaHex(string teste);
-
 string baseXParaDec(int baseX, string valor) {
 
+	size_t valorLen = strlen(valor);
 	int indexDoPonto = indexOf(valor, '.');
-
-	int maiorPotencia = indexDoPonto != -1 ? indexDoPonto - 1 : strlen(valor) - 1;
-	int menorPotencia = indexDoPonto != -1 ? strlen(valor) - 1 - indexDoPonto : 0;
+	int maiorPotencia = indexDoPonto != -1 ? indexDoPonto - 1 : valorLen - 1;
 
 	float resultado = 0;
-
-	size_t valorLen = strlen(valor);
 
 	for (int i = 0; i < valorLen; i++) {
 		if (valor[i] == '.') continue;
@@ -35,7 +30,7 @@ string decParaBaseX(string valor, int baseX) {
 	// Convertendo a parte inteira.
 	for (int i = valorDecimal; i >= 1; i /= baseX) {
 		char aux[2];
-		sprintf(aux, "%d", i % baseX);
+		sprintf(aux, "%c", itoa(i % baseX));
 		strcat(str, aux);
 	}
 
@@ -45,15 +40,15 @@ string decParaBaseX(string valor, int baseX) {
 		// Invertendo a string.
 		size_t len = strlen(str);
 		for (int i = 0; i < len / 2; i++) {
-			char aux		 = str[i];
-			str[i]			 = str[len - 1 - i];
+			char aux = str[i];
+			str[i] = str[len - 1 - i];
 			str[len - 1 - i] = aux;
 		}
 	}
 
 	// Convertendo a parte fracionária.
 
-	int	  parteInteira	   = (int)valorDecimal;
+	int parteInteira = (int)valorDecimal;
 	float parteFracionaria = valorDecimal - parteInteira;
 
 	if (parteFracionaria > 0) {
@@ -81,7 +76,7 @@ void conversor(int baseOrigem, int baseFinal) {
 	printf("Convertendo da base %d para base %d\n\n", baseOrigem, baseFinal);
 
 	printf("Digite o valor a ser convertido: ");
-	string valorOriginal   = getstr();
+	string valorOriginal = getstr();
 	string valorConvertido = strdup(valorOriginal);
 
 	switch (baseOrigem) {
@@ -92,12 +87,7 @@ void conversor(int baseOrigem, int baseFinal) {
 		valorConvertido = baseXParaDec(8, valorOriginal);
 		break;
 	case 10:
-		if (baseFinal == 16) {
-			puts("\nFunção ainda não implementada!");
-			// valorConvertido = decParaHex(valorOriginal);
-		} else {
-			valorConvertido = decParaBaseX(valorOriginal, baseFinal);
-		}
+		valorConvertido = decParaBaseX(valorOriginal, baseFinal);
 		break;
 	case 16:
 		valorConvertido = baseXParaDec(16, valorOriginal);
@@ -112,7 +102,7 @@ void conversor(int baseOrigem, int baseFinal) {
 }
 
 int ReadingChoice(int maxRange) {
-	int	 choice;
+	int choice;
 	bool invalid = false;
 
 	do {
