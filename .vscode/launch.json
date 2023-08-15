@@ -6,6 +6,13 @@
 	"configurations": [
 		{
 			"type": "java",
+			"name": "test",
+			"request": "launch",
+			"mainClass": "test",
+			"projectName": "CC-PUC_cc5a22eb"
+		},
+		{
+			"type": "java",
 			"name": "Ex18",
 			"request": "launch",
 			"mainClass": "Ex18",
