@@ -149,9 +149,15 @@ int escolhaBaseFinal(int baseOrigem) {
 
 	int escolha = ReadingChoice(3);
 
-	if (escolha == 0) {
-		return 5;
-	} else if (baseOrigem == 2 || baseOrigem < 10 && escolha >= 2) {
+	if (escolha == 0) return 5;
+
+	if (baseOrigem == 2) {
+		escolha++;
+	} else if (baseOrigem == 8 && escolha >= 2) {
+		escolha++;
+	} else if (baseOrigem == 10 && escolha >= 3) {
+		escolha++;
+	} else if (baseOrigem == 16 && escolha >= 4) {
 		escolha++;
 	}
 
