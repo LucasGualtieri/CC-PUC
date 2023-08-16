@@ -81,14 +81,10 @@ char* getValor(int base) {
 		if (invalid) printf("Valor inválido, tente novamente: ");
 		valor	   = getstr();
 		size_t len = strlen(valor);
-		for (int i = 0; i < len; i++) {
+		for (int i = 0; !invalid && i < len; i++) {
 			if (valor[i] == '.') continue;
-			if (ctoi(valor[i]) >= base) {
+			if (invalid = ctoi(valor[i]) >= base) {
 				free(valor);
-				invalid = true;
-				break;
-			} else {
-				invalid = false;
 			}
 		}
 	} while (invalid);
@@ -105,7 +101,7 @@ void conversor(int baseOrigem, int baseFinal) {
 	string valorOriginal   = getValor(baseOrigem);
 	string valorConvertido = strdup(valorOriginal);
 
-	if (baseOrigem == 2 || baseOrigem == 8 || baseOrigem == 16) {
+	if (baseOrigem != 10) {
 		valorConvertido = baseXParaDec(baseOrigem, valorOriginal);
 		valorConvertido = decParaBaseX(valorConvertido, baseFinal);
 	} else {
@@ -157,9 +153,10 @@ int escolhaBaseFinal(int baseOrigem) {
 		escolha++;
 	} else if (baseOrigem == 10 && escolha >= 3) {
 		escolha++;
-	} else if (baseOrigem == 16 && escolha >= 4) {
-		escolha++;
 	}
+	// else if (baseOrigem == 16 && escolha >= 4) {
+	//	escolha++;
+	// }
 
 	switch (escolha) {
 	case 1:
