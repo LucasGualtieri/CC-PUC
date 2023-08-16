@@ -52,7 +52,7 @@ int indexOf(string str, char reference) {
 }
 
 int ctoi(char c) {
-	if (!isalnum(c)) return 20;
+	if (!isalnum(c)) return 16; // Maior base de conversão
 	return 'A' <= (c = toUpper(c)) && c <= 'F' ? c - 55 : c - 48;
 }
 

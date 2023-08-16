@@ -6,6 +6,8 @@
 
 // clear && gcc palindromo.c -o palindromo && ./palindromo < pub.in > alun.out
 
+// setlocale();
+
 /*
 	"a�a"					- SIM
 	"a��a"					- SIM
