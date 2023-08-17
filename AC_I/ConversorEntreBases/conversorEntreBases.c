@@ -11,23 +11,22 @@ string baseEntradaParaDec(int baseEntrada, string valor) {
 	int	   indexDoPonto	 = indexOf(valor, '.');
 	int	   maiorPotencia = indexDoPonto != -1 ? indexDoPonto - 1 : valorLen - 1;
 
-	float resultado = 0;
+	double resultado = 0;
 
 	for (int i = 0; i < valorLen; i++) {
 		if (valor[i] == '.') continue;
-		resultado += ctoi(valor[i]) * pow(baseEntrada, maiorPotencia - i);
+		resultado += ctoi(valor[i]) * pow(baseEntrada, maiorPotencia--);
 	}
 
 	string valorConvertido = (string)malloc(STR_MAX_LEN * sizeof(char));
-	sprintf(valorConvertido, "%.*f", PRECISAO, resultado);
-
-	trim(valorConvertido);
+	sprintf(valorConvertido, "%.*lf", PRECISAO, resultado);
 
 	return valorConvertido;
 }
 
 string decParaBaseSaida(string valor, int baseSaida) {
 
+	printf("Valor: %s\n", valor);
 	if (baseSaida == 10) return valor;
 
 	float valorDecimal = atof(valor);
@@ -61,7 +60,7 @@ string decParaBaseSaida(string valor, int baseSaida) {
 	if (parteFracionaria > 0) {
 		strcat(str, ".");
 		for (int i = 0; i < PRECISAO; i++) {
-			char aux[PRECISAO];
+			char aux[2];
 
 			parteFracionaria *= baseSaida;
 

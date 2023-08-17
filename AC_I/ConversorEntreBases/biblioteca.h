@@ -72,20 +72,4 @@ char itoa(int val) {
 	return 10 <= val && val <= 15 ? val + 55 : val + 48;
 }
 
-void trim(string str) {
-
-	int ponto = indexOf(str, '.');
-
-	if (ponto == -1) return;
-
-	for (int i = strlen(str) - 1; i >= ponto; i--) {
-		if (str[i] == '0') {
-			str[i] = 0;
-			if (str[i - 1] == '.') str[i - 1] = 0;
-		} else {
-			break;
-		}
-	}
-}
-
 #endif /* BIBLIOTECA_H */
