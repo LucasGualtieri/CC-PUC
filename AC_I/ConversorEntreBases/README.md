@@ -31,7 +31,6 @@ Como descrito no tópico anterior, o programa possui apenas dois algoritmos de c
 	  ![image](https://github.com/LucasGualtieri/CC-PUC/assets/42350002/e69aa8b0-cfdb-4afa-86fb-f348d8f310d6)<br>
 #
 - O segundo algoritmo converte um valor em base Decimal para qualquer outra base. Na verdade, temos 2 subalgoritmos: a primeira parte converte a parte inteira através de divisões sucessivas e a segunda parte converte a parte fracionária através de multiplicações sucessivas: <br>
-	- Exemplo:<br>
 	- Na parte inteira, dividimos o número pela Base de Saída, obtendo o resto e o quociente separadamente. Continuamos a dividir o quociente pela base, guardando os novos resto e quociente, até que o quociente seja igual a zero.<br>
 	![image](https://github.com/LucasGualtieri/CC-PUC/assets/42350002/37e025cf-b77e-41d1-a96d-8359bbc4b65a)<br>
 	- Na parte fracionária, multiplicamos a parte fracionária do número decimal pela Base de Saída, considerando apenas a parte inteira produzida. Continuamos o processo até que a parte fracionária seja igual a zero ou até termos 5 casas de precisão.<br>
