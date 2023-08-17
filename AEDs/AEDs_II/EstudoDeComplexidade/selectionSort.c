@@ -35,17 +35,6 @@ void selectionSort(Array array) {
 		V[i]	 = swap;
 	}
 
-	// // int LS			= N - 2;
-	// int esquerda	= pow(N, 2) - N;
-	// int meio		= (N - 1) * (N - 2) / 2;
-	// int direita		= N - 1;
-	// int teoriaLucas = esquerda - meio - direita;
-
-	// printf("Esquerda: %d\n", esquerda);
-	// printf("Meio: %d\n", meio);
-	// printf("Direita: %d\n", direita);
-
-	// printf("Comparações na Teoria Lucas: %d\n", teoriaLucas);
 	printf("Comparações na Teoria: %d\n", ((int)pow(N, 2) - N) / 2);
 	printf("Comparações na Prática: %d\n", qtdComparacoes);
 	printf("Movimentações: %d\n", movimentacoes);
@@ -54,7 +43,7 @@ void selectionSort(Array array) {
 int main() {
 
 	Array array;
-	array.size	  = 1'024;
+	array.size	  = 5;
 	array.pointer = (int*)malloc(array.size * sizeof(int));
 
 	int contador = array.size;
@@ -62,9 +51,9 @@ int main() {
 		array.pointer[i] = contador--;
 	}
 
-	// intArrayPrint(array);
+	intArrayPrint(array);
 
 	selectionSort(array);
 
-	// intArrayPrint(array);
+	intArrayPrint(array);
 }
