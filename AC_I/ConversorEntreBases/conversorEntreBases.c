@@ -5,7 +5,7 @@
 
 #define PRECISAO 5
 
-string baseXParaDec(int baseX, string valor) {
+string baseEntradaParaDec(int baseEntrada, string valor) {
 
 	size_t valorLen		 = strlen(valor);
 	int	   indexDoPonto	 = indexOf(valor, '.');
@@ -15,7 +15,7 @@ string baseXParaDec(int baseX, string valor) {
 
 	for (int i = 0; i < valorLen; i++) {
 		if (valor[i] == '.') continue;
-		resultado += ctoi(valor[i]) * pow(baseX, maiorPotencia--);
+		resultado += ctoi(valor[i]) * pow(baseEntrada, maiorPotencia - i);
 	}
 
 	string valorConvertido = (string)malloc(STR_MAX_LEN * sizeof(char));
@@ -26,18 +26,18 @@ string baseXParaDec(int baseX, string valor) {
 	return valorConvertido;
 }
 
-string decParaBaseX(string valor, int baseX) {
+string decParaBaseSaida(string valor, int baseSaida) {
 
-	if (baseX == 10) return valor;
+	if (baseSaida == 10) return valor;
 
 	float valorDecimal = atof(valor);
 
 	string str = (string)malloc(STR_MAX_LEN * sizeof(char));
 
 	// Convertendo a parte inteira.
-	for (int i = valorDecimal; i >= 1; i /= baseX) {
+	for (int i = valorDecimal; i >= 1; i /= baseSaida) {
 		char aux[2];
-		sprintf(aux, "%c", itoa(i % baseX));
+		sprintf(aux, "%c", itoa(i % baseSaida));
 		strcat(str, aux);
 	}
 
@@ -63,7 +63,7 @@ string decParaBaseX(string valor, int baseX) {
 		for (int i = 0; i < PRECISAO; i++) {
 			char aux[PRECISAO];
 
-			parteFracionaria *= baseX;
+			parteFracionaria *= baseSaida;
 
 			if (parteFracionaria - (int)parteFracionaria == 0) i = PRECISAO;
 
@@ -99,23 +99,23 @@ string getValor(int base) {
 	return valor;
 }
 
-void conversor(int baseOrigem, int baseFinal) {
+void conversor(int baseEntrada, int baseSaida) {
 	clrscreen();
 
-	printf("Convertendo da base %d para base %d\n\n", baseOrigem, baseFinal);
+	printf("Convertendo da base %d para base %d\n\n", baseEntrada, baseSaida);
 
 	printf("Digite o valor a ser convertido: ");
-	string valorOriginal   = getValor(baseOrigem);
+	string valorOriginal   = getValor(baseEntrada);
 	string valorConvertido = strdup(valorOriginal);
 
-	if (baseOrigem != 10) {
-		valorConvertido = baseXParaDec(baseOrigem, valorOriginal);
-		valorConvertido = decParaBaseX(valorConvertido, baseFinal);
+	if (baseEntrada != 10) {
+		valorConvertido = baseEntradaParaDec(baseEntrada, valorOriginal);
+		valorConvertido = decParaBaseSaida(valorConvertido, baseSaida);
 	} else {
-		valorConvertido = decParaBaseX(valorOriginal, baseFinal);
+		valorConvertido = decParaBaseSaida(valorOriginal, baseSaida);
 	}
 
-	printf("\n%s convertido para base %d é: %s\n\n", valorOriginal, baseFinal, valorConvertido);
+	printf("\n%s convertido para base %d é: %s\n\n", valorOriginal, baseSaida, valorConvertido);
 
 	free(valorOriginal);
 	free(valorConvertido);
@@ -134,17 +134,17 @@ int lendoEscolha(int limiteSuperior) {
 	return escolha;
 }
 
-int escolhaBaseFinal(int baseOrigem) {
+int escolhaBaseFinal(int baseEntrada) {
 
 	clrscreen();
 
-	printf("Convertendo da base %d para base...\n\n", baseOrigem);
+	printf("Convertendo da base %d para base...\n\n", baseEntrada);
 
 	int contador = 1;
-	if (baseOrigem != 2) printf("%d - Binário\n", contador++);
-	if (baseOrigem != 8) printf("%d - Octal\n", contador++);
-	if (baseOrigem != 10) printf("%d - Decimal\n", contador++);
-	if (baseOrigem != 16) printf("%d - Hexadecimal\n", contador++);
+	if (baseEntrada != 2) printf("%d - Binário\n", contador++);
+	if (baseEntrada != 8) printf("%d - Octal\n", contador++);
+	if (baseEntrada != 10) printf("%d - Decimal\n", contador++);
+	if (baseEntrada != 16) printf("%d - Hexadecimal\n", contador++);
 	puts("0 - Voltar para o menu anterior\n");
 	printf("Escolha uma das opções acima: ");
 
@@ -152,26 +152,26 @@ int escolhaBaseFinal(int baseOrigem) {
 
 	if (escolha == 0) return 5;
 
-	if (baseOrigem == 2) {
+	if (baseEntrada == 2) {
 		escolha++;
-	} else if (baseOrigem == 8 && escolha >= 2) {
+	} else if (baseEntrada == 8 && escolha >= 2) {
 		escolha++;
-	} else if (baseOrigem == 10 && escolha >= 3) {
+	} else if (baseEntrada == 10 && escolha >= 3) {
 		escolha++;
 	}
 
 	switch (escolha) {
 	case 1:
-		conversor(baseOrigem, 2);
+		conversor(baseEntrada, 2);
 		break;
 	case 2:
-		conversor(baseOrigem, 8);
+		conversor(baseEntrada, 8);
 		break;
 	case 3:
-		conversor(baseOrigem, 10);
+		conversor(baseEntrada, 10);
 		break;
 	case 4:
-		conversor(baseOrigem, 16);
+		conversor(baseEntrada, 16);
 		break;
 	}
 
