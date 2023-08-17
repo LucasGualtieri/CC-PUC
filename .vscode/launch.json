@@ -6,6 +6,20 @@
 	"configurations": [
 		{
 			"type": "java",
+			"name": "Log",
+			"request": "launch",
+			"mainClass": "Log",
+			"projectName": "CC-PUC_cc5a22eb"
+		},
+		{
+			"type": "java",
+			"name": "Log",
+			"request": "launch",
+			"mainClass": "AEDs.AEDs_II.Log",
+			"projectName": "CC-PUC_cc5a22eb"
+		},
+		{
+			"type": "java",
 			"name": "test",
 			"request": "launch",
 			"mainClass": "test",

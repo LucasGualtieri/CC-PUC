@@ -1,3 +1,4 @@
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -34,25 +35,36 @@ void selectionSort(Array array) {
 		V[i]	 = swap;
 	}
 
-	printf("Comparações: %d\n", qtdComparacoes);
+	// // int LS			= N - 2;
+	// int esquerda	= pow(N, 2) - N;
+	// int meio		= (N - 1) * (N - 2) / 2;
+	// int direita		= N - 1;
+	// int teoriaLucas = esquerda - meio - direita;
+
+	// printf("Esquerda: %d\n", esquerda);
+	// printf("Meio: %d\n", meio);
+	// printf("Direita: %d\n", direita);
+
+	// printf("Comparações na Teoria Lucas: %d\n", teoriaLucas);
+	printf("Comparações na Teoria: %d\n", ((int)pow(N, 2) - N) / 2);
+	printf("Comparações na Prática: %d\n", qtdComparacoes);
 	printf("Movimentações: %d\n", movimentacoes);
 }
 
 int main() {
 
 	Array array;
-	array.size	  = 5;
+	array.size	  = 1'024;
 	array.pointer = (int*)malloc(array.size * sizeof(int));
 
-	array.pointer[0] = 5;
-	array.pointer[1] = 4;
-	array.pointer[2] = 3;
-	array.pointer[3] = 2;
-	array.pointer[4] = 1;
+	int contador = array.size;
+	for (int i = 0; i < array.size; i++) {
+		array.pointer[i] = contador--;
+	}
 
-	intArrayPrint(array);
+	// intArrayPrint(array);
 
 	selectionSort(array);
 
-	intArrayPrint(array);
+	// intArrayPrint(array);
 }
