@@ -12,7 +12,7 @@ Algoritmos e Estruturas de Dados - [AEDs I](AEDs/AEDs_I) / [AEDs II](AEDs/AEDs_I
 
 ## 📁 Arq. Computadores I
 
-Arquitetura de Computadores I - [Arq. Comp I](ArqDeComputadores)
+AC I - [Arq. Comp I](ArqDeComputadores)
 
 ## 📁 DIW
 
