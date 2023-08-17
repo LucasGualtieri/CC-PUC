@@ -10,9 +10,9 @@ Algoritmos e Estruturas de Dados - [AEDs I](AEDs/AEDs_I) / [AEDs II](AEDs/AEDs_I
 
 > 📁 [Monitoria AEDs I - Primeiro Semestre de 2023](AEDs/AEDs_I/MonitoriaAEDs_I/)
 
-## 📁 Arq. Computadores I
+## 📁 AC I
 
-Arquitetura de Computadores I - [AC I](AC I)
+Arquitetura de Computadores I - [AC I](AC_I)
 
 ## 📁 DIW
 
