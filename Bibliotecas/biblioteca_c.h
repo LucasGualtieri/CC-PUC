@@ -11,7 +11,7 @@
 #include <time.h>
 // #include <windows.h>
 
-#define Infinity 2'147'483'647
+#define Infinity 2147483647
 #define arrayLength(array) (int)(sizeof(array) / sizeof(array[0]))
 #define RANDOM(minRange, maxRange) (rand() % ((maxRange + 1) - minRange)) + minRange
 #define DEBUGGING (false)
@@ -29,8 +29,8 @@
 #define endl "\n"
 #define AND &&
 #define OR ||
-#define MaxStringLength 2'000
-#define ends 2'000
+#define MaxStringLength 2000
+#define ends 2000
 
 typedef char*		string;
 typedef const char* literal;
@@ -419,7 +419,7 @@ char** split(char* string, char* regex, bool freeBuffer) {
 }
 
 char* replaceAll(char* string, const char* regex, const char* replacement) {
-	char* aux = (char*)malloc(2'000 * sizeof(char));
+	char* aux = (char*)malloc(2000 * sizeof(char));
 
 	size_t regexLen		  = strlen(regex);
 	size_t replacementLen = strlen(replacement);
