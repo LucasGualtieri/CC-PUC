@@ -8,12 +8,13 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define STR_MAX_LEN 50
+
 typedef char* string;
 
 void flush() {
 	char c;
-	while ((c = fgetc(stdin)) != '\n' && c != '\r')
-		continue;
+	while ((c = fgetc(stdin)) != '\n' && c != '\r') continue;
 }
 
 void clrscreen() {
@@ -26,15 +27,26 @@ void replaceAllCommas(string str) {
 	}
 }
 
+void trimSpaces(string str) {
+	for (int i = strlen(str) - 1; i >= 0; i--) {
+		if (str[i] == ' ') {
+			str[i] = 0;
+		} else {
+			return;
+		}
+	}
+}
+
 string getstr() {
 
-	string str = (string)malloc(50 * sizeof(char));
+	string str = (string)malloc(STR_MAX_LEN * sizeof(char));
 	fgets(str, 50, stdin);
 	str[(int)strcspn(str, "\r\n")] = '\0';
 
 	str = (string)realloc(str, (strlen(str) + 1) * sizeof(char));
 
 	replaceAllCommas(str);
+	trimSpaces(str);
 
 	return str;
 }
