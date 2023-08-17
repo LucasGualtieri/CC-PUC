@@ -1,6 +1,6 @@
 #include "biblioteca.h"
 
-// Última atualização: 16/08 às 22:35
+// Última atualização: 17/08 às 18:45
 // https://replit.com/@LucasGualtieriF/ConversorEntreBases
 
 #define PRECISAO 5
