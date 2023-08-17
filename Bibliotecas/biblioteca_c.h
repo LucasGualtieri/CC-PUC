@@ -35,6 +35,8 @@
 typedef char*		string;
 typedef const char* literal;
 
+#define strread "%[^\r\n]"
+
 // #define and &&
 // #define or ||
 
