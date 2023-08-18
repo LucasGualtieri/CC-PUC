@@ -27,6 +27,30 @@ void replaceAllCommas(string str) {
 	}
 }
 
+int indexOf(string str, char reference) {
+
+	for (int i = 0; i < strlen(str); i++) {
+		if (str[i] == reference) return i;
+	}
+	return -1;
+}
+
+void trimZeros(string str) {
+
+	int ponto = indexOf(str, '.');
+
+	if (ponto == -1) return;
+
+	for (int i = strlen(str) - 1; i >= ponto; i--) {
+		if (str[i] == '0') {
+			str[i] = 0;
+			if (str[i - 1] == '.') str[i - 1] = 0;
+		} else {
+			break;
+		}
+	}
+}
+
 void trimSpaces(string str) {
 	for (int i = strlen(str) - 1; i >= 0; i--) {
 		if (str[i] == ' ') {
@@ -53,14 +77,6 @@ string getstr() {
 
 char toUpper(char c) {
 	return (char)('a' <= c && c <= 'z' ? c - 32 : c);
-}
-
-int indexOf(string str, char reference) {
-
-	for (int i = 0; i < strlen(str); i++) {
-		if (str[i] == reference) return i;
-	}
-	return -1;
 }
 
 int ctoi(char c) {

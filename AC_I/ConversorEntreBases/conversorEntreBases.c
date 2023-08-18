@@ -1,6 +1,6 @@
 #include "biblioteca.h"
 
-// Última atualização: 17/08 às 18:45
+// Última atualização: 18/08 às 20:55
 // https://replit.com/@LucasGualtieriF/ConversorEntreBases
 
 #define PRECISAO 5
@@ -21,12 +21,13 @@ string baseEntradaParaDec(int baseEntrada, string valor) {
 	string valorConvertido = (string)malloc(STR_MAX_LEN * sizeof(char));
 	sprintf(valorConvertido, "%.*lf", PRECISAO, resultado);
 
+	trimZeros(valorConvertido);
+
 	return valorConvertido;
 }
 
 string decParaBaseSaida(string valor, int baseSaida) {
 
-	printf("Valor: %s\n", valor);
 	if (baseSaida == 10) return valor;
 
 	float valorDecimal = atof(valor);
@@ -53,7 +54,6 @@ string decParaBaseSaida(string valor, int baseSaida) {
 	}
 
 	// Convertendo a parte fracionária.
-
 	int	  parteInteira	   = (int)valorDecimal;
 	float parteFracionaria = valorDecimal - parteInteira;
 
@@ -64,10 +64,10 @@ string decParaBaseSaida(string valor, int baseSaida) {
 
 			parteFracionaria *= baseSaida;
 
-			if (parteFracionaria - (int)parteFracionaria == 0) i = PRECISAO;
-
 			sprintf(aux, "%d", (int)parteFracionaria);
 			strcat(str, aux);
+
+			if (parteFracionaria - (int)parteFracionaria == 0) break;
 
 			parteFracionaria -= (int)parteFracionaria;
 		}
@@ -76,6 +76,9 @@ string decParaBaseSaida(string valor, int baseSaida) {
 	return str;
 }
 
+// Esse método lê do teclado o valor a ser convertido, repare que o valor é sempre uma string
+// para que possamos lidar com base hexadecimais e com números binários muito extensos.
+// Esse método também garante que nenhum dos caracteres que formam a string sejam maiores ou iguais à base.
 string getValor(int base) {
 
 	string valor;
@@ -133,6 +136,8 @@ int lendoEscolha(int limiteSuperior) {
 	return escolha;
 }
 
+// Nesse método faço algumas comparações baseado na primeira escolha (Base de entrada)
+// para que que o menu "responda" de acordo com a escolha do usuário.
 int escolhaBaseFinal(int baseEntrada) {
 
 	clrscreen();
