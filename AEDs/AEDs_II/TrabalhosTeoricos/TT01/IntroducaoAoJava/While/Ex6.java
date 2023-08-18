@@ -29,12 +29,14 @@ class Ex6 {
 		System.out.print("Nota máxima da prova: ");
 		int notaMaxima = scanner.nextInt();
 
+		int somaDasNotas = 0;
 		int alunosAbaixoDaMedia = 0;
 		int alunosConceitoA = 0;
 
 		int i = -1;
 		while (++i < 20) {
 			float aluno = scanner.nextFloat();
+			somaDasNotas += aluno;
 			if (aluno < notaMaxima * 0.6) {
 				alunosAbaixoDaMedia++;
 			}
@@ -43,8 +45,9 @@ class Ex6 {
 			}
 		}
 
-		System.out.println("Alunos abaixo da média:" + alunosAbaixoDaMedia);
-		System.out.println("Alunos conceito A:" + alunosConceitoA);
+		System.out.println("A média da turma é: " + somaDasNotas / 20.0);
+		System.out.println("Alunos abaixo da média: " + alunosAbaixoDaMedia);
+		System.out.println("Alunos conceito A: " + alunosConceitoA);
 
 		System.out.println("\n---------------------\n");
 	}
