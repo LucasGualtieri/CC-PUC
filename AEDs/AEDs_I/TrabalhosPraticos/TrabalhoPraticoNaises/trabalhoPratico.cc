@@ -38,6 +38,8 @@ int OptionsMenu() {
 // ANCHOR - Main
 int main() {
 
+	clear();
+
 	printColorBoldLn("------------ Cadastro de veículos ------------\n");
 
 	ListaVeiculos lista;
@@ -52,8 +54,8 @@ int main() {
 			try {
 				lista.listar();
 				Veiculo temp = lista.pesquisar();
-				lista.printHeader();
-				temp.print(lista.getLarguras());
+				// lista.printHeader();
+				temp.print();
 				cout << "\n\n";
 			} catch (string erro) {
 				cout << erro << endl;

@@ -33,25 +33,42 @@ class ListaVeiculos {
 	// ANCHOR - SetLarguras
 	void setLarguras() {
 
-		larguras.preco	= 5; // Não pode ser menor que 5
-		larguras.marca	= 5; // Não pode ser menor que 5
-		larguras.modelo = 6; // Não pode ser menor que 6
-		larguras.tipo	= 4; // Não pode ser menor que 4
+		larguras.preco	= 6; // string("preco ").length(); // O 'ç' conta como dois chars
+		larguras.marca	= 6; // string("marca ").length();
+		larguras.modelo = 7; // string("modelo ").length();
+		larguras.tipo	= 4; // string("tipo ").length();
 
 		for (int i = 0; i < Veiculo::getCount(); i++) {
 			size_t len;
-			if ((len = array[i].getPrecoLen()) > larguras.preco) larguras.preco = len;
-			if ((len = array[i].getMarca().length()) > larguras.marca) larguras.marca = len;
-			if ((len = array[i].getModelo().length()) > larguras.modelo) larguras.modelo = len;
-			if ((len = array[i].getTipo().length()) > larguras.tipo) larguras.tipo = len;
+			if ((len = array[i].getPrecoLen() + 1) > larguras.preco) larguras.preco = len;
+			if ((len = array[i].getMarca().length() + 1) > larguras.marca) larguras.marca = len;
+			if ((len = array[i].getModelo().length() + 1) > larguras.modelo) larguras.modelo = len;
+			if ((len = array[i].getTipo().length() + 1) > larguras.tipo) larguras.tipo = len;
 		}
-
-		// ++ para considerar o espaço
-		if (larguras.preco >= 5) larguras.preco++;
-		if (larguras.marca >= 5) larguras.marca++;
-		if (larguras.modelo >= 6) larguras.modelo++;
-		larguras.tipo++; // Doesn't need an if statement because the minimum size is the same size as the TIPO.len() ???
 	}
+
+	// // aNCHOR - SetLarguras
+	// void setLarguras() {
+
+	// 	larguras.preco	= 5; // Não pode ser menor que 5
+	// 	larguras.marca	= 5; // Não pode ser menor que 5
+	// 	larguras.modelo = 6; // Não pode ser menor que 6
+	// 	larguras.tipo	= 4; // Não pode ser menor que 4
+
+	// 	for (int i = 0; i < Veiculo::getCount(); i++) {
+	// 		size_t len;
+	// 		if ((len = array[i].getPrecoLen()) > larguras.preco) larguras.preco = len;
+	// 		if ((len = array[i].getMarca().length()) > larguras.marca) larguras.marca = len;
+	// 		if ((len = array[i].getModelo().length()) > larguras.modelo) larguras.modelo = len;
+	// 		if ((len = array[i].getTipo().length()) > larguras.tipo) larguras.tipo = len;
+	// 	}
+
+	// 	// ++ para considerar o espaço
+	// 	if (larguras.preco >= 5) larguras.preco++;
+	// 	if (larguras.marca >= 5) larguras.marca++;
+	// 	if (larguras.modelo >= 6) larguras.modelo++;
+	// 	larguras.tipo++; // Doesn't need an if statement because the minimum size is the same size as the TIPO.len() ???
+	// }
 
 	Larguras getLarguras() {
 		return larguras;
@@ -86,50 +103,50 @@ class ListaVeiculos {
 	}
 
 	// ANCHOR - GetFromFile
-	void getFromFile() {
-		FILE* DB = fopen("DB.txt", "r");
+	// void getFromFile() {
+	// 	FILE* DB = fopen("DB.txt", "r");
 
-		// char carroX[500];
+	// 	// char carroX[500];
 
-		char  placa[10], modelo[50], marca[50], obs[50], tipo[6];
-		int	  ano;
-		float preco;
+	// 	char  placa[10], modelo[50], marca[50], obs[50], tipo[6];
+	// 	int	  ano;
+	// 	float preco;
 
-		for (int i = 0; !feof(DB); i++) {
+	// 	for (int i = 0; !feof(DB); i++) {
 
-			fscanf(DB, "%[^;]%*c", placa);
-			fscanf(DB, "%d%*c", &ano);
-			fscanf(DB, "%f%*c", &preco);
-			fscanf(DB, "%[^;]%*c", marca);
-			fscanf(DB, "%[^;]%*c", modelo);
-			fscanf(DB, "%[^;]%*c", tipo);
-			fscanf(DB, "%[^;]%*c", obs);
+	// 		fscanf(DB, "%[^;]%*c", placa);
+	// 		fscanf(DB, "%d%*c", &ano);
+	// 		fscanf(DB, "%f%*c", &preco);
+	// 		fscanf(DB, "%[^;]%*c", marca);
+	// 		fscanf(DB, "%[^;]%*c", modelo);
+	// 		fscanf(DB, "%[^;]%*c", tipo);
+	// 		fscanf(DB, "%[^;]%*c", obs);
 
-			if (getc(DB) == EOF) break; // para comer o '\n'
+	// 		if (getc(DB) == EOF) break; // para comer o '\n'
 
-			string objPlaca(placa);
-			array[i].setPlaca(objPlaca);
+	// 		string objPlaca(placa);
+	// 		array[i].setPlaca(objPlaca);
 
-			array[i].setAno(ano);
+	// 		array[i].setAno(ano);
 
-			array[i].setPreco(preco);
+	// 		array[i].setPreco(preco);
 
-			string objMarca(marca);
-			array[i].setMarca(objMarca);
+	// 		string objMarca(marca);
+	// 		array[i].setMarca(objMarca);
 
-			string objModelo(modelo);
-			array[i].setModelo(objModelo);
+	// 		string objModelo(modelo);
+	// 		array[i].setModelo(objModelo);
 
-			array[i].setTipo(tipo[0]);
+	// 		array[i].setTipo(tipo[0]);
 
-			string objObs(obs);
-			array[i].setObs(objObs);
+	// 		string objObs(obs);
+	// 		array[i].setObs(objObs);
 
-			Veiculo::incrementCount();
-		}
+	// 		Veiculo::incrementCount();
+	// 	}
 
-		fclose(DB);
-	}
+	// 	fclose(DB);
+	// }
 
 	// ANCHOR - Cadastrar
 	void cadastrar() {
@@ -190,7 +207,9 @@ class ListaVeiculos {
 				array[i] = array[Veiculo::getCount() - 1];
 			}
 		}
-		Veiculo::decrementCount;
+		Veiculo::decrementCount();
+
+		setLarguras();
 
 		clear();
 
@@ -256,7 +275,7 @@ class ListaVeiculos {
 	void printHeader(ostream& stream = cout) {
 		stream << setw(8) << left << "PLACA";
 		stream << "| " << setw(5) << left << "ANO";
-		stream << "| " << setw(larguras.preco + 1) << left << "PREÇO"; // Precisa do + 1 pra alinhar direitinho mas n entendo pq n funcionaria sem
+		stream << "| " << setw(larguras.preco + 1) << left << "PREÇO"; // Precisa do + 1 por conta do 'Ç', não tenho certeza do pq
 		stream << "| " << setw(larguras.marca) << left << "MARCA";
 		stream << "| " << setw(larguras.modelo) << left << "MODELO";
 		stream << "| " << setw(larguras.tipo) << left << "TIPO";
@@ -270,6 +289,11 @@ class ListaVeiculos {
 		clear();
 
 		printColorBoldLn("------------ Lista de veículos cadastrados ------------\n");
+
+		if (Veiculo::getCount() == 0) {
+			cout << "A lista de veículos está vazia no momento.\n\n";
+			return;
+		}
 
 		printHeader(cout);
 

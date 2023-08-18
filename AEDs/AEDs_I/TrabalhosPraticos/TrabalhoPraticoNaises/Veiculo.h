@@ -203,7 +203,7 @@ class Veiculo {
 
 	// -----------------------------------------
 
-	// ANCHOR - Print
+	// ANCHOR - Print Iteração
 	void print(Larguras larguras, ostream& stream = cout) {
 
 		stream << setw(8) << left << getPlaca();
@@ -212,6 +212,36 @@ class Veiculo {
 		stream << "| " << setw(larguras.marca) << left << getMarca();
 		stream << "| " << setw(larguras.modelo) << left << getModelo();
 		stream << "| " << setw(larguras.tipo) << left << getTipo();
+		if (!getObs().empty()) {
+			stream << "| " << getObs();
+		} else {
+			stream << "| Sem observações";
+		}
+	}
+
+	// ANCHOR - Print Singular
+	void print(ostream& stream = cout) {
+
+		precoLen  = (precoLen = (this->getPrecoLen() + 1)) <= 7 ? 6 : precoLen;
+		marcaLen  = (marcaLen = (this->getMarca().length() + 1)) < 6 ? 6 : marcaLen;
+		modeloLen = (modeloLen = (this->getModelo().length() + 1)) < 7 ? 7 : modeloLen;
+		tipoLen	  = (tipoLen = (this->getTipo().length() + 1)) < 4 ? 4 : tipoLen;
+
+		stream << setw(8) << left << "PLACA";
+		stream << "| " << setw(5) << left << "ANO";
+		stream << "| " << setw(precoLen + 1) << left << "PREÇO"; // Precisa do + 1 por conta do 'Ç', não tenho certeza do pq
+		stream << "| " << setw(marcaLen) << left << "MARCA";
+		stream << "| " << setw(modeloLen) << left << "MODELO";
+		stream << "| " << setw(tipoLen) << left << "TIPO";
+		stream << "| OBSERVAÇÃO";
+		stream << endl;
+
+		stream << setw(8) << left << getPlaca();
+		stream << "| " << setw(5) << left << getAno();
+		stream << "| " << setw(precoLen) << left << fixed << setprecision(2) << getPreco();
+		stream << "| " << setw(marcaLen) << left << getMarca();
+		stream << "| " << setw(modeloLen) << left << getModelo();
+		stream << "| " << setw(tipoLen) << left << getTipo();
 		if (!getObs().empty()) {
 			stream << "| " << getObs();
 		} else {
