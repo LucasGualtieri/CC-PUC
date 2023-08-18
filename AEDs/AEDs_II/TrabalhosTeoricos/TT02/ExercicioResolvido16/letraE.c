@@ -7,17 +7,14 @@ int main() {
 
 	for (int i = 0; i < N; i++) {
 		for (int j = 0; j < N; j++) {
-			cont += 5;
+			cont += 2;
 			for (int k = 0; k < N; k++) {
 				for (int l = 0; l < N; l++) {
-					cont += 9;
+					cont += 2;
 				}
 			}
 		}
-	}
-
-	for (int i = 0; i < N / 2; i++) {
-		cont++;
+		if (i % 2 == 0) cont++;
 	}
 
 	printf("Cont: %d\n", cont);
