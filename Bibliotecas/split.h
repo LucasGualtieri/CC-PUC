@@ -11,6 +11,8 @@ class Split {
 	vector<string> array;
 
   public:
+	// plublic "read only" size_t size var
+
 	Split(string str, string splitAt) {
 		split(str, splitAt);
 	}
@@ -28,11 +30,15 @@ class Split {
 
 		string last = str.substr(start);
 
+		//                             char teste[] = {'\r', '\n', EOF, '\0'};
+		//                             strchr(teste, last[0]);
 		bool valid = !last.empty() && (last[0] != '\r' && last[0] != '\n' && last[0] != EOF);
 
 		if (valid) array.push_back(last);
 
 		if (array.size() == 0) throw string(RED + "Error on Split: " + RESET + "Unable to split line: \"" + str + "\"\n");
+
+		// I could set the size here -> split.size without ()
 	}
 
 	int length() {
@@ -53,6 +59,7 @@ class Split {
 
 		if (str.empty()) {
 			cout << "Trim: String's empty" << endl;
+			return;
 		}
 
 		while (str.at(0) == trim) {
