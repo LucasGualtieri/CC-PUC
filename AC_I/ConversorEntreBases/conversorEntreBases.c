@@ -20,8 +20,9 @@ string baseEntradaParaDec(int baseEntrada, string valor) {
 
 	string valorConvertido = (string)malloc(STR_MAX_LEN * sizeof(char));
 	sprintf(valorConvertido, "%.*lf", PRECISAO, resultado);
+	sprintf(valorConvertido, "%g", atof(valorConvertido));
 
-	trimZeros(valorConvertido);
+	// trimZeros(valorConvertido);
 
 	return valorConvertido;
 }

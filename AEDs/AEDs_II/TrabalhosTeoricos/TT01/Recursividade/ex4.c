@@ -19,5 +19,5 @@ int main() {
 	int array[] = {-912, 370, 999, -295, -71};
 
 	printf("The greatest element of the array is: ");
-	printf("%d\n", greatest(array, 5));
+	printf("%d\n", greatest(array, 4));
 }

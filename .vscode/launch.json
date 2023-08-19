@@ -6,6 +6,34 @@
 	"configurations": [
 		{
 			"type": "java",
+			"name": "Ex4",
+			"request": "launch",
+			"mainClass": "Ex4",
+			"projectName": "CC-PUC_cc5a22eb"
+		},
+		{
+			"type": "java",
+			"name": "ExemploArq01Escrita",
+			"request": "launch",
+			"mainClass": "ExemploArq01Escrita",
+			"projectName": "CC-PUC_cc5a22eb"
+		},
+		{
+			"type": "java",
+			"name": "ExemploArq02Leitura",
+			"request": "launch",
+			"mainClass": "ExemploArq02Leitura",
+			"projectName": "CC-PUC_cc5a22eb"
+		},
+		{
+			"type": "java",
+			"name": "Exemplo",
+			"request": "launch",
+			"mainClass": "Exemplo",
+			"projectName": "CC-PUC_cc5a22eb"
+		},
+		{
+			"type": "java",
 			"name": "Log",
 			"request": "launch",
 			"mainClass": "Log",
