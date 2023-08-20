@@ -44,9 +44,10 @@ void trimZeros(string str) {
 	for (int i = strlen(str) - 1; i >= ponto; i--) {
 		if (str[i] == '0') {
 			str[i] = 0;
-			if (str[i - 1] == '.') str[i - 1] = 0;
+		} else if (str[i] == '.') {
+			str[i] = 0;
 		} else {
-			break;
+			return;
 		}
 	}
 }
@@ -64,10 +65,10 @@ void trimSpaces(string str) {
 string getstr() {
 
 	string str = (string)malloc(STR_MAX_LEN * sizeof(char));
-	fgets(str, 50, stdin);
+	fgets(str, STR_MAX_LEN, stdin);
 	str[(int)strcspn(str, "\r\n")] = '\0';
 
-	str = (string)realloc(str, (strlen(str) + 1) * sizeof(char));
+	// str = (string)realloc(str, (strlen(str) + 1) * sizeof(char));
 
 	replaceAllCommas(str);
 	trimSpaces(str);

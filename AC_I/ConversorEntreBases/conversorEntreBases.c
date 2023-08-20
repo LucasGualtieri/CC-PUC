@@ -74,11 +74,13 @@ string decParaBaseSaida(string valor, int baseSaida) {
 		}
 	}
 
+	trimZeros(str);
+
 	return str;
 }
 
 // Esse método lê do teclado o valor a ser convertido, repare que o valor é sempre uma string
-// para que possamos lidar com base hexadecimais e com números binários muito extensos.
+// para que possamos lidar com bases hexadecimais e com números binários muito extensos.
 // Esse método também garante que nenhum dos caracteres que formam a string sejam maiores ou iguais à base.
 string getValor(int base) {
 
