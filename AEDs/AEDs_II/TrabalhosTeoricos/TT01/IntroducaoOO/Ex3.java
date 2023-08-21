@@ -32,28 +32,24 @@ class Ex3 {
 			return y;
 		}
 
-		// Method to calculate distance between this point and another point
 		double dist(Ponto other) {
 			double dx = other.x - this.x;
 			double dy = other.y - this.y;
 			return Math.sqrt(dx * dx + dy * dy);
 		}
 
-		// Method to calculate distance between this point and a given point (x, y)
 		double dist(double x, double y) {
 			double dx = x - this.x;
 			double dy = y - this.y;
 			return Math.sqrt(dx * dx + dy * dy);
 		}
 
-		// Static method to calculate distance between two points (x1, y1) and (x2, y2)
 		static double dist(double x1, double y1, double x2, double y2) {
 			double dx = x2 - x1;
 			double dy = y2 - y1;
 			return Math.sqrt(dx * dx + dy * dy);
 		}
 
-		// Static method to check if three points can form a triangle
 		static boolean isTriangulo(Ponto p1, Ponto p2, Ponto p3) {
 			double a = p1.dist(p2);
 			double b = p1.dist(p3);
@@ -61,20 +57,16 @@ class Ex3 {
 			return a + b > c && a + c > b && b + c > a;
 		}
 
-		// Method to calculate the area of a rectangle formed by this point and another
-		// point
 		double getAreaRetangulo(Ponto other) {
 			double width = Math.abs(other.x - this.x);
 			double height = Math.abs(other.y - this.y);
 			return width * height;
 		}
 
-		// Method to get the ID of this point
 		int getID() {
 			return id;
 		}
 
-		// Static method to get the next available ID
 		static int getNextID() {
 			return nextID;
 		}
