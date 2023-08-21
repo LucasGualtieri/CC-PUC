@@ -6,6 +6,13 @@
 	"configurations": [
 		{
 			"type": "java",
+			"name": "TP01Q01",
+			"request": "launch",
+			"mainClass": "TP01Q01",
+			"projectName": "CC-PUC_6ee93103"
+		},
+		{
+			"type": "java",
 			"name": "Ex4",
 			"request": "launch",
 			"mainClass": "Ex4",
