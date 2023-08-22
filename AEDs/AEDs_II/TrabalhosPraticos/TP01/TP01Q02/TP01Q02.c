@@ -2,7 +2,19 @@
 
 // clear && gcc TP01Q02.c -o TP01Q02 && ./TP01Q02 < pub.in > result.txt
 
-#define isSpecialChar(c) !(isalnum(c) || c == ' ' || c == '-')
+/*
+	"a�a"					- SIM
+	"a��a"					- SIM
+	"aça"					- SIM
+	"açça"					- SIM
+	"açaça"					- SIM
+	"açéa"					- NAO // Esse está dando resultado errado
+	"açéaaéça"				- SIM
+	"açéaéça"				- SIM
+	"marrocos - socorram" 	- SIM
+*/
+
+#define isSpecialChar(c) !(33 <= c && c <= 126)
 
 bool isPalindromo(String str) {
 
