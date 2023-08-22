@@ -1,9 +1,13 @@
-*.exe
-*.o
-*.class
-*replay_pid*
-*.Identifier
-*tempCodeRunnerFile.c
-*tempCodeRunnerFile.cpp
-*tempCodeRunnerFile.cc
-.*
+# *.exe
+# *.o
+# *.class
+# *replay_pid*
+# *.Identifier
+# *tempCodeRunnerFile.c
+# *tempCodeRunnerFile.cpp
+# *tempCodeRunnerFile.cc
+
+# Ignore all
+*
+# Unignore all with extensions
+!*.*
