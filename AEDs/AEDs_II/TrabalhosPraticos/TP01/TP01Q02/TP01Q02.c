@@ -1,4 +1,4 @@
-#include "/home/lucas/PC-HOME/CC-PUC/AEDs/AEDs_II/TrabalhosPraticos/Lib.h"
+#include "../LibCTP01.h"
 
 // clear && gcc TP01Q02.c -o TP01Q02 && ./TP01Q02 < pub.in > result.txt
 
