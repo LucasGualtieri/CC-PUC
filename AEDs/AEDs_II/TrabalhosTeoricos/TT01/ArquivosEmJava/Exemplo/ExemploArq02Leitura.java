@@ -1,3 +1,5 @@
+import ArquivosEmJava.Arq;
+
 class ExemploArq02Leitura {
 	public static void main(String[] args) {
 		if (!Arq.openRead(

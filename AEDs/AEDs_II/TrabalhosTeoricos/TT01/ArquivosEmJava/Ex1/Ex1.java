@@ -1,3 +1,5 @@
+import ArquivosEmJava.Arq;
+
 class Ex1 {
 	public static void main(String[] args) {
 		Arq.openRead("AEDs/AEDs_II/TrabalhosTeoricos/TT01/ArquivosEmJava/Ex1/arquivoText.txt", "UTF-8");

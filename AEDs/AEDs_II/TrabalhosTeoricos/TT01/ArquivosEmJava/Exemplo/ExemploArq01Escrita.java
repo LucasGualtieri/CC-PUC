@@ -1,3 +1,5 @@
+import ArquivosEmJava.Arq;
+
 class ExemploArq01Escrita {
 	public static void main(String[] args) {
 		Arq.openWrite("AEDs/AEDs_II/TrabalhosTeoricos/TT01/ArquivosEmJava/Exemplo/Exemplo.txt");

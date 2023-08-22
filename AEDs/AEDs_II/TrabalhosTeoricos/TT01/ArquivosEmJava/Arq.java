@@ -1,3 +1,5 @@
+package ArquivosEmJava;
+
 import java.util.Formatter;
 // import java.io.*;
 import java.util.Scanner;

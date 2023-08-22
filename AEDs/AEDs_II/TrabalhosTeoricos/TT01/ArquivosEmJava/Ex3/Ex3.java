@@ -1,3 +1,5 @@
+import ArquivosEmJava.Arq;
+
 import java.util.*;
 
 class Ex3 {
