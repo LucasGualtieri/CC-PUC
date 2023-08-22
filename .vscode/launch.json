@@ -8,6 +8,20 @@
 			"type": "java",
 			"name": "TP01Q01",
 			"request": "launch",
+			"mainClass": "TrabalhosPraticos.TP01.TP01Q01.TP01Q01",
+			"projectName": "CC-PUC_cc5a22eb"
+		},
+		{
+			"type": "java",
+			"name": "TP01Q01",
+			"request": "launch",
+			"mainClass": "TP01Q01",
+			"projectName": "CC-PUC_cc5a22eb"
+		},
+		{
+			"type": "java",
+			"name": "TP01Q01",
+			"request": "launch",
 			"mainClass": "TP01Q01",
 			"projectName": "CC-PUC_6ee93103"
 		},

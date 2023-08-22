@@ -193,48 +193,48 @@ int indexOf(char* string, const char* reference, int occurrence) {
 }
 
 /*
-		// Confere se o CPF é válido ou não
-		bool checkCPF(String cpf) {
+	// Confere se o CPF é válido ou não
+	bool checkCPF(String cpf) {
 
-				String cpfCopy = MaskCPF(cpf);
+		String cpfCopy = MaskCPF(cpf);
 
-				int soma = 0;
+		int soma = 0;
 
-				for (int i = 0, j = 10; j >= 2; i++) {
-						if (cpfCopy[i] != '.' && cpfCopy[i] != '-') {
-								soma += (cpfCopy[i] - '0') * j;
-								j--;
-						}
-				}
-
-				// Settando o primeiro dígito verificador
-				if (soma % 11 < 2) {
-						// cpfCopy[cpfCopy.length() - 2] = '0';
-				} else {
-						// sprintf(&cpfCopy[cpfCopy.length() - 2], "%d", 11 - (soma % 11));
-				}
-
-				soma = 0;
-
-				for (int i = 0, j = 11; j >= 2; i++) {
-						if (cpfCopy[i] != '.' && cpfCopy[i] != '-') {
-								soma += (cpfCopy[i] - '0') * j;
-								j--;
-						}
-				}
-
-				// Settando o segundo dígito verificador
-				if (soma % 11 < 2) {
-						// cpfCopy[cpfCopy.length() - 1] = '0';
-				} else {
-						// sprintf(&cpfCopy[cpfCopy.length() - 1], "%d", 11 - (soma % 11));
-				}
-
-				// cout << cpfCopy << endl;
-				// cout << cpf << endl;
-
-				return cpfCopy == MaskCPF(cpf) ? true : false;
+		for (int i = 0, j = 10; j >= 2; i++) {
+			if (cpfCopy[i] != '.' && cpfCopy[i] != '-') {
+				soma += (cpfCopy[i] - '0') * j;
+				j--;
+			}
 		}
+
+		// Settando o primeiro dígito verificador
+		if (soma % 11 < 2) {
+			// cpfCopy[cpfCopy.length() - 2] = '0';
+		} else {
+			// sprintf(&cpfCopy[cpfCopy.length() - 2], "%d", 11 - (soma % 11));
+		}
+
+		soma = 0;
+
+		for (int i = 0, j = 11; j >= 2; i++) {
+			if (cpfCopy[i] != '.' && cpfCopy[i] != '-') {
+				soma += (cpfCopy[i] - '0') * j;
+				j--;
+			}
+		}
+
+		// Settando o segundo dígito verificador
+		if (soma % 11 < 2) {
+			// cpfCopy[cpfCopy.length() - 1] = '0';
+		} else {
+			// sprintf(&cpfCopy[cpfCopy.length() - 1], "%d", 11 - (soma % 11));
+		}
+
+		// cout << cpfCopy << endl;
+		// cout << cpf << endl;
+
+		return cpfCopy == MaskCPF(cpf) ? true : false;
+	}
 */
 
 // Retorna uma string com mascara a partir de um long int.

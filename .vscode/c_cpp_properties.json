@@ -4,8 +4,8 @@
 			"name": "Linux",
 			"includePath": [
 				"${workspaceFolder}/**",
-				// "/home/lucas/PC-HOME/CC-PUC/Bibliotecas" //  Casa
-				"/home/1431578/Documents/CC-PUC/Bibliotecas" // Faculdade
+				"/home/lucas/PC-HOME/CC-PUC/Bibliotecas" //  Casa
+				// "/home/1431578/Documents/CC-PUC/Bibliotecas" // Faculdade
 			],
 			"defines": [],
 			"compilerPath": "/usr/bin/gcc",
