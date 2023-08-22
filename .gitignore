@@ -11,3 +11,5 @@
 *
 # Unignore all with extensions
 !*.*
+# Unignore Libraries
+!*.h
