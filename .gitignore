@@ -1,15 +1,18 @@
-# *.exe
-# *.o
-# *.class
-# *replay_pid*
-# *.Identifier
-# *tempCodeRunnerFile.c
-# *tempCodeRunnerFile.cpp
-# *tempCodeRunnerFile.cc
+# The oreder of stuff makes is relevant
 
-# Ignore all
 *
-# Unignore all with extensions
+!/**/
 !*.*
-# Unignore Libraries
-!*.h
+
+*.exe
+*.o
+*.class
+*.Identifier
+
+# *replay_pid*
+# *tempCodeRunnerFile.c
+
+# # Ignore all
+# *
+# # Unignore all with extensions
+# !*.*
