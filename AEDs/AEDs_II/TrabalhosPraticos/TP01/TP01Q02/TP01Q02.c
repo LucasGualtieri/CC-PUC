@@ -5,33 +5,57 @@
 /*
 	"a�a"					- SIM
 	"a��a"					- SIM
+	"a�a�a"					- SIM
+	"a´b´a"					- SIM
+	"a´b`a"					- NAO
 	"aça"					- SIM
 	"açça"					- SIM
 	"açaça"					- SIM
-	"açéa"					- NAO // Esse está dando resultado errado
+	"açéa"					- NAO
 	"açéaaéça"				- SIM
 	"açéaéça"				- SIM
 	"marrocos - socorram" 	- SIM
 */
 
-#define isSpecialChar(c) !(33 <= c && c <= 126)
+#define STR_MAX_LEN 400
+#define SPECIAL_CHAR -61 // characteres especias (e.g., ç, á, à, ã, etc)
+#define isSingleChar(c) (c > 0)
 
 bool isPalindromo(String str) {
 
 	int left = -1, right = strlen(str);
 
-	while (++left <= --right) {
-		if (!isSpecialChar(str[left]) || !isSpecialChar(str[right])) {
-			if (str[left] != str[right]) return false;
+	bool result = true;
+
+	while (left++ <= right--) {
+		char cLeft = str[left], cRight = str[right];
+
+		// Conferindo caracteres Alphanuméricos.
+		if (isSingleChar(cLeft) || isSingleChar(cRight)) {
+			if (cLeft != cRight) {
+				left   = right;
+				result = false;
+			}
+		} else if (cLeft == SPECIAL_CHAR) {
+			// Conferindo characteres especias (e.g., ç, á, à, ã, etc).
+			if (str[left + 1] != cRight) {
+				left   = right;
+				result = false;
+			}
+			left++, right--;
 		}
 	}
 
-	return true;
+	return result;
 }
 
 int main() {
+
 	char str[STR_MAX_LEN];
-	while (!equals(readstr(str), "FIM")) {
+
+	while (!isEqual(readstr(str), "FIM")) {
 		printf("%s\n", isPalindromo(str) ? "SIM" : "NAO");
 	}
+
+	return 0;
 }
