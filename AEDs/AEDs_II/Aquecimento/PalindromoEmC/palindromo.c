@@ -22,7 +22,8 @@
 
 #define STR_MAX_LEN 400
 #define SPECIAL_CHAR -61 // characteres especias (e.g., ç, á, à, ã, etc)
-#define isSingleChar(c) (isalnum(c) || c == ' ' || c == '-')
+#define isSingleChar(c) (c > 0)
+// #define isSingleChar(c) (isalnum(c) || c == ' ' || c == '-')
 
 typedef char* string;
 
