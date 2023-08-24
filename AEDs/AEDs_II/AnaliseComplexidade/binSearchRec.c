@@ -8,11 +8,11 @@ bool binAux(int x, int* array, int esq, int dir) {
 	int meio = (esq + dir) / 2;
 	int elementoBusca = array[meio];
 
-	if (elementoBusca == x) hasFound = true;
+	if (elementoBusca == x) esq = dir + 1;
 	else if (elementoBusca < x) esq = meio + 1;
 	else dir = meio - 1;
 
-	return esq > dir || hasFound ? hasFound : binAux(x, array, esq, dir);
+	return esq < dir && !hasFound ? binAux(x, array, esq, dir) : hasFound;
 }
 
 bool bin(int x, int* array, int tam) {

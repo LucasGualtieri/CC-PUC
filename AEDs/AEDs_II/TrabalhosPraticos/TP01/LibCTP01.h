@@ -19,8 +19,8 @@ typedef char* String;
 
 size_t strlen(const char* str) {
 	int len = 0;
-	for (int i = 0; str[i] != 0; i++) len++;
-	return len;
+	while (str[len++] != 0) continue;
+	return len - 1;
 }
 
 bool isEqual(const char* str1, const char* str2) {
@@ -32,7 +32,7 @@ bool isEqual(const char* str1, const char* str2) {
 	for (int i = 0; i < len; i++) {
 		if (str1[i] != str2[i]) {
 			isEqual = false;
-			i = len;
+			i		= len;
 		}
 	}
 
@@ -40,12 +40,12 @@ bool isEqual(const char* str1, const char* str2) {
 }
 
 int indexOf(String str, char c) {
-	int len = strlen(str);
-	for (int i = 0; i < len; i++) {
-		if (str[i] == c) return i;
+	int len = strlen(str) + 1;
+	for (int i = 0; i < len - 1; i++) {
+		if (str[i] == c) len = i;
 	}
 
-	return len + 1;
+	return len;
 }
 
 String readstr(String str) {
