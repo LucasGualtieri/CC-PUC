@@ -1,0 +1,7 @@
+Em C, a variáveis que armazenam números reais, ou em ponto flutuante como float double e long double
+possuem precisão dinâmica, os números de maior parte inteira terão menor precisão fracinária disponível.
+
+Existe uma lógica e um algoritmo por trás desse dinamismo.
+
+É importante observar que esse tratamento que essas variáveis recebem
+as tornam muito mais custosas computacionalmente falando.
