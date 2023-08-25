@@ -1,8 +1,11 @@
-// clear && javac -cp ../../.. TP01Q01.java && java -cp ../../.. TP01Q01.java < pub.in > result.txt
+// clear && javac -cp ../../.. TP01Q03.java && java -cp ../../.. TP01Q03.java < pub.in > result.txt
 
 import TrabalhosPraticos.Lib;
 
 class TP01Q03 {
+
+	static final int UNKNOWN_CHAR = 65533; 
+
 	static String cifraDeCesar(String str, int chave) {
 		return cifraDeCesarAux(str, chave);
 	}
@@ -15,7 +18,8 @@ class TP01Q03 {
 		String aux = "";
 		int len = str.length();
 		for (int i = 0; i < len; i++) {
-			aux += (char)(str.charAt(i) + chave);
+			char c = str.charAt(i);
+			aux += c == UNKNOWN_CHAR ? UNKNOWN_CHAR : (char)(c + chave);
 		}
 		return aux;
 	}
