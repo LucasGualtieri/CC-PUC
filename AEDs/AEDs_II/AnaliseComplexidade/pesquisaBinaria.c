@@ -6,21 +6,22 @@
 void pesquisaBinaria(int* array, int N, int x) {
 	int qtdComparacoes = 0, movimentacoes = 0;
 
-	bool resp	 = false;
-	int	 direita = N - 1, esquerda = 0, meio, diferenca;
+	bool resp = false;
+	int	 direita = N - 1, esquerda = 0, meio, elemento;
 	while (esquerda <= direita) {
-		meio	  = (esquerda + direita) / 2;
-		diferenca = (x - array[meio]);
+		meio = (esquerda + direita) / 2;
+		elemento = array[meio];
 		movimentacoes++;
-		if (diferenca == 0) {
+		if (elemento == x) {
 			resp = true;
-			break;
-		} else if (diferenca > 0) {
+			esquerda = direita + 1;
+		} else if (elemento > x) {
 			esquerda = meio + 1;
 		} else {
 			direita = meio - 1;
 		}
 	}
+	
 	printf("%s\n", resp ? "Achou" : "Nao a achou");
 	printf("movimentacoes: %d\n", movimentacoes);
 }
