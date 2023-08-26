@@ -27,15 +27,21 @@ bool isPalindromo(String str) {
 
 	bool result = true;
 
-	while (left++ <= right-- && result) {
+	while (left++ <= right--) {
 		char cLeft = str[left], cRight = str[right];
 
 		// Conferindo caracteres Alphanuméricos.
 		if (isSingleChar(cLeft) || isSingleChar(cRight)) {
-			if (cLeft != cRight) result = false;
+			if (cLeft != cRight) {
+				left = right;
+				result = false;
+			}
 		} else if (cLeft == SPECIAL_CHAR) {
 			// Conferindo characteres especias (e.g., ç, á, à, ã, etc).
-			if (str[left + 1] != cRight) result = false;
+			if (str[left + 1] != cRight) {
+				left = right;
+				result = false;
+			}
 			left++, right--;
 		}
 	}
