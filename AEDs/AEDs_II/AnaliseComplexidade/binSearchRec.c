@@ -31,42 +31,6 @@ bool bin(int x, int* array, long int tam) {
 	return binAux(x, array, 0, tam - 1);
 }
 
-void swap(int* value1, int* value2) {
-	int aux = *value1;
-	*value1 = *value2;
-	*value2 = aux;
-}
-
-void quicksortRec(int* array, int esq, int dir) {
-    int i = esq, j = dir;
-    int pivo = array[(dir+esq)/2];
-    while (i <= j) {
-        while (array[i] < pivo) i++;
-        while (array[j] > pivo) j--;
-        if (i <= j) {
-            swap(array + i, array + j);
-            i++;
-            j--;
-        }
-    }
-    if (esq < j)  quicksortRec(array, esq, j);
-    if (i < dir)  quicksortRec(array, i, dir);
-}
-
-void quicksort(int* array, int n) {
-    quicksortRec(array, 0, n-1);
-}
-
-void selectionsort(int* array, int n) {
-	for (int i = 0; i < n - 1; i++) {
-		int menor = i;
-		for (int j = i + 1; j < n; j++) {
-			if (array[menor] > array[j]) menor = j;
-		}
-		// swap(array + i, array + menor);
-	}
-}
-
 int main() {
 
 	long int tam = 1000000000;
@@ -77,10 +41,6 @@ int main() {
 	for (int i = 0; i < tam; i++) {
 		array[i] = i + 1;
 	}
-
-	printf("Ordenando o array\n");
-	quicksort(array, tam);
-	// selectionsort(array, tam);
 
 	printf("%d%s pertence ao array.\n", 23244, bin(23244, array, tam) ? "" : " não");
 
