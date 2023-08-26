@@ -7,14 +7,15 @@ class TP01Q04 {
 	
 	static Random gerador = new Random(4);
 
+	static char randomChar() {
+		return (char)('a' + (Math.abs(gerador.nextInt()) % 26));
+	}
+
 	static String aleatorio(String input) {
-		char baseChar = (char) ('a' + (Math.abs(gerador.nextInt()) % 26));
-		char newChar = (char)('a' + (Math.abs(gerador.nextInt()) % 26));
+		char baseChar = randomChar();
+		char newChar = randomChar();
 
-		// System.out.println("baseChar: " + baseChar);	
-		// System.out.println("newChar: " + newChar);	
-
-		String aux = "";
+		String aux = new String();
 		int len = input.length();
 		for (int i = 0; i < len; i++) {
 			char c = input.charAt(i);
@@ -25,7 +26,7 @@ class TP01Q04 {
 	}
 
 	public static void main(String[] args) {
-		String input = "";
+		String input = new String();
 		while(!Lib.isEqual(input = Lib.getstr(), "FIM")) {
 			System.out.println(aleatorio(input));
 		}
