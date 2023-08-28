@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Lib {
 
-	static Scanner scanner = new Scanner(System.in);
+	public static Scanner scanner = new Scanner(System.in);
 	// private static BufferedReader in = new BufferedReader(new InputStreamReader(System.in, Charset.forName("UTF-8")));
 
 	public static boolean isEqual(String str1, String str2) {
