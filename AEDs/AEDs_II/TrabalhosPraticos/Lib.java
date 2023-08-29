@@ -42,11 +42,11 @@ public class Lib {
 		String aux = "";
 		int strLen = str.length();
 		int baseStrLen = baseStr.length();
-		System.out.println("BaseStrLen: " + baseStrLen);
+		// System.out.println("BaseStrLen: " + baseStrLen);
 		for (int i = 0; i < strLen; i++) {
 			boolean subsstr = i < strLen - baseStrLen;
 			if (subsstr && isEqual(str.substring(i, i + baseStrLen), baseStr)) {
-				System.out.println("Subs: " + str.substring(i, i + baseStrLen));
+				// System.out.println("Subs: " + str.substring(i, i + baseStrLen));
 				aux += newChar;
 				i += baseStrLen - 1;
 			} else {
