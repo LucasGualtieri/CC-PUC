@@ -1,6 +1,6 @@
 #include "biblioteca.h"
 
-// Última atualização: 18/08 às 20:55
+// Última atualização: 29/08 às 11:05
 // https://replit.com/@LucasGualtieriF/ConversorEntreBases
 
 #define PRECISAO 5
@@ -128,13 +128,14 @@ void conversor(int baseEntrada, int baseSaida) {
 
 int lendoEscolha(int limiteSuperior) {
 	int	 escolha;
-	bool invalido = false;
+	bool valido = true;
 
 	do {
-		if (invalido) printf("Valor inválido, tente novamente: ");
+		if (!valido) printf("Valor inválido, tente novamente: ");
 		scanf("%d", &escolha);
 		flush();
-	} while ((invalido = escolha < 0 || limiteSuperior < escolha));
+		valido = 0 <= escolha && escolha <= limiteSuperior;
+	} while (!valido);
 
 	return escolha;
 }
@@ -216,19 +217,20 @@ int escolhaBaseOrigem() {
 }
 
 int continuarExecucao() {
-	bool invalido = false;
+	bool valido = true;
 	char resposta;
 
 	printf("Deseja converter mais um número? [S/N]: ");
 
 	do {
-		if (invalido) {
+		if (!valido) {
 			printf("Valor inválido, tente novamente. [S/N]: ");
 		}
 		scanf("%c", &resposta);
-		resposta = toUpper(resposta);
 		flush();
-	} while ((invalido = resposta != 'S' && resposta != 'N'));
+		resposta = toUpper(resposta);
+		valido = resposta == 'S' || resposta == 'N';
+	} while (!valido);
 
 	return resposta == 'S' ? true : false;
 }
