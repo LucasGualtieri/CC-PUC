@@ -85,20 +85,26 @@ class TP01Q05 {
 	static boolean algebraBooleana(String input) {
 		
 		char[] charArray = Lib.replaceAll(' ', "", input);
+		System.out.printf("String: '%s'\n", Lib.toString(charArray));
+		charArray = Lib.replaceAll("and", 'a', charArray);
+		System.out.printf("String: '%s'\n", Lib.toString(charArray));
+		return true;
+		// // charArray = Lib.replaceAll("or", 'o', charArray);
+		// // charArray = Lib.replaceAll("not", 'n', charArray);
 
-		int N = Lib.ctoi(charArray[0]);
+		// int N = Lib.ctoi(charArray[0]);
 		
-		// Substituindo os valores dos termos na String.
-		for (int i = 0; i < N; i++) {
-			char c = (char)('A' + i);
-			char replace = charArray[i + 1] == '1' ? '1' : '0';
-			charArray = Lib.replaceAll(c, replace, charArray);
-		}
+		// // Substituindo os valores dos termos na String.
+		// for (int i = 0; i < N; i++) {
+		// 	char c = (char)('A' + i);
+		// 	char replace = charArray[i + 1];
+		// 	charArray = Lib.replaceAll(c, replace, charArray);
+		// }
 
-		input = Lib.toString(charArray).substring(N + 1);
-		// System.out.printf("String: '%s'\n", input);
+		// input = Lib.toString(charArray).substring(N + 1);
+		// // System.out.printf("String: '%s'\n", input);
 
-		return searchForExpression(input);
+		// return searchForExpression(input);
 	}
 
 	public static void main(String[] args) {

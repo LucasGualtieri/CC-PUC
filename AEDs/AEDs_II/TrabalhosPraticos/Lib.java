@@ -35,6 +35,28 @@ public class Lib {
 		return aux;
 	}
 
+	public static char[] replaceAll(String baseStr, char newChar, char[] charrArray) {
+		
+		String str = toString(charrArray);
+
+		String aux = "";
+		int strLen = str.length();
+		int baseStrLen = baseStr.length();
+		System.out.println("BaseStrLen: " + baseStrLen);
+		for (int i = 0; i < strLen; i++) {
+			boolean subsstr = i < strLen - baseStrLen;
+			if (subsstr && isEqual(str.substring(i, i + baseStrLen), baseStr)) {
+				System.out.println("Subs: " + str.substring(i, i + baseStrLen));
+				aux += newChar;
+				i += baseStrLen - 1;
+			} else {
+				aux += str.charAt(i);
+			}
+		}
+
+		return aux.toCharArray();
+	}
+
 	public static char[] replaceAll(char baseChar, String newStr, String str) {
 		
 		String aux = "";
