@@ -3,16 +3,17 @@
 
 typedef struct Lista {
 	int *array, maxSize, size;
-    void (*InserirInicio)(struct Lista*, int number);
-    void (*InserirFim)(struct Lista*, int number);
-    void (*Inserir)(struct Lista*, int number, int position);
-    int (*RemoverInicio)(struct Lista*);
-    int (*RemoverFim)(struct Lista*);
-    int (*Remover)(struct Lista*, int position);
-    void (*Mostrar)(struct Lista*);
+	void (*InserirInicio)(int number, struct Lista*);
+	void (*InserirFim)(int number, struct Lista*);
+	void (*Inserir)(int number, size_t position, struct Lista*);
+	int (*RemoverInicio)(struct Lista*);
+	int (*RemoverFim)(struct Lista*);
+	int (*Remover)(size_t position, struct Lista*);
+	void (*Mostrar)(struct Lista);
+
 } Lista;
 
-void InserirInicio(Lista* lista, int number) {
+void InserirInicioListaLinear(int number, Lista* lista) {
 	if (lista->size == lista->maxSize) {
 		printf("Erro ao inserir: Lista cheia.");
 		return;	
@@ -27,7 +28,7 @@ void InserirInicio(Lista* lista, int number) {
 	lista->array[0] = number;
 }
 
-void InserirFim(Lista* lista, int number) {
+void InserirFimListaLinear(int number, Lista* lista) {
 	if (lista->size == lista->maxSize) {
 		printf("Erro ao inserir: Lista cheia.");
 		return;	
@@ -37,7 +38,7 @@ void InserirFim(Lista* lista, int number) {
 
 }
 
-void Inserir(Lista* lista, int number, int position) {
+void InserirListaLinear(int number, size_t position, Lista* lista) {
 	if (lista->size == lista->maxSize) {
 		printf("Erro ao inserir: Lista cheia.");
 		return;	
@@ -52,7 +53,7 @@ void Inserir(Lista* lista, int number, int position) {
 	lista->size++;
 }
 
-int RemoverInicio(Lista* lista) {
+int RemoverInicioListaLinear(Lista* lista) {
 	if (lista->size == 0) {
 		printf("Erro ao remover do inicio: Lista vazia.");
 		return 0;
@@ -69,7 +70,7 @@ int RemoverInicio(Lista* lista) {
 	return removido;
 }
 
-int RemoverFim(Lista* lista) {
+int RemoverFimListaLinear(Lista* lista) {
 	if (lista->size == 0) {
 		printf("Erro ao remover do fim: Lista vazia.");
 		return 0;
@@ -80,7 +81,7 @@ int RemoverFim(Lista* lista) {
 	return removido;
 }
 
-int Remover(Lista* lista, int position) {
+int RemoverListaLinear(size_t position, Lista* lista) {
 	if (lista->size == 0) {
 		printf("Erro ao remover do fim: Lista vazia.");
 		return 0;
@@ -97,31 +98,33 @@ int Remover(Lista* lista, int position) {
 	return removido;
 }
 
-void Mostrar(Lista* lista) {
+void MostrarListaLinear(Lista lista) {
 
-	if (lista->size == 0) printf("Lista vazia.\n");	
+	if (lista.size == 0) printf("Lista vazia.\n");	
 
-	for (int i = 0; i < lista->size; i++) {
+	for (int i = 0; i < lista.size; i++) {
 		if (i == 0) printf("{ ");	
-		printf("%d", lista->array[i]);
-		printf("%s", i < lista->size - 1 ? " " : " }\n");
+		printf("%d", lista.array[i]);
+		printf("%s", i < lista.size - 1 ? " " : " }\n");
 	}
-} 
+}
 
-Lista newLista(int maxSize) {
+Lista newLista(size_t maxSize) {
+
 	Lista lista;
-	if (maxSize == 0) maxSize = 80;
-	lista.maxSize = maxSize;
-	lista.size = 0;
-	lista.array = (int*)malloc(maxSize * sizeof(int));
 
-    lista.InserirInicio = InserirInicio;
-    lista.InserirFim = InserirFim;
-    lista.Inserir = Inserir;
-    lista.Mostrar = Mostrar;
-	lista.RemoverInicio = RemoverInicio;
-	lista.RemoverFim= RemoverFim;
-	lista.Remover = Remover;
+	if (maxSize == 0) maxSize = 80;
+	
+	lista.maxSize = maxSize;
+	lista.array = (int*)malloc(maxSize * sizeof(int));
+	lista.size = 0;
+    lista.InserirInicio = InserirInicioListaLinear;
+    lista.InserirFim = InserirFimListaLinear;
+    lista.Inserir = InserirListaLinear;
+    lista.Mostrar = MostrarListaLinear;
+	lista.RemoverInicio = RemoverInicioListaLinear;
+	lista.RemoverFim= RemoverFimListaLinear;
+	lista.Remover = RemoverListaLinear;
 
 	return lista;
 }

@@ -36,36 +36,35 @@ int paresMultiDe5(Lista lista) {
 	return contador;
 }
 
-
-
 int main () {
 
 	puts("==== LISTA LINEAR ====\n");
 
 	Lista lista = newLista(6);
 	
-	lista.InserirInicio(&lista, 1);
-	lista.InserirFim(&lista, 7);
-	lista.InserirFim(&lista, 9);
-	lista.InserirInicio(&lista, 3);
-	lista.Inserir(&lista, 8, 3);
-	lista.Inserir(&lista, 4, 2);
-	lista.Mostrar(&lista);
+	lista.InserirInicio(1, &lista);
+	lista.InserirFim(7, &lista);
+	lista.InserirFim(9, &lista);
+	lista.InserirInicio(3, &lista);
+	lista.Inserir(8, 3, &lista);
+	lista.Inserir(4, 2, &lista);
+	lista.Mostrar(lista);
 
     int x1, x2, x3;
     
     x1 = lista.RemoverInicio(&lista);
     x2 = lista.RemoverFim(&lista);
-    x3 = lista.Remover(&lista, 2);
+    x3 = lista.Remover(2, &lista);
     
     printf("%d, %d, %d\n", x1, x2, x3);
     
-	lista.Mostrar(&lista);
+	lista.Mostrar(lista);
 
 	printf("A soma de todos os elementos da lista é: %d\n", somaLista(lista));
 	printf("O maior elemento da lista é: %d\n", maiorLista(lista));
 	printf("A lista invertida é:\n");
 	inverteLista(&lista);
-	lista.Mostrar(&lista);
-	printf("A quantidade de pares múltiplos de 5 é: %d\n", paresMultiDe5 (lista));
+	lista.Mostrar(lista);
+
+	printf("A quantidade de pares múltiplos de 5 é: %d\n", paresMultiDe5(lista));
 }
