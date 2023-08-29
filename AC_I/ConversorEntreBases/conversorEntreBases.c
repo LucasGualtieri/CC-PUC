@@ -85,21 +85,21 @@ string decParaBaseSaida(string valor, int baseSaida) {
 string getValor(int base) {
 
 	string valor;
-	bool   invalido = false;
+	bool   valido = true;
 
 	do {
-		if (invalido) printf("Valor inválido, tente novamente: ");
+		if (!valido) printf("Valor inválido, tente novamente: ");
 		valor	   = getstr();
 		size_t len = strlen(valor);
-		invalido   = len == 0;
+		valido   = len > 0;
 
-		for (int i = 0; !invalido && i < len; i++) {
+		for (int i = 0; valido && i < len; i++) {
 			if (valor[i] == '.') continue;
-			invalido = ctoi(valor[i]) >= base;
+			valido = ctoi(valor[i]) < base;
 		}
-		if (invalido) free(valor);
+		if (!valido) free(valor);
 
-	} while (invalido);
+	} while (!valido);
 
 	return valor;
 }
