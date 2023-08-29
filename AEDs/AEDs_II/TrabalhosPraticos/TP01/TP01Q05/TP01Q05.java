@@ -44,6 +44,8 @@ class TP01Q05 {
 		// cria um vetor com elas, e fazer as comparações dentro do for
 		// no final das contas vou retornar "resultado"
 
+		// Essa linha está dando pau "3 1 1 0 or(or(and(not(and(A , B)) , not(C)) , and(not(A) , B , C) , and(A , B , C) , and(A , not(B) , not(C))) , and(A , not(B) , C))"
+
 		int indexOfParen = Lib.IndexOf(')', str) + 1;
 		String expressaoEsqStr = str.substring(0, indexOfParen);
 		String expressaoDirStr = str.substring(indexOfParen + 1);
