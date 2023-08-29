@@ -127,13 +127,14 @@ void conversor(int baseEntrada, int baseSaida) {
 }
 
 int lendoEscolha(int limiteSuperior) {
-	int	 escolha;
+	char escolha;
 	bool valido = true;
 
 	do {
 		if (!valido) printf("Valor inválido, tente novamente: ");
-		scanf("%d", &escolha);
+		scanf("%c", &escolha);
 		flush();
+		escolha = ctoi(escolha);
 		valido = 0 <= escolha && escolha <= limiteSuperior;
 	} while (!valido);
 

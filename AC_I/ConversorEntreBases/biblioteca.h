@@ -80,6 +80,10 @@ char toUpper(char c) {
 	return (char)('a' <= c && c <= 'z' ? c - 32 : c);
 }
 
+int isNumber(int value) {
+	return 0 <= value && value <= 9;
+}
+
 int ctoi(char c) {
 	if (!isalnum(c)) return 16; // Maior base de conversão
 	return 'A' <= (c = toUpper(c)) && c <= 'F' ? c - 55 : c - 48;
