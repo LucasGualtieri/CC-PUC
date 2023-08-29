@@ -1,232 +1,232 @@
-{
-	// Use IntelliSense to learn about possible attributes.
-	// Hover to view descriptions of existing attributes.
-	// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
-	"version": "0.2.0",
-	"configurations": [
-		{
-			"type": "java",
-			"name": "teste",
-			"request": "launch",
-			"mainClass": "teste",
-			"projectName": "CC-PUC_cc5a22eb"
-		},
-		{
-			"type": "java",
-			"name": "TP01Q01",
-			"request": "launch",
-			"mainClass": "TrabalhosPraticos.TP01.TP01Q01.TP01Q01",
-			"projectName": "CC-PUC_cc5a22eb"
-		},
-		{
-			"type": "java",
-			"name": "TP01Q01",
-			"request": "launch",
-			"mainClass": "TP01Q01",
-			"projectName": "CC-PUC_cc5a22eb"
-		},
-		{
-			"type": "java",
-			"name": "TP01Q01",
-			"request": "launch",
-			"mainClass": "TP01Q01",
-			"projectName": "CC-PUC_6ee93103"
-		},
-		{
-			"type": "java",
-			"name": "Ex4",
-			"request": "launch",
-			"mainClass": "Ex4",
-			"projectName": "CC-PUC_cc5a22eb"
-		},
-		{
-			"type": "java",
-			"name": "ExemploArq01Escrita",
-			"request": "launch",
-			"mainClass": "ExemploArq01Escrita",
-			"projectName": "CC-PUC_cc5a22eb"
-		},
-		{
-			"type": "java",
-			"name": "ExemploArq02Leitura",
-			"request": "launch",
-			"mainClass": "ExemploArq02Leitura",
-			"projectName": "CC-PUC_cc5a22eb"
-		},
-		{
-			"type": "java",
-			"name": "Exemplo",
-			"request": "launch",
-			"mainClass": "Exemplo",
-			"projectName": "CC-PUC_cc5a22eb"
-		},
-		{
-			"type": "java",
-			"name": "Log",
-			"request": "launch",
-			"mainClass": "Log",
-			"projectName": "CC-PUC_cc5a22eb"
-		},
-		{
-			"type": "java",
-			"name": "Log",
-			"request": "launch",
-			"mainClass": "AEDs.AEDs_II.Log",
-			"projectName": "CC-PUC_cc5a22eb"
-		},
-		{
-			"type": "java",
-			"name": "test",
-			"request": "launch",
-			"mainClass": "test",
-			"projectName": "CC-PUC_cc5a22eb"
-		},
-		{
-			"type": "java",
-			"name": "Ex18",
-			"request": "launch",
-			"mainClass": "Ex18",
-			"projectName": "CC-PUC_cc5a22eb"
-		},
-		{
-			"type": "java",
-			"name": "Ex16",
-			"request": "launch",
-			"mainClass": "Ex16",
-			"projectName": "CC-PUC_cc5a22eb"
-		},
-		{
-			"type": "java",
-			"name": "Ex15",
-			"request": "launch",
-			"mainClass": "Ex15",
-			"projectName": "CC-PUC_cc5a22eb"
-		},
-		{
-			"type": "java",
-			"name": "Ex14",
-			"request": "launch",
-			"mainClass": "Ex14",
-			"projectName": "CC-PUC_cc5a22eb"
-		},
-		{
-			"type": "java",
-			"name": "Ex13",
-			"request": "launch",
-			"mainClass": "Ex13",
-			"projectName": "CC-PUC_cc5a22eb"
-		},
-		{
-			"type": "java",
-			"name": "Ex12",
-			"request": "launch",
-			"mainClass": "Ex12",
-			"projectName": "CC-PUC_cc5a22eb"
-		},
-		{
-			"type": "java",
-			"name": "Ex11",
-			"request": "launch",
-			"mainClass": "Ex11",
-			"projectName": "CC-PUC_cc5a22eb"
-		},
-		{
-			"type": "java",
-			"name": "Ex10",
-			"request": "launch",
-			"mainClass": "Ex10",
-			"projectName": "CC-PUC_cc5a22eb"
-		},
-		{
-			"type": "java",
-			"name": "Ex9",
-			"request": "launch",
-			"mainClass": "Ex9",
-			"projectName": "CC-PUC_cc5a22eb"
-		},
-		{
-			"type": "java",
-			"name": "Ex8",
-			"request": "launch",
-			"mainClass": "Ex8",
-			"projectName": "CC-PUC_cc5a22eb"
-		},
-		{
-			"type": "java",
-			"name": "Ex7",
-			"request": "launch",
-			"mainClass": "Ex7",
-			"projectName": "CC-PUC_cc5a22eb"
-		},
-		{
-			"type": "java",
-			"name": "Ex6",
-			"request": "launch",
-			"mainClass": "Ex6",
-			"projectName": "CC-PUC_cc5a22eb"
-		},
-		{
-			"type": "java",
-			"name": "Ex5",
-			"request": "launch",
-			"mainClass": "Ex5",
-			"projectName": "CC-PUC_cc5a22eb"
-		},
-		{
-			"type": "java",
-			"name": "Ex2",
-			"request": "launch",
-			"mainClass": "AEDs.AEDs_II.TrabalhosTeoricos.TT01.IntroducaoAoJava.Ex2",
-			"projectName": "CC-PUC_cc5a22eb"
-		},
-		{
-			"type": "java",
-			"name": "Ex3",
-			"request": "launch",
-			"mainClass": "Ex3",
-			"projectName": "CC-PUC_cc5a22eb"
-		},
-		{
-			"type": "java",
-			"name": "Ex2",
-			"request": "launch",
-			"mainClass": "Ex2",
-			"projectName": "CC-PUC_cc5a22eb"
-		},
-		{
-			"type": "java",
-			"name": "Ex1",
-			"request": "launch",
-			"mainClass": "Ex1",
-			"projectName": "CC-PUC_cc5a22eb"
-		},
-		{
-			"type": "java",
-			"name": "Ex1",
-			"request": "launch",
-			"mainClass": "AEDs.AEDs_II.TrabalhosTeoricos.TT01.Ex1",
-			"projectName": "CC-PUC_cc5a22eb"
-		},
-		{
-			"type": "java",
-			"name": "Palindromo",
-			"request": "launch",
-			"mainClass": "Palindromo",
-			"projectName": "CC-PUC_cc5a22eb"
-		},
-		{
-			"type": "java",
-			"name": "palindromoEmJavaMyIO",
-			"request": "launch",
-			"mainClass": "palindromoEmJavaMyIO",
-			"projectName": "CC-PUC_cc5a22eb"
-		},
-		{
-			"type": "java",
-			"name": "palindromoEmJava",
-			"request": "launch",
-			"mainClass": "palindromoEmJava",
-			"projectName": "CC-PUC_cc5a22eb"
-		}
-	]
-}
+// {
+// 	// Use IntelliSense to learn about possible attributes.
+// 	// Hover to view descriptions of existing attributes.
+// 	// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+// 	"version": "0.2.0",
+// 	"configurations": [
+// 		{
+// 			"type": "java",
+// 			"name": "teste",
+// 			"request": "launch",
+// 			"mainClass": "teste",
+// 			"projectName": "CC-PUC_cc5a22eb"
+// 		},
+// 		{
+// 			"type": "java",
+// 			"name": "TP01Q01",
+// 			"request": "launch",
+// 			"mainClass": "TrabalhosPraticos.TP01.TP01Q01.TP01Q01",
+// 			"projectName": "CC-PUC_cc5a22eb"
+// 		},
+// 		{
+// 			"type": "java",
+// 			"name": "TP01Q01",
+// 			"request": "launch",
+// 			"mainClass": "TP01Q01",
+// 			"projectName": "CC-PUC_cc5a22eb"
+// 		},
+// 		{
+// 			"type": "java",
+// 			"name": "TP01Q01",
+// 			"request": "launch",
+// 			"mainClass": "TP01Q01",
+// 			"projectName": "CC-PUC_6ee93103"
+// 		},
+// 		{
+// 			"type": "java",
+// 			"name": "Ex4",
+// 			"request": "launch",
+// 			"mainClass": "Ex4",
+// 			"projectName": "CC-PUC_cc5a22eb"
+// 		},
+// 		{
+// 			"type": "java",
+// 			"name": "ExemploArq01Escrita",
+// 			"request": "launch",
+// 			"mainClass": "ExemploArq01Escrita",
+// 			"projectName": "CC-PUC_cc5a22eb"
+// 		},
+// 		{
+// 			"type": "java",
+// 			"name": "ExemploArq02Leitura",
+// 			"request": "launch",
+// 			"mainClass": "ExemploArq02Leitura",
+// 			"projectName": "CC-PUC_cc5a22eb"
+// 		},
+// 		{
+// 			"type": "java",
+// 			"name": "Exemplo",
+// 			"request": "launch",
+// 			"mainClass": "Exemplo",
+// 			"projectName": "CC-PUC_cc5a22eb"
+// 		},
+// 		{
+// 			"type": "java",
+// 			"name": "Log",
+// 			"request": "launch",
+// 			"mainClass": "Log",
+// 			"projectName": "CC-PUC_cc5a22eb"
+// 		},
+// 		{
+// 			"type": "java",
+// 			"name": "Log",
+// 			"request": "launch",
+// 			"mainClass": "AEDs.AEDs_II.Log",
+// 			"projectName": "CC-PUC_cc5a22eb"
+// 		},
+// 		{
+// 			"type": "java",
+// 			"name": "test",
+// 			"request": "launch",
+// 			"mainClass": "test",
+// 			"projectName": "CC-PUC_cc5a22eb"
+// 		},
+// 		{
+// 			"type": "java",
+// 			"name": "Ex18",
+// 			"request": "launch",
+// 			"mainClass": "Ex18",
+// 			"projectName": "CC-PUC_cc5a22eb"
+// 		},
+// 		{
+// 			"type": "java",
+// 			"name": "Ex16",
+// 			"request": "launch",
+// 			"mainClass": "Ex16",
+// 			"projectName": "CC-PUC_cc5a22eb"
+// 		},
+// 		{
+// 			"type": "java",
+// 			"name": "Ex15",
+// 			"request": "launch",
+// 			"mainClass": "Ex15",
+// 			"projectName": "CC-PUC_cc5a22eb"
+// 		},
+// 		{
+// 			"type": "java",
+// 			"name": "Ex14",
+// 			"request": "launch",
+// 			"mainClass": "Ex14",
+// 			"projectName": "CC-PUC_cc5a22eb"
+// 		},
+// 		{
+// 			"type": "java",
+// 			"name": "Ex13",
+// 			"request": "launch",
+// 			"mainClass": "Ex13",
+// 			"projectName": "CC-PUC_cc5a22eb"
+// 		},
+// 		{
+// 			"type": "java",
+// 			"name": "Ex12",
+// 			"request": "launch",
+// 			"mainClass": "Ex12",
+// 			"projectName": "CC-PUC_cc5a22eb"
+// 		},
+// 		{
+// 			"type": "java",
+// 			"name": "Ex11",
+// 			"request": "launch",
+// 			"mainClass": "Ex11",
+// 			"projectName": "CC-PUC_cc5a22eb"
+// 		},
+// 		{
+// 			"type": "java",
+// 			"name": "Ex10",
+// 			"request": "launch",
+// 			"mainClass": "Ex10",
+// 			"projectName": "CC-PUC_cc5a22eb"
+// 		},
+// 		{
+// 			"type": "java",
+// 			"name": "Ex9",
+// 			"request": "launch",
+// 			"mainClass": "Ex9",
+// 			"projectName": "CC-PUC_cc5a22eb"
+// 		},
+// 		{
+// 			"type": "java",
+// 			"name": "Ex8",
+// 			"request": "launch",
+// 			"mainClass": "Ex8",
+// 			"projectName": "CC-PUC_cc5a22eb"
+// 		},
+// 		{
+// 			"type": "java",
+// 			"name": "Ex7",
+// 			"request": "launch",
+// 			"mainClass": "Ex7",
+// 			"projectName": "CC-PUC_cc5a22eb"
+// 		},
+// 		{
+// 			"type": "java",
+// 			"name": "Ex6",
+// 			"request": "launch",
+// 			"mainClass": "Ex6",
+// 			"projectName": "CC-PUC_cc5a22eb"
+// 		},
+// 		{
+// 			"type": "java",
+// 			"name": "Ex5",
+// 			"request": "launch",
+// 			"mainClass": "Ex5",
+// 			"projectName": "CC-PUC_cc5a22eb"
+// 		},
+// 		{
+// 			"type": "java",
+// 			"name": "Ex2",
+// 			"request": "launch",
+// 			"mainClass": "AEDs.AEDs_II.TrabalhosTeoricos.TT01.IntroducaoAoJava.Ex2",
+// 			"projectName": "CC-PUC_cc5a22eb"
+// 		},
+// 		{
+// 			"type": "java",
+// 			"name": "Ex3",
+// 			"request": "launch",
+// 			"mainClass": "Ex3",
+// 			"projectName": "CC-PUC_cc5a22eb"
+// 		},
+// 		{
+// 			"type": "java",
+// 			"name": "Ex2",
+// 			"request": "launch",
+// 			"mainClass": "Ex2",
+// 			"projectName": "CC-PUC_cc5a22eb"
+// 		},
+// 		{
+// 			"type": "java",
+// 			"name": "Ex1",
+// 			"request": "launch",
+// 			"mainClass": "Ex1",
+// 			"projectName": "CC-PUC_cc5a22eb"
+// 		},
+// 		{
+// 			"type": "java",
+// 			"name": "Ex1",
+// 			"request": "launch",
+// 			"mainClass": "AEDs.AEDs_II.TrabalhosTeoricos.TT01.Ex1",
+// 			"projectName": "CC-PUC_cc5a22eb"
+// 		},
+// 		{
+// 			"type": "java",
+// 			"name": "Palindromo",
+// 			"request": "launch",
+// 			"mainClass": "Palindromo",
+// 			"projectName": "CC-PUC_cc5a22eb"
+// 		},
+// 		{
+// 			"type": "java",
+// 			"name": "palindromoEmJavaMyIO",
+// 			"request": "launch",
+// 			"mainClass": "palindromoEmJavaMyIO",
+// 			"projectName": "CC-PUC_cc5a22eb"
+// 		},
+// 		{
+// 			"type": "java",
+// 			"name": "palindromoEmJava",
+// 			"request": "launch",
+// 			"mainClass": "palindromoEmJava",
+// 			"projectName": "CC-PUC_cc5a22eb"
+// 		}
+// 	]
+// }

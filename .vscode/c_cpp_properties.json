@@ -1,25 +1,25 @@
-{
-	"configurations": [
-		{
-			"name": "Linux",
-			"includePath": [
-				"${workspaceFolder}/**",
-				"/home/lucas/PC-HOME/CC-PUC/Bibliotecas" //  Casa
-				// "/home/1431578/Documents/CC-PUC/Bibliotecas" // Faculdade
-			],
-			"defines": [],
-			"compilerPath": "/usr/bin/gcc",
-			"cStandard": "c17",
-			"cppStandard": "gnu++17",
-			"intelliSenseMode": "linux-gcc-x64",
-			"macFrameworkPath": [],
-			"forcedInclude": [],
-			"browse": {
-				"path": []
-			},
-			"compileCommands": "",
-			"compilerArgs": []
-		}
-	],
-	"version": 4
-}
+// {
+// 	"configurations": [
+// 		{
+// 			"name": "Linux",
+// 			"includePath": [
+// 				"${workspaceFolder}/**",
+// 				"/home/lucas/PC-HOME/CC-PUC/Bibliotecas" //  Casa
+// 				// "/home/1431578/Documents/CC-PUC/Bibliotecas" // Faculdade
+// 			],
+// 			"defines": [],
+// 			"compilerPath": "/usr/bin/gcc",
+// 			"cStandard": "c17",
+// 			"cppStandard": "gnu++17",
+// 			"intelliSenseMode": "linux-gcc-x64",
+// 			"macFrameworkPath": [],
+// 			"forcedInclude": [],
+// 			"browse": {
+// 				"path": []
+// 			},
+// 			"compileCommands": "",
+// 			"compilerArgs": []
+// 		}
+// 	],
+// 	"version": 4
+// }
