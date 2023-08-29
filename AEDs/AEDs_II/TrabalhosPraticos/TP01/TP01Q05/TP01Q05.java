@@ -4,94 +4,105 @@ import TrabalhosPraticos.Lib;
 
 class TP01Q05 {
 
-Selection sort
-	//static boolean AND() {
-	//	boolean val1, boolean val2;
-	//	// val1 = searchForVal();
-	//	
-	//	// Agora buscamos os segundo valor
-	//	// val2 = searchForVal();
+	static boolean OR(String str) {
 
-	//	return val1 && val2;
-	//}
+		System.out.printf("Função OR: '%s'\n", str);
 
-	//static boolean OR() {
-	//	boolean val1, boolean val2;
-	//	// val1 = searchForVal();
-	//	
-	//	// Agora buscamos os segundo valor
-	//	// val2 = searchForVal();
+		char c = str.charAt(0);
+		if (c == '1' || c == '0') {
+			// System.out.println("Primeiro IF");
+			return Lib.ctobool(c) || Lib.ctobool(str.charAt(2));
+		}
 
-	//	return val1 || val2;
-	//}
+		int indexOfParen = Lib.IndexOf(')', str) + 1;
+		String expressaoEsqStr = str.substring(0, indexOfParen);
+		String expressaoDirStr = str.substring(indexOfParen + 1);
+		boolean expressaoEsq = searchForExpression(expressaoEsqStr);
+		boolean expressaoDir = searchForExpression(expressaoDirStr);
 
-	//static boolean NOT() {
-	//	boolean val1, boolean val2;
-	//	// Buscamos saber se temos A ou b ou c, ou and or not or not
+		return expressaoEsq || expressaoDir;
 
-	//	if (/* SOMETHING >= A && <= C */) {
-	//		val = val1;
-	//	}
-	//	else if (/* SOMETHING == AND*/) {
-	//		val = AND();
-	//	} else if (/* SOMETHING == OR*/) {
-	//		val = OR();
-	//	} else {
-	//		val = NOT();
-	//	}
+	}
 
-	//	return !val1;
-	//}
+	static boolean AND(String str) {
 
-	static boolean searchForVal() {
+		System.out.printf("Função AND: '%s'\n", str);
+
+		char c = str.charAt(0);
+		if (c == '1' || c == '0') {
+			System.out.println("Primeiro IF");
+			return Lib.ctobool(c) && Lib.ctobool(str.charAt(2));
+		}
+
+		// boolean resultado = expressao[0] && expressao[1];
+		// for (int i = 2; i < ???; i++) {
+		// 	resultado = resultado && expressao[i];
+		// }
+		// Preciso achar uma forma de contar as expressões
+		// ideia de ir contando os parenteses que vao se abrindo
+		// e subtraindo nos parenteses que forem se fechando
+		// cria um vetor com elas, e fazer as comparações dentro do for
+		// no final das contas vou retornar "resultado"
+
+		int indexOfParen = Lib.IndexOf(')', str) + 1;
+		String expressaoEsqStr = str.substring(0, indexOfParen);
+		String expressaoDirStr = str.substring(indexOfParen + 1);
+		boolean expressaoEsq = searchForExpression(expressaoEsqStr);
+		boolean expressaoDir = searchForExpression(expressaoDirStr);
+		// System.out.printf("expressaoEsq: %s\n", expressaoEsq);
+		// System.out.printf("expressaoDir: %s\n", expressaoDir);
+
+		return expressaoEsq && expressaoDir;
+
+	}
+
+	static boolean searchForExpression(String str) {
+
+		System.out.printf("searchForExpression: '%s'\n", str);
 
 		// Esse metodo inicia a busca e as chamadas recursivas
 		// mas tbm precisa ser capaz de saber a hora de parar de buscar.
 
 		// Talvez if (c == '/n' or c == /r) return something;
 
-		// This method will iterate character by character until it finds
-		// A, B, C, AND, OR, NOT.
-
-		while ()
-
-		if (/* SOMETHING >= A && <= C */) {
-			return val;
-		}
-		else if (/* SOMETHING == AND*/) {
-			return AND();
-		} else if (/* SOMETHING == OR*/) {
-			return OR();
+		char c = str.charAt(0);
+		if (c == '1' || c == '0') {
+			return Lib.ctobool(c);
+		} else if (Lib.isEqual(str.substring(0, 3), "and")) {
+			return AND(str.substring(4));
+		} else if (Lib.isEqual(str.substring(0, 2), "or")) {
+			return OR(str.substring(3));
 		} else {
-			return NOT();
+			System.out.println("NOT");
+			return !searchForExpression(str.substring(4));
 		}
 
+		// return true;
 	}
 
-	static int algebraBooleana(String input) {
+	static boolean algebraBooleana(String input) {
 		
-		int N = StringNextInt(input);
-		
-		boolean[] entradas = new boolean[N];
+		char[] charArray = Lib.replaceAll(' ', "", input);
 
+		int N = Lib.ctoi(charArray[0]);
+		
+		// Substituindo os valores dos termos na String.
 		for (int i = 0; i < N; i++) {
-			entradas[i] StringNextIntk() == 1 ? true : false;
+			char c = (char)('A' + i);
+			char replace = charArray[i + 1] == '1' ? '1' : '0';
+			charArray = Lib.replaceAll(c, replace, charArray);
 		}
 
-		// replace all spaces with nothing
-		// if (n == 1) replace all As with value of entradas[0];
-		// if (n == 2) replace all As with value of entradas[0] && all Bs with value of entradas[1];
-		// if (n == 3) replace all As with value of entradas[0] && all Bs with value of entradas[1], all Cs with value of entradas[2];
+		input = Lib.toString(charArray).substring(N + 1);
+		// System.out.printf("String: '%s'\n", input);
 
-		String entradaTratada = 
-	
-		return searchForVal();
+		return searchForExpression(input);
 	}
 
 	public static void main(String[] args) {
 		String input = new String();
-		while(!Lib.isEqual(input = Lib.getstr(), "0")) {
-			System.out.println(algebraBooleana(input));
+		while(!Lib.isEqual(input = Lib.getstr(), "FIM")) {
+			System.out.println(algebraBooleana(input) ? 1 : 0);
 		}
 	}
 }
