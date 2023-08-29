@@ -22,7 +22,7 @@ Se BE = 10, convertemos o valor diretamente para a base de saída.
 
 ## ⚙️ Algoritmos de conversão
 Como descrito no tópico anterior, o programa possui apenas dois algoritmos de conversão:
-- O primeiro converte um valor e qualquer base para Decimal. Fazemos isso através do seguinte somatório: <br>
+- O primeiro converte um valor em qualquer base para Decimal. Fazemos isso através do seguinte somatório: <br>
 	- Exemplo:<br>
  	 ![image](https://github.com/LucasGualtieri/CC-PUC/assets/42350002/0d7ff605-6830-42c5-9cac-8b2912daed0c)
 	- Fórmula matemática:<br>
