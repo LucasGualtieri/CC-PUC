@@ -1,18 +1,30 @@
 package TrabalhosPraticos;
 
+import java.io.*;
 import java.util.*;
 
 public class Lib {
 
 	public static Scanner scanner = new Scanner(System.in);
-	// private static BufferedReader in = new BufferedReader(new InputStreamReader(System.in, Charset.forName("UTF-8")));
+	public static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-	public static int ctoi(char c) {
-		return c - 48;
-	}
+	public static int ctoi(char c) { return c - 48; }
+	public static boolean ctobool(char c) { return c == '1'; }
+	public static char toUpper(char c) { return 'a' <= c && c <= 'z' ? (char)(c - 32) : c; }
+	public static char toLower(char c) { return 'A' <= c && c <= 'Z' ? (char)(c + 32) : c; }
+	public static boolean isNumber(char c) { return '0' <= c && c <= '9'; };
+	public static boolean isAlpha(char c) { return 'A' <= c && c <= 'Z' || 'a' <= c && c <= 'z'; }
 
-	public static boolean ctobool(char c) {
-		return c == '1' ? true : false;
+	public static boolean isPresent(char c, String str) {
+		boolean result = false;
+		int len = str.length();
+		for (int i = 0; i < len; i++) {
+			if (str.charAt(i) == c) {
+				result = true;
+				i = len;
+			}
+		}
+		return result;
 	}
 
 	public static int IndexOf(char c, String str) {
@@ -32,6 +44,20 @@ public class Lib {
 		for (int i = 0; i < array.length; i++) {
 			aux += array[i];
 		}
+		return aux;
+	}
+
+	public static String replaceAll(char baseChar, char newChar, String str) {
+		
+		String aux = "";
+		int strLen = str.length();
+
+		for (int i = 0; i < strLen; i++) {
+			char c = str.charAt(i);
+			if (c == baseChar) aux += newChar;
+			else aux += c;
+		}
+
 		return aux;
 	}
 
