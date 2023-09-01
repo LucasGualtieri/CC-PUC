@@ -54,4 +54,11 @@ String readstr(String str) {
 	return str;
 }
 
+float getFloat(FILE* stream) {
+	if (!stream) stream = stdin;
+	float floatValue;
+	fscanf(stream, "%f", &floatValue);
+	return floatValue;
+}
+
 #endif /* LIB_H_ */

@@ -2,6 +2,7 @@ package TrabalhosPraticos;
 
 import java.io.*;
 import java.util.*;
+import java.io.File;
 
 public class Lib {
 
@@ -151,5 +152,23 @@ public class Lib {
 		System.out.printf("%s: ", msg);
 		String str = scanner.nextLine();
 		return str.substring(0, str.length());
+	}
+
+	public static float getfloat() {
+		float floatValue = scanner.nextFloat();
+		scanner.nextLine();
+		return floatValue;
+	}
+
+	public static double getDouble() {
+		double doubleValue = scanner.nextDouble();
+		scanner.nextLine();
+		return doubleValue;
+	}
+
+	public static int getint() {
+		int integer = scanner.nextInt();
+		scanner.nextLine();
+		return integer;
 	}
 }
