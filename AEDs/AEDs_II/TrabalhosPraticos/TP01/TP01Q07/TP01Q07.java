@@ -1,188 +1,32 @@
 // clear && javac -cp ../../.. TP01Q07.java && java -cp ../../.. TP01Q07.java < pub.in > result.txt
 
-// import TrabalhosPraticos.Lib;
+import TrabalhosPraticos.Lib;
 import java.net.*;
 import java.io.*;
-
-
 import java.util.*;
-
-class Lib {
-
-	public static Scanner scanner = new Scanner(System.in);
-	public static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
-	public static int ctoi(char c) { return c - 48; }
-	public static boolean ctobool(char c) { return c == '1'; }
-	public static char toUpper(char c) { return 'a' <= c && c <= 'z' ? (char)(c - 32) : c; }
-	public static char toLower(char c) { return 'A' <= c && c <= 'Z' ? (char)(c + 32) : c; }
-	public static boolean isNumber(char c) { return '0' <= c && c <= '9'; };
-	public static boolean isAlpha(char c) { return 'A' <= c && c <= 'Z' || 'a' <= c && c <= 'z'; }
-
-	public static boolean isPresent(char c, String str) {
-		boolean result = false;
-		int len = str.length();
-		for (int i = 0; i < len; i++) {
-			if (str.charAt(i) == c) {
-				result = true;
-				i = len;
-			}
-		}
-		return result;
-	}
-
-	public static int IndexOf(char c, String str) {
-		int index = 0;
-		int len = str.length();
-		for (int i = 0; i < len; i++) {
-			if (str.charAt(i) == c) {
-				index = i;
-				i = len;
-			}
-		}
-		return index;
-	}
-
-	public static String toString(char[] array) {
-		String aux = "";
-		for (int i = 0; i < array.length; i++) {
-			aux += array[i];
-		}
-		return aux;
-	}
-
-	public static String replaceAll(char baseChar, char newChar, String str) {
-		
-		String aux = "";
-		int strLen = str.length();
-
-		for (int i = 0; i < strLen; i++) {
-			char c = str.charAt(i);
-			if (c == baseChar) aux += newChar;
-			else aux += c;
-		}
-
-		return aux;
-	}
-
-	public static char[] replaceAll(String baseStr, char newChar, char[] charrArray) {
-		
-		String str = toString(charrArray);
-
-		String aux = "";
-		int strLen = str.length();
-		int baseStrLen = baseStr.length();
-		// System.out.println("BaseStrLen: " + baseStrLen);
-		for (int i = 0; i < strLen; i++) {
-			boolean subsstr = i < strLen - baseStrLen;
-			if (subsstr && isEqual(str.substring(i, i + baseStrLen), baseStr)) {
-				// System.out.println("Subs: " + str.substring(i, i + baseStrLen));
-				aux += newChar;
-				i += baseStrLen - 1;
-			} else {
-				aux += str.charAt(i);
-			}
-		}
-
-		return aux.toCharArray();
-	}
-
-	public static char[] replaceAll(char baseChar, String newStr, String str) {
-		
-		String aux = "";
-
-		for (int i = 0; i < str.length(); i++) {
-			if (str.charAt(i) == baseChar) aux += newStr;
-			else aux += str.charAt(i);
-		}
-
-		return aux.toCharArray();
-	}
-
-	public static char[] replaceAll(char baseChar, char newChar, char[] str) {
-		
-		String aux = "";
-
-		for (int i = 0; i < str.length; i++) {
-			if (str[i] == baseChar) aux += newChar;
-			else aux += str[i];
-		}
-
-		return aux.toCharArray();
-	}
-
-	public static char[] replaceAll(char baseChar, String newStr, char[] str) {
-		
-		String aux = "";
-
-		for (int i = 0; i < str.length; i++) {
-			if (str[i] == baseChar) aux += newStr;
-			else aux += str[i];
-		}
-
-		return aux.toCharArray();
-	}
-
-	public static boolean isEqual(String str1, String str2) {
-		if (str1.length() != str2.length()) return false;
-
-		for (int i = 0; i < str1.length(); i++) {
-			if (str1.charAt(i) != str2.charAt(i)) return false;
-		}
-
-		return true;
-	}
-	
-	// public static char readChar(){
-	// 	return readInt(); // (char)readInt();
-	// }
-
-	// public static int readInt() { // Talvez tenha que pegar o getChar do MyIO mais uma vez caso isso não funcione
-	// 	char int; // char resp = ' ';
-	// 	try {
-	// 		resp = (char)in.read();
-	// 	} catch(Exception e) {}
-	// 	return resp;
-	// }
-
-	public static String getstr() {
-		String str = scanner.nextLine();
-		return str.substring(0, str.length());
-	}
-
-	public static String getstr(String msg) {
-		System.out.printf("%s: ", msg);
-		String str = scanner.nextLine();
-		return str.substring(0, str.length());
-	}
-}
 
 class TP01Q07 {
 
-	static final char aNormal = 'a';
-	static final char eNormal = 'e';
-	static final char iNormal = 'i';
-	static final char oNormal = 'o';
-	static final char uNormal = 'u';
-	static final char aAgudo = 225;
-	static final char eAgudo = 233;
-	static final char iAgudo = 237;
-	static final char oAgudo = 243;
-	static final char uAgudo = 250;
-	static final char aCrase = 224;
-	static final char eCrase = 232;
-	static final char iCrase = 236;
-	static final char oCrase = 242;
-	static final char uCrase = 249;
-	static final char aTil = 227;
-	static final char oTil = 245;
-	static final char aCircunflexo = 226;
-	static final char eCircunflexo = 234;
-	static final char iCircunflexo = 238;
-	static final char oCircunflexo = 244;
-	static final char uCircunflexo = 251;
-
 	static class Contador {
+
+		static final char aAgudo = 225;
+		static final char eAgudo = 233;
+		static final char iAgudo = 237;
+		static final char oAgudo = 243;
+		static final char uAgudo = 250;
+		static final char aCrase = 224;
+		static final char eCrase = 232;
+		static final char iCrase = 236;
+		static final char oCrase = 242;
+		static final char uCrase = 249;
+		static final char aTil = 227;
+		static final char oTil = 245;
+		static final char aCircunflexo = 226;
+		static final char eCircunflexo = 234;
+		static final char iCircunflexo = 238;
+		static final char oCircunflexo = 244;
+		static final char uCircunflexo = 251;
+
 		int aNormalCount = 0;
 		int eNormalCount = 0;
 		int iNormalCount = 0;
@@ -209,57 +53,75 @@ class TP01Q07 {
 		Contador(String HTML) {
 			int htmlLen = HTML.length();
 			for (int i = 0; i < htmlLen; i++) {
-				char c = HTML.charAt(i);
-				if ((int)c == 97) aNormalCount++;
-				else if ((int)c == 101) eNormalCount++;
-				else if ((int)c == 105) iNormalCount++;
-				else if ((int)c == 111) oNormalCount++;
-				else if ((int)c == 117) uNormalCount++;
-				else if ((int)c == 225) aAgudoCount++;
-				else if ((int)c == 233) eAgudoCount++;
-				else if ((int)c == 237) iAgudoCount++;
-				else if ((int)c == 243) oAgudoCount++;
-				else if ((int)c == 250) uAgudoCount++;
-				else if ((int)c == 224) aCraseCount++;
-				else if ((int)c == 232) eCraseCount++;
-				else if ((int)c == 236) iCraseCount++;
-				else if ((int)c == 242) oCraseCount++;
-				else if ((int)c == 249) uCraseCount++;
-				else if ((int)c == 227) aTilCount++;
-				else if ((int)c == 245) oTilCount++;
-				else if ((int)c == 226) aCircunflexoCount++;
-				else if ((int)c == 234) eCircunflexoCount++;
-				else if ((int)c == 238) iCircunflexoCount++;
-				else if ((int)c == 244) oCircunflexoCount++;
-				else if ((int)c == 251) uCircunflexoCount++;
+
+				// Evitando os <tables>
+				if (i < htmlLen - 7) {
+					if (Lib.isEqual(HTML.substring(i, i + 7), "<table>")) {
+						i += 7;
+					}
+				}
+
+				// Evitando os <br>
+				if (i < htmlLen - 4) {
+					if (Lib.isEqual(HTML.substring(i, i + 4), "<br>")) {
+						i += 4;
+					}
+				}
+
+				int c = (int)HTML.charAt(i);
+				if (c == 'a') aNormalCount++;
+				else if (c == 'e') eNormalCount++;
+				else if (c == 'i') iNormalCount++;
+				else if (c == 'o') oNormalCount++;
+				else if (c == 'u') uNormalCount++;
+				else if (c == aAgudo) aAgudoCount++;
+				else if (c == eAgudo) eAgudoCount++;
+				else if (c == iAgudo) iAgudoCount++;
+				else if (c == oAgudo) oAgudoCount++;
+				else if (c == uAgudo) uAgudoCount++;
+				else if (c == aCrase) aCraseCount++;
+				else if (c == eCrase) eCraseCount++;
+				else if (c == iCrase) iCraseCount++;
+				else if (c == oCrase) oCraseCount++;
+				else if (c == uCrase) uCraseCount++;
+				else if (c == aTil) aTilCount++;
+				else if (c == oTil) oTilCount++;
+				else if (c == aCircunflexo) aCircunflexoCount++;
+				else if (c == eCircunflexo) eCircunflexoCount++;
+				else if (c == iCircunflexo) iCircunflexoCount++;
+				else if (c == oCircunflexo) oCircunflexoCount++;
+				else if (c == uCircunflexo) uCircunflexoCount++;
 			}
 		}
 		
 		public void imprimir() {
-			System.out.print("a(" + aNormalCount + ") ");
+			System.out.printf("a(%d) ", aNormalCount);
 			System.out.printf("e(%d) ", eNormalCount);
 			System.out.printf("i(%d) ", iNormalCount);
 			System.out.printf("o(%d) ", oNormalCount);
 			System.out.printf("u(%d) ", uNormalCount);
-			System.out.print('á' + "(" + aAgudoCount +") ");
-			System.out.printf("é(%d) ", eAgudoCount);
-			System.out.printf("í(%d) ", iAgudoCount);
-			System.out.printf("ó(%d) ", oAgudoCount);
-			System.out.printf("ú(%d) ", uAgudoCount);
-			System.out.printf("à(%d) ", aCraseCount);
-			System.out.printf("è(%d) ", eCraseCount);
-			System.out.printf("ì(%d) ", iCraseCount);
-			System.out.printf("ò(%d) ", oCraseCount);
-			System.out.printf("ù(%d) ", uCraseCount);
-			System.out.printf("ã(%d) ", aTilCount);
-			System.out.printf("õ(%d) ", oTilCount);
-			System.out.printf("â(%d) ", aCircunflexoCount);
-			System.out.printf("ê(%d) ", eCircunflexoCount);
-			System.out.printf("î(%d) ", iCircunflexoCount);
-			System.out.printf("ô(%d) ", oCircunflexoCount);
-			System.out.printf("û(%d) ", uCircunflexoCount);
+			System.out.printf("%c(%d) ", aAgudo, aAgudoCount);
+			System.out.printf("%c(%d) ", eAgudo, eAgudoCount);
+			System.out.printf("%c(%d) ", iAgudo, iAgudoCount);
+			System.out.printf("%c(%d) ", oAgudo, oAgudoCount);
+			System.out.printf("%c(%d) ", uAgudo, uAgudoCount);
+			System.out.printf("%c(%d) ", aCrase, aCraseCount);
+			System.out.printf("%c(%d) ", eCrase, eCraseCount);
+			System.out.printf("%c(%d) ", iCrase, iCraseCount);
+			System.out.printf("%c(%d) ", oCrase, oCraseCount);
+			System.out.printf("%c(%d) ", uCrase, uCraseCount);
+			System.out.printf("%c(%d) ", aTil, aTilCount);
+			System.out.printf("%c(%d) ", oTil, oTilCount);
+			System.out.printf("%c(%d) ", aCircunflexo, aCircunflexoCount);
+			System.out.printf("%c(%d) ", eCircunflexo, eCircunflexoCount);
+			System.out.printf("%c(%d) ", iCircunflexo, iCircunflexoCount);
+			System.out.printf("%c(%d) ", oCircunflexo, oCircunflexoCount);
+			System.out.printf("%c(%d) ", uCircunflexo, uCircunflexoCount);
 		}
+	}
 
+	static boolean isConsonant(char c) {
+		return Lib.isPresent(Lib.toLower(c), "bcdfghjklmnpqrstvwxyz");
 	}
 
 	static String getHTML(String endereco) {
@@ -301,16 +163,24 @@ class TP01Q07 {
 		return countTable;
 	}
 
-	static boolean isConsonant(char c) {
-		return Lib.isPresent(Lib.toLower(c), "bcdfghjklmnpqrstvwxyz");
-	}
-
 	static int consonantCount(String HTML) {
 		int countConsonant = 0;
 		int htmlLen = HTML.length();
 		for (int i = 0; i < htmlLen; i++) {
+			// Evitando os <tables>
+			if (i < htmlLen - 7) {
+				if (Lib.isEqual(HTML.substring(i, i + 7), "<table>")) {
+					i += 7;
+				}
+			}
+			// Evitando os <br>
+			if (i < htmlLen - 4) {
+				if (Lib.isEqual(HTML.substring(i, i + 4), "<br>")) {
+					i += 4;
+				}
+			}
 			char c = HTML.charAt(i);
-			if (isConsonant(c)) countConsonant++;
+			if (Lib.isLowerCase(c) && isConsonant(c)) countConsonant++;
 		}
 		return countConsonant;
 	}
@@ -321,7 +191,6 @@ class TP01Q07 {
 		while(!Lib.isEqual(nomeDaPagina = Lib.getstr(), "FIM")) {
 			String URL = Lib.getstr();
 			String HTML = getHTML(URL);
-
 			Contador vogais = new Contador(HTML);
 			vogais.imprimir();
 			System.out.printf("consoante(%d) ", consonantCount(HTML));
