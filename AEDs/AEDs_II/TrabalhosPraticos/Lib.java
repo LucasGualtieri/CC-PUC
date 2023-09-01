@@ -14,6 +14,7 @@ public class Lib {
 	public static char toLower(char c) { return 'A' <= c && c <= 'Z' ? (char)(c + 32) : c; }
 	public static boolean isNumber(char c) { return '0' <= c && c <= '9'; };
 	public static boolean isAlpha(char c) { return 'A' <= c && c <= 'Z' || 'a' <= c && c <= 'z'; }
+	public static boolean isLowerCase(char c) { return 'a' <= c && c <= 'z'; }
 
 	public static boolean isPresent(char c, String str) {
 		boolean result = false;
