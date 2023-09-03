@@ -61,4 +61,11 @@ float getFloat(FILE* stream) {
 	return floatValue;
 }
 
+int getInt(FILE* stream) {
+	if (!stream) stream = stdin;
+	int integer;
+	fscanf(stream, "%d", &integer);
+	return integer;
+}
+
 #endif /* LIB_H_ */

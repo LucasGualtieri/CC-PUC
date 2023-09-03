@@ -154,7 +154,7 @@ public class Lib {
 		return str.substring(0, str.length());
 	}
 
-	public static float getfloat() {
+	public static float getFloat() {
 		float floatValue = scanner.nextFloat();
 		scanner.nextLine();
 		return floatValue;
