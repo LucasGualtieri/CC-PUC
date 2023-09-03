@@ -19,7 +19,7 @@ int main() {
 
 	for (int i = 0; i < numberOfRealNumbers; i++) {
 		fprintf(file, "%g",  getFloat(stdin));
-		fprintf(file, "%s", i < numberOfRealNumbers - 1 ? "\n" : "");
+		if (i < numberOfRealNumbers - 1) fprintf(file, "\n");
 	}
 
 	fclose(file);
