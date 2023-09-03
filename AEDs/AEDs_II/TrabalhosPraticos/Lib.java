@@ -154,21 +154,27 @@ public class Lib {
 		return str.substring(0, str.length());
 	}
 
-	public static float getFloat() {
+	private static void flush() throws Exception {
+		try {
+			scanner.nextLine();
+		} catch (Exception e) {}
+	}
+
+	public static float getFloat() throws Exception {
 		float floatValue = scanner.nextFloat();
-		scanner.nextLine();
+		flush();
 		return floatValue;
 	}
 
-	public static double getDouble() {
+	public static double getDouble() throws Exception {
 		double doubleValue = scanner.nextDouble();
-		scanner.nextLine();
+		flush();
 		return doubleValue;
 	}
 
-	public static int getint() {
+	public static int getInt() throws Exception {
 		int integer = scanner.nextInt();
-		scanner.nextLine();
+		flush();
 		return integer;
 	}
 }
