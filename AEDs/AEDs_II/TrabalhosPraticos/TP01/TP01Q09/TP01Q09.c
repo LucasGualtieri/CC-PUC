@@ -12,12 +12,13 @@ void cursorReset(int* currentPosition, FILE* file) {
 
 int main() {
 
-	FILE* file = fopen("TP01Q09_LucasGualtieri.txt", "w");
+	String filePath = "TP01Q09_LucasGualtieri.txt";
+	FILE* file = fopen(filePath, "w");
 
-	int numberOfRealNumbers = getFloat(0);
+	int numberOfRealNumbers = getInt(stdin);
 
 	for (int i = 0; i < numberOfRealNumbers; i++) {
-		fprintf(file, "%g",  getFloat(0));
+		fprintf(file, "%g",  getFloat(stdin));
 		fprintf(file, "%s", i < numberOfRealNumbers - 1 ? "\n" : "");
 	}
 
@@ -25,7 +26,7 @@ int main() {
 
 	// --------------------------------------------------------
 
-	file = fopen("TP01Q09_LucasGualtieri.txt", "r");
+	file = fopen(filePath, "r");
 	fseek(file, 0, SEEK_END);
 	int currentPosition = ftell(file);
 
