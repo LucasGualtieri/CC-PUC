@@ -4,145 +4,150 @@ import TrabalhosPraticos.Lib;
 
 class TP01Q05 {
 
-	static String[] ExpressionsStr(String str) {
-		int expressionCount = 0;
+	static boolean debugging = true;
+
+	static int indexOfNextExp(String str) {
+		if (debugging) System.out.println("indexOfNextExp: " + str);
+		if (debugging) System.out.print("indexOfNextExp: ");
 		int len = str.length();
-
-		int[] startOfExpressions = new int[10]; // 10 é um número arbitrário grande
-
+		int openParentesesCount = 0;
+		int result = 0;
 		for (int i = 0; i < len; i++) {
 			char c = str.charAt(i);
-			if (c == 'a' || c == 'o' || c == '!') { // Achamos uma expressão
-				startOfExpressions[expressionCount++] = i;
-				// Agora precisamos skipar a expressão inteira.
-				int openParentesesCount = 1;
-				for (int j = i + 1; j < len; j++) {
-					c = str.charAt(j);
-					if (c == '(') openParentesesCount++;
-					if (c == ')') openParentesesCount--;
-					if (openParentesesCount == 0) {
-						j = len; // jota é o fim da expressao
-						startOfExpressions[expressionCount++] = j;
-					}
-				}
-			} else if (c == '1' || c == '0') { // Achamos um termo { A, B ou C}
-				startOfExpressions[expressionCount++] = i;
-			}
+			if (c == '(') openParentesesCount++;
+			else if (c == ')' && --openParentesesCount == 0) {
+				result = i + 2;
+				i = len;
+			} 
 		}
-
-		String[] arrayOfExpressions = new String[expressionCount];
-		// for (int i = 0; i < expressionCount; i++) {
-		// 	arrayOfExpressions[i] = str.substring(startOfExpressions[i], startOfExpressions[i + 1]);
-		// }
-
-		System.exit(1);
-
-		return arrayOfExpressions;
-
+		// if (debugging) System.out.println("result: " + result);
+		if (debugging) System.out.println("str.substring(result).length() == 0: " + (str.substring(result).length() == 0));
+		if (str.substring(result).length() == 0) return -1;
+		return result;
 	}
 
-	static boolean[] ExpressionsBool(String[] arrayOfExpressionsStr) {
-		
-		boolean[] arrayOfExpressionsBool = new boolean[arrayOfExpressionsStr.length];
-		for (int i = 0; i < arrayOfExpressionsBool.length; i++) {
-			arrayOfExpressionsBool[i] = searchForExpression(arrayOfExpressionsStr[i]);
-		}
-
-		return arrayOfExpressionsBool;
-
-		// int indexOfParen = Lib.IndexOf(')', str) + 1;
-		// String expressaoEsqStr = str.substring(0, indexOfParen);
-		// String expressaoDirStr = str.substring(indexOfParen + 1);
-		// boolean expressaoEsq = searchForExpression(expressaoEsqStr);
-		// boolean expressaoDir = searchForExpression(expressaoDirStr);
-		// // System.out.printf("expressaoEsq: %s\n", expressaoEsq);
-		// // System.out.printf("expressaoDir: %s\n", expressaoDir);
-	}
+	// static int indexOfNextExp(String str) {
+	// 	System.out.println("indexOfNextExp: " + str);
+	// 	int len = str.length();
+	// 	int openParentesesCount = 1;
+	// 	int result = 0;
+	// 	for (int i = 0; i < len; i++) {
+	// 		char c = str.charAt(i);
+	// 		if (c == '(') openParentesesCount++;
+	// 		else if (c == ')' && --openParentesesCount == 0) {
+	// 			result = i;
+	// 			i = len;
+	// 		} 
+	// 	}
+	// 	// System.out.println("result: " + result);
+	// 	return result - 1;
+	// }
 
 	static boolean OR(String str) {
 
-		System.out.printf("Função OR: '%s'\n", str);
+		if (debugging) System.out.printf("Função OR: '%s'\n", str);
 
-		return true;
+		char c = str.charAt(0);
+		// String nextComp = 
+		if (c == '1') return true;
+		else if (c == '0') {
+			if (debugging) System.out.printf("Função OR: else if (c == '0')\n");
+			return Lib.ctobool(c) || ORCompare(str.substring(2));
+		} else {
+			int indexOfNextExpVal = indexOfNextExp(str);
+			boolean hasNextExp = indexOfNextExpVal > 0;
+			if (!hasNextExp) return OR(str.substring(2));
+			return searchForExpression(str) || ORCompare(str.substring(indexOfNextExpVal));
+		}
+	}
 
-		// char c = str.charAt(0);
-		// if (c == '1' || c == '0') {
-		// 	// System.out.println("Primeiro IF");
-		// 	return Lib.ctobool(c) || Lib.ctobool(str.charAt(2));
-		// }
+	static boolean ORCompare(String str) {
+		if (debugging) System.out.printf("Função ORCompare: '%s'\n", str);
 
-		// int indexOfParen = Lib.IndexOf(')', str) + 1;
-		// String expressaoEsqStr = str.substring(0, indexOfParen);
-		// String expressaoDirStr = str.substring(indexOfParen + 1);
-		// boolean expressaoEsq = searchForExpression(expressaoEsqStr);
-		// boolean expressaoDir = searchForExpression(expressaoDirStr);
+		int indexOfNextExpVal = indexOfNextExp(str);
+		boolean hasNextExp = indexOfNextExpVal > 0;
 
-		// return expressaoEsq || expressaoDir;
-
+		char c = str.charAt(0);
+		String expressionString = str.substring(2); // Talvez possa ser um problema
+		if (c == 'a') {
+			if (!hasNextExp) return AND(expressionString);
+			return AND(expressionString) || ORCompare(str.substring(indexOfNextExpVal));
+		} else if (c == 'o') {
+			return OR(expressionString);
+		} else if (c == '!') {
+			return !searchForExpression(expressionString);
+		} else {
+			if (debugging) System.out.println("ORCompare: Else");
+			if (str.charAt(1) == ')') {
+				if (debugging) System.out.println("str.charAt(1) == ')'");
+				if (debugging) System.out.println("Lib.ctobool(c): " + Lib.ctobool(c));
+				return Lib.ctobool(c);
+			}
+			else return Lib.ctobool(c) || ORCompare(str.substring(2));
+		} 
 	}
 
 	static boolean AND(String str) {
 
-		System.out.printf("Função AND: '%s'\n", str);
-		boolean[] boolExpressions = ExpressionsBool(ExpressionsStr(str));
+		if (debugging) System.out.printf("Função AND: '%s'\n", str);
 
-		return true;
+		char c = str.charAt(0);
+		if (c == '0') return false;
+		else if (c == '1') {
+			boolean teste = ANDCompare(str.substring(2));
+			if (debugging) System.out.println("teste: " + teste);
+			return Lib.ctobool(c) && teste;
+		}
+		else return ANDCompare(str) && ANDCompare(str.substring(indexOfNextExp(str)));
+	}
 
+	static boolean ANDCompare(String str) {
+		if (debugging) System.out.printf("Função ANDCompare: '%s'\n", str);
 
-		// boolean resultado = boolExpressions[0] && boolExpressions[1];
-		// for (int i = 2; i < strExpressions.length i++) {
-		// 	resultado = resultado && boolExpressions[i];
-		// }
+		int indexOfNextExpVal = indexOfNextExp(str);
+		// if (debugging) System.out.println("indexOfNextExpVal: " + indexOfNextExpVal);
+		boolean hasNextExp = indexOfNextExpVal > 0;
 
-		// return resultado;
+		char c = str.charAt(0);
+		String expressionString = str.substring(2);
 
-		// -------------------------------
-
-		// char c = str.charAt(0);
-		// if (c == '1' || c == '0') {
-		// 	System.out.println("Primeiro IF");
-		// 	return Lib.ctobool(c) && Lib.ctobool(str.charAt(2));
-		// }
-
-		// boolean resultado = expressao[0] && expressao[1];
-		// for (int i = 2; i < ???; i++) {
-		// 	resultado = resultado && expressao[i];
-		// }
-		// for (int i = 2; i < ???; i++) {
-		// 	resultado = resultado && expressao[i];
-		// }
-		// Preciso achar uma forma de contar as expressões
-		// ideia de ir contando os parenteses que vao se abrindo
-		// e subtraindo nos parenteses que forem se fechando
-		// cria um vetor com elas, e fazer as comparações dentro do for
-		// no final das contas vou retornar "resultado"
-
-		// Essa linha está dando pau "3 1 1 0 or(or(and(not(and(A , B)) , not(C)) , and(not(A) , B , C) , and(A , B , C) , and(A , not(B) , not(C))) , and(A , not(B) , C))"
-
-
-		// return expressaoEsq && expressaoDir;
-
+		if (c == 'a') {
+			return AND(expressionString);
+		} else if (c == 'o') {
+			// return OR(expressionString);
+			if (!hasNextExp) {
+				if (debugging) System.out.println("!hasNextExp");
+				return OR(expressionString);
+			}
+			if (debugging) System.out.println("hasNextExp");
+			return OR(expressionString) && ANDCompare(str.substring(indexOfNextExpVal));
+		} else if (c == '!') {
+			if (debugging) System.out.println("else if (c == '!'): " + str);
+			if (!hasNextExp) return !searchForExpression(expressionString);
+			return !searchForExpression(expressionString) && ANDCompare(str.substring(indexOfNextExpVal));
+		} else {
+			if (debugging) System.out.println("ANDCompare: Else");
+			if (c == '0') return false;
+			if (str.charAt(1) == ')') return Lib.ctobool(c);
+			else return Lib.ctobool(c) && ANDCompare(str.substring(2));
+		} 
 	}
 
 	static boolean searchForExpression(String str) {
 
-		System.out.printf("searchForExpression: '%s'\n", str);
-
-		// Esse metodo inicia a busca e as chamadas recursivas
-		// mas tbm precisa ser capaz de saber a hora de parar de buscar.
-
-		// Talvez if (c == '/n' or c == /r) return something;
+		if (debugging) System.out.printf("searchForExpression: '%s'\n", str);
 
 		char c = str.charAt(0);
+		String expressionString = str.substring(2);
 		if (c == '1' || c == '0') {
 			return Lib.ctobool(c);
 		} else if (c == 'a') {
-			return AND(str.substring(2));
+			return AND(expressionString);
 		} else if (c == 'o') {
-			return OR(str.substring(2));
+			return OR(expressionString);
 		} else {
-			System.out.println("NOT");
-			return !searchForExpression(str.substring(2));
+			if (debugging) System.out.println("NOT");
+			return !searchForExpression(expressionString);
 		}
 	}
 
@@ -172,7 +177,8 @@ class TP01Q05 {
 
 	public static void main(String[] args) {
 		String input = new String();
-		while(!Lib.isEqual(input = Lib.getstr(), "FIM")) {
+		while((input = Lib.getstr()).charAt(0) != '0') {
+			// System.out.println("Resultado: " + (algebraBooleana(input) ? 1 : 0));
 			System.out.println(algebraBooleana(input) ? 1 : 0);
 		}
 	}
