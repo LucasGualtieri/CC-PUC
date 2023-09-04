@@ -58,6 +58,7 @@ float getFloat(FILE* stream) {
 	if (!stream) stream = stdin;
 	float floatValue;
 	fscanf(stream, "%f", &floatValue);
+	// flush();
 	return floatValue;
 }
 

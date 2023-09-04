@@ -2,12 +2,12 @@
 
 // clear && gcc TP01Q09.c -o TP01Q09 && ./TP01Q09 < pub.in > result.txt
 
-void cursorReset(int* currentPosition, FILE* file) {
-	fseek(file, --(*currentPosition), SEEK_SET);
-	while (*currentPosition >= 0 && fgetc(file) != '\n') {
-		fseek(file, (*currentPosition)--, SEEK_SET);
+void cursorReset(int* virtualCursor, FILE* file) {
+	fseek(file, --(*virtualCursor), SEEK_SET);
+	while (*virtualCursor >= 0 && fgetc(file) != '\n') {
+		fseek(file, --(*virtualCursor), SEEK_SET);
 	}
-	fseek(file, ++(*currentPosition), SEEK_SET);
+	fseek(file, *virtualCursor + 1, SEEK_SET);
 }
 
 int main() {
@@ -28,12 +28,12 @@ int main() {
 
 	file = fopen(filePath, "r");
 	fseek(file, 0, SEEK_END);
-	int currentPosition = ftell(file);
+	int virtualCursor = ftell(file);
 
 	for (int i = 0; i < numberOfRealNumbers; i++) {
-		cursorReset(&currentPosition, file);
+		cursorReset(&virtualCursor, file);
 		printf("%g",  getFloat(file));
-		printf("%s", i < numberOfRealNumbers - 1 ? "\n" : "");
+		if (i < numberOfRealNumbers - 1) puts("");
 	}
 
 	fclose(file);
