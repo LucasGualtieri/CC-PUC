@@ -2,7 +2,6 @@ package TrabalhosPraticos;
 
 import java.io.*;
 import java.util.*;
-import java.io.File;
 
 public class Lib {
 
