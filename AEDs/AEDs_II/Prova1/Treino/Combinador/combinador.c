@@ -1,50 +1,39 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
-// clear && gcc combinador.c && ./a.out
+// clear && gcc combinador.c -o combinador && ./combinador < pub.in > result.txt
 
-#define STR_MAX_LEN 50 + 1
+#define STR_MAX_LEN 100 + 1
 
 int main() {
 
-	char string00[STR_MAX_LEN];
+	char str1[STR_MAX_LEN];
 
-	while (scanf(" %[^\n]", string00)) {
-		char* string01 = strtok(string00, " ");
-		char* string02 = strtok(NULL, " ");
-		char* stringMaior, *stringMenor;
+	while (scanf("%s", str1) != EOF) {
+		
+		char str2[STR_MAX_LEN];
+		scanf("%s", str2);
 
-		// printf("string01: %s\n", string01);
-		// printf("string02: %s\n", string02);
+		int str1Len = strlen(str1);
+		int str2Len = strlen(str2);
 
-		int string01Len = strlen(string01);
-		int string02Len = strlen(string02);
-		int menorLen, maiorLen;
+		int cursorStr1 = 0;
+		int cursorStr2 = 0;
 
-		if (string01Len > string02Len) {
-			stringMaior = string01;
-			stringMenor = string02;
-			maiorLen = string01Len;
-			menorLen = string02Len;
-		} else {
-			stringMaior = string02;
-			stringMenor = string01;
-			maiorLen = string02Len;
-			menorLen = string01Len;
-		}
+		char resultado[STR_MAX_LEN];
 
-		int i;
-		for (i = 0; i < menorLen + maiorLen; i += 2) {
-			string00[i] = stringMaior[i];
-			if (i < menorLen) {
-				string00[i + 1] = stringMenor[i];		
+		int i = 0;
+		while (i < str1Len + str2Len) {
+			if (cursorStr1 < str1Len) {
+				resultado[i++] = str1[cursorStr1++];
 			}
-			string00[i + 2] = 0;
-			printf("string00: %s\n", string00);
+			if (cursorStr2 < str2Len) {
+				resultado[i++] = str2[cursorStr2++];
+			}
 		}
-		string00[i - 1] = 0;
+		resultado[i] = 0;
 
-		printf("%s\n", string00);
-
+		printf("%s\n", resultado);
 	}
 }
