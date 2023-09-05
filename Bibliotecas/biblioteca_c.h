@@ -383,6 +383,8 @@ void freeSplit(char** split) { // Better name? freeStringArray
 }
 
 char** split(char* string, char* regex, bool freeBuffer) {
+	// Refatorar devolvendo um struct com .size
+
 	char** array	   = NULL;
 	int	   sizeOfArray = 0;
 
