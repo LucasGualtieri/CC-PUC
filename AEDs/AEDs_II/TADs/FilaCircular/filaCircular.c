@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "filaCircular.h"
 
-// clear && gcc -o filaCircular filaCircular.c && ./filaCircular
+// clear && gcc filaCircular.c && ./a.out
 
 int main () {
 
@@ -25,8 +25,7 @@ int main () {
     x3 = fila.Next(&fila);
     
     // printf("%d, %d, %d\n", x1, x2, x3);
-    
-	// fila.Mostrar(fila);
+	// fila.Mostrar(fila); 
 
 	fila.Close(&fila);
 }
