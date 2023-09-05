@@ -59,16 +59,13 @@ class TP01Q07 {
 					if (Lib.isEqual(HTML.substring(i, i + 7), "<table>")) {
 						i += 7;
 					}
-				}
-
-				// Evitando os <br>
-				if (i < htmlLen - 4) {
+				} else if (i < htmlLen - 4) { // Evitando os <br>
 					if (Lib.isEqual(HTML.substring(i, i + 4), "<br>")) {
 						i += 4;
 					}
 				}
 
-				int c = (int)HTML.charAt(i);
+				char c = (char)HTML.charAt(i);
 				if (c == 'a') aNormalCount++;
 				else if (c == 'e') eNormalCount++;
 				else if (c == 'i') iNormalCount++;
@@ -121,6 +118,7 @@ class TP01Q07 {
 	}
 
 	static boolean isConsonant(char c) {
+		// return Lib.isAlpha(c) && !Lib.isVowel(c); // Alternativa menos custosa de se testar consoante
 		return Lib.isPresent(Lib.toLower(c), "bcdfghjklmnpqrstvwxyz");
 	}
 
@@ -172,9 +170,7 @@ class TP01Q07 {
 				if (Lib.isEqual(HTML.substring(i, i + 7), "<table>")) {
 					i += 7;
 				}
-			}
-			// Evitando os <br>
-			if (i < htmlLen - 4) {
+			} if (i < htmlLen - 4) { // Evitando os <br>
 				if (Lib.isEqual(HTML.substring(i, i + 4), "<br>")) {
 					i += 4;
 				}
