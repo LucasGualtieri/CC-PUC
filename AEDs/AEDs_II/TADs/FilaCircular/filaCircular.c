@@ -20,9 +20,9 @@ int main () {
 
     int x1, x2, x3;
     
-    x1 = fila.Remover(&fila);
-    x2 = fila.Remover(&fila);
-    x3 = fila.Remover(&fila);
+    x1 = fila.Next(&fila);
+    x2 = fila.Next(&fila);
+    x3 = fila.Next(&fila);
     
     // printf("%d, %d, %d\n", x1, x2, x3);
     
