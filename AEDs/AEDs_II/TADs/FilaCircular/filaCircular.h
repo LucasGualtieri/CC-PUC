@@ -9,6 +9,7 @@ typedef struct FilaCircular {
 	void (*Inserir)(int number, struct FilaCircular*);
 	int (*Remover)(struct FilaCircular*);
 	int (*Next)(struct FilaCircular*);
+	void (*Close)(struct FilaCircular*);
 	void (*Mostrar)(struct FilaCircular);
 	void (*ToggleShow) (struct FilaCircular*);
 
@@ -62,6 +63,11 @@ void ToggleShowOnUpdateFilaCircular(FilaCircular* fila) {
 	fila->ShowOnUpdate = fila->ShowOnUpdate ? false : true;
 }
 
+void CloseFilaCircular(FilaCircular* fila) {
+	fila->maxSize = 0;
+	free(fila->array);
+}
+
 FilaCircular newFilaCircular(size_t maxSize) {
 
 	FilaCircular fila;
@@ -76,6 +82,7 @@ FilaCircular newFilaCircular(size_t maxSize) {
 	fila.Next = NextFilaCircular;
     fila.Inserir = InserirFilaCircular;
 	fila.Remover = RemoverFilaCircular;
+    fila.Close = CloseFilaCircular;
     fila.Mostrar = MostrarFilaCircular;
 
 	return fila;

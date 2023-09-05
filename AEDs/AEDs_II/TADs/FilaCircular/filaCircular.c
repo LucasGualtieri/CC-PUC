@@ -27,4 +27,6 @@ int main () {
     // printf("%d, %d, %d\n", x1, x2, x3);
     
 	// fila.Mostrar(fila);
+
+	fila.Close(&fila);
 }
