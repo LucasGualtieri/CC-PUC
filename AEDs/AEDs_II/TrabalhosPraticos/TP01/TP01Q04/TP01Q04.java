@@ -11,6 +11,12 @@ class TP01Q04 {
 		return (char)('a' + (Math.abs(gerador.nextInt()) % 26));
 	}
 
+	/*
+		- Escolhe aleatóriamente dois caracteres.
+		- Recebe uma string e modifica todas as
+		ocorrências do primeiro caractere pelo
+		segundo caractere gerado.
+	*/
 	static String aleatorio(String input) {
 		char baseChar = randomChar();
 		char newChar = randomChar();

@@ -4,6 +4,10 @@ import TrabalhosPraticos.Lib;
 
 class TP01Q10 {
 
+	/*
+		- Retorna true ou false se a palavra for ou não um palíndromo.
+		- Faço isso testando as extremidades da palavra até chegar no meio da palavra.
+	*/
 	static boolean isPalindromoRec(String palavra, int left, int right) {
 		if (palavra.charAt(left) != palavra.charAt(right)) return false;
 		return (left > right) ? true : isPalindromoRec(palavra, left + 1, right - 1);

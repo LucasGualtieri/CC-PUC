@@ -1,4 +1,4 @@
-#include "../LibCTP01.h"
+#include "../../Lib.h"
 
 // clear && gcc TP01Q11.c -o TP01Q11 && ./TP01Q11 < pub.in > result.txt
 
@@ -21,34 +21,16 @@
 #define SPECIAL_CHAR -61 // characteres especias (e.g., ç, á, à, ã, etc)
 #define isSingleChar(c) (c > 0)
 
-bool isPalindromoIterativo(String str) {
-
-	int left = -1, right = strlen(str);
-
-	bool result = true;
-
-	while (left++ <= right--) {
-		char cLeft = str[left], cRight = str[right];
-
-		// Conferindo caracteres Alphanuméricos.
-		if (isSingleChar(cLeft) || isSingleChar(cRight)) {
-			if (cLeft != cRight) {
-				left = right;
-				result = false;
-			}
-		} else if (cLeft == SPECIAL_CHAR) {
-			// Conferindo characteres especias (e.g., ç, á, à, ã, etc).
-			if (str[left + 1] != cRight) {
-				left = right;
-				result = false;
-			}
-			left++, right--;
-		}
-	}
-
-	return result;
-}
-
+/*
+	- Retorna true ou false se a palavra é ou não um palíndromo.
+	- Faço isso testando as extremidades da palavra até chegar no meio da palavra.
+	- Em C, os caracteres são representados com apenas 1 byte,
+	ao contrário de Java, que utiliza 2 bytes. Isso faz com
+	que caracteres especiais (por exemplo, ç, á, à, ã, etc.)
+	sejam representados por DOIS SUBCARACTERES. Sendo assim,
+	certas manipulações especiais são necessárias para determinar
+	se a palavra é ou não um palíndromo.
+*/
 bool isPalindromoRec(String palavra, int left, int right) {
 	char cLeft = palavra[left], cRight = palavra[right];
 	if (isSingleChar(cLeft) || isSingleChar(cRight)) {

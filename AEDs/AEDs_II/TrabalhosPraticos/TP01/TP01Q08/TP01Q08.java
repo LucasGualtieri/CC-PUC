@@ -12,6 +12,12 @@ class TP01Q08 {
 
 	public static void main(String[] args) throws Exception {
 
+		/*
+			- Inicialmente abro o arquivo para escrita.
+			- Depois leio a quantidade de números a serem lidos.
+			- Por último os escrevo em binário no arquivo.
+		*/
+
 		String filePath = "TP01Q08_LucasGualtieri.txt";
 		RandomAccessFile fileWriter = new RandomAccessFile(filePath, "rw");
 
@@ -25,8 +31,17 @@ class TP01Q08 {
 
 		// --------------------------------------------------------
 
+		/*
+			- Agora abro o arquivo para leitura.
+			- Levo o curso para o começo do último número.
+			- Por último leio os números de trás para frente
+			voltando sempre sizeof(float) para ler o número de trás.
+		*/
+
 		RandomAccessFile file = new RandomAccessFile(filePath, "r");
-        int currentPosition = (4 * (numberOfRealNumbers - 1));
+		// A ideia de fazer - 1 é posicionar o cursor exatamente
+		// aonde ele precisa estar para fazer a primeira leitura.
+		int currentPosition = (4 * (numberOfRealNumbers - 1));
 
 		DecimalFormat formatter = new DecimalFormat();
 		for (int i = currentPosition; i >= 0; i -= 4) {

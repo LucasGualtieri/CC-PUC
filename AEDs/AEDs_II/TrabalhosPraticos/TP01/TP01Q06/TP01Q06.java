@@ -4,14 +4,17 @@ import TrabalhosPraticos.Lib;
 
 class TP01Q06 {
 
+	// Retorna true se o caractere for vogal.
 	static boolean isVowel(char c) {
 		return Lib.isPresent(Lib.toLower(c), "aeiou");
 	}
 
+	// Retorna true se o caractere for consoante.
 	static boolean isConsonant(char c) {
 		return Lib.isPresent(Lib.toLower(c), "bcdfghjklmnpqrstvwxyz");
 	}
 
+	// Retorna true se a String possuir somente vogais.
 	static boolean isAllVowels(String input) {
 		boolean result = true;
 		int len = input.length();
@@ -25,6 +28,7 @@ class TP01Q06 {
 		return result;
 	}
 
+	// Retorna true se a String possuir somente consoantes.
 	static boolean isAllConsonants(String input) {
 		boolean result = true;
 		int len = input.length();
@@ -38,6 +42,7 @@ class TP01Q06 {
 		return result;
 	}
 
+	// Retorna true se a String representar um número inteiro.
 	static boolean isInteger(String input) {
 		boolean result = true;
 		int len = input.length();
@@ -50,6 +55,7 @@ class TP01Q06 {
 		return result;
 	}
 
+	// Retorna true se a String representar um número real.
 	static boolean isFloatingPoint(String input) {
 		boolean result = true;
 		int len = input.length();

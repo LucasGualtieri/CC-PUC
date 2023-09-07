@@ -1,4 +1,4 @@
-#include "../LibCTP01.h"
+#include "../../Lib.h"
 #include <time.h>
 #include <math.h>
 
@@ -8,6 +8,12 @@ char randomChar() {
 	return (char)('a' + (abs(rand()) % 26));
 }
 
+/*
+	- Escolhe aleatóriamente dois caracteres.
+	- Recebe uma string e modifica todas as
+	ocorrências do primeiro caractere pelo
+	segundo caractere gerado.
+*/
 String aleatorio(String str) {
 	
 	char baseChar = randomChar();

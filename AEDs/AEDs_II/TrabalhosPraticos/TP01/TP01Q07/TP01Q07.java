@@ -7,8 +7,19 @@ import java.util.*;
 
 class TP01Q07 {
 
+	/*
+		- Essa classe se propõe a ajudar no processo
+		de contagem, armazenamento e entrega do resultado final.	
+	*/
 	static class Contador {
 
+		/*
+			- Essas definições foram necessárias para
+			lidar o os diferentes charsets, tanto
+			para fazer as comparações, quanto para
+			imprimir o resultado na tela.
+			- Elas representam as vogais acentuadas.
+		*/
 		static final char aAgudo = 225;
 		static final char eAgudo = 233;
 		static final char iAgudo = 237;
@@ -50,6 +61,11 @@ class TP01Q07 {
 		int oCircunflexoCount = 0;
 		int uCircunflexoCount = 0;
 
+		/*
+			- Recebe uma string contendo um arquvi HTML completo.
+			- Conta a quantidade de vogais normais e acentuadas presentes.
+			- Salva essas quantidades nos atributos da classe.
+		*/
 		Contador(String HTML) {
 			int htmlLen = HTML.length();
 			for (int i = 0; i < htmlLen; i++) {
@@ -65,7 +81,7 @@ class TP01Q07 {
 					}
 				}
 
-				char c = (char)HTML.charAt(i);
+				char c = HTML.charAt(i);
 				if (c == 'a') aNormalCount++;
 				else if (c == 'e') eNormalCount++;
 				else if (c == 'i') iNormalCount++;
@@ -91,6 +107,12 @@ class TP01Q07 {
 			}
 		}
 		
+		/*
+			Imprime na tela a vogal e a quantidade de vogais
+			lidas do HTML. Esse método imprime as letras a partir
+			das constantes presentes nessa classe, para garantir
+			que o caractere impresso esteja corretamente renderizado.
+		*/
 		public void imprimir() {
 			System.out.printf("a(%d) ", aNormalCount);
 			System.out.printf("e(%d) ", eNormalCount);
@@ -117,11 +139,17 @@ class TP01Q07 {
 		}
 	}
 
+	// Retorna verdadeiro se o caractere for consoante
 	static boolean isConsonant(char c) {
 		// return Lib.isAlpha(c) && !Lib.isVowel(c); // Alternativa menos custosa de se testar consoante
 		return Lib.isPresent(Lib.toLower(c), "bcdfghjklmnpqrstvwxyz");
 	}
 
+	/*
+		- Recebe um endereço/link/URL
+		- Retorna uma string contendo o arquivo
+		html inteiro a partir do endereço.
+	*/
 	static String getHTML(String endereco) {
 		String line, html = "";
 		try {
@@ -137,6 +165,10 @@ class TP01Q07 {
 		return html;
 	}
 
+	/*
+		- Retorna a quantidade de tags
+		<br> presentes no html.
+	*/
 	static int lineBreakCount(String HTML) {
 		int countLineBreak = 0;
 		int htmlLen = HTML.length();
@@ -149,6 +181,10 @@ class TP01Q07 {
 		return countLineBreak;
 	}
 
+	/*
+		- Retorna a quantidade de tags
+		<table> presentes no html.
+	*/
 	static int tableCount(String HTML) {
 		int countTable = 0;
 		int htmlLen = HTML.length();
@@ -161,6 +197,10 @@ class TP01Q07 {
 		return countTable;
 	}
 
+	/*
+		- Retorna a quantidade de consoantes
+		minúsculas presentes no html.
+	*/
 	static int consonantCount(String HTML) {
 		int countConsonant = 0;
 		int htmlLen = HTML.length();
