@@ -4,87 +4,80 @@ import TrabalhosPraticos.Lib;
 
 class TP01Q05 {
 
-	static boolean debugging = true;
+	static boolean debugging = false;
 
-	static int indexOfNextExp(String str) {
-		if (debugging) System.out.println("indexOfNextExp: " + str);
-		if (debugging) System.out.print("indexOfNextExp: ");
+	static int endOfCurExp(String str) {
+		if (debugging) System.out.printf("endOfCurExp: '%s'\n", str);
+		// if (debugging) System.out.print("endOfCurExp: ");
 		int len = str.length();
+		if (len == 0) return 0;
+
 		int openParentesesCount = 0;
-		int result = 0;
+		int result = 1;
 		for (int i = 0; i < len; i++) {
 			char c = str.charAt(i);
 			if (c == '(') openParentesesCount++;
 			else if (c == ')' && --openParentesesCount == 0) {
-				result = i + 2;
+				result = i + 1;
 				i = len;
-			} 
+			}
 		}
-		// if (debugging) System.out.println("result: " + result);
-		if (debugging) System.out.println("str.substring(result).length() == 0: " + (str.substring(result).length() == 0));
-		if (str.substring(result).length() == 0) return -1;
+		if (Lib.substr(result, str).length() == 0) return -1;
+		
 		return result;
 	}
 
-	// static int indexOfNextExp(String str) {
-	// 	System.out.println("indexOfNextExp: " + str);
-	// 	int len = str.length();
-	// 	int openParentesesCount = 1;
-	// 	int result = 0;
-	// 	for (int i = 0; i < len; i++) {
-	// 		char c = str.charAt(i);
-	// 		if (c == '(') openParentesesCount++;
-	// 		else if (c == ')' && --openParentesesCount == 0) {
-	// 			result = i;
-	// 			i = len;
-	// 		} 
-	// 	}
-	// 	// System.out.println("result: " + result);
-	// 	return result - 1;
-	// }
+	static int startOfNextExp(String str) {
+		return endOfCurExp(str) + 1;
+	}
 
 	static boolean OR(String str) {
 
 		if (debugging) System.out.printf("Função OR: '%s'\n", str);
 
 		char c = str.charAt(0);
-		// String nextComp = 
 		if (c == '1') return true;
-		else if (c == '0') {
-			if (debugging) System.out.printf("Função OR: else if (c == '0')\n");
-			return Lib.ctobool(c) || ORCompare(str.substring(2));
-		} else {
-			int indexOfNextExpVal = indexOfNextExp(str);
-			boolean hasNextExp = indexOfNextExpVal > 0;
-			if (!hasNextExp) return OR(str.substring(2));
-			return searchForExpression(str) || ORCompare(str.substring(indexOfNextExpVal));
-		}
+		if (c == '0') return Lib.ctobool(c) || ORCompare(Lib.substr(2, str));
+		return ORCompare(Lib.substr(0, endOfCurExp(str), str)) || ORCompare(Lib.substr(startOfNextExp(str), str)); //Maybe OR normal
 	}
 
 	static boolean ORCompare(String str) {
 		if (debugging) System.out.printf("Função ORCompare: '%s'\n", str);
 
-		int indexOfNextExpVal = indexOfNextExp(str);
-		boolean hasNextExp = indexOfNextExpVal > 0;
-
 		char c = str.charAt(0);
-		String expressionString = str.substring(2); // Talvez possa ser um problema
+		String expressionString = Lib.substr(1, str.length(), str);
+
+		if (c == '0') return false;
+
+		int indexEnd = endOfCurExp(Lib.substr(1, str));
+		if (debugging) System.out.println("indexEnd: " + indexEnd);
+		boolean hasNextExp = indexEnd > 0;
+
+		if (c == '1' && hasNextExp) {
+			if (c == '1' && !hasNextExp) return Lib.ctobool(c);
+			return Lib.ctobool(c) || ORCompare(Lib.substr(2, str));
+		}
+
 		if (c == 'a') {
-			if (!hasNextExp) return AND(expressionString);
-			return AND(expressionString) || ORCompare(str.substring(indexOfNextExpVal));
-		} else if (c == 'o') {
-			return OR(expressionString);
-		} else if (c == '!') {
-			return !searchForExpression(expressionString);
-		} else {
-			if (debugging) System.out.println("ORCompare: Else");
-			if (str.charAt(1) == ')') {
-				if (debugging) System.out.println("str.charAt(1) == ')'");
-				if (debugging) System.out.println("Lib.ctobool(c): " + Lib.ctobool(c));
-				return Lib.ctobool(c);
-			}
-			else return Lib.ctobool(c) || ORCompare(str.substring(2));
-		} 
+			if (debugging) System.out.println("c == 'a': " + str);
+			if (!hasNextExp) return AND(Lib.substr(2, str.length() - 1, str));
+			return AND(Lib.substr(2, indexEnd, str)) || ORCompare(Lib.substr(indexEnd + 2, str));
+		}
+
+		if (c == 'o') {
+			if (debugging) System.out.println("c == 'o': " + str);
+			if (!hasNextExp) return OR(Lib.substr(2, str.length() - 1, str));
+			return OR(Lib.substr(2, indexEnd, str)) || ORCompare(Lib.substr(indexEnd + 2, str));
+		}
+
+		if (c == '!') {
+			if (debugging) System.out.println("c == '!': " + str);
+			if (!hasNextExp) return NOT(Lib.substr(1, expressionString));
+			return NOT(Lib.substr(1, expressionString)) || ORCompare(Lib.substr(indexEnd + 2, str)); // + 1 pra start + 1 pelo !
+		}
+
+		return true; // Unreachable return
+
 	}
 
 	static boolean AND(String str) {
@@ -93,44 +86,56 @@ class TP01Q05 {
 
 		char c = str.charAt(0);
 		if (c == '0') return false;
-		else if (c == '1') {
-			boolean teste = ANDCompare(str.substring(2));
-			if (debugging) System.out.println("teste: " + teste);
-			return Lib.ctobool(c) && teste;
-		}
-		else return ANDCompare(str) && ANDCompare(str.substring(indexOfNextExp(str)));
+		if (c == '1') return Lib.ctobool(c) && ANDCompare(Lib.substr(2, str));
+		return ANDCompare(Lib.substr(0, endOfCurExp(str), str)) && ANDCompare(Lib.substr(startOfNextExp(str), str));
 	}
 
 	static boolean ANDCompare(String str) {
 		if (debugging) System.out.printf("Função ANDCompare: '%s'\n", str);
 
-		int indexOfNextExpVal = indexOfNextExp(str);
-		// if (debugging) System.out.println("indexOfNextExpVal: " + indexOfNextExpVal);
-		boolean hasNextExp = indexOfNextExpVal > 0;
-
 		char c = str.charAt(0);
-		String expressionString = str.substring(2);
+		String expressionString = Lib.substr(1, str.length(), str);
+
+		if (c == '0') return false;
+
+		int indexEnd = endOfCurExp(Lib.substr(1, str));
+		if (debugging) System.out.printf("indexEnd: %d\n", indexEnd);
+		boolean hasNextExp = indexEnd > 0;
+
+		if (c == '1' && hasNextExp) {
+			if (c == '1' && !hasNextExp) return Lib.ctobool(c);
+			return Lib.ctobool(c) && ANDCompare(Lib.substr(2, str));
+		}
 
 		if (c == 'a') {
-			return AND(expressionString);
-		} else if (c == 'o') {
-			// return OR(expressionString);
-			if (!hasNextExp) {
-				if (debugging) System.out.println("!hasNextExp");
-				return OR(expressionString);
-			}
-			if (debugging) System.out.println("hasNextExp");
-			return OR(expressionString) && ANDCompare(str.substring(indexOfNextExpVal));
-		} else if (c == '!') {
-			if (debugging) System.out.println("else if (c == '!'): " + str);
-			if (!hasNextExp) return !searchForExpression(expressionString);
-			return !searchForExpression(expressionString) && ANDCompare(str.substring(indexOfNextExpVal));
-		} else {
-			if (debugging) System.out.println("ANDCompare: Else");
-			if (c == '0') return false;
-			if (str.charAt(1) == ')') return Lib.ctobool(c);
-			else return Lib.ctobool(c) && ANDCompare(str.substring(2));
-		} 
+			if (debugging) System.out.println("c == 'a': " + str);
+			if (!hasNextExp) return AND(Lib.substr(2, str.length() - 1, str));
+			return AND(Lib.substr(2, indexEnd, str)) && ANDCompare(Lib.substr(indexEnd + 2, str));
+		}
+
+		if (c == 'o') {
+			if (debugging) System.out.println("c == 'o': " + str);
+			if (!hasNextExp) return OR(Lib.substr(2, str.length() - 1, str));
+			return OR(Lib.substr(2, indexEnd, str)) && ANDCompare(Lib.substr(indexEnd + 2, str));
+		}
+		
+		if (c == '!') {
+			if (debugging) System.out.println("c == '!': " + str);
+			if (!hasNextExp) return NOT(Lib.substr(1, expressionString));
+			return NOT(Lib.substr(1, expressionString)) && ANDCompare(Lib.substr(indexEnd + 2, str)); // + 1 pra start + 1 pelo !
+		}
+
+		return true; // Unreachable return
+
+	}
+
+	static boolean NOT(String str) {
+
+		if (debugging) System.out.printf("Função NOT: '%s'\n", str);
+
+		char c = str.charAt(0);
+		if (c == '0' || c == '1') return !Lib.ctobool(c);
+		return !searchForExpression(str);
 	}
 
 	static boolean searchForExpression(String str) {
@@ -138,7 +143,7 @@ class TP01Q05 {
 		if (debugging) System.out.printf("searchForExpression: '%s'\n", str);
 
 		char c = str.charAt(0);
-		String expressionString = str.substring(2);
+		String expressionString = Lib.substr(2, str.length() - 1, str);
 		if (c == '1' || c == '0') {
 			return Lib.ctobool(c);
 		} else if (c == 'a') {
@@ -147,7 +152,7 @@ class TP01Q05 {
 			return OR(expressionString);
 		} else {
 			if (debugging) System.out.println("NOT");
-			return !searchForExpression(expressionString);
+			return NOT(expressionString);
 		}
 	}
 
@@ -168,7 +173,8 @@ class TP01Q05 {
 			charArray = Lib.replaceAll(c, replace, charArray);
 		}
 
-		input = Lib.toString(charArray).substring(N + 1);
+		input = Lib.toString(charArray);
+		input = Lib.substr(N + 1, input);
 		// System.out.printf("String: '%s'\n", input);
 		// System.out.printf("String: '%s'\n", Lib.toString(charArray));
 
@@ -177,9 +183,13 @@ class TP01Q05 {
 
 	public static void main(String[] args) {
 		String input = new String();
+		int i = 0;
 		while((input = Lib.getstr()).charAt(0) != '0') {
-			// System.out.println("Resultado: " + (algebraBooleana(input) ? 1 : 0));
-			System.out.println(algebraBooleana(input) ? 1 : 0);
+			if (debugging) {
+				System.out.printf("Resultado: %d°: %d\n", ++i, (algebraBooleana(input) ? 1 : 0));
+			} else {
+				System.out.println(algebraBooleana(input) ? 1 : 0);
+			}
 		}
 	}
 }

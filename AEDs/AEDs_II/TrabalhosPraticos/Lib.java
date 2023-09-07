@@ -48,6 +48,52 @@ public class Lib {
 		return aux;
 	}
 
+	public static String substr(int start, int end, String str) {
+		
+		int strLen = str.length();
+
+		if (start < 0) {
+			start = 0; 
+		}
+		
+		if (end > strLen) {
+			end = strLen; 
+		}
+
+		if (start >= end) {
+			return "";
+		}
+		
+		String aux = "";
+		for (int i = start; i < end; i++) {
+			aux += str.charAt(i);
+		}
+
+		return aux;
+	}
+
+	public static String substr(int start, String str) {
+		int strLen = str.length();
+
+		// System.out.println("In: substr(): " + str);
+		// System.out.printf("In: substr(): %s, start: %d\n", str, start);
+
+		if (start < 0) {
+			start = 0;
+		}
+
+    	if (start >= strLen) {
+    	    return "";
+		}
+
+		String aux = "";
+		for (int i = start; i < strLen; i++) {
+			aux += str.charAt(i);
+		}
+
+		return aux;
+	}
+
 	public static String replaceAll(char baseChar, char newChar, String str) {
 		
 		String aux = "";
