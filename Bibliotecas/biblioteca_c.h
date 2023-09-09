@@ -70,8 +70,8 @@ void clrscreen() {
 /*!
  * Pausa o programa até o usuario apertar ENTER.
  * O programa termina caso algo além de ENTER for digitado.
- * @param flush se == 1 limpará a entrada padrão.
- * @param flush se == 0 não limpará a entrada padrão.
+ * @param flushing se == 1 limpará a entrada padrão.
+ * @param flushing se == 0 não limpará a entrada padrão.
  */
 void Pause(bool flushing) {
 
