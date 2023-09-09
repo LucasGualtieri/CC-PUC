@@ -19,7 +19,7 @@ typedef char* String;
 
 size_t strlen(const char* str) {
 	int len = 0;
-	while (str[len++] != 0) continue;
+	while (str[len++] != 0);
 	return len - 1;
 }
 
