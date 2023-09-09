@@ -9,12 +9,10 @@
 int main() {
 
 	char str1[STR_MAX_LEN];
+	char str2[STR_MAX_LEN];
 
-	while (scanf("%s", str1) != EOF) {
+	while (scanf("%s%s", str1, str2) != EOF) {
 		
-		char str2[STR_MAX_LEN];
-		scanf("%s", str2);
-
 		int str1Len = strlen(str1);
 		int str2Len = strlen(str2);
 
