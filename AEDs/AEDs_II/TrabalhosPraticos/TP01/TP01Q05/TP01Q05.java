@@ -11,10 +11,10 @@ class TP01Q05 {
 		- Retorna -1 se não houver mais expressões
 	*/
 	static int endOfCurExp(String str) {
-		if (debugging) System.out.printf("endOfCurExp: '%s'\n", str);
+		// if (debugging) System.out.printf("endOfCurExp: '%s'\n", str);
 
 		int len = str.length();
-		if (len == 0) return 0;
+		if (len == 0) return -1;
 
 		int openParentesesCount = 0;
 		int result = 1;
@@ -71,13 +71,13 @@ class TP01Q05 {
 		if (debugging) System.out.printf("Função ORCompare: '%s'\n", str);
 
 		char c = str.charAt(0);
-		String expressionString = Lib.substr(1, str.length(), str);
+		String expressionString = Lib.substr(1, str.length() - 1, str);
 
 		if (c == '1') return true;
 
 		int indexEnd = endOfCurExp(Lib.substr(1, str));
-		if (debugging) System.out.println("indexEnd: " + indexEnd);
 		boolean hasNextExp = indexEnd > 0;
+		if (debugging) System.out.printf("hasNextExp: %b\n", hasNextExp);
 
 		if (c == '0') {
 			if (!hasNextExp) return Lib.ctobool(c);
@@ -86,13 +86,13 @@ class TP01Q05 {
 
 		if (c == 'a') {
 			if (debugging) System.out.println("c == 'a': " + str);
-			if (!hasNextExp) return AND(Lib.substr(2, str.length() - 1, str));
+			if (!hasNextExp) return AND(Lib.substr(1, expressionString));
 			return AND(Lib.substr(2, indexEnd, str)) || ORCompare(Lib.substr(indexEnd + 2, str));
 		}
 
 		if (c == 'o') {
 			if (debugging) System.out.println("c == 'o': " + str);
-			if (!hasNextExp) return OR(Lib.substr(2, str.length() - 1, str));
+			if (!hasNextExp) return OR(Lib.substr(1, expressionString));
 			return OR(Lib.substr(2, indexEnd, str)) || ORCompare(Lib.substr(indexEnd + 2, str));
 		}
 
@@ -138,13 +138,13 @@ class TP01Q05 {
 		if (debugging) System.out.printf("Função ANDCompare: '%s'\n", str);
 
 		char c = str.charAt(0);
-		String expressionString = Lib.substr(1, str.length(), str);
+		String expressionString = Lib.substr(1, str.length() - 1, str);
 
 		if (c == '0') return false;
 
 		int indexEnd = endOfCurExp(Lib.substr(1, str));
-		if (debugging) System.out.printf("indexEnd: %d\n", indexEnd);
 		boolean hasNextExp = indexEnd > 0;
+		if (debugging) System.out.printf("hasNextExp: %b\n", hasNextExp);
 
 		if (c == '1') {
 			if (!hasNextExp) return Lib.ctobool(c);
@@ -153,13 +153,13 @@ class TP01Q05 {
 
 		if (c == 'a') {
 			if (debugging) System.out.println("c == 'a': " + str);
-			if (!hasNextExp) return AND(Lib.substr(2, str.length() - 1, str));
+			if (!hasNextExp) return AND(Lib.substr(1, expressionString));
 			return AND(Lib.substr(2, indexEnd, str)) && ANDCompare(Lib.substr(indexEnd + 2, str));
 		}
 
 		if (c == 'o') {
 			if (debugging) System.out.println("c == 'o': " + str);
-			if (!hasNextExp) return OR(Lib.substr(2, str.length() - 1, str));
+			if (!hasNextExp) return OR(Lib.substr(1, expressionString));
 			return OR(Lib.substr(2, indexEnd, str)) && ANDCompare(Lib.substr(indexEnd + 2, str));
 		}
 		
