@@ -4,10 +4,15 @@
 #include <stdlib.h>
 #include <time.h>
 #include <stdbool.h>
+#include <stdarg.h>
+#include <limits.h>
+
+#define EOA INT_MAX // End of array
 
 typedef struct IntArray {
 	int size, *array;
 	void (*Print)(struct IntArray);
+	void (*Fill)(struct IntArray, int sentinel, ...);
 	void (*FillRand)(int lowerLimit, int upperLimit, struct IntArray);
 	void (*FillOrdered)(int lowerLimit, int upperLimit, struct IntArray);
 	void (*Close)(struct IntArray);
@@ -20,6 +25,16 @@ int RandInt(int lowerLimit, int upperLimit) {
         seedInitialized = true;
     }
 	return (rand() % ((upperLimit + 1) - lowerLimit)) + lowerLimit;
+}
+
+void IntArrayFill(IntArray array, int sentinel, ...) {
+	va_list args;
+	va_start(args, sentinel);
+
+	int value;
+	while ((value = va_arg(args, int)) != sentinel) {
+        *(array.array++) = value;
+    }
 }
 
 void IntArrayFillRand(int lowerLimit, int upperLimit, IntArray array) {
@@ -41,7 +56,7 @@ void IntArrayFillOrdered(int lowerLimit, int upperLimit, IntArray array) {
 	for (int i = 0; i < array.size; i++) {
 		
 		if (ascending) array.array[i] = lowerLimit++;
-		else array.array[i] = upperLimit--;
+		else array.array[i] = lowerLimit--;
 	}
 }
 
@@ -65,11 +80,14 @@ IntArray newIntArray(int arraySize) {
 	array.size = arraySize;
 	array.array = (int*)malloc(arraySize * sizeof(int));
 	array.Print = IntArrayPrint;
+	array.Fill = IntArrayFill;
 	array.FillRand = IntArrayFillRand;
 	array.FillOrdered = IntArrayFillOrdered;
 	array.Close = IntArrayClose;
 
 	return array;
 }
+
+// Método com args... para receber os números do array, foo(1,2,3,4,5,6);
 
 #endif

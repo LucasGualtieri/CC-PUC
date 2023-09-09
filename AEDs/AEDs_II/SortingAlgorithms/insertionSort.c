@@ -20,8 +20,9 @@ void InsertionSort(IntArray array) {
 
 int main() {
 
-	IntArray array = newIntArray(10);
+	// IntArray array = newIntArray(5);
 
+	// array.FillOrdered(10, 1, array);
 	array.FillRand(-50, 50, array);
 	array.Print(array);
 
