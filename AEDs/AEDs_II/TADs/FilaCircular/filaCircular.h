@@ -4,7 +4,7 @@
 #include <stdbool.h> 
 
 typedef struct FilaCircular {
-	int *array, maxSize, first, last;
+	int *array, maxSize, size, first, last;
 	bool ShowOnUpdate;
 	void (*Inserir)(int number, struct FilaCircular*);
 	int (*Remover)(struct FilaCircular*);
@@ -21,6 +21,7 @@ void InserirFilaCircular(int number, FilaCircular* fila) {
 		return;	
 	}
 
+	fila->size++;
 	fila->array[fila->last] = number;
 	fila->last = (fila->last + 1) % fila->maxSize;
 
@@ -33,6 +34,7 @@ int RemoverFilaCircular(FilaCircular* fila) {
 		return 0;
 	}
 
+	fila->size--;
 	int removido = fila->array[fila->first];
 	fila->first = (fila->first + 1) % fila->maxSize;
 
@@ -75,6 +77,7 @@ FilaCircular newFilaCircular(size_t maxSize) {
 	if (maxSize == 0) maxSize = 80;
 	
 	fila.maxSize = maxSize;
+	fila.size = 0;
 	fila.array = (int*)malloc((maxSize + 1) * sizeof(int));
 	fila.first = fila.last = 0;
 	fila.ShowOnUpdate = false;

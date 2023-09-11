@@ -5,7 +5,8 @@ public class pesquisa_v2 {
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
 
-		int numeroDeEstados = Integer.parseInt(scanner.nextLine());
+		int numeroDeEstados = scanner.nextInt();
+		scanner.nextLine(); // Flush
 		boolean vantajoso = false;
 
 		for (int i = 0; i < numeroDeEstados; i++) {

@@ -10,12 +10,12 @@ void InsertionSort(IntArray array) {
 	int j, temp;
 	for (int i = 1; i < size; i++) {
 		temp = buffer[i];
-		for (j = i - 1; j >= 0 && buffer[j] > temp; j--) {
-			buffer[j + 1] = buffer[j];
+		j = i - 1;
+		while (j >= 0 && buffer[j] > temp) {
+			buffer[j + 1] = buffer[j--];
 		}
 		buffer[j + 1] = temp;
 	}
-
 }
 
 int main() {

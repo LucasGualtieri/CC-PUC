@@ -2,8 +2,8 @@ typedef struct Timer {
 	clock_t startTime;
 	clock_t endTime;
 	double totalTime;
-	void (*start)(struct Timer*);
-	double (*stop)(struct Timer*);
+	void (*Start)(struct Timer*);
+	double (*Stop)(struct Timer*);
 } Timer;
 
 void TimerStart(Timer* timer) {
@@ -20,7 +20,7 @@ double TimerStop(Timer* timer) {
 
 Timer newTimer() {
 	Timer timer;
-	timer.start = TimerStart;
-	timer.stop = TimerStop;
+	timer.Start = TimerStart;
+	timer.Stop = TimerStop;
 	return timer;
 }

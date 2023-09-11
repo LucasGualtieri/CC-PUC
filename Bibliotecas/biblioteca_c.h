@@ -44,7 +44,7 @@ typedef const char* literal;
 void flush(FILE* stream) {
 	if (stream == 0) stream = stdin;
 	char c;
-	while ((c = fgetc(stream)) != '\n' && c != '\r') continue;
+	while ((c = fgetc(stream)) != '\n' && c != '\r');
 }
 
 void printColor(const char* msg, const char* color) {

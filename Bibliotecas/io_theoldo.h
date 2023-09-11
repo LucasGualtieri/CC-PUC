@@ -110,7 +110,7 @@ void IO_clrscr() {
  */
 void IO_flush() {
 	//  fflush ( stdin );   // para Windows - OBS: NAO RECOMENDADO !
-	// para Linux   - OBS: NAO FUNCIONA    !
+	// para Linux   - OBS: NAO FUNCIONA!
 	char x = '0';
 	do {
 		x = getchar();
