@@ -10,6 +10,14 @@ int readInt() {
 	return integer;
 }
 
+void IntArrayPrint(int* array, int n) {
+	printf("{ ");
+	for (int i = 0; i < n; i++) {
+		printf("%d", array[i]);
+		printf("%s", i < n - 1 ? ", " : " }\n");
+	}
+}
+
 void selectionSort(int* array, int n) {
 	for (int i = 0; i < n - 1; i++) {
 		int menor = i;
@@ -19,6 +27,19 @@ void selectionSort(int* array, int n) {
 		int swap = array[menor];
 		array[menor] = array[i];
 		array[i]	 = swap;
+	}
+}
+
+void InsertionSort(int* array, int size) {
+	int j, temp;
+	for (int i = 1; i < size; i++) {
+		temp = array[i];
+		j = i - 1;
+		while (j >= 0 && array[j] > temp) {
+			array[j + 1] = array[j--];
+		}
+		array[j + 1] = temp;
+		IntArrayPrint(array, size);
 	}
 }
 
@@ -43,14 +64,6 @@ int numeroSemPar(int* array, int n) {
 	return resultado;
 }
 
-void IntArrayPrint(int* array, int n) {
-	printf("{ ");
-	for (int i = 0; i < n; i++) {
-		printf("%d", array[i]);
-		printf("%s", i < n - 1 ? ", " : " }\n");
-	}
-}
-
 int main() {
 	
 	int *array, arraySize;
@@ -67,7 +80,8 @@ int main() {
 		}
 
 		// IntArrayPrint(array, arraySize);
-		selectionSort(array, arraySize);
+		// selectionSort(array, arraySize);
+		InsertionSort(array, arraySize);
 		// IntArrayPrint(array, arraySize);
 		// exit(0);
 
