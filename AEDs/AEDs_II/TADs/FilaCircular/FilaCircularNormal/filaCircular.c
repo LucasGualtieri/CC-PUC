@@ -5,7 +5,7 @@
 
 // clear && gcc filaCircular.c && ./a.out
 
-// Funciona para listas ordenadas APENAS!!! SE E SOMENTE SE ORDENADAS
+// Funciona para filas ordenadas APENAS!!! SE E SOMENTE SE ORDENADAS
 bool PesquisaBinaria(int elemento, FilaCircular fila) {
 	int low = 0, high = fila.size - 1;
 	bool resultado = false;
@@ -31,7 +31,7 @@ bool PesquisaBinaria(int elemento, FilaCircular fila) {
 	return resultado;
 }
 
-int main () {
+int main() {
 
 	puts("---- LISTA CIRCULAR ----\n");
 
@@ -45,19 +45,33 @@ int main () {
 	fila.Inserir(9, &fila);
 	// fila.Mostrar(fila);
 
-	for (int i = 0; i < 15; i++) {
-		bool teste = PesquisaBinaria(i, fila);
-		printf("%d° Pesquisa Bin: %s\n", i, teste ? "ACHOU" : "NÃO ACHOU");
-	}
+	int buscar = 7;
+	bool resultado = PesquisaBinaria(buscar, fila);
+	printf("'%d' %spertence à fila.\n", buscar, resultado ? "" : "não ");
 
-    int x1, x2, x3;
-    
-    x1 = fila.Next(&fila);
-    x2 = fila.Next(&fila);
-    x3 = fila.Next(&fila);
-    
-    // printf("%d, %d, %d\n", x1, x2, x3);
 	// fila.Mostrar(fila); 
 
+	printf("---------------\n");
+
+	int x1, x2, x3;
+
+	x1 = fila.Remover(&fila);
+	x2 = fila.Remover(&fila);
+	x3 = fila.Remover(&fila);
+
+	printf("Números removidos: %d, %d, %d\n", x1, x2, x3);
+
+	fila.Inserir(1, &fila);
+	fila.Inserir(2, &fila);
+	fila.Inserir(3, &fila);
+
+	// printf("A fila invertida é:\n");
+	// inverteFila(&fila);
+	// fila.Mostrar(fila);
+
 	fila.Close(&fila);
+
+	fila.Inserir(1, &fila);
+	fila.Remover(&fila);
+
 }

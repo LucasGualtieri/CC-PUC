@@ -6,18 +6,24 @@
 typedef struct FilaCircular {
 	int *array, maxSize, size, first, last;
 	bool ShowOnUpdate;
+	
 	void (*Inserir)(int number, struct FilaCircular*);
 	int (*Remover)(struct FilaCircular*);
 	int (*Next)(struct FilaCircular*);
-	void (*Close)(struct FilaCircular*);
-	void (*Mostrar)(struct FilaCircular);
+
 	void (*ToggleShow) (struct FilaCircular*);
+	void (*Mostrar)(struct FilaCircular);
+	void (*Close)(struct FilaCircular*);
 
 } FilaCircular;
 
 void InserirFilaCircular(int number, FilaCircular* fila) {
-	if ((fila->last + 1) % fila->maxSize == fila->first) {
-		puts("Erro ao inserir: fila cheia.");
+	
+	if (fila->maxSize == 0) {
+		puts("Erro ao inserir: Fila fechada.");
+		return;	
+	} else if ((fila->last + 1) % fila->maxSize == fila->first) {
+		puts("Erro ao inserir: Fila cheia.");
 		return;	
 	}
 
@@ -29,9 +35,14 @@ void InserirFilaCircular(int number, FilaCircular* fila) {
 }
 
 int RemoverFilaCircular(FilaCircular* fila) {
-	if (fila->last == fila->first) {
-		puts("Erro ao inserir: fila cheia.");
-		return 0;
+
+	// Em hexadecimal, cada dígito pode representar 4 bits.
+	if (fila->maxSize == 0) {
+		puts("Erro ao remover: Fila fechada.");
+		return -0x7fffffff;	
+	} else if (fila->last == fila->first) {
+		puts("Erro ao remover: Fila vazia.");
+		return -0x7fffffff;
 	}
 
 	fila->size--;
@@ -50,15 +61,18 @@ int NextFilaCircular(FilaCircular* fila) {
 void MostrarFilaCircular(FilaCircular fila) {
 
 	if (fila.maxSize == 0) {
-		printf("fila vazia.\n");	
+		puts("Erro ao mostrar: Lista fechada.");
+		return;
+	} else if (fila.size == 0) {
+		puts("Erro ao mostrar: Fila vazia.");
 		return;
 	}
 
 	printf("{ ");	
-	for (int i = fila.first; i < fila.last; i = (i + 1) % fila.maxSize) {
-		printf("%d", fila.array[i]);
-		printf("%s", i < fila.last - 1 ? " " : " }\n");
+	for (int i = fila.first; i != fila.last; i = (i + 1) % fila.maxSize) {
+		printf("%d ", fila.array[i]);
 	}
+	printf("}\n");
 }
 
 void ToggleShowOnUpdateFilaCircular(FilaCircular* fila) {
@@ -76,19 +90,21 @@ FilaCircular newFilaCircular(size_t maxSize) {
 
 	if (maxSize == 0) maxSize = 80;
 	
-	fila.maxSize = maxSize;
 	fila.size = 0;
-	fila.array = (int*)malloc((maxSize + 1) * sizeof(int));
+	fila.maxSize = maxSize + 1;
+	fila.array = (int*)malloc((maxSize) * sizeof(int));
 	fila.first = fila.last = 0;
 	fila.ShowOnUpdate = false;
-	fila.ToggleShow = ToggleShowOnUpdateFilaCircular;
-	fila.Next = NextFilaCircular;
-    fila.Inserir = InserirFilaCircular;
+
+	fila.Inserir = InserirFilaCircular;
 	fila.Remover = RemoverFilaCircular;
-    fila.Close = CloseFilaCircular;
-    fila.Mostrar = MostrarFilaCircular;
+	fila.Next = NextFilaCircular;
+
+	fila.ToggleShow = ToggleShowOnUpdateFilaCircular;
+	fila.Mostrar = MostrarFilaCircular;
+	fila.Close = CloseFilaCircular;
 
 	return fila;
 }
 
-#endif /* LIB_H_ */
+#endif
