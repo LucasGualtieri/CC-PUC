@@ -3,10 +3,9 @@
 *
 !/**/
 !*.*
-
+a.out
 *.exe
 *.o
-*.out
 *.class
 *.Identifier
 
