@@ -75,7 +75,8 @@ void InsertionSort(IntArray array) {
 		temp = buffer[i];
 		j = i - 1;
 		while (j >= 0 && buffer[j] > temp) {
-			buffer[j + 1] = buffer[j--];
+			buffer[j + 1] = buffer[j];
+			j--;
 		}
 		buffer[j + 1] = temp;
 	}

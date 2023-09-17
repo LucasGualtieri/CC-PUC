@@ -12,7 +12,7 @@ void InsertionSort(IntArray array) {
 		temp = buffer[i];
 		j = i - 1;
 		while (j >= 0 && buffer[j] > temp) {
-			buffer[j + 1] = buffer[j--];
+			buffer[j-- + 1] = buffer[j];
 		}
 		buffer[j + 1] = temp;
 	}
@@ -20,7 +20,7 @@ void InsertionSort(IntArray array) {
 
 int main() {
 
-	// IntArray array = newIntArray(5);
+	IntArray array = newIntArray(10);
 
 	// array.FillOrdered(10, 1, array);
 	array.FillRand(-50, 50, array);
