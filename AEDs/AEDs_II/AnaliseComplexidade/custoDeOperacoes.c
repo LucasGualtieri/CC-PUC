@@ -17,17 +17,17 @@ double Media() {
 	for (int i = 0; i < reps; i++) {
 		timer.Start(&timer);
 		for (int j = 0; j < 100000000; j++) {
-			var *= 2;
-			var /= 2;
+			var *= 6;
+			var /= 6;
 			var += 1;
 			var -= 1;
-			var *= 2;
-			var /= 2;
-			var += 1;
-			var -= 1;
+			// var *= 6;
+			// var /= 6;
+			// var += 1;
+			// var -= 1;
 			// for (int k = 0; k < 2; k++) {
-			// 	var *= 2;
-			// 	var /= 2;
+			// 	var *= 6;
+			// 	var /= 6;
 			// 	var += 1;
 			// 	var -= 1;
 			// }
