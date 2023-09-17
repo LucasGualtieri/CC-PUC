@@ -63,7 +63,7 @@ void MostrarFilaCircular(FilaCircular fila) {
 	if (fila.maxSize == 0) {
 		puts("Erro ao mostrar: Lista fechada.");
 		return;
-	} else if (fila.size == 0) {
+	} else if (fila.last == fila.first) {
 		puts("Erro ao mostrar: Fila vazia.");
 		return;
 	}
