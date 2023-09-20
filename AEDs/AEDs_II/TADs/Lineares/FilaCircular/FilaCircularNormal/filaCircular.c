@@ -31,19 +31,24 @@ bool PesquisaBinaria(int elemento, FilaCircular fila) {
 	return resultado;
 }
 
-int main() {
+int main () {
 
-	puts("---- LISTA CIRCULAR ----\n");
+	puts("----- FILA CIRCULAR SEM DENTE -----\n");
 
-	FilaCircular fila = newFilaCircular(5);
+	FilaCircular fila = newFilaCircular(6);
+	
+	fila.ToggleShow(&fila);
 
-	// fila.ToggleShow(&fila);
-
+	fila.Mostrar(fila);
+	fila.Remover(&fila);
 	fila.Inserir(1, &fila);
-	fila.Inserir(3, &fila);
 	fila.Inserir(7, &fila);
 	fila.Inserir(9, &fila);
-	// fila.Mostrar(fila);
+	fila.Inserir(3, &fila);
+	fila.Inserir(8, &fila);
+	fila.Inserir(4, &fila);
+
+	printf("---------------\n");
 
 	int buscar = 7;
 	bool resultado = PesquisaBinaria(buscar, fila);
@@ -61,17 +66,18 @@ int main() {
 
 	printf("Números removidos: %d, %d, %d\n", x1, x2, x3);
 
-	fila.Inserir(1, &fila);
-	fila.Inserir(2, &fila);
-	fila.Inserir(3, &fila);
+	printf("---------------\n");
 
-	// printf("A fila invertida é:\n");
-	// inverteFila(&fila);
+	buscar = 7;
+	resultado = PesquisaBinaria(buscar, fila);
+	printf("'%d' %spertence à fila.\n", buscar, resultado ? "" : "não ");
+	
+	printf("---------------\n");
+
 	// fila.Mostrar(fila);
 
 	fila.Close(&fila);
 
 	fila.Inserir(1, &fila);
 	fila.Remover(&fila);
-
 }

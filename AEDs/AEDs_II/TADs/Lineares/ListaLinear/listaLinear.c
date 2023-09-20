@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "listaLinear.h"
 
-// clear && gcc -o listaLinear listaLinear.c && ./listaLinear
+// clear && gcc listaLinear.c && ./a.out
 
 void inverteLista(Lista* lista) {
 	int* array = lista->array;
@@ -24,13 +24,13 @@ int main () {
 	lista.ToggleShow(&lista);
 
 	lista.Mostrar(lista);
+	lista.RemoverInicio(&lista);
 	lista.InserirInicio(1, &lista);
 	lista.InserirFim(7, &lista);
 	lista.InserirFim(9, &lista);
 	lista.InserirInicio(3, &lista);
 	lista.Inserir(8, 3, &lista);
 	lista.Inserir(4, 2, &lista);
-	// lista.Mostrar(lista);
 
 	printf("---------------\n");
 
@@ -52,5 +52,4 @@ int main () {
 
 	lista.InserirInicio(1, &lista);
 	lista.RemoverInicio(&lista);
-
 }
