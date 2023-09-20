@@ -222,23 +222,21 @@ class TP01Q05 {
 	*/
 	static boolean algebraBooleana(String input) {
 		
-		char[] charArray = Lib.replaceAll(' ', "", input);
-		charArray = Lib.replaceAll("and", 'a', charArray);
-		charArray = Lib.replaceAll("or", 'o', charArray);
-		charArray = Lib.replaceAll("not", '!', charArray);
-		// System.out.printf("String: '%s'\n", Lib.toString(charArray));
+		input = Lib.replaceAll(' ', "", input);
+		input = Lib.replaceAll("and", 'a', input);
+		input = Lib.replaceAll("or", 'o', input);
+		input = Lib.replaceAll("not", '!', input);
+		// System.out.printf("String: '%s'\n", Lib.toString(input));
 
-		int N = Lib.ctoi(charArray[0]);
+		int N = Lib.ctoi(input.charAt(0));
 		
 		// Substituindo os valores dos termos na String.
 		for (int i = 0; i < N; i++) {
 			char c = (char)('A' + i);
-			char replace = charArray[i + 1];
-			charArray = Lib.replaceAll(c, replace, charArray);
+			char replace = input.charAt(i + 1);
+			input = Lib.replaceAll(c, replace, input);
 		}
 
-		// Convertendo novamente para String.
-		input = Lib.toString(charArray);
 		// System.out.printf("String: '%s'\n", input);
 		// System.out.printf("String: '%s'\n", Lib.toString(charArray));
 

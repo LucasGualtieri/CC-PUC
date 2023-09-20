@@ -108,10 +108,8 @@ public class Lib {
 		return aux;
 	}
 
-	public static char[] replaceAll(String baseStr, char newChar, char[] charrArray) {
+	public static String replaceAll(String baseStr, char newChar, String str) {
 		
-		String str = toString(charrArray);
-
 		String aux = "";
 		int strLen = str.length();
 		int baseStrLen = baseStr.length();
@@ -127,10 +125,10 @@ public class Lib {
 			}
 		}
 
-		return aux.toCharArray();
+		return aux;
 	}
 
-	public static char[] replaceAll(char baseChar, String newStr, String str) {
+	public static String replaceAll(char baseChar, String newStr, String str) {
 		
 		String aux = "";
 
@@ -139,7 +137,7 @@ public class Lib {
 			else aux += str.charAt(i);
 		}
 
-		return aux.toCharArray();
+		return aux;
 	}
 
 	public static char[] replaceAll(char baseChar, char newChar, char[] str) {
