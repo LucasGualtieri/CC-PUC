@@ -2,15 +2,14 @@
 
 typedef struct Celula {
 	int valor;
-	struct Celula* bellow;
-
+	struct Celula* prox;
 } Celula;
 
-Celula newCelula(int valor, Celula* bellow) {
+Celula* newCelula(int valor, Celula* prox) {
 
-	Celula* celula = (Celula*)malloc(sizoeof(Celula));
+	Celula* celula = (Celula*)malloc(sizeof(Celula));
 	celula->valor = valor;
-	celula->bellow = bellow;
+	celula->prox = prox;
 
 	return celula;
 }

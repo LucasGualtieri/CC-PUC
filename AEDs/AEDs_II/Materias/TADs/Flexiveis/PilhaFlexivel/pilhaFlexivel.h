@@ -1,93 +1,115 @@
 #include <stdbool.h>
 #include "../celula.h"
 
+#define ERRO -0x7fffffff
+
 typedef struct PilhaFlex {
 	Celula* topo;
-	bool showOnUpdate;
+	bool showOnUpdate, isClosed;
 
-	void (*Inserir)(int number, struct Pilha*);
-	int (*Remover)(struct Pilha*);
+	void (*Inserir)(int number, struct PilhaFlex*);
+	int (*Remover)(struct PilhaFlex*);
 
-	void (*ToggleShow) (struct Pilha*);
-	void (*Mostrar)(struct Pilha);
-	void (*Close)(struct Pilha*);
+	void (*ToggleShow) (struct PilhaFlex*);
+	void (*Mostrar)(struct PilhaFlex);
+	void (*Close)(struct PilhaFlex*);
+	void (*Free)(struct PilhaFlex*);
 
 } PilhaFlex;
 
-void InserirPilhaFlex(int value, Pilha* pilha) {
+void InserirPilhaFlex(int valor, PilhaFlex* pilha) {
 
-	Celula* newCell = newCelula(value, pilha.topo);
-	if (!newCell) printf("Erro");
-	pilha->topo = newCell;
+	// printf("Valor: %d\n", valor);
 
-	// --------------------------
+	Celula* newCelulaTmp = newCelula(valor, pilha->topo);
+	// printf("newCelulaTmp: %d\n", newCelulaTmp->valor);
 
-	if (pilha->maxSize == 0) {
-		puts("Erro ao inserir: Pilha fechada.");
+	if (!newCelula) {
+		fprintf(stderr, "Erro ao inserir.\n");
 		return;
-	} else if (pilha->size == pilha->maxSize) {
-		puts("Erro ao inserir: Pilha cheia.");
+	} else if (pilha->isClosed) {
+		fprintf(stderr, "Erro ao inserir: Pilha fechada.\n");
 		return;
 	}
 
-	pilha->array[pilha->size++] = number;
+	pilha->topo = newCelulaTmp;
+	// printf("pilha->topo->valor: %d\n", pilha->topo->valor);
 
 	if (pilha->showOnUpdate) pilha->Mostrar(*pilha);
-
 }
 
-int RemoverPilhaFlex(Pilha* pilha) {
+int RemoverPilhaFlex(PilhaFlex* pilha) {
 
 	// Em hexadecimal, cada dígito pode representar 4 bits.
-	if (pilha->maxSize == 0) {
-		puts("Erro ao remover: Pilha fechada.");
-		return -0x7fffffff;
-	} else if (pilha->size == 0) {
-		puts("Erro ao remover: Pilha vazia.");
-		return -0x7fffffff;
+	if (!pilha->topo->prox) {
+		fprintf(stderr, "Erro ao remover: Pilha vazia.\n");
+		return ERRO;
+	} else if (pilha->isClosed) {
+		fprintf(stderr, "Erro ao remover: Pilha fechada.\n");
+		return ERRO;
 	}
 
-	int removido = pilha->array[--pilha->size];
+	int removidoValor = pilha->topo->valor;
+	Celula* removidoCelula = pilha->topo;
+	pilha->topo = pilha->topo->prox;
+	free(removidoCelula);
 
 	if (pilha->showOnUpdate) pilha->Mostrar(*pilha);
 
-	return removido;
+	return removidoValor;
 }
 
-void ToggleShowOnUpdatePilhaFlex(Pilha* pilha) {
+void ToggleShowOnUpdatePilhaFlex(PilhaFlex* pilha) {
 	pilha->showOnUpdate = pilha->showOnUpdate ? false : true;
 }
 
-void MostrarPilhaFlex(Pilha pilha) {
+void MostrarPilhaFlex(PilhaFlex pilha) {
 
-	if (pilha.maxSize == 0) {
-		puts("Erro ao mostrar: Pilha fechada.");
-		return;
-	} else if (pilha.size == 0) {
-		puts("Erro ao mostrar: Fila vazia.");
+	if (!pilha.topo->prox) {
+		fprintf(stderr, "Erro ao mostrar: Pilha vazia.\n");
 		return;
 	}
 
 	printf("{ ");
-	for (int i = 0; i < pilha.size; i++) {
-		printf("%d ", pilha.array[i]);
+	for (Celula* i = pilha.topo; i->prox; i = i->prox) {
+		printf("%d ", i->valor);
 	}
 	printf("}\n");
 }
 
-void ClosePilhaFlex(Pilha* pilha) {
-	free(pilha->array);
-	pilha->maxSize = 0;
+void OpenPilhaFlex(PilhaFlex* pilha) {
+	if (!pilha->isClosed) {
+		fprintf(stderr, "Pilha já está aberta.\n");
+		return;
+	}
+	pilha->isClosed = false;
 }
 
-Pilha newPilha(size_t maxSize) {
+void ClosePilhaFlex(PilhaFlex* pilha) {
+	if (pilha->isClosed) {
+		fprintf(stderr, "Pilha já está fechada.\n");
+		return;
+	}
+	pilha->isClosed = true;
+}
 
-	Pilha pilha;
+void FreePilhaFlex(PilhaFlex* pilha) {
+	Celula* tmp;
+	for (Celula* i = pilha->topo; !i->prox; i = tmp) {
+		tmp = i->prox;
+		free(i);
+	}
+}
 
-	Celula cabeca = newCelula(NULL, NULL);
+PilhaFlex newPilhaFlex() {
+
+	PilhaFlex pilha;
+
+	Celula* cabeca = newCelula(0, NULL);
 
 	pilha.topo = cabeca;
 	pilha.showOnUpdate = false;
+	pilha.isClosed = false;
 
 	pilha.Inserir = InserirPilhaFlex;
 	pilha.Remover = RemoverPilhaFlex;
@@ -95,6 +117,7 @@ Pilha newPilha(size_t maxSize) {
 	pilha.ToggleShow = ToggleShowOnUpdatePilhaFlex;
 	pilha.Mostrar = MostrarPilhaFlex;
 	pilha.Close = ClosePilhaFlex;
+	pilha.Free = FreePilhaFlex;
 
 	return pilha;
 }

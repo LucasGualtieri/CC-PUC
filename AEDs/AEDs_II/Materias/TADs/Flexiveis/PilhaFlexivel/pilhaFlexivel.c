@@ -1,7 +1,7 @@
 #include <stdio.h>
-#include "../celula.h"
+#include "pilhaFlexivel.h"
 
-// clear && gcc pilhaFlexivel && ./a.out
+// clear && gcc pilhaFlexivel.c && ./a.out
 
 int main() {
 
@@ -30,12 +30,14 @@ int main() {
 
 	printf("Números removidos: %d, %d, %d\n", x1, x2, x3);
 
-	// pilha.Mostrar(pilha);
+	pilha.Mostrar(pilha);
 
-	pilha.Close(&pilha); // Considerar um pilha stop
+	pilha.Close(&pilha);
 	
 	pilha.Inserir(1, &pilha);
 	pilha.Remover(&pilha);
+
+	pilha.Free(&pilha);
 
 	return 0;
 }
