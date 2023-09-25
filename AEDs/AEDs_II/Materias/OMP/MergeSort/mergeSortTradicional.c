@@ -1,50 +1,13 @@
 #include <stdio.h>
-#include "AuxLibs/IntArray.h"
+#include "../AuxLibs/IntArray.h"
 
-// clear && gcc mergeSort.c && ./a.out
+// clear && gcc mergeSortTradicional.c && ./a.out
 
-void intercalar(int* array, int esq, int meio, int dir){
-	int n1, n2, i, j, k;
+void mergesort(IntArray array);
 
-	//Definir tamanho dos dois subarrays
-	n1 = meio - esq + 1;
-	n2 = dir - meio;
+void mergesortRec(int *array, int left, int right);
 
-	int* a1 = (int*)malloc((n1 + 1) * sizeof(int)); 
-	int* a2 = (int*)malloc((n2 + 1) * sizeof(int));
-
-	//Inicializar primeiro subarray
-	for(i = 0; i < n1; i++){
-		a1[i] = array[esq+i];
-	}
-
-	//Inicializar segundo subarray
-	for(j = 0; j < n2; j++){
-		a2[j] = array[meio+j+1];
-	}
-
-	//Sentinela no final dos dois arrays
-	a1[i] = a2[j] = 0x7FFFFFFF;
-
-	//Intercalacao propriamente dita
-	for(i = j = 0, k = esq; k <= dir; k++){
-		array[k] = (a1[i] <= a2[j]) ? a1[i++] : a2[j++];
-	}
-}
-
-void mergesortRec(int *array, int esq, int dir){
-	if (esq < dir){
-		int meio = (esq + dir) / 2;
-		mergesortRec(array, esq, meio);
-		mergesortRec(array, meio + 1, dir);
-		intercalar(array, esq, meio, dir);
-	}
-}
-
-void mergesort(IntArray array) {
-	mergesortRec(array.array, 0, array.size);
-}
-
+void intercalar(int* array, int left, int mid, int right);
 
 void main() {
 
@@ -56,4 +19,46 @@ void main() {
 	mergesort(array);
 	IntArrayPrint(array);
 
+}
+
+void mergesort(IntArray array) {
+	mergesortRec(array.array, 0, array.size - 1);
+}
+
+void mergesortRec(int *array, int left, int right){
+	if (left < right){
+		int mid = (left + right) / 2;
+		mergesortRec(array, left, mid);
+		mergesortRec(array, mid + 1, right);
+		intercalar(array, left, mid, right);
+	}
+}
+
+void intercalar(int* array, int left, int mid, int right){
+	int n1, n2, i, j;
+
+	//Definir tamanho dos dois subarrays
+	n1 = mid - left + 1;
+	n2 = right - mid;
+
+	int* a1 = (int*)malloc((n1 + 1) * sizeof(int)); 
+	int* a2 = (int*)malloc((n2 + 1) * sizeof(int));
+
+	// Inicializar primeiro subarray
+	for (i = 0; i < n1; i++) {
+		a1[i] = array[left + i];
+	}
+
+	// Inicializar segundo subarray
+	for (j = 0; j < n2; j++) {
+		a2[j] = array[mid+j+1];
+	}
+
+	// Sentinela no final dos dois arrays
+	a1[i] = a2[j] = 0x7FFFFFFF;
+
+	//Intercalacao propriamente dita
+	for (i = j = 0; left <= right; left++) {
+		array[left] = (a1[i] <= a2[j]) ? a1[i++] : a2[j++];
+	}
 }

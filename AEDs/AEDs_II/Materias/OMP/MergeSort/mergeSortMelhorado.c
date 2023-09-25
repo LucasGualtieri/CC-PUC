@@ -1,84 +1,13 @@
 #include <stdio.h>
 #include "../AuxLibs/IntArray.h"
 
-// clear && gcc mergeSortTradicional.c && ./a.out
+// clear && gcc mergeSortMelhorado.c && ./a.out
 
-void arrayPrint(int* array, int size) {
-	printf("{ ");
-	for (int i = 0; i < size; i++) {
-		printf("%d ", array[i]);
-	}
-	printf("}\n");
-}
+void mergesort(IntArray array);
 
-void intercalar(int* array, int left, int meio, int right) {
-	
-	printf("---- Intercalar ----\n");
+void mergesortRec(int *array, int left, int right);
 
-	printf("left: %d ", left);
-	printf("meio: %d ", meio);
-	printf("right: %d\n", right);
-
-	if (right - left == 1) {
-		printf("RETORNANDO\n");
-		return;
-	}
-
-	int n1, n2, i, j, k;
-
-	// meio++; // Ou meio + 1
-
-	//Definir tamanho dos dois subarrays
-	// n1 = meio - left + 1;
-
-	int auxSize = (right - left) + 1;
-	int* aux = (int*)malloc(auxSize * sizeof(int)); 
-
-	for (i = left; i <= right; i++) { aux[i] = array[i]; }
-	// for (j = 0; j < n2; j++) { a2[j] = array[meio + j + 1]; }
-
-	//Sentinela no final dos dois arrays
-	// aux[i] = 0x7FFFFFFF;
-
-	// //Intercalacao propriamente dita
-	// for (i = j = 0, k = left; k <= right; k++){
-	// 	array[k] = (aux[i] <= a2[j]) ? aux[i++] : a2[j++];
-	// }
-
-	printf("aux: ");
-	arrayPrint(aux, auxSize);
-	// printf("teste\n");
-	i = left, j = meio + 1;
-	while (i <= meio && meio <= right) {
-		if (aux[i] <= aux[j]) {
-			array[left++] = aux[i++];
-		} else {
-			array[left++] = aux[j++];
-		}
-	}
-	printf("array: ");
-	arrayPrint(array, auxSize);
-
-	free(aux);
-
-	// exit(0);
-}
-
-void mergesortRec(int *array, int left, int right) {
-	if (left < right){
-		int mid = (left + right) / 2;
-		printf("Esquerda:\n");
-		mergesortRec(array, left, mid);
-		printf("Direita:\n");
-		mergesortRec(array, mid + 1, right);
-		intercalar(array, left, mid, right);
-	}
-}
-
-void mergesort(IntArray array) {
-	mergesortRec(array.array, 0, array.size);
-}
-
+void intercalar(int* array, int left, int mid, int right);
 
 void main() {
 
@@ -90,4 +19,87 @@ void main() {
 	mergesort(array);
 	IntArrayPrint(array);
 
+}
+
+void mergesort(IntArray array) {
+	mergesortRec(array.array, 0, array.size - 1);
+}
+
+void mergesortRec(int *array, int left, int right){
+	if (left < right){
+		int mid = (left + right) / 2;
+		mergesortRec(array, left, mid);
+		mergesortRec(array, mid + 1, right);
+		intercalar(array, left, mid, right);
+	}
+}
+
+void intercalar(int* array, int left, int mid, int right){
+
+	printf("Array inteiro:\n");
+	for (int i = 0; i < 8; i++) {
+		printf("%d ", array[i]);
+	}
+	printf("\n");
+
+	int leftOr = left;
+
+	int auxSize = (right - left) + 1;
+
+	int* aux = (int*)malloc(auxSize * sizeof(int)); 
+
+	printf("left: %d\n", left);
+	printf("mid: %d\n", mid);
+	printf("right: %d\n", right);
+	printf("auxSize: %d\n", auxSize);
+
+	for (int i = 0; i < auxSize; i++) {
+		// printf("Montand: %d ", array[left + i]);
+		aux[i] = array[left + i];
+	}
+	// printf("\n");
+
+	printf("Pós montar aux:\n");
+	for (int i = 0; i < auxSize; i++) {
+		printf("%d ", aux[i]);
+	}
+	printf("\n");
+	int CE = 0, CD = (auxSize / 2);
+	// printf("A CE: %d\n", CE);
+	// printf("A CD: %d\n", CD);
+	// printf("V CE: %d\n", aux[CE]);
+	// printf("V CD: %d\n", aux[CD]);
+	while (left <= right) {
+		// printf("Looping...\n");
+		// printf("CE: %d\n", CE);
+		// printf("CD: %d\n", CD);
+		if (CE <= mid || CD <= right) {
+			array[left++] = (aux[CE] < aux[CD]) ? aux[CE++] : aux[CD++];
+		} else {
+			// array[left++] = (CE <= mid) ? aux[CE++] : aux[CD++];
+			if (CE <= mid) {
+				printf("CE <= mid\n");
+				printf("array[%d] = aux[%d]\n", left, CE);
+				array[left++] = aux[CE++];
+			} else {
+				printf("CD <= right\n");
+				printf("array[%d] = aux[%d]\n", left, CD);
+				array[left++] = aux[CD++];
+			}
+		}
+		// printf("CE - 1: %d\n", CE - 1);
+		// printf("CE: %d\n", CE);
+		// printf("CD - 1: %d\n", CD - 1);
+		// printf("CD: %d\n", CD);
+		// printf("aux[CE - 1]: %d\n", aux[CE - 1]);
+		// printf("aux[CE]: %d\n", aux[CE]);
+		// printf("aux[CD - 1]: %d\n", aux[CD - 1]);
+		// printf("aux[CD]: %d\n", aux[CD]);
+	}
+	
+	printf("Pós intercalação:\n");
+	for (int i = 0; i < auxSize; i++) {
+		printf("%d ", array[i + leftOr]);
+	}
+	printf("\n-------------\n");
 }
