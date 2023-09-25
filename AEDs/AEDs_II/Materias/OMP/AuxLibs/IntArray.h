@@ -18,7 +18,7 @@ typedef struct IntArray {
 	void (*Close)(struct IntArray);
 } IntArray;
 
-int RandInt(int lowerLimit, int upperLimit) {
+static int RandInt(int lowerLimit, int upperLimit) {
 	static bool seedInitialized = false;
     if (!seedInitialized) {
         srand(time(0)); // clock() also works

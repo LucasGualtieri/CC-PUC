@@ -14,7 +14,7 @@ void TimerStart(Timer* timer) {
 
 double TimerStop(Timer* timer) {
 	timer->endTime = clock();
-	timer->totalTime = ((double) (timer->endTime - timer->startTime)) / CLOCKS_PER_SEC;
+	timer->totalTime = ((double)(timer->endTime - timer->startTime)) / CLOCKS_PER_SEC;
 	// double teste = difftime(timer.elapsedTime, timer.startTime);
 	// printf("Teste = %lf\n", teste);
 	return timer->totalTime;
