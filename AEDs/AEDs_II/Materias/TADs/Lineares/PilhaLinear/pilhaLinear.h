@@ -2,7 +2,7 @@
 
 typedef struct Pilha {
 	int *array, maxSize, size;
-	bool ShowOnUpdate;
+	bool showOnUpdate;
 
 	void (*Inserir)(int number, struct Pilha*);
 	int (*Remover)(struct Pilha*);
@@ -25,7 +25,7 @@ void InserirPilhaLinear(int number, Pilha* pilha) {
 
 	pilha->array[pilha->size++] = number;
 
-	if (pilha->ShowOnUpdate) pilha->Mostrar(*pilha);
+	if (pilha->showOnUpdate) pilha->Mostrar(*pilha);
 
 }
 
@@ -42,13 +42,13 @@ int RemoverPilhaLinear(Pilha* pilha) {
 
 	int removido = pilha->array[--pilha->size];
 
-	if (pilha->ShowOnUpdate) pilha->Mostrar(*pilha);
+	if (pilha->showOnUpdate) pilha->Mostrar(*pilha);
 
 	return removido;
 }
 
 void ToggleShowOnUpdatePilhaLinear(Pilha* pilha) {
-	pilha->ShowOnUpdate = pilha->ShowOnUpdate ? false : true;
+	pilha->showOnUpdate = pilha->showOnUpdate ? false : true;
 }
 
 void MostrarPilhaLinear(Pilha pilha) {
@@ -82,7 +82,7 @@ Pilha newPilha(size_t maxSize) {
 	pilha.size = 0;
 	pilha.maxSize = maxSize;
 	pilha.array = (int*)malloc(maxSize * sizeof(int));
-	pilha.ShowOnUpdate = false;
+	pilha.showOnUpdate = false;
 
 	pilha.Inserir = InserirPilhaLinear;
 	pilha.Remover = RemoverPilhaLinear;

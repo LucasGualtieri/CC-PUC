@@ -5,7 +5,7 @@
 
 typedef struct Lista {
 	int *array, maxSize, size;
-	bool ShowOnUpdate;
+	bool showOnUpdate;
 
 	void (*InserirInicio)(int number, struct Lista*);
 	void (*InserirFim)(int number, struct Lista*);
@@ -38,7 +38,7 @@ void InserirInicioListaLinear(int number, Lista* lista) {
 	lista->size++;
 	lista->array[0] = number;
 
-	if (lista->ShowOnUpdate) lista->Mostrar(*lista);
+	if (lista->showOnUpdate) lista->Mostrar(*lista);
 }
 
 void InserirFimListaLinear(int number, Lista* lista) {
@@ -53,7 +53,7 @@ void InserirFimListaLinear(int number, Lista* lista) {
 
 	lista->array[lista->size++] = number;
 
-	if (lista->ShowOnUpdate) lista->Mostrar(*lista);
+	if (lista->showOnUpdate) lista->Mostrar(*lista);
 
 }
 
@@ -74,7 +74,7 @@ void InserirListaLinear(int number, size_t position, Lista* lista) {
 	lista->array[position] = number;
 	lista->size++;
 
-	if (lista->ShowOnUpdate) lista->Mostrar(*lista);
+	if (lista->showOnUpdate) lista->Mostrar(*lista);
 }
 
 int RemoverInicioListaLinear(Lista* lista) {
@@ -96,7 +96,7 @@ int RemoverInicioListaLinear(Lista* lista) {
 
 	lista->size--;
 
-	if (lista->ShowOnUpdate) lista->Mostrar(*lista);
+	if (lista->showOnUpdate) lista->Mostrar(*lista);
 
 	return removido;
 }
@@ -114,7 +114,7 @@ int RemoverFimListaLinear(Lista* lista) {
 
 	int removido = lista->array[--lista->size];
 
-	if (lista->ShowOnUpdate) lista->Mostrar(*lista);
+	if (lista->showOnUpdate) lista->Mostrar(*lista);
 
 	return removido;
 }
@@ -138,13 +138,13 @@ int RemoverListaLinear(size_t position, Lista* lista) {
 
 	lista->size--;
 
-	if (lista->ShowOnUpdate) lista->Mostrar(*lista);
+	if (lista->showOnUpdate) lista->Mostrar(*lista);
 
 	return removido;
 }
 
 void ToggleShowOnUpdateListaLinear(Lista* lista) {
-	lista->ShowOnUpdate = lista->ShowOnUpdate ? false : true;
+	lista->showOnUpdate = lista->showOnUpdate ? false : true;
 }
 
 void MostrarListaLinear(Lista lista) {
@@ -178,7 +178,7 @@ Lista newLista(size_t maxSize) {
 	lista.size = 0;
 	lista.maxSize = maxSize;
 	lista.array = (int*)malloc(maxSize * sizeof(int));
-	lista.ShowOnUpdate = false;
+	lista.showOnUpdate = false;
 
 	lista.InserirInicio = InserirInicioListaLinear;
 	lista.InserirFim = InserirFimListaLinear;

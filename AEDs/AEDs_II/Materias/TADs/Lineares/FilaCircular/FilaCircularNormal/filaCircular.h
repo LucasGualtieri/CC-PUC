@@ -5,7 +5,7 @@
 
 typedef struct FilaCircular {
 	int *array, maxSize, size, first, last;
-	bool ShowOnUpdate;
+	bool showOnUpdate;
 	
 	void (*Inserir)(int number, struct FilaCircular*);
 	int (*Remover)(struct FilaCircular*);
@@ -31,7 +31,7 @@ void InserirFilaCircular(int number, FilaCircular* fila) {
 	fila->array[fila->last] = number;
 	fila->last = (fila->last + 1) % fila->maxSize;
 
-	if (fila->ShowOnUpdate) fila->Mostrar(*fila);
+	if (fila->showOnUpdate) fila->Mostrar(*fila);
 }
 
 int RemoverFilaCircular(FilaCircular* fila) {
@@ -49,7 +49,7 @@ int RemoverFilaCircular(FilaCircular* fila) {
 	int removido = fila->array[fila->first];
 	fila->first = (fila->first + 1) % fila->maxSize;
 
-	if (fila->ShowOnUpdate) fila->Mostrar(*fila);
+	if (fila->showOnUpdate) fila->Mostrar(*fila);
 
 	return removido;
 }
@@ -76,7 +76,7 @@ void MostrarFilaCircular(FilaCircular fila) {
 }
 
 void ToggleShowOnUpdateFilaCircular(FilaCircular* fila) {
-	fila->ShowOnUpdate = fila->ShowOnUpdate ? false : true;
+	fila->showOnUpdate = fila->showOnUpdate ? false : true;
 }
 
 void CloseFilaCircular(FilaCircular* fila) {
@@ -94,7 +94,7 @@ FilaCircular newFilaCircular(size_t maxSize) {
 	fila.maxSize = maxSize + 1;
 	fila.array = (int*)malloc((maxSize) * sizeof(int));
 	fila.first = fila.last = 0;
-	fila.ShowOnUpdate = false;
+	fila.showOnUpdate = false;
 
 	fila.Inserir = InserirFilaCircular;
 	fila.Remover = RemoverFilaCircular;

@@ -2,7 +2,7 @@
 
 typedef struct Fila {
 	int *array, maxSize, size;
-	bool ShowOnUpdate;
+	bool showOnUpdate;
 
 	void (*Inserir)(int number, struct Fila*);
 	int (*Remover)(struct Fila*);
@@ -25,7 +25,7 @@ void InserirFilaLinear(int number, Fila* fila) {
 
 	fila->array[fila->size++] = number;
 
-	if (fila->ShowOnUpdate) fila->Mostrar(*fila);
+	if (fila->showOnUpdate) fila->Mostrar(*fila);
 
 }
 
@@ -48,13 +48,13 @@ int RemoverFilaLinear(Fila* fila) {
 
 	fila->size--;
 
-	if (fila->ShowOnUpdate) fila->Mostrar(*fila);
+	if (fila->showOnUpdate) fila->Mostrar(*fila);
 
 	return removido;
 }
 
 void ToggleShowOnUpdateFilaLinear(Fila* fila) {
-	fila->ShowOnUpdate = fila->ShowOnUpdate ? false : true;
+	fila->showOnUpdate = fila->showOnUpdate ? false : true;
 }
 
 void MostrarFilaLinear(Fila fila) {
@@ -88,7 +88,7 @@ Fila newFila(size_t maxSize) {
 	fila.size = 0;
 	fila.maxSize = maxSize;
 	fila.array = (int*)malloc(maxSize * sizeof(int));
-	fila.ShowOnUpdate = false;
+	fila.showOnUpdate = false;
 
 	fila.Inserir = InserirFilaLinear;
 	fila.Remover = RemoverFilaLinear;
