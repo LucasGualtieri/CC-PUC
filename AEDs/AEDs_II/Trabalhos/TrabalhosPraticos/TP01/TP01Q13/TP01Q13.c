@@ -1,4 +1,4 @@
-#include "../../Lib.h"
+#include "../LibTP01.h"
 #include <time.h>
 #include <math.h>
 

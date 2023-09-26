@@ -1,6 +1,6 @@
-// clear && javac -cp ../../.. TP01Q03.java && java -cp ../../.. TP01Q03.java < pub.in > result.txt
+// clear && javac -cp ../.. TP01Q03.java && java -cp ../.. TP01Q03.java < pub.in > result.txt
 
-import TrabalhosPraticos.Lib;
+import TP01.Lib;
 
 class TP01Q03 {
 

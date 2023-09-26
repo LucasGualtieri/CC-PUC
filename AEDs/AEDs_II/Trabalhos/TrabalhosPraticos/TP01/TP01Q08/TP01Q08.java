@@ -1,6 +1,6 @@
-// clear && javac -cp ../../.. TP01Q08.java && java -cp ../../.. TP01Q08.java < pub.in > result.txt
+// clear && javac -cp ../.. TP01Q08.java && java -cp ../.. TP01Q08.java < pub.in > result.txt
 
-import TrabalhosPraticos.Lib;
+import TP01.Lib;
 import java.io.File;
 import java.io.BufferedWriter;
 import java.io.FileWriter;

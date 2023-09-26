@@ -1,4 +1,4 @@
-#include "../../Lib.h"
+#include "../LibTP01.h"
 
 // clear && gcc TP01Q11.c -o TP01Q11 && ./TP01Q11 < pub.in > result.txt
 

@@ -1,6 +1,6 @@
-// clear && javac -cp ../../.. TP01Q07.java && java -cp ../../.. TP01Q07.java < pub.in > result.txt
+// clear && javac -cp ../.. TP01Q07.java && java -cp ../.. TP01Q07.java < pub.in > result.txt
 
-import TrabalhosPraticos.Lib;
+import TP01.Lib;
 import java.net.*;
 import java.io.*;
 import java.util.*;

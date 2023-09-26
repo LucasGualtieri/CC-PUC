@@ -1,4 +1,4 @@
-package TrabalhosPraticos;
+package TP01;
 
 import java.io.*;
 import java.util.*;
