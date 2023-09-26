@@ -13,6 +13,7 @@ typedef struct PilhaFlex {
 	void (*ToggleShow) (struct PilhaFlex*);
 	void (*Mostrar)(struct PilhaFlex);
 	void (*Close)(struct PilhaFlex*);
+	void (*Open)(struct PilhaFlex*);
 	void (*Free)(struct PilhaFlex*);
 
 } PilhaFlex;
@@ -117,6 +118,7 @@ PilhaFlex newPilhaFlex() {
 	pilha.ToggleShow = ToggleShowOnUpdatePilhaFlex;
 	pilha.Mostrar = MostrarPilhaFlex;
 	pilha.Close = ClosePilhaFlex;
+	pilha.Open = OpenPilhaFlex;
 	pilha.Free = FreePilhaFlex;
 
 	return pilha;
