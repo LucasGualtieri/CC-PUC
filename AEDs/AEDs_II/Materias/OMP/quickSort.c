@@ -3,9 +3,10 @@
 
 // clear && gcc quickSort.c && ./a.out
 
-// Faster without function?
 void swap(int* var1, int* var2) {
-	
+	int aux = *var1;
+	*var1 = *var2;
+	*var2 = aux;
 }
 
 void QuickSortRec(int *array, int left, int right) {

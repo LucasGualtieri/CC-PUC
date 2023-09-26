@@ -1,16 +1,16 @@
 #include <stdio.h>
-#include "AuxLibs/IntArray.h"
+#include "../AuxLibs/IntArray.h"
 
-// clear && gcc insertionSort.c && ./a.out
+// clear && gcc insertionSortParcial.c && ./a.out
 
-void InsertionSort(IntArray array) {
+void InsertionSort(int k, IntArray array) {
 	int size = array.size;
 	int* buffer = array.array;
 
 	int j, temp;
 	for (int i = 1; i < size; i++) {
 		temp = buffer[i];
-		j = i - 1;
+		j = (i < k) ? i - 1 : k - 1;
 		while (j >= 0 && buffer[j] > temp) {
 			buffer[j-- + 1] = buffer[j];
 		}
@@ -20,13 +20,13 @@ void InsertionSort(IntArray array) {
 
 int main() {
 
-	IntArray array = newIntArray(10);
+	IntArray array = newIntArray(5);
 
-	// array.FillOrdered(10, 1, array);
-	array.FillRand(-50, 50, array);
+	array.Fill(array, EOA, 38, 13, 23, 10, 47, EOA);
 	array.Print(array);
 
-	InsertionSort(array);
+	int k = 3;
+	InsertionSort(k, array);
 	array.Print(array);
 
 	array.Close(array);
