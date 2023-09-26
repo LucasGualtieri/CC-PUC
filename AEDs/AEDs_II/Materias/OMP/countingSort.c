@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "AuxLibs/IntArray.h"
+#include "AuxLibs/Timer.h"
 
 // clear && gcc countingSort.c && ./a.out
 
@@ -16,9 +17,10 @@ void CountingSort(IntArray array) {
 
 	int* auxArray = (int*)calloc(maxValue, sizeof(int));
 
-	for (int i = 0; i < N; i++) {
-		auxArray[buffer[i]]++;
-	}
+	// int* auxArray = (int*)malloc(maxValue * sizeof(int));
+	// for (int i = 0; i < maxValue; i++) auxArray[i] = 0; // If malloc'ing
+
+	for (int i = 0; i < N; i++) auxArray[buffer[i]]++;
 
 	int i = 0, j = 0;
 	while (i < N) {
@@ -28,21 +30,27 @@ void CountingSort(IntArray array) {
 			auxArray[j]--;
 		}
 	}
+
+	free(auxArray);
 }
 
 int main() {
 
-	IntArray arrayDeIdades = newIntArray(10); // 1 Bilhão
+	Timer timer = newTimer();
+	IntArray array = newIntArray(1000000000); // 1 Bilhão
 
-	// array.FillOrdered(10, 1, array);
-	arrayDeIdades.FillRand(0, 100, arrayDeIdades);
-	arrayDeIdades.Print(arrayDeIdades);
+	timer.Start(&timer);
+	// array.FillOrdered(0, 1000000000, array); // Preenche mais rápido
+	array.FillRand(0, 100, array);
+	printf("Tempo para preencher: %.3lfs\n", timer.Stop(&timer));
+	// array.Print(array);
 
-	CountingSort(arrayDeIdades);
-	arrayDeIdades.Print(arrayDeIdades);
+	timer.Start(&timer);
+	CountingSort(array);
+	printf("Tempo para ordenar: %.3lfs\n", timer.Stop(&timer));
 
-	arrayDeIdades.Close(arrayDeIdades);
+	// array.Print(array);
 
-	printf("Fim da Ordenação\n");
+	// array.Close(array);
 
 }
