@@ -10,14 +10,29 @@ void swap(int* var1, int* var2) {
 	*var2 = aux;
 }
 
+// void BubbleSort(IntArray array) { // Otimizado
+
+// 	int* buffer = array.array;
+// 	int N = array.size;
+
+// 	int j;
+// 	for (int i = (N - 1); i > 0; i--) {
+// 		for (j = 0; j < i; j++) {
+// 			if (buffer[j] > buffer[j + 1]) {
+// 				swap(&buffer[j], &buffer[j + 1]);
+// 			}
+// 		}
+// 	}
+// }
+
 void BubbleSort(IntArray array){
 
 	int* buffer = array.array;
 	int N = array.size;
 
 	int j;
-	for (int i = (N - 1); i > 0; i--) {
-		for (j = 0; j < i; j++) {
+	for (int i = 0; i < N; i++) {
+		for (j = 0; j < N; j++) {
 			if (buffer[j] > buffer[j + 1]) {
 				swap(&buffer[j], &buffer[j + 1]);
 			}
