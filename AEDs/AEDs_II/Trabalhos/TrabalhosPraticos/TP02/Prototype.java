@@ -7,21 +7,41 @@ class Prototype {
 
 	public static void main(String[] args) throws Exception {
 
-		String filePath = "players.csv";
-		Scanner file = new Scanner(new File(filePath));
+		File file = new File("tmp/players.csv");
+		Scanner fileScanner = new Scanner(file);
 		Scanner input = new Scanner(System.in);
 		String pubIn;
 
+		String teste = fileScanner.nextLine();
+
 		while (!(pubIn = input.next()).equals("FIM")) {
 
-			// Fazer um input.delimiter(',');
+			String[] arrayStrings = new String[5];
+			arrayStrings[0] = "k\ljdlkfjsdflkjsdfljsdfkldlfsdklfjksdf"
+
+			Class string {
+				char array = new char[10000000000000];
+			}
+
+
+
+			// Fazer um file.delimiter(',');
 			// Para ler incialmente só o id
 			// Se for igual ao do pubin
 			// Jogador jogador = newJogador(id, "resto da string");
 			// aí sim eu chamo a função Lista.push(jogador);
 			// Tenho que passar o resto da string para poder fazer o spit
 
-			String[] csvFile = file.nextLine().split(",");
+
+
+			if (pubin == Integer.Parseint(file.delimiter(','))) {
+				String linhaDoArquivo = file.nextLine();
+				String[] arrayStrings = arrayStringslinhaDoArquivo.split(",");
+			}
+
+			jogador.setNome(arrayStrings[1]);
+
+			// String[] csvFile = file.nextLine().split(",");
 			csvFile = file.nextLine().split(",");
 			csvFile = file.nextLine().split(",");
 			if (pubIn.equals(csvFile[0])) {
