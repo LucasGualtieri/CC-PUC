@@ -13,6 +13,14 @@ class Prototype {
 		String pubIn;
 
 		while (!(pubIn = input.next()).equals("FIM")) {
+
+			// Fazer um input.delimiter(',');
+			// Para ler incialmente só o id
+			// Se for igual ao do pubin
+			// Jogador jogador = newJogador(id, "resto da string");
+			// aí sim eu chamo a função Lista.push(jogador);
+			// Tenho que passar o resto da string para poder fazer o spit
+
 			String[] csvFile = file.nextLine().split(",");
 			csvFile = file.nextLine().split(",");
 			csvFile = file.nextLine().split(",");
