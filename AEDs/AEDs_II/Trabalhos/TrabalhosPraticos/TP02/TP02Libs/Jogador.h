@@ -44,14 +44,19 @@ typedef struct Jogador {
 	void (*setEstadoNascimento) (String estadoNascimento, struct Jogador*);
 
 	void (*Construtor) (Split array, struct Jogador*);
+	struct Jogador (*Clone) (struct Jogador);
 	void (*Mostrar) (struct Jogador);
-	// void (*Close) (Split array, struct Jogador*);
+	void (*Close) (struct Jogador);
 
 } Jogador;
 
 // Getter e Setter - Id
 int GetIdJogador(Jogador jogador) { return jogador.id; }
 void SetIdJogador(int id, Jogador* jogador) { jogador->id = id; }
+
+// Getter e Setter - Nome
+String GetNomeJogador(Jogador jogador) { return jogador.nome; }
+void SetNomeJogador(String nome, Jogador* jogador) { jogador->nome = strdup(nome); }
 
 // Getter e Setter - Altura
 int GetAlturaJogador(Jogador jogador) { return jogador.altura; }
@@ -83,10 +88,6 @@ void SetAnoNascimentoJogador(String anoNascimento, Jogador* jogador) {
 	jogador->anoNascimento = atoi(anoNascimento);
 }
 
-// Getter e Setter - Nome
-String GetNomeJogador(Jogador jogador) { return jogador.nome; }
-void SetNomeJogador(String nome, Jogador* jogador) { jogador->nome = strdup(nome); }
-
 // Getter e Setter - Universidade
 String GetUniversidadeJogador(Jogador jogador) { return jogador.universidade; }
 void SetUniversidadeJogador(String universidade, Jogador* jogador) { jogador->universidade = strdup(universidade); }
@@ -112,6 +113,19 @@ void ConstrutorJogador(Split split, Jogador* jogador) {
 
 }
 
+Jogador CloneJogador(Jogador jogador) {
+
+	Jogador clone = jogador;
+
+	clone.setNome(jogador.getNome(jogador), &clone);
+	clone.setUniversidade(jogador.getUniversidade(jogador), &clone);
+	clone.setCidadeNascimento(jogador.getCidadeNascimento(jogador), &clone);
+	clone.setEstadoNascimento(jogador.getEstadoNascimento(jogador), &clone);
+
+	return clone;
+
+}
+
 void MostrarJogador(Jogador jogador) {
 	printf("[%d ## ", jogador.getId(jogador));
 	printf("%s ## ", jogador.getNome(jogador));
@@ -123,7 +137,13 @@ void MostrarJogador(Jogador jogador) {
 	printf("%s]\n", jogador.getEstadoNascimento(jogador));
 }
 
-void CloseJogador();
+void CloseJogador(Jogador jogador) {
+
+	free(jogador.getNome(jogador));
+	free(jogador.getUniversidade(jogador));
+	free(jogador.getCidadeNascimento(jogador));
+	free(jogador.getEstadoNascimento(jogador));
+}
 
 Jogador newJogador() {
 
@@ -154,7 +174,9 @@ Jogador newJogador() {
 	jogador.setEstadoNascimento = SetEstadoNascimentoJogador;
 
 	jogador.Construtor = ConstrutorJogador;
+	jogador.Clone = CloneJogador;
 	jogador.Mostrar = MostrarJogador;
+	jogador.Close = CloseJogador;
 
 	return jogador;
 }

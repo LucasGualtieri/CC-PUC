@@ -10,9 +10,9 @@ typedef struct Split {
 	char array[MAX_ATTRIBUTES][STR_MAX_LEN];
 } Split;
 
-Split newSplit(FILE* CSV, const char* const delimiter) {
+Split newSplit(FILE* CSV) {
 
-	Split split = { 8 }; // Inicializa o size com 1
+	Split split = { 8 }; // Inicializa o size com 8
 
 	char teste[500];
 	for (int i = 0; i < MAX_ATTRIBUTES; i++) {

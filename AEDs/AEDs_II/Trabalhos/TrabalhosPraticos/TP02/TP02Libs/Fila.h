@@ -32,7 +32,7 @@ void InserirFila(Jogador jogador, Fila* fila) {
 		return;
 	}
 
-	fila->array[fila->size++] = jogador;
+	fila->array[fila->size++] = jogador.Clone(jogador);
 
 	if (fila->showOnUpdate) fila->Mostrar(*fila);
 
@@ -84,8 +84,13 @@ void MostrarFila(Fila fila) {
 }
 
 void CloseFila(Fila* fila) {
+	
+	for (int i = 0; i < fila->size; i++) {
+		fila->array[i].Close(fila->array[i]);
+	}
+
 	free(fila->array);
-	// For pra dar free em todos os jogadores
+	
 	fila->maxSize = 0;
 }
 
@@ -93,7 +98,12 @@ void ImportDataBaseBD(literal filePath, Fila* BD) {
 
 	// printf("filePath: %s\n", filePath);
 
-	FILE* CSV = fopen(filePath, "r");
+	FILE* CSV;
+	if (!(CSV = fopen(filePath, "r"))) {
+		printf("Erro: Falha ao abrir players.csv\n");
+		exit(0);
+	}
+
 	char inputCSV[STR_MAX_LEN];
 	readStr(CSV, inputCSV); // Despresando o header do .csv
 	
@@ -102,7 +112,7 @@ void ImportDataBaseBD(literal filePath, Fila* BD) {
 		// printf("inputCSV: %s\n", inputCSV);
 
 		// No estado atual o split retorna uma possível linha vazia quando o arquivo tem uma linha vazia no final
-		Split array = newSplit(CSV, ",");
+		Split array = newSplit(CSV);
 		Jogador jogador = newJogador();
 
 		jogador.Construtor(array, &jogador);
@@ -112,9 +122,7 @@ void ImportDataBaseBD(literal filePath, Fila* BD) {
 	}
 }
 
-Jogador GetFila(int id, Fila fila) {
-	return fila.array[id];
-}
+Jogador GetFila(int id, Fila fila) { return fila.array[id]; }
 
 Fila newFila(size_t maxSize) {
 

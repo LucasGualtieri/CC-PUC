@@ -14,7 +14,6 @@ int main() {
 	while (strcmp(readStr(0, inputPUBIN), "FIM")) {
 		int id = atoi(inputPUBIN);
 		listaJogadores.Inserir(BD.Get(id, BD), &listaJogadores);
-		// Dentro do inserir fazer um .clone
 	}
 
 	listaJogadores.Mostrar(listaJogadores);
