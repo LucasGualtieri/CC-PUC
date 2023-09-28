@@ -13,12 +13,14 @@ int main() {
 
 	while (strcmp(readStr(0, inputPUBIN), "FIM")) {
 		int id = atoi(inputPUBIN);
+		Jogador jogador = BD.PesquisaBinaria(id);
+		jogador.Mostrar(jogador);
 		// printf("Id: %d\n", id);
-		// listaJogadores.Inserir(BD.PesquisaSenquencial(id));
+		// listaJogadores.Inserir(BD.PesquisaBinaria(id));
 		// Dentro do inserir fazer um .clone
 	}
 
-	listaJogadores.Mostrar(listaJogadores);
+	// listaJogadores.Mostrar(listaJogadores);
 
 	listaJogadores.Close(&listaJogadores);
 	BD.Close(&BD);

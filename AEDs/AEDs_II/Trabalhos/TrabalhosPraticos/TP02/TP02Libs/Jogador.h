@@ -1,3 +1,6 @@
+#include "Split.h"
+#include <string.h>
+
 typedef char* String;
 
 typedef struct Jogador {
@@ -14,15 +17,15 @@ typedef struct Jogador {
 
 	// Getter e Setter - Altura
 	int (*getAltura) (struct Jogador);
-	void (*setAltura) (int altura, struct Jogador*);
+	void (*setAltura) (String altura, struct Jogador*);
 
 	// Getter e Setter - Peso
 	int (*getPeso) (struct Jogador);
-	void (*setPeso) (int peso, struct Jogador*);
+	void (*setPeso) (String peso, struct Jogador*);
 
 	// Getter e Setter - AnoNascimento
 	int (*getAnoNascimento) (struct Jogador);
-	void (*setAnoNascimento) (int anoNascimento, struct Jogador*);
+	void (*setAnoNascimento) (String anoNascimento, struct Jogador*);
 
 	// Getter e Setter - Nome
 	String (*getNome) (struct Jogador);
@@ -40,7 +43,9 @@ typedef struct Jogador {
 	String (*getEstadoNascimento) (struct Jogador);
 	void (*setEstadoNascimento) (String estadoNascimento, struct Jogador*);
 
+	void (*Construtor) (Split array, struct Jogador*);
 	void (*Mostrar) (struct Jogador);
+	// void (*Close) (Split array, struct Jogador*);
 
 } Jogador;
 
@@ -50,44 +55,75 @@ void SetIdJogador(int id, Jogador* jogador) { jogador->id = id; }
 
 // Getter e Setter - Altura
 int GetAlturaJogador(Jogador jogador) { return jogador.altura; }
-void SetAlturaJogador(int altura, Jogador* jogador) { jogador->altura = altura; }
+void SetAlturaJogador(String altura, Jogador* jogador) {
+	if (!strcmp(altura, "(null)")) {
+		jogador->altura = -1;
+		return;
+	}
+	jogador->altura = atoi(altura);
+}
 
 // Getter e Setter - Peso
 int GetPesoJogador(Jogador jogador) { return jogador.peso; }
-void SetPesoJogador(int peso, Jogador* jogador) { jogador->peso = peso; }
+void SetPesoJogador(String peso, Jogador* jogador) {
+	if (!strcmp(peso, "(null)")) {
+		jogador->peso = -1;
+		return;
+	}
+	jogador->peso = atoi(peso);
+}
 
 // Getter e Setter - AnoNascimento
 int GetAnoNascimentoJogador(Jogador jogador) { return jogador.anoNascimento; }
-void SetAnoNascimentoJogador(int anoNascimento, Jogador* jogador) { jogador->anoNascimento = anoNascimento; }
+void SetAnoNascimentoJogador(String anoNascimento, Jogador* jogador) {
+	if (!strcmp(anoNascimento, "(null)")) {
+		jogador->anoNascimento = -1;
+		return;
+	}
+	jogador->anoNascimento = atoi(anoNascimento);
+}
 
 // Getter e Setter - Nome
 String GetNomeJogador(Jogador jogador) { return jogador.nome; }
-void SetNomeJogador(String nome, Jogador* jogador) { jogador->nome = nome; }
+void SetNomeJogador(String nome, Jogador* jogador) { jogador->nome = strdup(nome); }
 
 // Getter e Setter - Universidade
 String GetUniversidadeJogador(Jogador jogador) { return jogador.universidade; }
-void SetUniversidadeJogador(String universidade, Jogador* jogador) { jogador->universidade = universidade; }
+void SetUniversidadeJogador(String universidade, Jogador* jogador) { jogador->universidade = strdup(universidade); }
 
 // Getter e Setter - CidadeNascimento
 String GetCidadeNascimentoJogador(Jogador jogador) { return jogador.cidadeNascimento; }
-void SetCidadeNascimentoJogador(String cidadeNascimento, Jogador* jogador) { jogador->cidadeNascimento = cidadeNascimento; }
+void SetCidadeNascimentoJogador(String cidadeNascimento, Jogador* jogador) { jogador->cidadeNascimento = strdup(cidadeNascimento); }
 
 // Getter e Setter - EstadoNascimento
 String GetEstadoNascimentoJogador(Jogador jogador) { return jogador.estadoNascimento; }
-void SetEstadoNascimentoJogador(String estadoNascimento, Jogador* jogador) { jogador->estadoNascimento = estadoNascimento; }
+void SetEstadoNascimentoJogador(String estadoNascimento, Jogador* jogador) { jogador->estadoNascimento = strdup(estadoNascimento); }
+
+void ConstrutorJogador(Split split, Jogador* jogador) {
+
+	jogador->setId(atoi(split.array[0]), jogador);
+	jogador->setNome(split.array[1], jogador);
+	jogador->setAltura(split.array[2], jogador);
+	jogador->setPeso(split.array[3], jogador);
+	jogador->setUniversidade(split.array[4], jogador);
+	jogador->setAnoNascimento(split.array[5], jogador);
+	jogador->setCidadeNascimento(split.array[6], jogador);
+	jogador->setEstadoNascimento(split.array[7], jogador);
+
+}
 
 void MostrarJogador(Jogador jogador) {
-	printf("[ ");
-	printf("%d ## ", jogador.getId(jogador));
+	printf("[%d ## ", jogador.getId(jogador));
+	printf("%s ## ", jogador.getNome(jogador));
 	printf("%d ## ", jogador.getAltura(jogador));
 	printf("%d ## ", jogador.getPeso(jogador));
 	printf("%d ## ", jogador.getAnoNascimento(jogador));
-	printf("%s ## ", jogador.getNome(jogador));
 	printf("%s ## ", jogador.getUniversidade(jogador));
 	printf("%s ## ", jogador.getCidadeNascimento(jogador));
-	printf("%s ##", jogador.getEstadoNascimento(jogador));
-	printf("]\n");
+	printf("%s]\n", jogador.getEstadoNascimento(jogador));
 }
+
+void CloseJogador();
 
 Jogador newJogador() {
 
@@ -117,6 +153,7 @@ Jogador newJogador() {
 	jogador.getEstadoNascimento = GetEstadoNascimentoJogador;
 	jogador.setEstadoNascimento = SetEstadoNascimentoJogador;
 
+	jogador.Construtor = ConstrutorJogador;
 	jogador.Mostrar = MostrarJogador;
 
 	return jogador;

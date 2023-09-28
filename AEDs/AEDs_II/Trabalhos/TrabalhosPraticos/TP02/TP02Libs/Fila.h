@@ -90,23 +90,26 @@ void CloseFila(Fila* fila) {
 	fila->maxSize = 0;
 }
 
-void ImportDataBaseBD(literal filePath, Fila* fila) {
+void ImportDataBaseBD(literal filePath, Fila* BD) {
 
 	// printf("filePath: %s\n", filePath);
 
 	FILE* CSV = fopen(filePath, "r");
 	char inputCSV[STR_MAX_LEN];
+	readStr(CSV, inputCSV); // Despresando o header do .csv
 	
 	while (!feof(CSV)) {
 
-		readStr(CSV, inputCSV);
 		// printf("inputCSV: %s\n", inputCSV);
 
-		// Split array = newSplit(readStr(CSV, inputCSV), ",");
+		// No estado atual o split retorna uma possível linha vazia quando o arquivo tem uma linha vazia no final
+		Split array = newSplit(CSV, ",");
 		Jogador jogador = newJogador();
-		// jogador.Construtor(array);
 
-		fila->Inserir(jogador, fila);
+		jogador.Construtor(array, &jogador);
+		BD->Inserir(jogador, BD);
+
+		// jogador.Mostrar(jogador);
 	}
 }
 
