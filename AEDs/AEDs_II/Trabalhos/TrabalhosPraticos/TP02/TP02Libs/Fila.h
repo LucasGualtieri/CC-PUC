@@ -14,6 +14,7 @@ typedef struct Fila {
 	Jogador (*Remover)(struct Fila*);
 
 	void (*ImportDataBase) (literal filePath, struct Fila*);
+	Jogador (*Get) (int id, struct Fila);
 
 	void (*ToggleShow) (struct Fila*);
 	void (*Mostrar)(struct Fila);
@@ -77,11 +78,9 @@ void MostrarFila(Fila fila) {
 		return;
 	}
 
-	printf("{ ");
 	for (int i = 0; i < fila.size; i++) {
 		fila.array[i].Mostrar(fila.array[i]);
 	}
-	printf("}\n");
 }
 
 void CloseFila(Fila* fila) {
@@ -113,6 +112,10 @@ void ImportDataBaseBD(literal filePath, Fila* BD) {
 	}
 }
 
+Jogador GetFila(int id, Fila fila) {
+	return fila.array[id];
+}
+
 Fila newFila(size_t maxSize) {
 
 	Fila fila;
@@ -128,6 +131,7 @@ Fila newFila(size_t maxSize) {
 	fila.Remover = RemoverFila;
 
 	fila.ImportDataBase = ImportDataBaseBD;
+	fila.Get = GetFila;
 
 	fila.ToggleShow = ToggleShowOnUpdateFila;
 	fila.Mostrar = MostrarFila;

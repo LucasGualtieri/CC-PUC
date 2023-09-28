@@ -17,7 +17,7 @@ Split newSplit(FILE* CSV, const char* const delimiter) {
 	char teste[500];
 	for (int i = 0; i < MAX_ATTRIBUTES; i++) {
 		if (fscanf(CSV, "%[^,\n\r]", teste) == 0) {
-			strcpy(split.array[i], "(null)");
+			strcpy(split.array[i], "nao informado");
 		} else {
 			strcpy(split.array[i], teste);
 		}
