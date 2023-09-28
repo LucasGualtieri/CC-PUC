@@ -1,14 +1,6 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdbool.h>
 #include "LibTP02.h"
 #include "Jogador.h"
 #include "Split.h"
-
-#define STR_MAX_LEN 500
-
-typedef const char* const literal;
 
 const Jogador ERRO = { -0x7fffffff }; // Setta o Id
 
@@ -32,10 +24,10 @@ typedef struct Fila {
 void InserirFila(Jogador jogador, Fila* fila) {
 
 	if (fila->maxSize == 0) {
-		puts("Erro ao inserir: Fila fechada.");
+		fprintf(stderr, "Erro ao inserir: Fila fechada.\n");
 		return;
 	} else if (fila->size == fila->maxSize) {
-		puts("Erro ao inserir: Fila cheia.");
+		fprintf(stderr, "Erro ao inserir: Fila cheia.\n");
 		return;
 	}
 
@@ -49,10 +41,10 @@ Jogador RemoverFila(Fila* fila) {
 
 	// Em hexadecimal, cada dígito pode representar 4 bits.
 	if (fila->maxSize == 0) {
-		puts("Erro ao remover: Fila fechada.");
+		fprintf(stderr, "Erro ao remover: Fila fechada.\n");
 		return ERRO;
 	} else if (fila->size == 0) {
-		puts("Erro ao remover: Fila vazia.");
+		fprintf(stderr, "Erro ao remover: Fila vazia.\n");
 		return ERRO;
 	}
 
@@ -78,10 +70,10 @@ void MostrarFila(Fila fila) {
 	// listaJogadores.printPlayer(id, BD); // Loopar pelo id
 
 	if (fila.maxSize == 0) {
-		puts("Erro ao mostrar: Fila fechada.");
+		fprintf(stderr, "Erro ao mostrar: Fila fechada.\n");
 		return;
 	} else if (fila.size == 0) {
-		puts("Erro ao mostrar: Fila vazia.");
+		fprintf(stderr, "Erro ao mostrar: Fila vazia.\n");
 		return;
 	}
 
@@ -100,7 +92,7 @@ void CloseFila(Fila* fila) {
 
 void ImportDataBaseBD(literal filePath, Fila* fila) {
 
-	printf("filePath: %s\n", filePath);
+	// printf("filePath: %s\n", filePath);
 
 	FILE* CSV = fopen(filePath, "r");
 	char inputCSV[STR_MAX_LEN];
@@ -108,7 +100,7 @@ void ImportDataBaseBD(literal filePath, Fila* fila) {
 	while (!feof(CSV)) {
 
 		readStr(CSV, inputCSV);
-		printf("inputCSV: %s\n", inputCSV);
+		// printf("inputCSV: %s\n", inputCSV);
 
 		// Split array = newSplit(readStr(CSV, inputCSV), ",");
 		Jogador jogador = newJogador();

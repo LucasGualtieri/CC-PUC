@@ -1,4 +1,4 @@
-#include "../TP02Libs/Fila.h"
+#include "../TP02Libs/LibTP02.h"
 
 // clear && gcc TP02Q02.c && ./a.out < pub.in > result.txt
 
@@ -13,6 +13,7 @@ int main() {
 
 	while (strcmp(readStr(0, inputPUBIN), "FIM")) {
 		int id = atoi(inputPUBIN);
+		// printf("Id: %d\n", id);
 		// listaJogadores.Inserir(BD.PesquisaSenquencial(id));
 		// Dentro do inserir fazer um .clone
 	}
