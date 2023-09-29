@@ -96,8 +96,6 @@ void CloseFila(Fila* fila) {
 
 void ImportDataBaseBD(literal filePath, Fila* BD) {
 
-	// printf("filePath: %s\n", filePath);
-
 	FILE* CSV;
 	if (!(CSV = fopen(filePath, "r"))) {
 		printf("Erro: Falha ao abrir players.csv\n");
@@ -109,16 +107,14 @@ void ImportDataBaseBD(literal filePath, Fila* BD) {
 	
 	while (!feof(CSV)) {
 
-		// printf("inputCSV: %s\n", inputCSV);
-
 		// No estado atual o split retorna uma possível linha vazia quando o arquivo tem uma linha vazia no final
 		Split array = newSplit(CSV);
-		Jogador jogador = newJogador();
 
+		Jogador jogador = newJogador();
 		jogador.Construtor(array, &jogador);
+
 		BD->Inserir(jogador, BD);
 
-		// jogador.Mostrar(jogador);
 	}
 }
 

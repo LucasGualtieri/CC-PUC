@@ -90,15 +90,21 @@ void SetAnoNascimentoJogador(String anoNascimento, Jogador* jogador) {
 
 // Getter e Setter - Universidade
 String GetUniversidadeJogador(Jogador jogador) { return jogador.universidade; }
-void SetUniversidadeJogador(String universidade, Jogador* jogador) { jogador->universidade = strdup(universidade); }
+void SetUniversidadeJogador(String universidade, Jogador* jogador) {
+	jogador->universidade = strdup(universidade);
+}
 
 // Getter e Setter - CidadeNascimento
 String GetCidadeNascimentoJogador(Jogador jogador) { return jogador.cidadeNascimento; }
-void SetCidadeNascimentoJogador(String cidadeNascimento, Jogador* jogador) { jogador->cidadeNascimento = strdup(cidadeNascimento); }
+void SetCidadeNascimentoJogador(String cidadeNascimento, Jogador* jogador) {
+	jogador->cidadeNascimento = strdup(cidadeNascimento);
+}
 
 // Getter e Setter - EstadoNascimento
 String GetEstadoNascimentoJogador(Jogador jogador) { return jogador.estadoNascimento; }
-void SetEstadoNascimentoJogador(String estadoNascimento, Jogador* jogador) { jogador->estadoNascimento = strdup(estadoNascimento); }
+void SetEstadoNascimentoJogador(String estadoNascimento, Jogador* jogador) {
+	jogador->estadoNascimento = strdup(estadoNascimento);
+}
 
 void ConstrutorJogador(Split split, Jogador* jogador) {
 

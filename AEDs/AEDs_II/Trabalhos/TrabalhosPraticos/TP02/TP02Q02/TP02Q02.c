@@ -1,4 +1,4 @@
-#include "../TP02Libs/LibTP02.h"
+#include "../TP02Libs/LibsC/LibTP02.h"
 
 // clear && gcc TP02Q02.c && ./a.out < pub.in > result.txt
 

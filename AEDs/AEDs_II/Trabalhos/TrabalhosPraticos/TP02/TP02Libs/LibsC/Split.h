@@ -14,12 +14,12 @@ Split newSplit(FILE* CSV) {
 
 	Split split = { 8 }; // Inicializa o size com 8
 
-	char teste[500];
+	char valor[STR_MAX_LEN];
 	for (int i = 0; i < MAX_ATTRIBUTES; i++) {
-		if (fscanf(CSV, "%[^,\n\r]", teste) == 0) {
+		if (fscanf(CSV, "%[^,\n\r]", valor) == 0) {
 			strcpy(split.array[i], "nao informado");
 		} else {
-			strcpy(split.array[i], teste);
+			strcpy(split.array[i], valor);
 		}
 		fgetc(CSV); // Despresando a virgula
 	}

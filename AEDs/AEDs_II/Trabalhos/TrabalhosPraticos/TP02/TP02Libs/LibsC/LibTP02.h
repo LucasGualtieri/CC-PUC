@@ -7,7 +7,7 @@
 #include <stdbool.h>
 
 #define STR_MAX_LEN 500
-#define BD_SIZE 3923 // Quantidade Jogadores
+#define BD_SIZE 3922 // Quantidade Jogadores
 
 typedef const char* const literal;
 typedef char* String;
@@ -20,6 +20,6 @@ char* readStr(FILE* stream, String input) {
 	return input;
 }
 
-#include "../TP02Libs/Fila.h"
+#include "Fila.h"
 
 #endif
