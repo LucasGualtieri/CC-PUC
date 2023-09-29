@@ -13,12 +13,14 @@ typedef struct Fila {
 	void (*Inserir)(Jogador jogador, struct Fila*);
 	Jogador (*Remover)(struct Fila*);
 
-	void (*ImportDataBase) (literal filePath, struct Fila*);
-	Jogador (*Get) (int id, struct Fila);
+	void (*Sort)(struct Fila);
 
-	void (*ToggleShow) (struct Fila*);
+	void (*ImportDataBase) (literal filePath, struct Fila*);
+	Jogador (*Get)(int id, struct Fila);
+
+	void (*ToggleShow)(struct Fila*);
 	void (*Mostrar)(struct Fila);
-	void (*Close)(struct Fila*); // Implementar o Jogador.close(); Para dar free nas strings
+	void (*Close)(struct Fila*);
 
 } Fila;
 
@@ -61,6 +63,8 @@ Jogador RemoverFila(Fila* fila) {
 
 	return removido;
 }
+
+void SortFila(Fila fila);
 
 void ToggleShowOnUpdateFila(Fila* fila) {
 	fila->showOnUpdate = fila->showOnUpdate ? false : true;
@@ -133,6 +137,8 @@ Fila newFila(size_t maxSize) {
 
 	fila.Inserir = InserirFila;
 	fila.Remover = RemoverFila;
+
+	fila.Sort = SortFila;
 
 	fila.ImportDataBase = ImportDataBaseBD;
 	fila.Get = GetFila;
