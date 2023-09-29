@@ -61,7 +61,7 @@ void SetNomeJogador(String nome, Jogador* jogador) { jogador->nome = strdup(nome
 // Getter e Setter - Altura
 int GetAlturaJogador(Jogador jogador) { return jogador.altura; }
 void SetAlturaJogador(String altura, Jogador* jogador) {
-	if (!strcmp(altura, "(null)")) {
+	if (!strcmp(altura, "nao informado")) {
 		jogador->altura = -1;
 		return;
 	}
@@ -71,7 +71,7 @@ void SetAlturaJogador(String altura, Jogador* jogador) {
 // Getter e Setter - Peso
 int GetPesoJogador(Jogador jogador) { return jogador.peso; }
 void SetPesoJogador(String peso, Jogador* jogador) {
-	if (!strcmp(peso, "(null)")) {
+	if (!strcmp(peso, "nao informado")) {
 		jogador->peso = -1;
 		return;
 	}
@@ -81,7 +81,7 @@ void SetPesoJogador(String peso, Jogador* jogador) {
 // Getter e Setter - AnoNascimento
 int GetAnoNascimentoJogador(Jogador jogador) { return jogador.anoNascimento; }
 void SetAnoNascimentoJogador(String anoNascimento, Jogador* jogador) {
-	if (!strcmp(anoNascimento, "(null)")) {
+	if (!strcmp(anoNascimento, "nao informado")) {
 		jogador->anoNascimento = -1;
 		return;
 	}

@@ -36,13 +36,17 @@ int main() {
 	listaJogadores.Sort(listaJogadores);
 	// listaJogadores.Mostrar(listaJogadores);
 
+	// Timer timer = newTimer();
+	// timer.Start(&tempoTotal);
 	while (strcmp(readStr(0, inputPUBIN), "FIM")) {
 		bool resultado = PesquisaBinaria(inputPUBIN, listaJogadores);
 		printf("%s\n", resultado ? "SIM" : "NAO");
 	}
+	// double tempoTotal = timer.Stop(&timer);
 
 	listaJogadores.Close(&listaJogadores);
 	BD.Close(&BD);
+
 
 }
 
