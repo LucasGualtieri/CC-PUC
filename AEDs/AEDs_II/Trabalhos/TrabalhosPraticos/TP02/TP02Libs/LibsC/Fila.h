@@ -40,7 +40,8 @@ void InserirFila(Jogador jogador, Fila* fila) {
 
 }
 
-Jogador RemoverFila(Fila* fila) {
+// Se for retornar um jogador tem que pensar como vai fazer o free depois
+void RemoverFila(Fila* fila) {
 
 	// Em hexadecimal, cada dígito pode representar 4 bits.
 	if (fila->maxSize == 0) {
@@ -51,7 +52,8 @@ Jogador RemoverFila(Fila* fila) {
 		return ERRO;
 	}
 
-	Jogador removido = fila->array[0];
+	// Jogador removido = fila->array[0];
+	free(fila->array[0]);
 
 	for (int i = 0; i < fila->size - 1; i++) {
 		fila->array[i] = fila->array[i + 1];
@@ -61,7 +63,7 @@ Jogador RemoverFila(Fila* fila) {
 
 	if (fila->showOnUpdate) fila->Mostrar(*fila);
 
-	return removido;
+	// return removido;
 }
 
 void SortFila(Fila fila);
@@ -109,12 +111,14 @@ void ImportDataBaseBD(literal filePath, Fila* BD) {
 	char inputCSV[STR_MAX_LEN];
 	readStr(CSV, inputCSV); // Despresando o header do .csv
 	
+	Jogador jogador;
+
 	while (!feof(CSV)) {
 
 		// No estado atual o split retorna uma possível linha vazia quando o arquivo tem uma linha vazia no final
 		Split array = newSplit(CSV);
 
-		Jogador jogador = newJogador();
+		jogador = newJogador();
 		jogador.Construtor(array, &jogador);
 
 		BD->Inserir(jogador, BD);
