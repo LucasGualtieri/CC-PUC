@@ -4,33 +4,37 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 // clear && javac -cp ../TP02Libs TP02Q01.java && java -cp ../TP02Libs TP02Q01
-// clear && javac TP02Q01.java && java TP02Q01
+// clear && javac TP02Q01.java && java TP02Q01 < pub.in > result.txt
 
 class Jogador {
 	private int id, altura, peso, anoNascimento;
 	private String nome, universidade, cidadeNascimento, estadoNascimento;
 
+	public Jogador() {}
+
 	public Jogador(String[] array) {
-		this.setId(this.array[0]);
-		this.setNome(this.array[1]);
-		this.setAltura(this.array[2]);
-		this.setPeso(this.array[3]);
-		this.setUniversidade(this.array[4]);
-		this.setAnoNascimento(this.array[5]);
-		this.setCidadeNascimento(this.array[6]);
-		this.setEstadoNascimento(this.array[7]);
+		this.setId(array[0]);
+		this.setNome(array[1]);
+		this.setAltura(array[2]);
+		this.setPeso(array[3]);
+		this.setUniversidade(array[4]);
+		this.setAnoNascimento(array[5]);
+		this.setCidadeNascimento(array[6]);
+		this.setEstadoNascimento(array[7]);
 	}
 
 	// Getter e Setter - Id
 	public int getId() { return this.id; }
 	public void setId(String id) { this.id = Integer.parseInt(id); }
+	public void setId(int id) { this.id = id; }
 	
 	// Getter e Setter - Nome
-	public int getNome() { return this.nome; }
-	public void setNome(String nome) { this.nome = Integer.parseInt(nome); }
+	public String getNome() { return this.nome; }
+	public void setNome(String nome) { this.nome = nome; }
 
 	// Getter e Setter - Altura
 	public int getAltura() { return this.altura; }
+	public void setAltura(int altura) { this.altura = altura; }
 	public void setAltura(String altura) {
 		if (altura.equals("nao informado")) {
 			this.altura = -1;
@@ -41,6 +45,7 @@ class Jogador {
 
 	// Getter e Setter - Peso
 	public int getPeso() { return this.peso; }
+	public void setPeso(int peso) { this.peso = peso; }
 	public void setPeso(String peso) {
 		if (peso.equals("nao informado")) {
 			this.peso = -1;
@@ -51,6 +56,7 @@ class Jogador {
 
 	// Getter e Setter - AnoNascimento
 	public int getAnoNascimento() { return this.anoNascimento; }
+	public void setAnoNascimento(int anoNascimento) { this.anoNascimento = anoNascimento; }
 	public void setAnoNascimento(String anoNascimento) {
 		if (anoNascimento.equals("nao informado")) {
 			this.anoNascimento = -1;
@@ -60,25 +66,25 @@ class Jogador {
 	}
 
 	// Getter e Setter - Universidade
-	public String GetUniversidade() { return this.universidade; }
-	public void SetUniversidade(String universidade) {
+	public String getUniversidade() { return this.universidade; }
+	public void setUniversidade(String universidade) {
 		this.universidade = universidade;
 	}
 
 	// Getter e Setter - CidadeNascimento
-	public String GetCidadeNascimento() { return this.cidadeNascimento; }
-	public void SetCidadeNascimento(String cidadeNascimento) {
+	public String getCidadeNascimento() { return this.cidadeNascimento; }
+	public void setCidadeNascimento(String cidadeNascimento) {
 		this.cidadeNascimento = cidadeNascimento;
 	}
 
 	// Getter e Setter - EstadoNascimento
-	public String GetEstadoNascimento() { return this.estadoNascimento; }
-	public void SetEstadoNascimento(String estadoNascimento) {
+	public String getEstadoNascimento() { return this.estadoNascimento; }
+	public void setEstadoNascimento(String estadoNascimento) {
 		this.estadoNascimento = estadoNascimento;
 	}
 
 	public Jogador Clone() {
-		Jogador clone;
+		Jogador clone = new Jogador();
 
 		clone.setId(this.getId());
 		clone.setNome(this.getNome());
@@ -109,9 +115,9 @@ class Jogador {
 class Lista {
 	Jogador[] array;
 	int maxSize, size;
-	bool showOnUpdate;
+	boolean showOnUpdate;
 
-	Lista(String filePath, int size) {
+	Lista(String filePath, int size) throws Exception {
 		this(size);
 		this.ImportDataBase(filePath);
 	}
@@ -126,7 +132,7 @@ class Lista {
 	public void Inserir(Jogador jogador) throws Exception {
 
 		if (this.size == this.maxSize) {
-			throw new Exception("Erro ao inserir: Fila fechada.\n");
+			throw new Exception("Erro ao inserir: Fila cheia.\n");
 		}
 
 		this.array[this.size++] = jogador.Clone();
@@ -162,32 +168,35 @@ class Lista {
 	public void Sort() {
 		int j;
 		Jogador temp;
-		for (int i = 1; i < N; i++) {
+		for (int i = 1; i < this.size; i++) {
 			temp = array[i];
 			j = i - 1;
-			while (j >= 0 && strcmp(array[j], temp) > 0) {
-				array[j-- + 1] = array[j];
+			while (j >= 0 && strcmp(this.array[j], temp) > 0) {
+				this.array[j-- + 1] = this.array[j];
 			}
-			array[j + 1] = temp;
+			this.array[j + 1] = temp;
 		}
 	}
 
-	void ImportDataBase(String filePath) {
+	void ImportDataBase(String filePath) throws Exception {
+	
 		Scanner fileReader = new Scanner(new File(filePath));
-		// try {
-		// 	fileReader = new Scanner(new File(filePath));
-		// } catch (FileNotFoundException e) {
-		// 	System.out.println("Erro: Falha ao abrir players.csv\n");
-		// 	System
-		// }
 
 		String inputCSV = new String();
-		inputCSV = fileReader.nextLine(); // Despresando o header do .csv
+		fileReader.nextLine(); // Despresando o header do .csv
 
 		Jogador jogador;
 
 		while (fileReader.hasNextLine()) {
-			String array = inputCSV.split(",", -1);
+			inputCSV = fileReader.nextLine();
+			String[] array = inputCSV.split(",", -1);
+
+			for (int i = 1; i < array.length; i++) {
+				if (array[i].isEmpty()) {
+					array[i] = "nao informado";
+				}
+			}
+
 			jogador = new Jogador(array);
 			this.Inserir(jogador);
 		}
@@ -197,7 +206,17 @@ class Lista {
 	public Jogador Get(int id) { return this.array[id]; }
 
 	public void ToggleShow() {}
-	public void Mostrar() {}
+
+	public void Mostrar() {
+		if (this.size == 0) {
+			System.out.println("Erro ao mostrar: Fila vazia.");
+			return;
+		}
+
+		for (int i = 0; i < this.size; i++) {
+			this.array[i].Mostrar();
+		}
+	}
 
 }
 
@@ -205,25 +224,27 @@ class TP02Q01 {
 
 	static Scanner scanner = new Scanner(System.in);
 
+	static final int BD_SIZE = 3922;
+
 	static String readStr() {
 		return scanner.nextLine();
 	}
 
-	public static void main(String[] args) {
-		// Lista BD = new Lista("../tmp/players.csv", BD_SIZE);
-		// Lista listaJogadores = new Lista(40);
+	public static void main(String[] args) throws Exception {
+		Lista BD = new Lista("/tmp/players.csv", BD_SIZE);
+		// BD.Mostrar();
+		Lista listaJogadores = new Lista(40);
 
-		// String inputPUBIN = new String();
-		String inputPUBIN;
+		String inputPUBIN = new String();
 
 		// while (!(inputPUBIN = Lib.readStr()).equals("FIM")) {
 		while (!(inputPUBIN = readStr()).equals("FIM")) {
 			int id = Integer.parseInt(inputPUBIN);
-			System.out.printf("Id: %d", id);
-			// listaJogadores.Inserir(BD.Get(id));
+			// System.out.printf("Id: %d\n", id);
+			listaJogadores.Inserir(BD.Get(id));
 		}
 
-		// listaJogadores.Mostrar();
+		listaJogadores.Mostrar();
 
 	}
 }
