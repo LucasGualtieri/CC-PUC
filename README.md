@@ -8,7 +8,7 @@ Repositório de exercícios / projetos desenvolvidos no curso de Ciência da Com
 
 Algoritmos e Estruturas de Dados - [AEDs I](AEDs/AEDs_I) / [AEDs II](AEDs/AEDs_II)
 
-> 📁 [Monitoria AEDs I - Primeiro Semestre de 2023](AEDs/AEDs_I/MonitoriaAEDs_I/)
+> 📁 [Monitoria AEDs I](AEDs/Monitoria_AEDs_I/)
 
 ## 📁 AC I
 
