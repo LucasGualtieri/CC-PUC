@@ -12,11 +12,6 @@
 
 typedef char* string;
 
-void flush() {
-	char c;
-	while ((c = fgetc(stdin)) != '\n' && c != '\r') continue;
-}
-
 void clrscreen() {
 	system("clear");
 }
@@ -74,6 +69,25 @@ string getstr() {
 	trimSpaces(str);
 
 	return str;
+}
+
+void flush() {
+	char c;
+	while ((c = fgetc(stdin)) != '\n' && c != '\r');
+}
+
+char readChar() {
+	char c;
+	scanf("%c", &c);
+	flush();
+	return c;
+}
+
+int readInt() {
+	int integer;
+	scanf("%d", &integer);
+	flush();
+	return integer;
 }
 
 char toUpper(char c) {

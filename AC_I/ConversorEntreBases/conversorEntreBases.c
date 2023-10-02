@@ -3,7 +3,11 @@
 // Última atualização: 29/08 às 11:05
 // https://replit.com/@LucasGualtieriF/ConversorEntreBases
 
+// clear && gcc conversorEntreBases.c -lm && ./a.out
+
 #define PRECISAO 5
+
+#define escolhaParaBase(esc) esc == 1 ? 2 : esc == 2 ? 8 : esc == 3 ? 10 : 16
 
 string baseEntradaParaDec(int baseEntrada, string valor) {
 
@@ -91,7 +95,7 @@ string getValor(int base) {
 		if (!valido) printf("Valor inválido, tente novamente: ");
 		valor	   = getstr();
 		size_t len = strlen(valor);
-		valido   = len > 0;
+		valido     = len > 0;
 
 		for (int i = 0; valido && i < len; i++) {
 			if (valor[i] == '.') continue;
@@ -132,11 +136,8 @@ int lendoEscolha(int limiteSuperior) {
 
 	do {
 		if (!valido) printf("Valor inválido, tente novamente: ");
-		scanf("%c", &escolha);
-		flush();
-		escolha = ctoi(escolha);
-		valido = 0 <= escolha && escolha <= limiteSuperior;
-	} while (!valido);
+		escolha = ctoi(readChar()); // Não sei pq está char
+	} while (!(valido = 0 <= escolha && escolha <= limiteSuperior));
 
 	return escolha;
 }
@@ -169,20 +170,7 @@ int escolhaBaseFinal(int baseEntrada) {
 		escolha++;
 	}
 
-	switch (escolha) {
-	case 1:
-		conversor(baseEntrada, 2);
-		break;
-	case 2:
-		conversor(baseEntrada, 8);
-		break;
-	case 3:
-		conversor(baseEntrada, 10);
-		break;
-	case 4:
-		conversor(baseEntrada, 16);
-		break;
-	}
+	conversor(baseEntrada, escolhaParaBase(escolha));
 
 	return escolha;
 }
@@ -199,25 +187,15 @@ int escolhaBaseOrigem() {
 	puts("0 - Sair do programa\n");
 	printf("Escolha uma das opções acima: ");
 
-	switch (lendoEscolha(4)) {
-	case 1:
-		return escolhaBaseFinal(2);
-		break;
-	case 2:
-		return escolhaBaseFinal(8);
-		break;
-	case 3:
-		return escolhaBaseFinal(10);
-		break;
-	case 4:
-		return escolhaBaseFinal(16);
-		break;
-	default:
-		return 0;
-	}
+	int escolha = lendoEscolha(4);
+
+	if (escolha != 0) {
+		return escolhaBaseFinal(escolhaParaBase(escolha));
+	} else return 0;
+
 }
 
-int continuarExecucao() {
+int decidirContinuar() {
 	bool valido = true;
 	char resposta;
 
@@ -227,9 +205,7 @@ int continuarExecucao() {
 		if (!valido) {
 			printf("Valor inválido, tente novamente. [S/N]: ");
 		}
-		scanf("%c", &resposta);
-		flush();
-		resposta = toUpper(resposta);
+		resposta = toUpper(readChar());
 		valido = resposta == 'S' || resposta == 'N';
 	} while (!valido);
 
@@ -242,9 +218,41 @@ int main() {
 	bool continuar = true;
 
 	while (continuar && (escolha = escolhaBaseOrigem())) {
-		if (escolha != 5) continuar = continuarExecucao();
+		if (escolha != 5) continuar = decidirContinuar();
 	}
 
 	puts("\n------- | FIM DO PROGRAMA | -------\n");
 	return 0;
 }
+
+// switch (lendoEscolha(4)) {
+// case 1:
+// 	return escolhaBaseFinal(2);
+// 	break;
+// case 2:
+// 	return escolhaBaseFinal(8);
+// 	break;
+// case 3:
+// 	return escolhaBaseFinal(10);
+// 	break;
+// case 4:
+// 	return escolhaBaseFinal(16);
+// 	break;
+// default:
+// 	return 0;
+// }
+
+// switch (escolha) {
+// case 1:
+// 	conversor(baseEntrada, 2);
+// 	break;
+// case 2:
+// 	conversor(baseEntrada, 8);
+// 	break;
+// case 3:
+// 	conversor(baseEntrada, 10);
+// 	break;
+// case 4:
+// 	conversor(baseEntrada, 16);
+// 	break;
+// }
