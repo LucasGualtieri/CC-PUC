@@ -1,9 +1,12 @@
+// package TP02;
+
 // import TP02.Lib;
 import java.util.*;
 import java.io.File;
-import java.io.FileNotFoundException;
+// import java.io.FileNotFoundException;
+import TP02.TP02Libs.Lib;
 
-// clear && javac -cp ../TP02Libs TP02Q01.java && java -cp ../TP02Libs TP02Q01
+// clear && javac -cp ../.. TP02Q01.java && java -cp ../.. TP02Q01
 // clear && javac TP02Q01.java && java TP02Q01 < pub.in > result.txt
 
 class Jogador {
@@ -188,6 +191,7 @@ class Lista {
 		Jogador jogador;
 
 		while (fileReader.hasNextLine()) {
+			
 			inputCSV = fileReader.nextLine();
 			String[] array = inputCSV.split(",", -1);
 
@@ -231,20 +235,22 @@ class TP02Q01 {
 	}
 
 	public static void main(String[] args) throws Exception {
-		Lista BD = new Lista("/tmp/players.csv", BD_SIZE);
-		// BD.Mostrar();
-		Lista listaJogadores = new Lista(40);
+		Lib.teste();
 
-		String inputPUBIN = new String();
+		// Lista BD = new Lista("/tmp/players.csv", BD_SIZE);
+		// // BD.Mostrar();
+		// Lista listaJogadores = new Lista(40);
 
-		// while (!(inputPUBIN = Lib.readStr()).equals("FIM")) {
-		while (!(inputPUBIN = readStr()).equals("FIM")) {
-			int id = Integer.parseInt(inputPUBIN);
-			// System.out.printf("Id: %d\n", id);
-			listaJogadores.Inserir(BD.Get(id));
-		}
+		// String inputPUBIN = new String();
 
-		listaJogadores.Mostrar();
+		// // while (!(inputPUBIN = Lib.readStr()).equals("FIM")) {
+		// while (!(inputPUBIN = readStr()).equals("FIM")) {
+		// 	int id = Integer.parseInt(inputPUBIN);
+		// 	// System.out.printf("Id: %d\n", id);
+		// 	listaJogadores.Inserir(BD.Get(id));
+		// }
+
+		// listaJogadores.Mostrar();
 
 	}
 }

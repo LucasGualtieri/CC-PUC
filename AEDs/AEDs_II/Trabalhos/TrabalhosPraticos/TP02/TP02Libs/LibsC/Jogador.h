@@ -15,13 +15,13 @@ typedef struct Jogador {
 	void (*setId) (int id, struct Jogador*);
 
 	// Setter - Altura
-	void (*setAltura) (String altura, struct Jogador*);
+	void (*setAltura) (int altura, struct Jogador*);
 
 	// Setter - Peso
-	void (*setPeso) (String peso, struct Jogador*);
+	void (*setPeso) (int peso, struct Jogador*);
 
 	// Setter - AnoNascimento
-	void (*setAnoNascimento) (String anoNascimento, struct Jogador*);
+	void (*setAnoNascimento) (int anoNascimento, struct Jogador*);
 
 	// Setter - Nome
 	void (*setNome) (String nome, struct Jogador*);
@@ -85,11 +85,11 @@ void SetEstadoNascimentoJogador(String estadoNascimento, Jogador* jogador) {
 void ConstrutorJogador(Split split, Jogador* jogador) {
 
 	jogador->setId(atoi(split.array[0]), jogador);
-	jogador->setNome(atoi(split.array[1]), jogador);
+	jogador->setNome(split.array[1], jogador);
 	jogador->setAltura(atoi(split.array[2]), jogador);
 	jogador->setPeso(atoi(split.array[3]), jogador);
 	jogador->setUniversidade(split.array[4], jogador);
-	jogador->setAnoNascimento(split.array[5], jogador);
+	jogador->setAnoNascimento(atoi(split.array[5]), jogador);
 	jogador->setCidadeNascimento(split.array[6], jogador);
 	jogador->setEstadoNascimento(split.array[7], jogador);
 
@@ -110,23 +110,23 @@ Jogador CloneJogador(Jogador jogador) {
 
 void MostrarJogador(Jogador jogador) {
 
-	printf("[%d ## ", jogador.getId(jogador));
-	printf("%s ## ", jogador.getNome(jogador));
-	printf("%d ## ", jogador.getAltura(jogador));
-	printf("%d ## ", jogador.getPeso(jogador));
-	printf("%d ## ", jogador.getAnoNascimento(jogador));
-	printf("%s ## ", jogador.getUniversidade(jogador));
-	printf("%s ## ", jogador.getCidadeNascimento(jogador));
-	printf("%s]\n", jogador.getEstadoNascimento(jogador));
+	printf("[%d ## ", jogador.id);
+	printf("%s ## ", jogador.nome);
+	printf("%d ## ", jogador.altura);
+	printf("%d ## ", jogador.peso);
+	printf("%d ## ", jogador.anoNascimento);
+	printf("%s ## ", jogador.universidade);
+	printf("%s ## ", jogador.cidadeNascimento);
+	printf("%s]\n", jogador.estadoNascimento);
 
 }
 
 void CloseJogador(Jogador jogador) {
 
-	free(jogador.getNome(jogador));
-	free(jogador.getUniversidade(jogador));
-	free(jogador.getCidadeNascimento(jogador));
-	free(jogador.getEstadoNascimento(jogador));
+	free(jogador.nome);
+	free(jogador.universidade);
+	free(jogador.cidadeNascimento);
+	free(jogador.estadoNascimento);
 
 }
 

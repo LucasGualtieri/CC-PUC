@@ -4,10 +4,11 @@
 
 int main() {
 
-	Fila BD = newFila(BD_SIZE);
+	Lista BD = newLista(BD_SIZE);
 	BD.ImportDataBase("../tmp/players.csv", &BD);
 
-	Fila listaJogadores = newFila(40); // Tamanho de entradada do Pub.in
+
+	Lista listaJogadores = newLista(40); // Tamanho de entradada do Pub.in
 
 	char inputPUBIN[STR_MAX_LEN];
 
