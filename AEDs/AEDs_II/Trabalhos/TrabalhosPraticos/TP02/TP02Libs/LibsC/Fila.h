@@ -40,32 +40,6 @@ void InserirFila(Jogador jogador, Fila* fila) {
 
 }
 
-// Se for retornar um jogador tem que pensar como vai fazer o free depois
-void RemoverFila(Fila* fila) {
-
-	// Em hexadecimal, cada dígito pode representar 4 bits.
-	if (fila->maxSize == 0) {
-		fprintf(stderr, "Erro ao remover: Fila fechada.\n");
-		return ERRO;
-	} else if (fila->size == 0) {
-		fprintf(stderr, "Erro ao remover: Fila vazia.\n");
-		return ERRO;
-	}
-
-	// Jogador removido = fila->array[0];
-	free(fila->array[0]);
-
-	for (int i = 0; i < fila->size - 1; i++) {
-		fila->array[i] = fila->array[i + 1];
-	}
-
-	fila->size--;
-
-	if (fila->showOnUpdate) fila->Mostrar(*fila);
-
-	// return removido;
-}
-
 void SortFila(Fila fila);
 
 void ToggleShowOnUpdateFila(Fila* fila) {
