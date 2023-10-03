@@ -46,14 +46,17 @@ class TP02Q03 {
 
 	static final int BD_SIZE = 3922;
 
-	static void registroLog(Timer timer, int comparacoes) throws Exception {
+	static void registroLog(Timer timer, ResultadoPesquisa resultado) throws Exception {
 	
 		String fileName = "794989_sequencial.txt";
 		PrintWriter printWriter = new PrintWriter(new FileWriter(fileName));
 
-		printWriter.printf("794989\t%.3fs\t%d", timer.Time(), comparacoes);
-		printWriter.close();
+		printWriter.printf("Matrícula: 794989\t");
+		printWriter.printf("Tempo de execução: %.3fs\t", timer.Time());
+		printWriter.printf("Número de comparações: %d", resultado.getComparacoes());
 
+		printWriter.close();
+		
 	}
 }
 

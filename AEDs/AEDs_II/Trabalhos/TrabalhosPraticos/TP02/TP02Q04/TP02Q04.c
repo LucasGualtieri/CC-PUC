@@ -23,12 +23,16 @@ bool PesquisaBinaria(String nome, int* comparacoes, Lista lista) {
 }
 
 void registroLog(Timer timer, int comparacoes) {
+
 	literal fileName = "794989_binaria.txt";
 	FILE* file = fopen(fileName, "w");
 
-	fprintf(file, "794989\t%.3fs\t%d", timer.Time(&timer), comparacoes);
+	fprintf(file, "Matrícula: 794989\t");
+	fprintf(file, "Tempo de execução: %.3fs\t", timer.Time(&timer));
+	fprintf(file, "Número de comparações: %d\t", comparacoes);
 
 	fclose(file);
+
 }
 
 int main() {

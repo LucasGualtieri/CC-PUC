@@ -20,20 +20,24 @@ void SortLista(Lista lista) {
 	}
 }
 
-void registroLog(Timer timer, int comparacoes) {
+void registroLog(Timer timer, int comparacoes, int movimentacoes) {
+
 	literal fileName = "794989_selecaoRecursiva.txt";
 	FILE* file = fopen(fileName, "w");
 
-	fprintf(file, "794989\t%.3fs\t%d", timer.Time(&timer), comparacoes);
+	fprintf(file, "Matrícula: 794989\t");
+	fprintf(file, "Tempo de execução: %.3fs\t", timer.Time(&timer));
+	fprintf(file, "Número de comparações: %d\t", comparacoes);
+	fprintf(file, "Número de movimentações: %d", movimentacoes);
 
 	fclose(file);
+
 }
 
 int main() {
 
 	// Tem que pegar os pub in certo e fazer o sort padrao da lista na classe lista e os sorts dos deveres separados igual fiz com a pesquisa
 	
-
 	Lista BD = newLista(BD_SIZE);
 	BD.ImportDataBase("../tmp/players.csv", &BD);
 
