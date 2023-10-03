@@ -11,7 +11,7 @@ class TP02Q03 {
 
 		resultado.setEncontrado(false);
 		for (int i = 0; i < lista.size; i++) {
-			if (lista.array[i].getNome().equals(nome)) {
+			if (lista.array[i].getNome().contains(nome)) {
 				i = lista.size;
 				resultado.setEncontrado(true);
 			}
