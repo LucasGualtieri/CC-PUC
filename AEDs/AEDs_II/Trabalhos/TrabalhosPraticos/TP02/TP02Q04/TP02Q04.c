@@ -36,7 +36,7 @@ int main() {
 	Lista BD = newLista(BD_SIZE);
 	BD.ImportDataBase("../tmp/players.csv", &BD);
 
-	Lista listaJogadores = newLista(49); // Tamanho de entradada do Pub.in
+	Lista listaJogadores = newLista(49); // Tamanho de entradadas do pub.in
 
 	char inputPUBIN[STR_MAX_LEN];
 

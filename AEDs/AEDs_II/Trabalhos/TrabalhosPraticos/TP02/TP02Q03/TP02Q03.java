@@ -22,7 +22,7 @@ class TP02Q03 {
 	public static void main(String[] args) throws Exception {
 
 		Lista BD = new Lista("../tmp/players.csv", BD_SIZE);
-		Lista jogadores = new Lista(74);
+		Lista jogadores = new Lista(74); // Tamanho de entradadas do pri.in
 
 		String inputPUBIN = new String();
 		
@@ -31,7 +31,7 @@ class TP02Q03 {
 			jogadores.Inserir(BD.Get(id));
 		}
 
-		Timer timer = new Timer();
+		Timer timer = new Timer(true);
 		ResultadoPesquisa resultado = new ResultadoPesquisa();
 
 		while (!(inputPUBIN = Lib.readStr()).equals("FIM")) {
@@ -70,8 +70,10 @@ class Timer {
 	
 	private long tempoInicial, tempoFinal, tempoDecorrido;
 
-	Timer() {
-		this.Start();
+	Timer() {}
+	
+	Timer(boolean start) {
+		if (start) this.Start();
 	}
 	
 	public void Start() {
@@ -88,23 +90,23 @@ class Timer {
 }
 
 class ResultadoPesquisa {
-    boolean encontrado;
-    int comparacoes;
+	boolean encontrado;
+	int comparacoes, movimentacoes;
 
-    public ResultadoPesquisa() {
-		this(false, 0);
+	public ResultadoPesquisa() {
+		this(false, 0, 0);
 	}
-	public ResultadoPesquisa(boolean encontrado, int comparacoes) {
+	public ResultadoPesquisa(boolean encontrado, int comparacoes, int movimentacoes) {
 		this.encontrado = encontrado;
+		this.comparacoes = comparacoes;
 		this.comparacoes = comparacoes;
 	}
 
 	public boolean getEncontrado() { return encontrado; }
 	public void setEncontrado(boolean encontrado) { this.encontrado = encontrado; }
 	public int getComparacoes() { return comparacoes; }
-	public void incrementarComparacoes() {
-		this.comparacoes++;
-	}
+	public void incrementarComparacoes() { this.comparacoes++; }
+	public void incrementarMovimentacoes(int movimentacoes) { this.comparacoes += movimentacoes; }
 }
 
 class Jogador {
