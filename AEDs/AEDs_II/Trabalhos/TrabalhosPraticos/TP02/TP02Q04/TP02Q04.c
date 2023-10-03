@@ -61,21 +61,3 @@ int main() {
 	BD.Close(&BD);
 
 }
-
-#define strcmpr(jog1, jog2) strcmp(jog1.nome, jog2.nome)
-
-void SortLista(Lista lista) {
-	int N = lista.size;
-	Jogador* array = lista.array;
-
-	int j;
-	Jogador temp;
-	for (int i = 1; i < N; i++) {
-		temp = array[i];
-		j = i - 1;
-		while (j >= 0 && strcmpr(array[j], temp) > 0) {
-			array[j-- + 1] = array[j];
-		}
-		array[j + 1] = temp;
-	}
-}

@@ -23,5 +23,3 @@ int main() {
 	BD.Close(&BD);
 
 }
-
-void SortLista(Lista lista) {}

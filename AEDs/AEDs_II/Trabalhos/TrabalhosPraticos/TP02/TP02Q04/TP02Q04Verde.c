@@ -278,7 +278,23 @@ void InserirLista(Jogador jogador, Lista* lista) {
 
 }
 
-void SortLista(Lista lista);
+#define strcmpr(jog1, jog2) strcmp(jog1.nome, jog2.nome)
+
+void SortLista(Lista lista) {
+	int N = lista.size;
+	Jogador* array = lista.array;
+
+	int j;
+	Jogador temp;
+	for (int i = 1; i < N; i++) {
+		temp = array[i];
+		j = i - 1;
+		while (j >= 0 && strcmpr(array[j], temp) > 0) {
+			array[j-- + 1] = array[j];
+		}
+		array[j + 1] = temp;
+	}
+}
 
 void ToggleShowOnUpdateLista(Lista* lista) {
 	lista->showOnUpdate = lista->showOnUpdate ? false : true;
@@ -347,7 +363,7 @@ Lista newLista(size_t maxSize) {
 
 	lista.Inserir = InserirLista;
 
-	lista.Sort = SortLista;
+	lista.SortNome = SortNomeLista;
 
 	lista.ImportDataBase = ImportDataBaseBD;
 	lista.Get = GetLista;
@@ -379,26 +395,6 @@ bool PesquisaBinariaAux(String nome, int* comparacoes, Jogador* array, int left,
 
 bool PesquisaBinaria(String nome, int* comparacoes, Lista lista) {
 	return PesquisaBinariaAux(nome, comparacoes, lista.array, 0, lista.size - 1);
-}
-
-// ------------------- Ordenação por Nome -------------------
-
-#define strcmpr(jog1, jog2) strcmp(jog1.nome, jog2.nome)
-
-void SortLista(Lista lista) {
-	int N = lista.size;
-	Jogador* array = lista.array;
-
-	int j;
-	Jogador temp;
-	for (int i = 1; i < N; i++) {
-		temp = array[i];
-		j = i - 1;
-		while (j >= 0 && strcmpr(array[j], temp) > 0) {
-			array[j-- + 1] = array[j];
-		}
-		array[j + 1] = temp;
-	}
 }
 
 // ------------------- MAIN -------------------
