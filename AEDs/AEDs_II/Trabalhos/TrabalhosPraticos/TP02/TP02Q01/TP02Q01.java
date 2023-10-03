@@ -14,7 +14,7 @@ class TP02Q01 {
 
 		String inputPUBIN = new String();
 		
-		while (!(inputPUBIN = Lib.readstr()).equals("FIM")) {
+		while (!(inputPUBIN = Lib.readStr()).equals("FIM")) {
 			int id = Integer.parseInt(inputPUBIN);
 			listaJogadores.Inserir(BD.Get(id));
 		}
@@ -27,7 +27,7 @@ class TP02Q01 {
 class Lib {
 	static Scanner scanner = new Scanner(System.in);
 
-	public static String readstr() {
+	public static String readStr() {
 		return scanner.nextLine();
 	}
 }

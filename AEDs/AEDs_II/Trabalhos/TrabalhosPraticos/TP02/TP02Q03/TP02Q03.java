@@ -26,7 +26,7 @@ class TP02Q03 {
 
 		String inputPUBIN = new String();
 		
-		while (!(inputPUBIN = Lib.readstr()).equals("FIM")) {
+		while (!(inputPUBIN = Lib.readStr()).equals("FIM")) {
 			int id = Integer.parseInt(inputPUBIN);
 			jogadores.Inserir(BD.Get(id));
 		}
@@ -34,7 +34,7 @@ class TP02Q03 {
 		Timer timer = new Timer();
 		ResultadoPesquisa resultado = new ResultadoPesquisa();
 
-		while (!(inputPUBIN = Lib.readstr()).equals("FIM")) {
+		while (!(inputPUBIN = Lib.readStr()).equals("FIM")) {
 			PesquisaSequencial(inputPUBIN, jogadores, resultado);
 			System.out.println(resultado.getEncontrado() ? "SIM" : "NAO");
 		}
@@ -61,7 +61,7 @@ class Lib {
 
 	static Scanner scanner = new Scanner(System.in);
 
-	public static String readstr() {
+	public static String readStr() {
 		return scanner.nextLine();
 	}
 }
