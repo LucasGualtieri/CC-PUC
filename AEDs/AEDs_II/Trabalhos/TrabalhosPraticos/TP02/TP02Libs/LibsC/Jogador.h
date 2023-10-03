@@ -1,7 +1,6 @@
+#include "LibTP02.h"
 #include "Split.h"
 #include <string.h>
-
-typedef char* String;
 
 typedef struct Jogador {
 

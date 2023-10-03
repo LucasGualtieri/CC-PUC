@@ -5,21 +5,23 @@
 int main() {
 
 	Lista BD = newLista(BD_SIZE);
-	BD.ImportDataBase("../tmp/players.csv", &BD);
+	BD.ImportDataBase("/tmp/players.csv", &BD);
 
 
-	Lista listaJogadores = newLista(40); // Tamanho de entradada do Pub.in
+	Lista jogadores = newLista(40); // Tamanho de entradada do Pub.in
 
 	char inputPUBIN[STR_MAX_LEN];
 
 	while (strcmp(readStr(0, inputPUBIN), "FIM")) {
 		int id = atoi(inputPUBIN);
-		listaJogadores.Inserir(BD.Get(id, BD), &listaJogadores);
+		jogadores.Inserir(BD.Get(id, BD), &jogadores);
 	}
 
-	listaJogadores.Mostrar(listaJogadores);
+	jogadores.Mostrar(jogadores);
 
-	listaJogadores.Close(&listaJogadores);
+	jogadores.Close(&jogadores);
 	BD.Close(&BD);
 
 }
+
+void SortLista(Lista lista) {}

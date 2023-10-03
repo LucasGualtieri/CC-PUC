@@ -1,8 +1,9 @@
-#include "LibTP02.h"
-#include "Jogador.h"
-#include "Split.h"
+#ifndef LISTA_H
+#define LISTA_H
 
-const Jogador ERRO = { -0x7fffffff }; // Setta o Id
+#include "LibTP02.h"
+#include "Split.h"
+#include "Jogador.h"
 
 typedef struct Lista {
 
@@ -88,8 +89,6 @@ void ImportDataBaseBD(literal filePath, Lista* BD) {
 
 		BD->Inserir(jogador, BD);
 
-		array.close(array);
-
 	}
 
 }
@@ -109,7 +108,7 @@ Lista newLista(size_t maxSize) {
 
 	lista.Inserir = InserirLista;
 
-	// lista.Sort = SortLista;
+	lista.Sort = SortLista;
 
 	lista.ImportDataBase = ImportDataBaseBD;
 	lista.Get = GetLista;
@@ -120,3 +119,5 @@ Lista newLista(size_t maxSize) {
 
 	return lista;
 }
+
+#endif
