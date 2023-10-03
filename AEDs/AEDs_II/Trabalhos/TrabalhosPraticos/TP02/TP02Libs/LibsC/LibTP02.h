@@ -21,5 +21,6 @@ char* readStr(FILE* stream, String input) {
 }
 
 #include "Lista.h"
+#include "Timer.h"
 
 #endif
