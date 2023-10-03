@@ -3,16 +3,14 @@
 // clear && gcc TP02Q04.c && ./a.out < pub.in > result.txt
 
 bool PesquisaBinariaAux(String nome, int* comparacoes, Jogador* array, int left, int right) {
+	
 	int mid = (left + right) / 2;
 	String elementoBusca = array[mid].nome;
 
-	int result = strcmp(elementoBusca, nome);
-	// (*comparacoes)++;
-
-	if (result == 0) {
+	if (strstr(elementoBusca, nome)) {
 		(*comparacoes)++;
 		return true;
-	}	else if (result < 0) {
+	}	else if (strcmp(elementoBusca, nome) < 0) {
 		left = mid + 1;
 	}	else right = mid - 1;
 	(*comparacoes) += 2;
