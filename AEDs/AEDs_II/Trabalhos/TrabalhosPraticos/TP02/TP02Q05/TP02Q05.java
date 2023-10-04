@@ -68,7 +68,7 @@ class TP02Q05 {
 		printWriter.printf("Número de comparações: %d", resultado.getMovimentacoes());
 
 		printWriter.close();
-		
+
 	}
 
 }
