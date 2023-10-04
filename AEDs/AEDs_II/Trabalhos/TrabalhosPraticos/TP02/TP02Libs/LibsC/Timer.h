@@ -35,5 +35,6 @@ Timer newTimer() {
 	Timer timer;
 	timer.Start = TimerStart;
 	timer.Stop = TimerStop;
+	timer.Time = TimerTime;
 	return timer;
 }

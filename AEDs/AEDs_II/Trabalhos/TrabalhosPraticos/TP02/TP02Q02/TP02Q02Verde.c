@@ -209,17 +209,17 @@ typedef struct Lista {
 	int maxSize, size;
 	bool showOnUpdate;
 
-	void (*Inserir)(Jogador jogador, struct Lista*);
-	Jogador (*Remover)(struct Lista*);
+	void (*Inserir) (Jogador jogador, struct Lista*);
+	Jogador (*Remover) (struct Lista*);
 
-	void (*Sort)(struct Lista);
+	void (*SortNome) (struct Lista);
 
 	void (*ImportDataBase) (literal filePath, struct Lista*);
-	Jogador (*Get)(int id, struct Lista);
+	Jogador (*Get) (int id, struct Lista);
 
-	void (*ToggleShow)(struct Lista*);
-	void (*Mostrar)(struct Lista);
-	void (*Close)(struct Lista*);
+	void (*ToggleShow) (struct Lista*);
+	void (*Mostrar) (struct Lista);
+	void (*Close) (struct Lista*);
 
 } Lista;
 

@@ -11,17 +11,17 @@ typedef struct Lista {
 	int maxSize, size;
 	bool showOnUpdate;
 
-	void (*Inserir)(Jogador jogador, struct Lista*);
-	Jogador (*Remover)(struct Lista*);
+	void (*Inserir) (Jogador jogador, struct Lista*);
+	Jogador (*Remover) (struct Lista*);
 
-	void (*Sort)(struct Lista);
+	void (*SortNome) (struct Lista);
 
 	void (*ImportDataBase) (literal filePath, struct Lista*);
-	Jogador (*Get)(int id, struct Lista);
+	Jogador (*Get) (int id, struct Lista);
 
-	void (*ToggleShow)(struct Lista*);
-	void (*Mostrar)(struct Lista);
-	void (*Close)(struct Lista*);
+	void (*ToggleShow) (struct Lista*);
+	void (*Mostrar) (struct Lista);
+	void (*Close) (struct Lista*);
 
 } Lista;
 
@@ -38,8 +38,6 @@ void InserirLista(Jogador jogador, Lista* lista) {
 
 }
 
-#define strcmpr(jog1, jog2) strcmp(jog1.nome, jog2.nome)
-
 void SortNomeLista(Lista lista) {
 	int N = lista.size;
 	Jogador* array = lista.array;
@@ -49,7 +47,7 @@ void SortNomeLista(Lista lista) {
 	for (int i = 1; i < N; i++) {
 		temp = array[i];
 		j = i - 1;
-		while (j >= 0 && strcmpr(array[j], temp) > 0) {
+		while (j >= 0 && strcmp(array[j].nome, temp.nome) > 0) {
 			array[j-- + 1] = array[j];
 		}
 		array[j + 1] = temp;

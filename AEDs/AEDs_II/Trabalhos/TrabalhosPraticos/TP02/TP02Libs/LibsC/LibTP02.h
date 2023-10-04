@@ -12,6 +12,10 @@
 typedef const char* const literal;
 typedef char* String;
 
+typedef struct Resultado {
+	int comparacoes, movimentacoes;
+} Resultado;
+
 char* readStr(FILE* stream, String input) {
 	if (!stream) stream = stdin;
 
