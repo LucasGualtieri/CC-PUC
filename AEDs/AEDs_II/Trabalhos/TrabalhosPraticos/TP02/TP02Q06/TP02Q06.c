@@ -1,4 +1,4 @@
-#include "../TP02Libs/LibsC/LibTP02.h"
+#include "../LibTP02.h"
 
 // clear && gcc TP02Q06.c && ./a.out < pub.in > result.txt
 
@@ -37,7 +37,7 @@ void registroLog(Timer timer, Resultado resultado) {
 	FILE* file = fopen(fileName, "w");
 
 	fprintf(file, "Matrícula: 794989\t");
-	fprintf(file, "Tempo de execução: %fs\t", timer.Time(&timer));
+	fprintf(file, "Tempo de execução: %.3fs\t", timer.Time(&timer));
 	fprintf(file, "Número de comparações: %d\t", resultado.comparacoes);
 	fprintf(file, "Número de movimentações: %d", resultado.movimentacoes);
 
@@ -48,12 +48,12 @@ void registroLog(Timer timer, Resultado resultado) {
 int main() {
 	
 	Timer timer = newTimer();
-	Resultado resultado;
+	Resultado resultado = { 0, 0 };
 
 	Lista BD = newLista(BD_SIZE);
 	BD.ImportDataBase("../tmp/players.csv", &BD);
 
-	Lista jogadores = newLista(463); // Tamanho de entradadas do pub.in
+	Lista jogadores = newLista(465); // Tamanho de entradadas do pub.in
 
 	char inputPUBIN[STR_MAX_LEN];
 	while (strcmp(readStr(0, inputPUBIN), "FIM")) {
