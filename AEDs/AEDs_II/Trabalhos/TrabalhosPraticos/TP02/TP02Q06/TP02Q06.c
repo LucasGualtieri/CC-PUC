@@ -1,68 +1,75 @@
 #include "../TP02Libs/LibsC/LibTP02.h"
 
-// clear && gcc TP02Q04.c && ./a.out < pub.in > result.txt
+// clear && gcc TP02Q06.c && ./a.out < pub.in > result.txt
 
 #define strcmpr(jog1, jog2) strcmp(jog1.nome, jog2.nome)
 
-void SortLista(Lista lista) {
-	int N = lista.size;
-	Jogador* array = lista.array;
-
-	int j;
-	Jogador temp;
-	for (int i = 1; i < N; i++) {
-		temp = array[i];
-		j = i - 1;
-		while (j >= 0 && strcmpr(array[j], temp) > 0) {
-			array[j-- + 1] = array[j];
-		}
-		array[j + 1] = temp;
-	}
+void swap(Jogador* jog1, Jogador* jog2) {
+	Jogador aux = *jog1;
+	*jog1 = *jog2;
+	*jog2 = aux;
 }
 
-void registroLog(Timer timer, int comparacoes, int movimentacoes) {
+void SelectionSortRecursivo(int i, int j, int menor, Resultado* resultado, Lista array) {
+
+	if (j < array.size) {
+		if (strcmpr(array.array[menor], array.array[j]) > 0) menor = j;
+		resultado->comparacoes++;
+		SelectionSortRecursivo(i, j + 1, menor, resultado, array);
+	} else {
+		swap(&array.array[i], &array.array[menor]);
+		resultado->movimentacoes++;
+	}
+
+	if (++i < array.size - 1 && j == i) {
+		SelectionSortRecursivo(i, i + 1, i, resultado, array);
+	}
+
+}
+
+void SelectionSort(Resultado* resultado, Lista array) {
+	SelectionSortRecursivo(0, 1, 0, resultado, array);
+}
+
+void registroLog(Timer timer, Resultado resultado) {
 
 	literal fileName = "794989_selecaoRecursiva.txt";
 	FILE* file = fopen(fileName, "w");
 
 	fprintf(file, "Matrícula: 794989\t");
-	fprintf(file, "Tempo de execução: %.3fs\t", timer.Time(&timer));
-	fprintf(file, "Número de comparações: %d\t", comparacoes);
-	fprintf(file, "Número de movimentações: %d", movimentacoes);
+	fprintf(file, "Tempo de execução: %fs\t", timer.Time(&timer));
+	fprintf(file, "Número de comparações: %d\t", resultado.comparacoes);
+	fprintf(file, "Número de movimentações: %d", resultado.movimentacoes);
 
 	fclose(file);
 
 }
 
 int main() {
-
-	// Tem que pegar os pub in certo e fazer o sort padrao da lista na classe lista e os sorts dos deveres separados igual fiz com a pesquisa
 	
+	Timer timer = newTimer();
+	Resultado resultado;
+
 	Lista BD = newLista(BD_SIZE);
 	BD.ImportDataBase("../tmp/players.csv", &BD);
 
-	Lista listaJogadores = newLista(49); // Tamanho de entradadas do pub.in
+	Lista jogadores = newLista(463); // Tamanho de entradadas do pub.in
 
 	char inputPUBIN[STR_MAX_LEN];
-
 	while (strcmp(readStr(0, inputPUBIN), "FIM")) {
 		int id = atoi(inputPUBIN);
-		listaJogadores.Inserir(BD.Get(id, BD), &listaJogadores);
+		jogadores.Inserir(BD.Get(id, BD), &jogadores);
 	}
 
-	listaJogadores.Sort(listaJogadores);
-
-	Timer timer = newTimerStart();
-	int comparacoes = 0;
-	while (strcmp(readStr(0, inputPUBIN), "FIM")) {
-		bool resultado = PesquisaBinaria(inputPUBIN, &comparacoes, listaJogadores);
-		printf("%s\n", resultado ? "SIM" : "NAO");
-	}
+	timer.Start(&timer);
+	SelectionSort(&resultado, jogadores);
 	timer.Stop(&timer);
 
-	registroLog(timer, comparacoes);
+	jogadores.Mostrar(jogadores);
+	
+	registroLog(timer, resultado);
 
-	listaJogadores.Close(&listaJogadores);
+	jogadores.Close(&jogadores);
 	BD.Close(&BD);
 
 }
