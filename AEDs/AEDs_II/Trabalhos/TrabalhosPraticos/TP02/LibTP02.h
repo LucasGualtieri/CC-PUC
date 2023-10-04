@@ -7,6 +7,8 @@
 #include <string.h>
 #include <stdbool.h>
 
+// --------------------------- FUNÇÕES E DEFINIÇÕES AUXILIARES ---------------------------
+
 #define STR_MAX_LEN 80
 #define BD_SIZE 3923 // Quantidade Jogadores
 
@@ -24,6 +26,8 @@ char* readStr(FILE* stream, String input) {
 	input[(int)strcspn(input, "\n")] = '\0';
 	return input;
 }
+
+// --------------------------- CLASSE SPLIT ---------------------------
 
 #define MAX_ATTRIBUTES 8
 
@@ -48,6 +52,8 @@ Split newSplit(FILE* CSV) {
 
 	return split;
 }
+
+// --------------------------- CLASSE TIMER ---------------------------
 
 typedef struct Timer {
 	clock_t startTime;
@@ -87,6 +93,8 @@ Timer newTimer() {
 	timer.Time = TimerTime;
 	return timer;
 }
+
+// --------------------------- CLASSE JOGADOR ---------------------------
 
 typedef struct Jogador {
 
@@ -236,6 +244,8 @@ Jogador newJogador() {
 
 	return jogador;
 }
+
+// --------------------------- CLASSE LISTA ---------------------------
 
 typedef struct Lista {
 

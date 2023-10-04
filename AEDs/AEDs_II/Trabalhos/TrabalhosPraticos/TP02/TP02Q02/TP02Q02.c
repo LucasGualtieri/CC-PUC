@@ -1,12 +1,11 @@
-#include "../TP02Libs/LibsC/LibTP02.h"
+#include "..LibTP02.h"
 
 // clear && gcc TP02Q02.c && ./a.out < pub.in > result.txt
 
 int main() {
 
 	Lista BD = newLista(BD_SIZE);
-	BD.ImportDataBase("/tmp/players.csv", &BD);
-
+	BD.ImportDataBase("../tmp/players.csv", &BD);
 
 	Lista jogadores = newLista(40); // Tamanho de entradadas do pub.in
 

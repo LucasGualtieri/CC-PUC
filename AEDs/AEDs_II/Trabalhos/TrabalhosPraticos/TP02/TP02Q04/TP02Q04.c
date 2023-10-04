@@ -1,41 +1,44 @@
-#include "../TP02Libs/LibsC/LibTP02.h"
+#include "../LibTP02.h"
 
 // clear && gcc TP02Q04.c && ./a.out < pub.in > result.txt
 
-bool PesquisaBinariaAux(String nome, int* comparacoes, Jogador* array, int left, int right) {
+bool PesquisaBinariaAux(String nome, int left, int right, Resultado* resultado, Jogador* array) {
 	
 	int mid = (left + right) / 2;
 	String elementoBusca = array[mid].nome;
 
 	if (strstr(elementoBusca, nome)) {
-		(*comparacoes)++;
+		resultado->comparacoes++;
 		return true;
 	}	else if (strcmp(elementoBusca, nome) < 0) {
 		left = mid + 1;
 	}	else right = mid - 1;
-	(*comparacoes) += 2;
+	resultado->comparacoes += 2;
 
-	return left <= right ? PesquisaBinariaAux(nome, comparacoes, array, left, right) : false;
+	return left <= right ? PesquisaBinariaAux(nome, left, right, resultado, array) : false;
 }
 
-bool PesquisaBinaria(String nome, int* comparacoes, Lista lista) {
-	return PesquisaBinariaAux(nome, comparacoes, lista.array, 0, lista.size - 1);
+bool PesquisaBinaria(String nome, Resultado* resultado, Lista lista) {
+	return PesquisaBinariaAux(nome, 0, lista.size - 1, resultado, lista.array);
 }
 
-void registroLog(Timer timer, int comparacoes) {
+void registroLog(Timer timer, Resultado resultado) {
 
 	literal fileName = "794989_binaria.txt";
 	FILE* file = fopen(fileName, "w");
 
 	fprintf(file, "Matrícula: 794989\t");
-	fprintf(file, "Tempo de execução: %.3fs\t", timer.Time(&timer));
-	fprintf(file, "Número de comparações: %d\t", comparacoes);
+	fprintf(file, "Tempo de execução: %fs\t", timer.Time(&timer));
+	fprintf(file, "Número de comparações: %d", resultado.comparacoes);
 
 	fclose(file);
 
 }
 
 int main() {
+
+	Timer timer = newTimer();
+	Resultado resultado = { 0 };
 
 	Lista BD = newLista(BD_SIZE);
 	BD.ImportDataBase("../tmp/players.csv", &BD);
@@ -49,17 +52,16 @@ int main() {
 		jogadores.Inserir(BD.Get(id, BD), &jogadores);
 	}
 
-	jogadores.Sort(jogadores);
+	jogadores.SortNome(jogadores);
 
-	Timer timer = newTimerStart();
-	int comparacoes = 0;
+	timer.Start(&timer);
 	while (strcmp(readStr(0, inputPUBIN), "FIM")) {
-		bool resultado = PesquisaBinaria(inputPUBIN, &comparacoes, jogadores);
-		printf("%s\n", resultado ? "SIM" : "NAO");
+		bool achou = PesquisaBinaria(inputPUBIN, &resultado, jogadores);
+		printf("%s\n", achou ? "SIM" : "NAO");
 	}
 	timer.Stop(&timer);
 
-	registroLog(timer, comparacoes);
+	registroLog(timer, resultado);
 
 	jogadores.Close(&jogadores);
 	BD.Close(&BD);
