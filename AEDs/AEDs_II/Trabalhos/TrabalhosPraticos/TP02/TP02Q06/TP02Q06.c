@@ -18,7 +18,7 @@ void SelectionSortRecursivo(int i, int j, int menor, Resultado* resultado, Lista
 		SelectionSortRecursivo(i, j + 1, menor, resultado, array);
 	} else {
 		swap(&array.array[i], &array.array[menor]);
-		resultado->movimentacoes++;
+		resultado->movimentacoes += 3;
 	}
 
 	if (++i < array.size - 1 && j == i) {
