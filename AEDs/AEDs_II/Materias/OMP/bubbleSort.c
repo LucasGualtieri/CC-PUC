@@ -25,14 +25,14 @@ void swap(int* var1, int* var2) {
 // 	}
 // }
 
-void BubbleSort(IntArray array){
+void BubbleSort(IntArray array) {
 
 	int* buffer = array.array;
 	int N = array.size;
 
 	int j;
-	for (int i = 0; i < N; i++) {
-		for (j = 0; j < N; j++) {
+	for (int i = 0; i < N - 1; i++) {
+		for (j = 0; j < N - 1; j++) {
 			if (buffer[j] > buffer[j + 1]) {
 				swap(&buffer[j], &buffer[j + 1]);
 			}
