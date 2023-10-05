@@ -18,7 +18,7 @@ void SelectionSortRecursivo(int i, int j, int menor, Resultado* resultado, Lista
 		SelectionSortRecursivo(i, j + 1, menor, resultado, array);
 	} else {
 		swap(&array.array[i], &array.array[menor]);
-		resultado->movimentacoes += 3;
+		resultado->movimentacoes++;
 	}
 
 	if (++i < array.size - 1 && j == i) {
@@ -56,7 +56,7 @@ int main() {
 	Lista jogadores = newLista(465); // Tamanho de entradadas do pri.in
 
 	char inputPUBIN[STR_MAX_LEN];
-	
+
 	while (strcmp(readStr(0, inputPUBIN), "FIM")) {
 		int id = atoi(inputPUBIN);
 		jogadores.Inserir(BD.Get(id, BD), &jogadores);
