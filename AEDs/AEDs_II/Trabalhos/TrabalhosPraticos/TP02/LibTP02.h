@@ -263,6 +263,7 @@ typedef struct Lista {
 
 	void (*ToggleShow) (struct Lista*);
 	void (*Mostrar) (struct Lista);
+	void (*MostrarParcial) (int k, struct Lista);
 	void (*Close) (struct Lista*);
 
 } Lista;
@@ -308,6 +309,18 @@ void MostrarLista(Lista lista) {
 	}
 
 	for (int i = 0; i < lista.size; i++) {
+		lista.array[i].Mostrar(lista.array[i]);
+	}
+}
+
+void MostrarParcialLista(int k, Lista lista) {
+
+	if (lista.size == 0) {
+		fprintf(stderr, "Erro ao mostrar: Lista vazia.\n");
+		return;
+	}
+
+	for (int i = 0; i < k; i++) {
 		lista.array[i].Mostrar(lista.array[i]);
 	}
 }
@@ -371,6 +384,7 @@ Lista newLista(size_t maxSize) {
 
 	lista.ToggleShow = ToggleShowOnUpdateLista;
 	lista.Mostrar = MostrarLista;
+	lista.MostrarParcial = MostrarParcialLista;
 	lista.Close = CloseLista;
 
 	return lista;

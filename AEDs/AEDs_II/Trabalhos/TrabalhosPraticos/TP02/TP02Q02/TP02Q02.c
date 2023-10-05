@@ -7,18 +7,18 @@ int main() {
 	Lista BD = newLista(BD_SIZE);
 	BD.ImportDataBase("../tmp/players.csv", &BD);
 
-	Lista jogadores = newLista(40); // Tamanho de entradadas do pub.in
+	Lista listaJogadores = newLista(40); // Tamanho de entradadas do pub.in
 
 	char inputPUBIN[STR_MAX_LEN];
 
 	while (strcmp(readStr(0, inputPUBIN), "FIM")) {
 		int id = atoi(inputPUBIN);
-		jogadores.Inserir(BD.Get(id, BD), &jogadores);
+		listaJogadores.Inserir(BD.Get(id, BD), &listaJogadores);
 	}
 
-	jogadores.Mostrar(jogadores);
+	listaJogadores.Mostrar(listaJogadores);
 
-	jogadores.Close(&jogadores);
+	listaJogadores.Close(&listaJogadores);
 	BD.Close(&BD);
 
 }

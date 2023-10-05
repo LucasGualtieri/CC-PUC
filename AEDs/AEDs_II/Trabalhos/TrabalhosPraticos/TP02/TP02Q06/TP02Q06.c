@@ -18,7 +18,7 @@ void SelectionSortRecursivo(int i, int j, int menor, Resultado* resultado, Lista
 		SelectionSortRecursivo(i, j + 1, menor, resultado, array);
 	} else {
 		swap(&array.array[i], &array.array[menor]);
-		resultado->movimentacoes++;
+		resultado->movimentacoes += 3;
 	}
 
 	if (++i < array.size - 1 && j == i) {
@@ -37,7 +37,7 @@ void registroLog(Timer timer, Resultado resultado) {
 	FILE* file = fopen(fileName, "w");
 
 	fprintf(file, "Matrícula: 794989\t");
-	fprintf(file, "Tempo de execução: %.3fs\t", timer.Time(&timer));
+	fprintf(file, "Tempo de execução: %fs\t", timer.Time(&timer));
 	fprintf(file, "Número de comparações: %d\t", resultado.comparacoes);
 	fprintf(file, "Número de movimentações: %d", resultado.movimentacoes);
 
@@ -53,24 +53,24 @@ int main() {
 	Lista BD = newLista(BD_SIZE);
 	BD.ImportDataBase("../tmp/players.csv", &BD);
 
-	Lista jogadores = newLista(465); // Tamanho de entradadas do pri.in
+	Lista listaJogadores = newLista(465); // Tamanho de entradadas do pri.in
 
 	char inputPUBIN[STR_MAX_LEN];
 
 	while (strcmp(readStr(0, inputPUBIN), "FIM")) {
 		int id = atoi(inputPUBIN);
-		jogadores.Inserir(BD.Get(id, BD), &jogadores);
+		listaJogadores.Inserir(BD.Get(id, BD), &listaJogadores);
 	}
 
 	timer.Start(&timer);
-	SelectionSort(&resultado, jogadores);
+	SelectionSort(&resultado, listaJogadores);
 	timer.Stop(&timer);
 
-	jogadores.Mostrar(jogadores);
-	
+	listaJogadores.Mostrar(listaJogadores);
+
 	registroLog(timer, resultado);
 
-	jogadores.Close(&jogadores);
+	listaJogadores.Close(&listaJogadores);
 	BD.Close(&BD);
 
 }
