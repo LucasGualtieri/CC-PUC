@@ -35,7 +35,7 @@ class TP02Q05 {
 	public static void main(String[] args) throws Exception {
 
 		Lista BD = new Lista("/tmp/players.csv", BD_SIZE);
-		Lista jogadores = new Lista(465); // Tamanho de entradadas do pri.in
+		Lista jogadores = new Lista(465); // Tamanho de entradas do pri.in
 
 		String inputPUBIN = new String();
 		
