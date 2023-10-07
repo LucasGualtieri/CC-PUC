@@ -1,4 +1,4 @@
-#include "../LibTP02.h"
+#include "../Libs/LibTP02.h"
 
 // clear && gcc TP02Q04.c && ./a.out < pub.in > result.txt
 
@@ -22,18 +22,7 @@ bool PesquisaBinaria(String nome, Resultado* resultado, Lista lista) {
 	return PesquisaBinariaAux(nome, 0, lista.size - 1, resultado, lista.array);
 }
 
-void registroLog(Timer timer, Resultado resultado) {
-
-	literal fileName = "794989_binaria.txt";
-	FILE* file = fopen(fileName, "w");
-
-	fprintf(file, "Matrícula: 794989\t");
-	fprintf(file, "Tempo de execução: %fs\t", timer.Time(&timer));
-	fprintf(file, "Número de comparações: %d", resultado.comparacoes);
-
-	fclose(file);
-
-}
+void registroLog(Timer timer, Resultado resultado);
 
 int main() {
 
@@ -52,7 +41,7 @@ int main() {
 		listaJogadores.Inserir(BD.Get(id, BD), &listaJogadores);
 	}
 
-	listaJogadores.SortNome(listaJogadores);
+	listaJogadores.SortByNome(listaJogadores);
 
 	timer.Start(&timer);
 	while (strcmp(readStr(0, inputPUBIN), "FIM")) {
@@ -65,5 +54,18 @@ int main() {
 
 	listaJogadores.Close(&listaJogadores);
 	BD.Close(&BD);
+
+}
+
+void registroLog(Timer timer, Resultado resultado) {
+
+	literal fileName = "794989_binaria.txt";
+	FILE* file = fopen(fileName, "w");
+
+	fprintf(file, "Matrícula: 794989\t");
+	fprintf(file, "Tempo de execução: %fs\t", timer.Time(&timer));
+	fprintf(file, "Número de comparações: %d", resultado.comparacoes);
+
+	fclose(file);
 
 }

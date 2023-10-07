@@ -1,14 +1,8 @@
-#include "../LibTP02.h"
+#include "../Libs/LibTP02.h"
 
 // clear && gcc TP02Q06.c && ./a.out < pub.in > result.txt
 
 #define strcmpr(jog1, jog2) strcmp(jog1.nome, jog2.nome)
-
-void swap(Jogador* jog1, Jogador* jog2) {
-	Jogador aux = *jog1;
-	*jog1 = *jog2;
-	*jog2 = aux;
-}
 
 void SelectionSortRecursivo(int i, int j, int menor, Resultado* resultado, Lista array) {
 
@@ -31,19 +25,7 @@ void SelectionSort(Resultado* resultado, Lista array) {
 	SelectionSortRecursivo(0, 1, 0, resultado, array);
 }
 
-void registroLog(Timer timer, Resultado resultado) {
-
-	literal fileName = "794989_selecaoRecursiva.txt";
-	FILE* file = fopen(fileName, "w");
-
-	fprintf(file, "Matrícula: 794989\t");
-	fprintf(file, "Tempo de execução: %fs\t", timer.Time(&timer));
-	fprintf(file, "Número de comparações: %d\t", resultado.comparacoes);
-	fprintf(file, "Número de movimentações: %d", resultado.movimentacoes);
-
-	fclose(file);
-
-}
+void registroLog(Timer timer, Resultado resultado);
 
 int main() {
 	
@@ -72,5 +54,19 @@ int main() {
 
 	listaJogadores.Close(&listaJogadores);
 	BD.Close(&BD);
+
+}
+
+void registroLog(Timer timer, Resultado resultado) {
+
+	literal fileName = "794989_selecaoRecursiva.txt";
+	FILE* file = fopen(fileName, "w");
+
+	fprintf(file, "Matrícula: 794989\t");
+	fprintf(file, "Tempo de execução: %fs\t", timer.Time(&timer));
+	fprintf(file, "Número de comparações: %d\t", resultado.comparacoes);
+	fprintf(file, "Número de movimentações: %d", resultado.movimentacoes);
+
+	fclose(file);
 
 }

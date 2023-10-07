@@ -2,20 +2,6 @@
 
 // clear && gcc TP02Q16.c && ./a.out < pub.in > result.txt
 
-void registroLog(Timer timer, Resultado resultado) {
-
-	literal fileName = "794989_insercao.txt";
-	FILE* file = fopen(fileName, "w");
-
-	fprintf(file, "Matrícula: 794989\t");
-	fprintf(file, "Tempo de execução: %fs\t", timer.Time(&timer));
-	fprintf(file, "Número de comparações: %d\t", resultado.comparacoes);
-	fprintf(file, "Número de movimentações: %d", resultado.movimentacoes);
-
-	fclose(file);
-
-}
-
 void InsertionSortParcial(int k, Resultado* resultado, Lista listaJogadores) {
 	
 	int N = listaJogadores.size;
@@ -40,6 +26,8 @@ void InsertionSortParcial(int k, Resultado* resultado, Lista listaJogadores) {
 		resultado->movimentacoes += 2;
 	}
 }
+
+void registroLog(Timer timer, Resultado resultado);
 
 int main() {
 	
@@ -72,5 +60,19 @@ int main() {
 
 	// listaJogadores.Close(&listaJogadores);
 	BD.Close(&BD);
+
+}
+
+void registroLog(Timer timer, Resultado resultado) {
+
+	literal fileName = "794989_insercao.txt";
+	FILE* file = fopen(fileName, "w");
+
+	fprintf(file, "Matrícula: 794989\t");
+	fprintf(file, "Tempo de execução: %fs\t", timer.Time(&timer));
+	fprintf(file, "Número de comparações: %d\t", resultado.comparacoes);
+	fprintf(file, "Número de movimentações: %d", resultado.movimentacoes);
+
+	fclose(file);
 
 }

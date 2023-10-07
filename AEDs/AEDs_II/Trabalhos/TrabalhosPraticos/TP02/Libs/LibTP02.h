@@ -77,15 +77,6 @@ double TimerTime(Timer* timer) {
 	return timer->totalTime;
 }
 
-Timer newTimerStart() {
-	Timer timer;
-	timer.Start = TimerStart;
-	timer.Stop = TimerStop;
-	timer.Time = TimerTime;
-	timer.Start(&timer);
-	return timer;
-}
-
 Timer newTimer() {
 	Timer timer;
 	timer.Start = TimerStart;
@@ -256,7 +247,7 @@ typedef struct Lista {
 	void (*Inserir) (Jogador jogador, struct Lista*);
 	Jogador (*Remover) (struct Lista*);
 
-	void (*SortNome) (struct Lista);
+	void (*SortByNome) (struct Lista);
 
 	void (*ImportDataBase) (literal filePath, struct Lista*);
 	Jogador (*Get) (int id, struct Lista);
@@ -281,7 +272,13 @@ void InserirLista(Jogador jogador, Lista* lista) {
 
 }
 
-void SortNomeLista(Lista lista) {
+void swap(Jogador* jog1, Jogador* jog2) {
+	Jogador aux = *jog1;
+	*jog1 = *jog2;
+	*jog2 = aux;
+}
+
+void SortByNomeLista(Lista lista) {
 	int N = lista.size;
 	Jogador* array = lista.array;
 
@@ -377,7 +374,7 @@ Lista newLista(size_t maxSize) {
 
 	lista.Inserir = InserirLista;
 
-	lista.SortNome = SortNomeLista;
+	lista.SortByNome = SortByNomeLista;
 
 	lista.ImportDataBase = ImportDataBaseBD;
 	lista.Get = GetLista;

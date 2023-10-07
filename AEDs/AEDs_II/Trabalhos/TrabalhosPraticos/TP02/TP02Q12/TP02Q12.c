@@ -1,26 +1,6 @@
-#include "../LibTP02.h"
+#include "../Libs/LibTP02.h"
 
 // clear && gcc TP02Q12.c && ./a.out < pub.in > result.txt
-
-void swap(Jogador* jog1, Jogador* jog2) {
-	Jogador aux = *jog1;
-	*jog1 = *jog2;
-	*jog2 = aux;
-}
-
-void registroLog(Timer timer, Resultado resultado) {
-
-	literal fileName = "794989_bolha.txt";
-	FILE* file = fopen(fileName, "w");
-
-	fprintf(file, "Matrícula: 794989\t");
-	fprintf(file, "Tempo de execução: %fs\t", timer.Time(&timer));
-	fprintf(file, "Número de comparações: %d\t", resultado.comparacoes);
-	fprintf(file, "Número de movimentações: %d", resultado.movimentacoes);
-
-	fclose(file);
-
-}
 
 void BubbleSort(Resultado* resultado, Lista jogadores) {
 
@@ -31,13 +11,15 @@ void BubbleSort(Resultado* resultado, Lista jogadores) {
 		// for (j = 0; j < N - i - 1; j++) { // Bubble Otimizado
 		for (int j = 0; j < N - 1; j++) {
 			if (array[j].anoNascimento > array[j + 1].anoNascimento) {
-				resultado->comparacoes++;
 				swap(&array[j], &array[j + 1]);
+				resultado->comparacoes++;
 				resultado->movimentacoes += 3;
 			}
 		}
 	}
 }
+
+void registroLog(Timer timer, Resultado resultado);
 
 int main() {
 	
@@ -56,7 +38,7 @@ int main() {
 		listaJogadores.Inserir(BD.Get(id, BD), &listaJogadores);
 	}
 
-	listaJogadores.SortNome(listaJogadores);
+	listaJogadores.SortByNome(listaJogadores);
 
 	timer.Start(&timer);
 	BubbleSort(&resultado, listaJogadores);
@@ -68,5 +50,19 @@ int main() {
 
 	listaJogadores.Close(&listaJogadores);
 	BD.Close(&BD);
+
+}
+
+void registroLog(Timer timer, Resultado resultado) {
+
+	literal fileName = "794989_bolha.txt";
+	FILE* file = fopen(fileName, "w");
+
+	fprintf(file, "Matrícula: 794989\t");
+	fprintf(file, "Tempo de execução: %fs\t", timer.Time(&timer));
+	fprintf(file, "Número de comparações: %d\t", resultado.comparacoes);
+	fprintf(file, "Número de movimentações: %d", resultado.movimentacoes);
+
+	fclose(file);
 
 }
