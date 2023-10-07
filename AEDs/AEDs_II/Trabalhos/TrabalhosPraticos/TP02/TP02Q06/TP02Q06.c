@@ -4,33 +4,31 @@
 
 #define strcmpr(jog1, jog2) strcmp(jog1.nome, jog2.nome)
 
-void SelectionSortRecursivo(int i, int j, int menor, Resultado* resultado, Lista array) {
+void SelectionSortRecursivo(int i, int j, int menor, Log* log, Lista array) {
 
 	if (j < array.size) {
 		if (strcmpr(array.array[menor], array.array[j]) > 0) menor = j;
-		resultado->comparacoes++;
-		SelectionSortRecursivo(i, j + 1, menor, resultado, array);
+		log->comparacoes++;
+		SelectionSortRecursivo(i, j + 1, menor, log, array);
 	} else {
 		swap(&array.array[i], &array.array[menor]);
-		resultado->movimentacoes += 3;
+		log->movimentacoes += 3;
 	}
 
 	if (++i < array.size - 1 && j == i) {
-		SelectionSortRecursivo(i, i + 1, i, resultado, array);
+		SelectionSortRecursivo(i, i + 1, i, log, array);
 	}
 
 }
 
-void SelectionSort(Resultado* resultado, Lista array) {
-	SelectionSortRecursivo(0, 1, 0, resultado, array);
+void SelectionSort(Log* log, Lista array) {
+	SelectionSortRecursivo(0, 1, 0, log, array);
 }
-
-void registroLog(Timer timer, Resultado resultado);
 
 int main() {
 	
 	Timer timer = newTimer();
-	Resultado resultado = { 0, 0 };
+	Log log = newLog();
 
 	Lista BD = newLista(BD_SIZE);
 	BD.ImportDataBase("../tmp/players.csv", &BD);
@@ -45,28 +43,14 @@ int main() {
 	}
 
 	timer.Start(&timer);
-	SelectionSort(&resultado, listaJogadores);
+	SelectionSort(&log, listaJogadores);
 	timer.Stop(&timer);
 
 	listaJogadores.Mostrar(listaJogadores);
 
-	registroLog(timer, resultado);
+	log.RegistroOrdenacao("794989_selecaoRecursiva.txt", timer, log);
 
 	listaJogadores.Close(&listaJogadores);
 	BD.Close(&BD);
-
-}
-
-void registroLog(Timer timer, Resultado resultado) {
-
-	literal fileName = "794989_selecaoRecursiva.txt";
-	FILE* file = fopen(fileName, "w");
-
-	fprintf(file, "Matrícula: 794989\t");
-	fprintf(file, "Tempo de execução: %fs\t", timer.Time(&timer));
-	fprintf(file, "Número de comparações: %d\t", resultado.comparacoes);
-	fprintf(file, "Número de movimentações: %d", resultado.movimentacoes);
-
-	fclose(file);
 
 }

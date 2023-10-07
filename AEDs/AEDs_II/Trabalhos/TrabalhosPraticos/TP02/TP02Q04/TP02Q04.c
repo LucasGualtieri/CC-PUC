@@ -2,32 +2,30 @@
 
 // clear && gcc TP02Q04.c && ./a.out < pub.in > result.txt
 
-bool PesquisaBinariaAux(String nome, int left, int right, Resultado* resultado, Jogador* array) {
+bool PesquisaBinariaAux(String nome, int left, int right, Log* log, Jogador* array) {
 	
 	int mid = (left + right) / 2;
 	String elementoBusca = array[mid].nome;
 
 	if (strstr(elementoBusca, nome)) {
-		resultado->comparacoes++;
+		log->comparacoes++;
 		return true;
 	}	else if (strcmp(elementoBusca, nome) < 0) {
 		left = mid + 1;
 	}	else right = mid - 1;
-	resultado->comparacoes += 2;
+	log->comparacoes += 2;
 
-	return left <= right ? PesquisaBinariaAux(nome, left, right, resultado, array) : false;
+	return left <= right ? PesquisaBinariaAux(nome, left, right, log, array) : false;
 }
 
-bool PesquisaBinaria(String nome, Resultado* resultado, Lista lista) {
-	return PesquisaBinariaAux(nome, 0, lista.size - 1, resultado, lista.array);
+bool PesquisaBinaria(String nome, Log* log, Lista lista) {
+	return PesquisaBinariaAux(nome, 0, lista.size - 1, log, lista.array);
 }
-
-void registroLog(Timer timer, Resultado resultado);
 
 int main() {
 
 	Timer timer = newTimer();
-	Resultado resultado = { 0 };
+	Log log = newLog();
 
 	Lista BD = newLista(BD_SIZE);
 	BD.ImportDataBase("../tmp/players.csv", &BD);
@@ -45,27 +43,14 @@ int main() {
 
 	timer.Start(&timer);
 	while (strcmp(readStr(0, inputPUBIN), "FIM")) {
-		bool achou = PesquisaBinaria(inputPUBIN, &resultado, listaJogadores);
-		printf("%s\n", achou ? "SIM" : "NAO");
+		bool hasFound = PesquisaBinaria(inputPUBIN, &log, listaJogadores);
+		printf("%s\n", hasFound ? "SIM" : "NAO");
 	}
 	timer.Stop(&timer);
 
-	registroLog(timer, resultado);
+	log.RegistroPesquisa("794989_binaria.txt", timer, log);
 
 	listaJogadores.Close(&listaJogadores);
 	BD.Close(&BD);
-
-}
-
-void registroLog(Timer timer, Resultado resultado) {
-
-	literal fileName = "794989_binaria.txt";
-	FILE* file = fopen(fileName, "w");
-
-	fprintf(file, "Matrícula: 794989\t");
-	fprintf(file, "Tempo de execução: %fs\t", timer.Time(&timer));
-	fprintf(file, "Número de comparações: %d", resultado.comparacoes);
-
-	fclose(file);
 
 }

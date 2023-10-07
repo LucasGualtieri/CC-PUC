@@ -15,10 +15,6 @@
 typedef const char* const literal;
 typedef char* String;
 
-typedef struct Resultado {
-	int comparacoes, movimentacoes;
-} Resultado;
-
 char* readStr(FILE* stream, String input) {
 	if (!stream) stream = stdin;
 
@@ -85,6 +81,42 @@ Timer newTimer() {
 	return timer;
 }
 
+// --------------------------- CLASSE LOG ---------------------------
+
+typedef struct Log {
+	int comparacoes, movimentacoes;
+	void (*RegistroPesquisa) (literal fileName, Timer, struct Log);
+	void (*RegistroOrdenacao) (literal fileName, Timer, struct Log);
+} Log;
+
+void RegistroPesquisa(literal fileName, Timer timer, Log log) {
+	FILE* file = fopen(fileName, "w");
+
+	fprintf(file, "Matrícula: 794989\t");
+	fprintf(file, "Tempo de execução: %fs\t", timer.Time(&timer));
+	fprintf(file, "Número de comparações: %d", log.comparacoes);
+
+	fclose(file);
+}
+
+void RegistroOrdenacao(literal fileName, Timer timer, Log log) {
+	FILE* file = fopen(fileName, "w");
+
+	fprintf(file, "Matrícula: 794989\t");
+	fprintf(file, "Tempo de execução: %fs\t", timer.Time(&timer));
+	fprintf(file, "Número de comparações: %d\t", log.comparacoes);
+	fprintf(file, "Número de movimentações: %d", log.movimentacoes);
+
+	fclose(file);
+}
+
+Log newLog() {
+	Log log = { 0, 0 };
+	log.RegistroPesquisa = RegistroPesquisa;
+	log.RegistroOrdenacao = RegistroOrdenacao;
+	return log;
+}
+
 // --------------------------- CLASSE JOGADOR ---------------------------
 
 typedef struct Jogador {
@@ -119,7 +151,7 @@ typedef struct Jogador {
 	// Setter - EstadoNascimento
 	void (*setEstadoNascimento) (String estadoNascimento, struct Jogador*);
 
-	void (*Construtor) (Split array, struct Jogador*);
+	void (*Construtor) (Split, struct Jogador*);
 	struct Jogador (*Clone) (struct Jogador);
 	void (*Mostrar) (struct Jogador);
 	void (*Close) (struct Jogador);
@@ -244,7 +276,7 @@ typedef struct Lista {
 	int maxSize, size;
 	bool showOnUpdate;
 
-	void (*Inserir) (Jogador jogador, struct Lista*);
+	void (*Inserir) (Jogador, struct Lista*);
 	Jogador (*Remover) (struct Lista*);
 
 	void (*SortByNome) (struct Lista);

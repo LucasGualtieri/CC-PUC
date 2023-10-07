@@ -2,7 +2,7 @@
 
 // clear && gcc TP02Q12.c && ./a.out < pub.in > result.txt
 
-void BubbleSort(Resultado* resultado, Lista jogadores) {
+void BubbleSort(Log* log, Lista jogadores) {
 
 	Jogador* array = jogadores.array;
 	int N = jogadores.size;
@@ -12,19 +12,19 @@ void BubbleSort(Resultado* resultado, Lista jogadores) {
 		for (int j = 0; j < N - 1; j++) {
 			if (array[j].anoNascimento > array[j + 1].anoNascimento) {
 				swap(&array[j], &array[j + 1]);
-				resultado->comparacoes++;
-				resultado->movimentacoes += 3;
+				log->comparacoes++;
+				log->movimentacoes += 3;
 			}
 		}
 	}
 }
 
-void registroLog(Timer timer, Resultado resultado);
+void registroLog(Timer timer, Log log);
 
 int main() {
 	
 	Timer timer = newTimer();
-	Resultado resultado = { 0, 0 };
+	Log log = newLog();
 
 	Lista BD = newLista(BD_SIZE);
 	BD.ImportDataBase("../tmp/players.csv", &BD);
@@ -41,28 +41,14 @@ int main() {
 	listaJogadores.SortByNome(listaJogadores);
 
 	timer.Start(&timer);
-	BubbleSort(&resultado, listaJogadores);
+	BubbleSort(&log, listaJogadores);
 	timer.Stop(&timer);
 
 	listaJogadores.Mostrar(listaJogadores);
 
-	registroLog(timer, resultado);
+	log.RegistroOrdenacao("794989_bolha.txt", timer, log);
 
 	listaJogadores.Close(&listaJogadores);
 	BD.Close(&BD);
-
-}
-
-void registroLog(Timer timer, Resultado resultado) {
-
-	literal fileName = "794989_bolha.txt";
-	FILE* file = fopen(fileName, "w");
-
-	fprintf(file, "Matrícula: 794989\t");
-	fprintf(file, "Tempo de execução: %fs\t", timer.Time(&timer));
-	fprintf(file, "Número de comparações: %d\t", resultado.comparacoes);
-	fprintf(file, "Número de movimentações: %d", resultado.movimentacoes);
-
-	fclose(file);
 
 }

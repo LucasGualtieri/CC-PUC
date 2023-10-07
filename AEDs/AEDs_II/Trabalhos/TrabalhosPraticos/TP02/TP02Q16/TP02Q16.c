@@ -1,8 +1,8 @@
-#include "../LibTP02.h"
+#include "../Libs/LibTP02.h"
 
 // clear && gcc TP02Q16.c && ./a.out < pub.in > result.txt
 
-void InsertionSortParcial(int k, Resultado* resultado, Lista listaJogadores) {
+void InsertionSortParcial(int k, Log* log, Lista listaJogadores) {
 	
 	int N = listaJogadores.size;
 	Jogador* array = listaJogadores.array;
@@ -15,24 +15,22 @@ void InsertionSortParcial(int k, Resultado* resultado, Lista listaJogadores) {
 		j = (i < k) ? i - 1 : k - 1;
 		// if (i == k) printf("Perdido: %s\n", array[k].nome);
 
-		resultado->comparacoes++;
+		log->comparacoes++;
 		while (j >= 0 && array[j].anoNascimento > temp.anoNascimento) {
 			array[j-- + 1] = array[j];
-			resultado->comparacoes++;
-			resultado->movimentacoes++;
+			log->comparacoes++;
+			log->movimentacoes++;
 		}
 
 		array[j + 1] = temp;
-		resultado->movimentacoes += 2;
+		log->movimentacoes += 2;
 	}
 }
-
-void registroLog(Timer timer, Resultado resultado);
 
 int main() {
 	
 	Timer timer = newTimer();
-	Resultado resultado = { 0, 0 };
+	Log log = newLog();
 
 	Lista BD = newLista(BD_SIZE);
 	BD.ImportDataBase("../tmp/players.csv", &BD);
@@ -46,33 +44,19 @@ int main() {
 		listaJogadores.Inserir(BD.Get(id, BD), &listaJogadores);
 	}
 
-	listaJogadores.SortNome(listaJogadores);
+	listaJogadores.SortByNome(listaJogadores);
 
 	int k = 10;
 
 	timer.Start(&timer);
-	InsertionSortParcial(k, &resultado, listaJogadores);
+	InsertionSortParcial(k, &log, listaJogadores);
 	timer.Stop(&timer);
 
 	listaJogadores.MostrarParcial(k, listaJogadores);
 
-	registroLog(timer, resultado);
+	log.RegistroOrdenacao("794989_insercao.txt", timer, log);
 
 	// listaJogadores.Close(&listaJogadores);
 	BD.Close(&BD);
-
-}
-
-void registroLog(Timer timer, Resultado resultado) {
-
-	literal fileName = "794989_insercao.txt";
-	FILE* file = fopen(fileName, "w");
-
-	fprintf(file, "Matrícula: 794989\t");
-	fprintf(file, "Tempo de execução: %fs\t", timer.Time(&timer));
-	fprintf(file, "Número de comparações: %d\t", resultado.comparacoes);
-	fprintf(file, "Número de movimentações: %d", resultado.movimentacoes);
-
-	fclose(file);
 
 }
