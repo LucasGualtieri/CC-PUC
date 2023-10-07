@@ -8,38 +8,22 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 
 public class Lib {
+
+	// --------------------------- FUNÇÕES AUXILIARES ---------------------------
+
 	static Scanner scanner = new Scanner(System.in);
 
-	public static class Log {
-		private static int comparacoes, movimentacoes;
-
-		public Log() {
-			this(0, 0);
-		}
-		
-		public Log(int comparacoes, int movimentacoes) {
-			this.comparacoes = comparacoes;
-			this.movimentacoes = movimentacoes;
-		}
-
-		public static void registroPesquisa(Lib.Timer timer) throws Exception {
-	
-			String fileName = "794989_sequencial.txt";
-			PrintWriter printWriter = new PrintWriter(new FileWriter(fileName));
-
-			printWriter.printf("Matrícula: 794989\t");
-			printWriter.printf("Tempo de execução: %fs\t", timer.Time());
-			printWriter.printf("Número de comparações: %d", comparacoes);
-
-			printWriter.close();
-				
-		}
-
-		public void incrementarComparacoes() { this.comparacoes++; }
-		public void incrementarMovimentacoes(int movimentacoes) {
-			this.movimentacoes += movimentacoes;
-		}
+	public static String readStr() {
+		return scanner.nextLine();
 	}
+
+	public static void swap(int i, int menor, Lib.Jogador[] array) {
+		Lib.Jogador aux = array[i];
+		array[i] = array[menor];
+		array[menor] = aux;
+	}
+
+	// --------------------------- CLASSE TIMER ---------------------------
 
 	public static class Timer {
 	
@@ -58,6 +42,53 @@ public class Lib {
 		}
 
 	}
+
+	// --------------------------- CLASSE LOG ---------------------------
+
+	public static class Log {
+		private static int comparacoes, movimentacoes;
+
+		public Log() {
+			this(0, 0);
+		}
+		
+		public Log(int comparacoes, int movimentacoes) {
+			this.comparacoes = comparacoes;
+			this.movimentacoes = movimentacoes;
+		}
+
+		public static void RegistroPesquisa(String fileName, Lib.Timer timer) throws Exception {
+
+			PrintWriter printWriter = new PrintWriter(new FileWriter(fileName));
+
+			printWriter.printf("Matrícula: 794989\t");
+			printWriter.printf("Tempo de execução: %fs\t", timer.Time());
+			printWriter.printf("Número de comparações: %d", comparacoes);
+
+			printWriter.close();
+				
+		}
+
+		public static void RegistroOrdenacao(String fileName, Lib.Timer timer) throws Exception {
+
+			PrintWriter printWriter = new PrintWriter(new FileWriter(fileName));
+
+			printWriter.printf("Matrícula: 794989\t");
+			printWriter.printf("Tempo de execução: %fs\t", timer.Time());
+			printWriter.printf("Número de comparações: %d\t", comparacoes);
+			printWriter.printf("Número de movimentações: %d", movimentacoes);
+
+			printWriter.close();
+				
+		}
+
+		public void incrementarComparacoes() { this.comparacoes++; }
+		public void incrementarMovimentacoes(int movimentacoes) {
+			this.movimentacoes += movimentacoes;
+		}
+	}
+
+	// --------------------------- CLASSE JOGADOR ---------------------------
 
 	public static class Jogador {
 		private int id, altura, peso, anoNascimento;
@@ -165,6 +196,8 @@ public class Lib {
 
 	}
 
+	// --------------------------- CLASSE LISTA ---------------------------
+
 	public static class Lista {
 		private int maxSize, size;
 		private boolean showOnUpdate;
@@ -198,38 +231,18 @@ public class Lib {
 
 		}
 
-		public Jogador Remover() throws Exception {
-
-			if (this.size == 0) {
-				throw new Exception("Erro ao remover: Fila vazia.\n");
-			}
-
-			Jogador removido = this.array[0];
-
-			for (int i = 0; i < this.size - 1; i++) {
-				this.array[i] = this.array[i + 1];
-			}
-
-			this.size--;
-
-			if (this.showOnUpdate) this.Mostrar();
-
-			return removido;
-
-		}
-
 		private int strcmp(Jogador jog1, Jogador jog2) {
 			return jog1.getNome().compareTo(jog2.getNome());
 		}
 
-		public void Sort() {
+		public void SortByNome() {
 			int j;
 			Jogador temp;
 			for (int i = 1; i < this.size; i++) {
 				temp = array[i];
 				j = i - 1;
 				while (j >= 0 && strcmp(this.array[j], temp) > 0) {
-					this.array[j-- + 1] = this.array[j];
+					this.array[j + 1] = this.array[j--];
 				}
 				this.array[j + 1] = temp;
 			}
@@ -278,7 +291,4 @@ public class Lib {
 
 	}
 
-	public static String readStr() {
-		return scanner.nextLine();
-	}
 }

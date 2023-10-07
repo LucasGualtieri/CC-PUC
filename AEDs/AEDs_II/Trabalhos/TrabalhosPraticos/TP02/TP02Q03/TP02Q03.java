@@ -27,23 +27,23 @@ class TP02Q03 {
 		Lib.Log resultado = new Lib.Log();
 
 		Lib.Lista BD = new Lib.Lista("../tmp/players.csv", BD_SIZE);
-		Lib.Lista jogadores = new Lib.Lista(74); // Tamanho de entradas do pri.in
+		Lib.Lista listaJogadores = new Lib.Lista(74); // Tamanho de entradas do pri.in
 
 		String inputPUBIN = new String();
 		
 		while (!(inputPUBIN = Lib.readStr()).equals("FIM")) {
 			int id = Integer.parseInt(inputPUBIN);
-			jogadores.Inserir(BD.Get(id));
+			listaJogadores.Inserir(BD.Get(id));
 		}
 
 		timer.Start();
 		while (!(inputPUBIN = Lib.readStr()).equals("FIM")) {
-			boolean hasFound = PesquisaSequencial(inputPUBIN, jogadores, resultado);
+			boolean hasFound = PesquisaSequencial(inputPUBIN, listaJogadores, resultado);
 			System.out.println(hasFound ? "SIM" : "NAO");
 		}
 		timer.Stop();
 
-		Lib.Log.registroPesquisa(timer);		
+		Lib.Log.RegistroPesquisa("794989_sequencial.txt", timer);		
 
 	}
 }
