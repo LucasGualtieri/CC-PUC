@@ -15,7 +15,7 @@ void CountingSort(IntArray array) {
 		if (buffer[i] > maxValue) maxValue = buffer[i];
 	}
 
-	int* auxArray = (int*)calloc(maxValue, sizeof(int));
+	int* auxArray = (int*)calloc(maxValue + 1, sizeof(int));
 
 	// int* auxArray = (int*)malloc(maxValue * sizeof(int));
 	// for (int i = 0; i < maxValue; i++) auxArray[i] = 0; // If malloc'ing
