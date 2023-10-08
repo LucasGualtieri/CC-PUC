@@ -11,15 +11,18 @@ class TP02Q07 {
 
 	static void InsertionSort(Lib.Lista lista, Lib.Log log) {
 
+		int	N = lista.getSize();
+		Lib.Jogador[] array = lista.array;
+
 		int j;
-		for (int i = 1; i < lista.getSize(); i++) {
-			Lib.Jogador temp = lista.array[i];
+		for (int i = 1; i < N; i++) {
+			Lib.Jogador temp = array[i];
 			j = i - 1;
-			while (j >= 0 && AnoNascimentoCmp(lista.array[j], temp, log)) {
-				lista.array[j + 1] = lista.array[j--];
+			while (j >= 0 && AnoNascimentoCmp(array[j], temp, log)) {
+				array[j + 1] = array[j--];
 				log.incrementarMovimentacoes(1);
 			}
-			lista.array[j + 1] = temp;
+			array[j + 1] = temp;
 			log.incrementarMovimentacoes(2);
 		}
 
@@ -53,5 +56,37 @@ class TP02Q07 {
 		log.RegistroOrdenacao("794989_insercao.txt", timer);		
 
 	}
+
+	// static int BinarySearch(int x, Lib.Jogador[] array, int right) {
+
+	// 	int	left = 0, pivotValue, pivot;
+	// 	do {
+	// 		pivot = (left + right) / 2;
+	// 		pivotValue = array[pivot].getAnoNascimento();
+	// 		if (pivotValue < x) left = pivot + 1;
+	// 		else right = pivot - 1;
+	// 	} while (left <= right);
+		
+	// 	return pivotValue <= x ? pivot + 1 : pivot;
+	// }
+
+	// static void InsertionSort(Lib.Lista lista, Lib.Log log) {
+		
+	// 	int N = lista.getSize();
+	// 	Lib.Jogador[] array = lista.array;
+
+	// 	Lib.Jogador tmp;
+	// 	int shiftIndex;
+	// 	for (int i = 1; i < N; i++) {
+	// 		tmp = array[i];
+	// 		shiftIndex = BinarySearch(tmp.getAnoNascimento(), array, i - 1);
+	// 		for (int j = i; j > shiftIndex; j--) {
+	// 			array[j] = array[j - 1];
+	// 			log.incrementarMovimentacoes(1);
+	// 		}
+	// 		array[shiftIndex] = tmp;
+	// 		log.incrementarMovimentacoes(2);
+	// 	}
+	// }
 
 }

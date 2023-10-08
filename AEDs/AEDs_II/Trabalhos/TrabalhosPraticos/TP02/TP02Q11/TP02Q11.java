@@ -6,8 +6,8 @@ class TP02Q11 {
 
 	static void CountingSort(Lib.Lista lista, Lib.Log log) {
 
-		Lib.Jogador[] array = lista.array;
 		int	N = lista.getSize();
+		Lib.Jogador[] array = lista.array;
 
 		Lib.Jogador[] auxArray = new Lib.Jogador[N];
 

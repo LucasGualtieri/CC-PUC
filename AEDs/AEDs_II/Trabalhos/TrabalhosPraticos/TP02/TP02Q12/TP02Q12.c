@@ -4,8 +4,8 @@
 
 void BubbleSort(Log* log, Lista jogadores) {
 
-	Jogador* array = jogadores.array;
 	int N = jogadores.size;
+	Jogador* array = jogadores.array;
 
 	for (int i = 0; i < N - 1; i++) {
 		// for (j = 0; j < N - i - 1; j++) { // Bubble Otimizado
