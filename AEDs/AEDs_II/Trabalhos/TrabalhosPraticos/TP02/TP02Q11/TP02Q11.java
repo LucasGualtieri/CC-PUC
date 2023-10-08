@@ -9,6 +9,8 @@ class TP02Q11 {
 		Lib.Jogador[] array = lista.array;
 		int	N = lista.getSize();
 
+		Lib.Jogador[] auxArray = new Lib.Jogador[N];
+
 		int maxValue = array[0].getAltura();
 		int minValue = array[0].getAltura();
 
@@ -18,14 +20,15 @@ class TP02Q11 {
 			if (altura < minValue) minValue = altura;
 		}
 
-		int[] countArray = new int[++maxValue + 1];
-		for (int i = 0; i < N; i++) countArray[array[i].getAltura()]++;
-		for (int i = minValue; i < maxValue; i++) countArray[i] += countArray[i - 1];
+		int countSize = (maxValue - minValue) + 1;
+		int[] countArray = new int[countSize];
 
-		Lib.Jogador[] auxArray = new Lib.Jogador[N];
+		for (int i = 0; i < N; i++) countArray[array[i].getAltura() - minValue]++;
+		for (int i = 1; i < countSize; i++) countArray[i] += countArray[i - 1];
 
-		for (int i = 0; i < N; i++) {
-			auxArray[countArray[array[i].getAltura()]-- - 1] = array[i];
+		for (int i = N - 1; i >= 0; i--) {
+			int alturaPos = array[i].getAltura() - minValue;
+			auxArray[countArray[alturaPos]-- - 1] = array[i];
 		}
 
 		lista.array = auxArray;
