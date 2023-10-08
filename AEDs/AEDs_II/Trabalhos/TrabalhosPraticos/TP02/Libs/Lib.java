@@ -289,6 +289,17 @@ public class Lib {
 			}
 		}
 
+		public void MostrarParcial(int k) {
+			if (this.size == 0) {
+				System.out.println("Erro ao mostrar: Fila vazia.");
+				return;
+			}
+
+			for (int i = 0; i < k; i++) {
+				this.array[i].Mostrar();
+			}
+		}
+
 	}
 
 }
