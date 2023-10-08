@@ -54,7 +54,7 @@ int main() {
 
 	listaJogadores.MostrarParcial(k, listaJogadores);
 
-	log.RegistroOrdenacao("794989_insercao.txt", timer, log);
+	log.RegistroOrdenacao("794989_insercaoParcial.txt", timer, log);
 
 	// listaJogadores.Close(&listaJogadores);
 	BD.Close(&BD);
