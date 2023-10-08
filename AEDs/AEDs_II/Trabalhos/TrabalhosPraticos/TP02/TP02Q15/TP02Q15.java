@@ -10,14 +10,17 @@ class TP02Q15 {
 
 	static void SelectionSortParcial(int k, Lib.Lista lista, Lib.Log log) {
 
+		int N = lista.getSize();
+		Lib.Jogador[] array = lista.array;
+
 		int i, j, menor;
-		for (i = 0; i < lista.getSize() - 1; i++) {
+		for (i = 0; i < k; i++) {
 			menor = i;
-			for (j = i + 1; j < k && j < lista.getSize(); j++) {
-				if (strcmpr(lista.array[menor], lista.array[j]) > 0) menor = j;
+			for (j = i + 1; j < N; j++) {
+				if (strcmpr(array[menor], array[j]) > 0) menor = j;
 				log.incrementarComparacoes();
 			}
-			Lib.swap(i, menor, lista.array);
+			Lib.swap(i, menor, array);
 			log.incrementarMovimentacoes(3);
 		}
 
