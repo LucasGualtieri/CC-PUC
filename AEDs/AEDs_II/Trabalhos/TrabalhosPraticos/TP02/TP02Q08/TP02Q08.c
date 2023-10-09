@@ -2,9 +2,13 @@
 
 // clear && gcc TP02Q08.c && ./a.out < pub.in > result.txt
 
-bool PesoCmp(Jogador jog1, Jogador jog2, Log* log) {
-	log->comparacoes++;
-	return jog1.peso > jog2.peso;
+int PesoCmp(Jogador jog1, Jogador jog2, Log* log) {
+	log->comparacoes += 2;
+	if (jog1.peso != jog2.peso) {
+		return jog1.peso > jog2.peso;
+	} else {
+		return strcmp(jog1.nome, jog2.nome);
+	}
 }
 
 void insertionSortByColor(int color, int h, int N, Log* log, Jogador* array) {
@@ -13,7 +17,7 @@ void insertionSortByColor(int color, int h, int N, Log* log, Jogador* array) {
 	for (int i = h + color; i < N; i += h) {
 		temp = array[i];
 		j = i - h;
-		while (j >= 0 && PesoCmp(array[j], temp, log)) {
+		while (j >= 0 && PesoCmp(array[j], temp, log) > 0) {
 			array[j + h] = array[j];
 			j -= h;
 			log->movimentacoes++;
@@ -56,8 +60,6 @@ int main() {
 		listaJogadores.Inserir(BD.Get(id, BD), &listaJogadores);
 	}
 
-	// listaJogadores.SortByNome(listaJogadores);
-
 	timer.Start(&timer);
 	ShellSort(&log, listaJogadores);
 	timer.Stop(&timer);
@@ -70,3 +72,18 @@ int main() {
 	BD.Close(&BD);
 
 }
+
+// Roda mais lento por algum motivo, alguns micro segundo mais lento
+// Mas também tem um tempo mais constante, não varia mt mais que 0.000160
+// Mas faz umas 2000 comps a menos.
+// int PesoCmp(Jogador jog1, Jogador jog2, Log* log) {
+// 	bool pesoCmp = jog1.peso > jog2.peso;
+// 	if (pesoCmp) {
+// 		log->comparacoes++;
+// 		return pesoCmp;
+// 	} else {
+// 		log->comparacoes += 2;
+// 		pesoCmp = jog1.peso < jog2.peso;
+// 		return pesoCmp ? !pesoCmp : strcmp(jog1.nome, jog2.nome);
+// 	}
+// }
