@@ -19,8 +19,6 @@ void BubbleSort(Log* log, Lista jogadores) {
 	}
 }
 
-void registroLog(Timer timer, Log log);
-
 int main() {
 	
 	Timer timer = newTimer();
