@@ -30,7 +30,7 @@ void QuickSortRec(int left, int right, Log* log, Jogador* array) {
 }
 
 void QuickSort(Log* log, Lista jogadores) {
-    QuickSortRec(0, jogadores.size - 1, log, jogadores.array);
+	QuickSortRec(0, jogadores.size - 1, log, jogadores.array);
 }
 
 int main() {
