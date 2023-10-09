@@ -4,7 +4,14 @@
 
 int strcmpr(Jogador jog1, Jogador jog2, Log* log) {
 	log->comparacoes++;
-	return strcmp(jog1.estadoNascimento, jog2.estadoNascimento);
+	int strComp = strcmp(jog1.estadoNascimento, jog2.estadoNascimento);
+
+	if (strComp != 0) {
+		return strComp;
+	} else {
+		log->comparacoes++;
+		return strcmp(jog1.nome, jog2.nome);
+	}
 }
 
 void QuickSortRec(int left, int right, Log* log, Jogador* array) {
@@ -15,10 +22,7 @@ void QuickSortRec(int left, int right, Log* log, Jogador* array) {
 	while (i <= j) {
 		while (strcmpr(array[i], pivot, log) < 0) i++;
 		while (strcmpr(array[j], pivot, log) > 0) j--;
-		if (i <= j) {
-			log->movimentacoes += 3;
-			swap(&array[i++], &array[j--]);
-		}
+		if (i <= j) swap(&array[i++], &array[j--], log);
 	}
 
 	if (left < j)  QuickSortRec(left, j, log, array);
@@ -45,8 +49,6 @@ int main() {
 		int id = atoi(inputPUBIN);
 		listaJogadores.Inserir(BD.Get(id, BD), &listaJogadores);
 	}
-
-	// listaJogadores.SortByNome(listaJogadores);
 
 	timer.Start(&timer);
 	QuickSort(&log, listaJogadores);
