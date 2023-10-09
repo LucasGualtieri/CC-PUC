@@ -2,17 +2,18 @@
 
 // clear && gcc TP02Q06.c && ./a.out < pub.in > result.txt
 
-#define strcmpr(jog1, jog2) strcmp(jog1.nome, jog2.nome)
+int strcmpr(Jogador jog1, Jogador jog2, Log* log) {
+	log->comparacoes++;
+	return strcmp(jog1.nome, jog2.nome);
+}
 
 void SelectionSortRecursivo(int i, int j, int menor, Log* log, Lista array) {
 
 	if (j < array.size) {
-		if (strcmpr(array.array[menor], array.array[j]) > 0) menor = j;
-		log->comparacoes++;
+		if (strcmpr(array.array[menor], array.array[j], log) > 0) menor = j;
 		SelectionSortRecursivo(i, j + 1, menor, log, array);
 	} else {
-		swap(&array.array[i], &array.array[menor]);
-		log->movimentacoes += 3;
+		swap(&array.array[i], &array.array[menor], log);
 	}
 
 	if (++i < array.size - 1 && j == i) {

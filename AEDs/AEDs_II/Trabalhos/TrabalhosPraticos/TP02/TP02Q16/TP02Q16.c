@@ -2,6 +2,11 @@
 
 // clear && gcc TP02Q16.c && ./a.out < pub.in > result.txt
 
+bool AnoNascimentoCmp(Jogador jog1, Jogador jog2, Log* log) {
+	log->comparacoes++;
+	return jog1.anoNascimento > jog2.anoNascimento;
+}
+
 void InsertionSortParcial(int k, Log* log, Lista listaJogadores) {
 	
 	int N = listaJogadores.size;
@@ -15,10 +20,8 @@ void InsertionSortParcial(int k, Log* log, Lista listaJogadores) {
 		j = (i < k) ? i - 1 : k - 1;
 		// if (i == k) printf("Perdido: %s\n", array[k].nome);
 
-		log->comparacoes++;
-		while (j >= 0 && array[j].anoNascimento > temp.anoNascimento) {
+		while (j >= 0 && AnoNascimentoCmp(array[j], temp, log)) {
 			array[j-- + 1] = array[j];
-			log->comparacoes++;
 			log->movimentacoes++;
 		}
 

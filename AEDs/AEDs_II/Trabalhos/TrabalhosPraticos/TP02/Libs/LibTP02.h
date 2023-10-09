@@ -304,10 +304,11 @@ void InserirLista(Jogador jogador, Lista* lista) {
 
 }
 
-void swap(Jogador* jog1, Jogador* jog2) {
+void swap(Jogador* jog1, Jogador* jog2, Log* log) {
 	Jogador aux = *jog1;
 	*jog1 = *jog2;
 	*jog2 = aux;
+	log->movimentacoes += 3;
 }
 
 void SortByNomeLista(Lista lista) {

@@ -10,10 +10,9 @@ void BubbleSort(Log* log, Lista jogadores) {
 	for (int i = 0; i < N - 1; i++) {
 		// for (j = 0; j < N - i - 1; j++) { // Bubble Otimizado
 		for (int j = 0; j < N - 1; j++) {
+			log->comparacoes++;
 			if (array[j].anoNascimento > array[j + 1].anoNascimento) {
-				swap(&array[j], &array[j + 1]);
-				log->comparacoes++;
-				log->movimentacoes += 3;
+				swap(&array[j], &array[j + 1], log);
 			}
 		}
 	}
