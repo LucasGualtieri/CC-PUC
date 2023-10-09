@@ -4,7 +4,9 @@
 
 bool AnoNascimentoCmp(Jogador jog1, Jogador jog2, Log* log) {
 	log->comparacoes++;
-	return jog1.anoNascimento > jog2.anoNascimento;
+	bool result = jog1.anoNascimento > jog2.anoNascimento;
+	
+	return result;
 }
 
 void InsertionSortParcial(int k, Log* log, Lista listaJogadores) {
@@ -18,7 +20,11 @@ void InsertionSortParcial(int k, Log* log, Lista listaJogadores) {
 
 		temp = array[i];
 		j = (i < k) ? i - 1 : k - 1;
-		// if (i == k) printf("Perdido: %s\n", array[k].nome);
+
+		if (i > k) {
+			array[i] = array[k];
+			log->movimentacoes++;
+		}
 
 		while (j >= 0 && AnoNascimentoCmp(array[j], temp, log)) {
 			array[j-- + 1] = array[j];
@@ -59,7 +65,7 @@ int main() {
 
 	log.RegistroOrdenacao("794989_insercaoParcial.txt", timer, log);
 
-	// listaJogadores.Close(&listaJogadores);
+	listaJogadores.Close(&listaJogadores);
 	BD.Close(&BD);
 
 }
