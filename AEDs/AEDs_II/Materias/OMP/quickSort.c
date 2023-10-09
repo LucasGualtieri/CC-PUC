@@ -9,7 +9,7 @@ void swap(int* var1, int* var2) {
 	*var2 = aux;
 }
 
-void QuickSortRec(int *array, int left, int right) {
+void QuickSortRec(int* array, int left, int right) {
 	int i = left, j = right;
 	int pivo = array[(right + left) / 2];
 	while (i <= j) {
