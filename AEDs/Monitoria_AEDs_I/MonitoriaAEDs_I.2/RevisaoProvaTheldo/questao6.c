@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-// clear && gcc questao.c && ./a.out
+// clear && gcc questao6.c && ./a.out
 
 int somaDosDivisores(int numero) {
     int soma = 0;
