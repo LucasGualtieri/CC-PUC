@@ -5,8 +5,12 @@ import TP02.Libs.Lib;
 class TP02Q07 {
 
 	static boolean AnoNascimentoCmp(Lib.Jogador jog1, Lib.Jogador jog2, Lib.Log log) {
-		log.incrementarComparacoes();
-		return jog1.getAnoNascimento() > jog2.getAnoNascimento();
+		log.incrementarComparacoes(2);
+		if (jog1.getAnoNascimento() != jog2.getAnoNascimento()) {
+			return jog1.getAnoNascimento() > jog2.getAnoNascimento();
+		} else {
+			return jog1.getNome().compareTo(jog2.getNome()) > 0;
+		}
 	}
 
 	static void InsertionSort(Lib.Lista lista, Lib.Log log) {
@@ -45,8 +49,6 @@ class TP02Q07 {
 			listaJogadores.Inserir(BD.Get(id));
 		}
 
-	 	listaJogadores.SortByNome();
-
 		timer.Start();
 		InsertionSort(listaJogadores, log);
 		timer.Stop();
@@ -57,7 +59,8 @@ class TP02Q07 {
 
 	}
 
-	// static int BinarySearch(int x, Lib.Jogador[] array, int right) {
+	// Não consegue ordenar por nome como desempate, precisaria ordenar o array duas vezes
+	// static int BinarySearch(int x, int right, Lib.Log log, Lib.Jogador[] array) {
 
 	// 	int	left = 0, pivotValue, pivot;
 	// 	do {
@@ -65,6 +68,7 @@ class TP02Q07 {
 	// 		pivotValue = array[pivot].getAnoNascimento();
 	// 		if (pivotValue < x) left = pivot + 1;
 	// 		else right = pivot - 1;
+	// 		log.incrementarComparacoes();
 	// 	} while (left <= right);
 		
 	// 	return pivotValue <= x ? pivot + 1 : pivot;
@@ -79,7 +83,7 @@ class TP02Q07 {
 	// 	int shiftIndex;
 	// 	for (int i = 1; i < N; i++) {
 	// 		tmp = array[i];
-	// 		shiftIndex = BinarySearch(tmp.getAnoNascimento(), array, i - 1);
+	// 		shiftIndex = BinarySearch(tmp.getAnoNascimento(), i - 1, log, array);
 	// 		for (int j = i; j > shiftIndex; j--) {
 	// 			array[j] = array[j - 1];
 	// 			log.incrementarMovimentacoes(1);

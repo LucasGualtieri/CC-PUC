@@ -2,12 +2,12 @@
 
 // clear && gcc TP02Q08.c && ./a.out < pub.in > result.txt
 
-int PesoCmp(Jogador jog1, Jogador jog2, Log* log) {
+bool PesoCmp(Jogador jog1, Jogador jog2, Log* log) {
 	log->comparacoes += 2;
 	if (jog1.peso != jog2.peso) {
 		return jog1.peso > jog2.peso;
 	} else {
-		return strcmp(jog1.nome, jog2.nome);
+		return strcmp(jog1.nome, jog2.nome) > 0;
 	}
 }
 
@@ -17,7 +17,7 @@ void insertionSortByColor(int color, int h, int N, Log* log, Jogador* array) {
 	for (int i = h + color; i < N; i += h) {
 		temp = array[i];
 		j = i - h;
-		while (j >= 0 && PesoCmp(array[j], temp, log) > 0) {
+		while (j >= 0 && PesoCmp(array[j], temp, log)) {
 			array[j + h] = array[j];
 			j -= h;
 			log->movimentacoes++;
