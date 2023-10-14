@@ -4,12 +4,17 @@ import TP02.Libs.Lib;
 
 class TP02Q03 {
 
+	// public static boolean Lista compareTo(int index, String nome) {
+
+	// }
+
 	static boolean PesquisaSequencial(String nome, Lib.Lista lista, Lib.Log resultado) {
 
 		boolean hasFound = false;
 		
 		for (int i = 0; i < lista.getSize(); i++) {
 			if (lista.array[i].getNome().contains(nome)) {
+			// if (lista.compareTo(i, nome);) {
 				i = lista.getSize();
 				hasFound = true;
 			}
@@ -18,6 +23,22 @@ class TP02Q03 {
 
 		return hasFound;
 	}
+
+	// static boolean PesquisaSequencial(String nome, Lib.Lista lista, Lib.Log resultado) {
+
+	// 	boolean hasFound = false;
+		
+	// 	for (int i = 0; i < lista.getSize(); i++) {
+	// 		if (lista.array[i].getNome().contains(nome)) {
+	// 		if (lista.compareToInt(i, nome);) {
+	// 			i = lista.getSize();
+	// 			hasFound = true;
+	// 		}
+	// 		resultado.incrementarComparacoes();
+	// 	}
+
+	// 	return hasFound;
+	// }
 
 	static final int BD_SIZE = 3922;
 

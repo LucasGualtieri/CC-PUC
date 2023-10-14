@@ -201,7 +201,6 @@ public class Lib {
 
 	public static class Lista {
 		private int maxSize, size;
-		private boolean showOnUpdate;
 		public Jogador[] array;
 
 		public Lista(String filePath, int size) throws Exception {
@@ -216,9 +215,7 @@ public class Lib {
 			showOnUpdate = false;
 		}
 
-		public int getSize() {
-			return this.size;
-		}
+		public int getSize() { return this.size; }
 
 		public void Inserir(Jogador jogador) throws Exception {
 
@@ -228,13 +225,28 @@ public class Lib {
 
 			this.array[this.size++] = jogador.Clone();
 
-			if (this.showOnUpdate) this.Mostrar();
-
 		}
 
 		private int strcmp(Jogador jog1, Jogador jog2) {
 			return jog1.getNome().compareTo(jog2.getNome());
 		}
+
+		public void SortByNome() {
+			for (int i = 0; i < size - 1; i++) {
+				int menor = i;
+				for (int j = i; j < size; j++) {
+					if (array[menor] > array[j]) menor = j;
+				}
+				swap();
+			}
+		}
+
+		// Tenho que:
+		// Implementar o swap tanto para o sortByNome, quanto para todos os outros methdos de ordenação
+		// Implementar o compareToInt e compareToStr
+		// Criar os dois atributos int atributoInt e String atributoStr
+		// Criar o lista.SetAtributoInt e lista.SetAtributoStr
+		// Refatorar a classe para ter tipo generico? Tavez implique em uma sintaxe feia com o Lib.Lista<Jogador>
 
 		public void SortByNome() {
 			int j;
@@ -248,36 +260,6 @@ public class Lib {
 				this.array[j + 1] = temp;
 			}
 		}
-
-		void ImportDataBase(String filePath) throws Exception {
-		
-			Scanner fileReader = new Scanner(new File(filePath));
-
-			String inputCSV = new String();
-			fileReader.nextLine(); // Despresando o header do .csv
-
-			Jogador jogador;
-
-			while (fileReader.hasNextLine()) {
-				
-				inputCSV = fileReader.nextLine();
-				String[] array = inputCSV.split(",", -1);
-
-				for (int i = 1; i < array.length; i++) {
-					if (array[i].isEmpty()) {
-						array[i] = "nao informado";
-					}
-				}
-
-				jogador = new Jogador(array);
-				this.Inserir(jogador);
-			}
-
-		}
-
-		public Jogador Get(int id) { return this.array[id]; }
-
-		public void ToggleShow() {}
 
 		public void Mostrar() {
 			if (this.size == 0) {
@@ -300,6 +282,31 @@ public class Lib {
 				this.array[i].Mostrar();
 			}
 		}
+
+		void ImportDataBase(String filePath) throws Exception {
+		
+			Scanner fileReader = new Scanner(new File(filePath));
+
+			String inputCSV = new String();
+			fileReader.nextLine(); // Despresando o header do .csv
+
+			while (fileReader.hasNextLine()) {
+				
+				inputCSV = fileReader.nextLine();
+				String[] array = inputCSV.split(",", -1);
+
+				for (int i = 1; i < array.length; i++) {
+					if (array[i].isEmpty()) {
+						array[i] = "nao informado";
+					}
+				}
+
+				this.Inserir(new Jogador(array));
+			}
+
+		}
+
+		public Jogador Get(int id) { return this.array[id]; }
 
 	}
 

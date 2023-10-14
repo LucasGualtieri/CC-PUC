@@ -28,20 +28,16 @@ char* readStr(FILE* stream, String input) {
 #define MAX_ATTRIBUTES 8
 
 typedef struct Split {
-	int size;
 	char array[MAX_ATTRIBUTES][STR_MAX_LEN];
 } Split;
 
 Split newSplit(FILE* CSV) {
 
-	Split split = { 8 }; // Inicializa o size com 8
+	Split split; // Inicializa o size com 8
 
-	char valor[STR_MAX_LEN];
 	for (int i = 0; i < MAX_ATTRIBUTES; i++) {
-		if (fscanf(CSV, "%[^,\n]", valor) == 0) {
+		if (fscanf(CSV, "%[^,\n]", split.array[i]) == 0) {
 			strcpy(split.array[i], "nao informado");
-		} else {
-			strcpy(split.array[i], valor);
 		}
 		fgetc(CSV); // Despresando a virgula
 	}
@@ -292,7 +288,6 @@ typedef struct Lista {
 	void (*Close) (struct Lista*);
 
 } Lista;
-
 
 void InserirLista(Jogador jogador, Lista* lista) {
 
