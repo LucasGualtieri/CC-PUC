@@ -2,22 +2,19 @@
 
 // clear && gcc TP02Q06.c && ./a.out < pub.in > result.txt
 
-int strcmpr(Jogador jog1, Jogador jog2, Log* log) {
-	log->comparacoes++;
-	return strcmp(jog1.nome, jog2.nome);
-}
+void SelectionSortRecursivo(int i, int j, int menor, Log* log, Lista lista) {
 
-void SelectionSortRecursivo(int i, int j, int menor, Log* log, Lista array) {
+	Jogador* array = lista.array;
 
-	if (j < array.size) {
-		if (strcmpr(array.array[menor], array.array[j], log) > 0) menor = j;
-		SelectionSortRecursivo(i, j + 1, menor, log, array);
+	if (j < lista.size) {
+		if (lista.CompareToStr(array[menor], array[j], log) > 0) menor = j;
+		SelectionSortRecursivo(i, j + 1, menor, log, lista);
 	} else {
-		swap(&array.array[i], &array.array[menor], log);
+		swap(&array[i], &array[menor], log);
 	}
 
-	if (++i < array.size - 1 && j == i) {
-		SelectionSortRecursivo(i, i + 1, i, log, array);
+	if (++i < lista.size - 1 && j == i) {
+		SelectionSortRecursivo(i, i + 1, i, log, lista);
 	}
 
 }
@@ -34,24 +31,25 @@ int main() {
 	Lista BD = newLista(BD_SIZE);
 	BD.ImportDataBase("../tmp/players.csv", &BD);
 
-	Lista listaJogadores = newLista(465); // Tamanho de entradas do pri.in
+	Lista lista = newLista(465); // Tamanho de entradas do pri.in
 
 	char inputPUBIN[STR_MAX_LEN];
 
 	while (strcmp(readStr(0, inputPUBIN), "FIM")) {
 		int id = atoi(inputPUBIN);
-		listaJogadores.Inserir(BD.Get(id, BD), &listaJogadores);
+		lista.Inserir(BD.Get(id, BD), &lista);
+		lista.setAtributo(BD.array[id].nome, lista); // Setta o atributo usado na ordenação
 	}
 
 	timer.Start(&timer);
-	SelectionSort(&log, listaJogadores);
+	SelectionSort(&log, lista);
 	timer.Stop(&timer);
 
-	listaJogadores.Mostrar(listaJogadores);
+	lista.Mostrar(lista);
 
 	log.RegistroOrdenacao("794989_selecaoRecursiva.txt", timer, log);
 
-	listaJogadores.Close(&listaJogadores);
+	lista.Close(&lista);
 	BD.Close(&BD);
 
 }

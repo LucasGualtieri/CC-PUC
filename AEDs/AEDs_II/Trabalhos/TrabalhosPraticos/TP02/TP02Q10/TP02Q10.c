@@ -2,35 +2,25 @@
 
 // clear && gcc TP02Q10.c && ./a.out < pub.in > result.txt
 
-int strcmpr(Jogador jog1, Jogador jog2, Log* log) {
-	log->comparacoes++;
-	int strComp = strcmp(jog1.estadoNascimento, jog2.estadoNascimento);
-
-	if (strComp != 0) {
-		return strComp;
-	} else {
-		log->comparacoes++;
-		return strcmp(jog1.nome, jog2.nome);
-	}
-}
-
-void QuickSortRec(int left, int right, Log* log, Jogador* array) {
+void QuickSortRec(int left, int right, Log* log, Lista lista) {
 
 	int i = left, j = right;
-	Jogador pivot = array[(right + left) / 2];
+	Jogador* array = lista.array;
+	Jogador pivot = array[left];
+	// Jogador pivot = array[(right + left) / 2];
 
 	while (i <= j) {
-		while (strcmpr(array[i], pivot, log) < 0) i++;
-		while (strcmpr(array[j], pivot, log) > 0) j--;
+		while (lista.CompareToStr(array[i], pivot, log) < 0) i++;
+		while (lista.CompareToStr(array[j], pivot, log) > 0) j--;
 		if (i <= j) swap(&array[i++], &array[j--], log);
 	}
 
-	if (left < j)  QuickSortRec(left, j, log, array);
-	if (i < right)  QuickSortRec(i, right, log, array);
+	if (left < j)  QuickSortRec(left, j, log, lista);
+	if (i < right)  QuickSortRec(i, right, log, lista);
 }
 
-void QuickSort(Log* log, Lista jogadores) {
-	QuickSortRec(0, jogadores.size - 1, log, jogadores.array);
+void QuickSort(Log* log, Lista lista) {
+	QuickSortRec(0, lista.size - 1, log, lista);
 }
 
 int main() {
@@ -41,24 +31,25 @@ int main() {
 	Lista BD = newLista(BD_SIZE);
 	BD.ImportDataBase("../tmp/players.csv", &BD);
 
-	Lista listaJogadores = newLista(465); // Tamanho de entradas do pri.in
+	Lista lista = newLista(465); // Tamanho de entradas do pri.in
 
 	char inputPUBIN[STR_MAX_LEN];
 
 	while (strcmp(readStr(0, inputPUBIN), "FIM")) {
 		int id = atoi(inputPUBIN);
-		listaJogadores.Inserir(BD.Get(id, BD), &listaJogadores);
+		lista.Inserir(BD.Get(id, BD), &lista);
+		lista.setAtributo(BD.array[id].estadoNascimento, lista); // Setta o atributo usado na ordenação
 	}
 
 	timer.Start(&timer);
-	QuickSort(&log, listaJogadores);
+	QuickSort(&log, lista);
 	timer.Stop(&timer);
 
-	listaJogadores.Mostrar(listaJogadores);
+	lista.Mostrar(lista);
 
 	log.RegistroOrdenacao("794989_quicksort.txt", timer, log);
 
-	listaJogadores.Close(&listaJogadores);
+	lista.Close(&lista);
 	BD.Close(&BD);
 
 }

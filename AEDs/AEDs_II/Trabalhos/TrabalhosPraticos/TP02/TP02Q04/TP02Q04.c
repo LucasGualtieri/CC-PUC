@@ -30,27 +30,27 @@ int main() {
 	Lista BD = newLista(BD_SIZE);
 	BD.ImportDataBase("../tmp/players.csv", &BD);
 
-	Lista listaJogadores = newLista(74); // Tamanho de entradas do pri.in
+	Lista lista = newLista(74); // Tamanho de entradas do pri.in
 
 	char inputPUBIN[STR_MAX_LEN];
 
 	while (strcmp(readStr(0, inputPUBIN), "FIM")) {
 		int id = atoi(inputPUBIN);
-		listaJogadores.Inserir(BD.Get(id, BD), &listaJogadores);
+		lista.Inserir(BD.Get(id, BD), &lista);
 	}
 
-	listaJogadores.SortByNome(listaJogadores);
+	lista.SortByNome(lista);
 
 	timer.Start(&timer);
 	while (strcmp(readStr(0, inputPUBIN), "FIM")) {
-		bool hasFound = PesquisaBinaria(inputPUBIN, &log, listaJogadores);
+		bool hasFound = PesquisaBinaria(inputPUBIN, &log, lista);
 		printf("%s\n", hasFound ? "SIM" : "NAO");
 	}
 	timer.Stop(&timer);
 
 	log.RegistroPesquisa("794989_binaria.txt", timer, log);
 
-	listaJogadores.Close(&listaJogadores);
+	lista.Close(&lista);
 	BD.Close(&BD);
 
 }

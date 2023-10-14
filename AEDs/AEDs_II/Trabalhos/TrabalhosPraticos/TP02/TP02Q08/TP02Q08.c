@@ -2,22 +2,16 @@
 
 // clear && gcc TP02Q08.c && ./a.out < pub.in > result.txt
 
-bool PesoCmp(Jogador jog1, Jogador jog2, Log* log) {
-	log->comparacoes += 2;
-	if (jog1.peso != jog2.peso) {
-		return jog1.peso > jog2.peso;
-	} else {
-		return strcmp(jog1.nome, jog2.nome) > 0;
-	}
-}
-
-void insertionSortByColor(int color, int h, int N, Log* log, Jogador* array) {
-	int j;
+void insertionSortByColor(int color, int h, Log* log, Lista lista) {
+	
+	int j, N = lista.size;
+	Jogador* array = lista.array;
+	
 	Jogador temp;
 	for (int i = h + color; i < N; i += h) {
 		temp = array[i];
 		j = i - h;
-		while (j >= 0 && PesoCmp(array[j], temp, log)) {
+		while (j >= 0 && lista.CompareToInt(array[j], temp, log)) {
 			array[j + h] = array[j];
 			j -= h;
 			log->movimentacoes++;
@@ -27,10 +21,10 @@ void insertionSortByColor(int color, int h, int N, Log* log, Jogador* array) {
 	}
 }
 
-void ShellSort(Log* log, Lista jogadores) {
+void ShellSort(Log* log, Lista lista) {
 
-	int N = jogadores.size;
-	Jogador* array = jogadores.array;
+	int N = lista.size;
+	Jogador* array = lista.array;
 
 	int h;
 	for (h = 1; h < N; h = (h * 3) + 1);
@@ -38,7 +32,7 @@ void ShellSort(Log* log, Lista jogadores) {
 	while (h >= 1) {
 		h /= 3;
 		for (int color = 0; color < h; color++) {
-			insertionSortByColor(color, h, N, log, array);
+			insertionSortByColor(color, h, log, lista);
 		}
 	}
 }
@@ -51,24 +45,25 @@ int main() {
 	Lista BD = newLista(BD_SIZE);
 	BD.ImportDataBase("../tmp/players.csv", &BD);
 
-	Lista listaJogadores = newLista(466); // Tamanho de entradas do pri.in
+	Lista lista = newLista(466); // Tamanho de entradas do pri.in
 
 	char inputPUBIN[STR_MAX_LEN];
 
 	while (strcmp(readStr(0, inputPUBIN), "FIM")) {
 		int id = atoi(inputPUBIN);
-		listaJogadores.Inserir(BD.Get(id, BD), &listaJogadores);
+		lista.Inserir(BD.Get(id, BD), &lista);
+		lista.setAtributo(&BD.array[id].peso, lista); // Setta o atributo usado na ordenação
 	}
 
 	timer.Start(&timer);
-	ShellSort(&log, listaJogadores);
+	ShellSort(&log, lista);
 	timer.Stop(&timer);
 
-	listaJogadores.Mostrar(listaJogadores);
+	lista.Mostrar(lista);
 
 	log.RegistroOrdenacao("794989_shellsort.txt", timer, log);
 
-	listaJogadores.Close(&listaJogadores);
+	lista.Close(&lista);
 	BD.Close(&BD);
 
 }

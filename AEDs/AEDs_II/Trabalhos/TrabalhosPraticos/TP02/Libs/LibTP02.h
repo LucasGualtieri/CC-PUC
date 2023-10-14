@@ -121,6 +121,7 @@ Log newLog() {
 
 typedef struct Jogador {
 
+	void* atributo;
 	int id, altura, peso, anoNascimento;
 	String nome;
 	String universidade;
@@ -277,19 +278,21 @@ typedef struct Lista {
 	bool showOnUpdate;
 
 	void (*Inserir) (Jogador, struct Lista*);
-	Jogador (*Remover) (struct Lista*);
 
+	void (*setAtributo) (void* atributo, struct Lista lista);
+	bool (*CompareToInt) (Jogador jog1, Jogador jog2, Log* log);
+	int (*CompareToStr) (Jogador jog1, Jogador jog2, Log* log);
 	void (*SortByNome) (struct Lista);
 
 	void (*ImportDataBase) (literal filePath, struct Lista*);
 	Jogador (*Get) (int id, struct Lista);
 
-	void (*ToggleShow) (struct Lista*);
 	void (*Mostrar) (struct Lista);
 	void (*MostrarParcial) (int k, struct Lista);
 	void (*Close) (struct Lista*);
 
 } Lista;
+
 
 void InserirLista(Jogador jogador, Lista* lista) {
 
@@ -299,8 +302,6 @@ void InserirLista(Jogador jogador, Lista* lista) {
 	}
 
 	lista->array[lista->size++] = jogador.Clone(jogador);
-
-	if (lista->showOnUpdate) lista->Mostrar(*lista);
 
 }
 
@@ -312,23 +313,50 @@ void swap(Jogador* jog1, Jogador* jog2, Log* log) {
 }
 
 void SortByNomeLista(Lista lista) {
+
+	Log log;
 	int N = lista.size;
 	Jogador* array = lista.array;
 
-	int j;
-	Jogador temp;
-	for (int i = 1; i < N; i++) {
-		temp = array[i];
-		j = i - 1;
-		while (j >= 0 && strcmp(array[j].nome, temp.nome) > 0) {
-			array[j-- + 1] = array[j];
+	for (int i = 0; i < N - 1; i++) {
+		int menor = i;
+		for (int j = i + 1; j < N; j++) {
+			if (strcmp(array[menor].nome, array[j].nome) > 0) {
+				menor = j;
+			}
 		}
-		array[j + 1] = temp;
+		swap(&array[i], &array[menor], &log);
+	}
+
+}
+
+void setAtributoLista(void* atributo, Lista lista) {
+	lista.array[lista.size - 1].atributo = atributo;
+}
+
+#define vint(var) *((int*)var) // Void to int
+
+bool CompareToIntLista(Jogador jog1, Jogador jog2, Log* log) {
+
+	log->comparacoes += 2;
+	if (vint(jog1.atributo) != vint(jog2.atributo)) {
+		return vint(jog1.atributo) > vint(jog2.atributo);
+	} else {
+		return strcmp(jog1.nome, jog2.nome) > 0;
 	}
 }
 
-void ToggleShowOnUpdateLista(Lista* lista) {
-	lista->showOnUpdate = lista->showOnUpdate ? false : true;
+int CompareToStrLista(Jogador jog1, Jogador jog2, Log* log) {
+
+	log->comparacoes++;
+	int strComp = strcmp(jog1.atributo, jog2.atributo);
+
+	if (strComp == 0) {
+		log->comparacoes++;
+		strComp = strcmp(jog1.nome, jog2.nome);
+	}
+
+	return strComp;
 }
 
 void MostrarLista(Lista lista) {
@@ -403,16 +431,17 @@ Lista newLista(size_t maxSize) {
 	lista.size = 0;
 	lista.maxSize = maxSize;
 	lista.array = (Jogador*)malloc(maxSize * sizeof(Jogador));
-	lista.showOnUpdate = false;
 
 	lista.Inserir = InserirLista;
 
+	lista.setAtributo = setAtributoLista;
+	lista.CompareToInt = CompareToIntLista;
+	lista.CompareToStr = CompareToStrLista;
 	lista.SortByNome = SortByNomeLista;
 
 	lista.ImportDataBase = ImportDataBaseBD;
 	lista.Get = GetLista;
 
-	lista.ToggleShow = ToggleShowOnUpdateLista;
 	lista.Mostrar = MostrarLista;
 	lista.MostrarParcial = MostrarParcialLista;
 	lista.Close = CloseLista;

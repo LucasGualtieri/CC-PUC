@@ -2,16 +2,15 @@
 
 // clear && gcc TP02Q12.c && ./a.out < pub.in > result.txt
 
-void BubbleSort(Log* log, Lista jogadores) {
+void BubbleSort(Log* log, Lista lista) {
 
-	int N = jogadores.size;
-	Jogador* array = jogadores.array;
+	int N = lista.size;
+	Jogador* array = lista.array;
 
 	for (int i = 0; i < N - 1; i++) {
 		// for (j = 0; j < N - i - 1; j++) { // Bubble Otimizado
 		for (int j = 0; j < N - 1; j++) {
-			log->comparacoes++;
-			if (array[j].anoNascimento > array[j + 1].anoNascimento) {
+			if (lista.CompareToInt(array[j], array[j + 1], log)) {
 				swap(&array[j], &array[j + 1], log);
 			}
 		}
@@ -26,26 +25,25 @@ int main() {
 	Lista BD = newLista(BD_SIZE);
 	BD.ImportDataBase("../tmp/players.csv", &BD);
 
-	Lista listaJogadores = newLista(465); // Tamanho de entradas do pri.in
+	Lista lista = newLista(465); // Tamanho de entradas do pri.in
 
 	char inputPUBIN[STR_MAX_LEN];
 
 	while (strcmp(readStr(0, inputPUBIN), "FIM")) {
 		int id = atoi(inputPUBIN);
-		listaJogadores.Inserir(BD.Get(id, BD), &listaJogadores);
+		lista.Inserir(BD.Get(id, BD), &lista);
+		lista.setAtributo(&BD.array[id].anoNascimento, lista);
 	}
 
-	listaJogadores.SortByNome(listaJogadores);
-
 	timer.Start(&timer);
-	BubbleSort(&log, listaJogadores);
+	BubbleSort(&log, lista);
 	timer.Stop(&timer);
 
-	listaJogadores.Mostrar(listaJogadores);
+	lista.Mostrar(lista);
 
 	log.RegistroOrdenacao("794989_bolha.txt", timer, log);
 
-	listaJogadores.Close(&listaJogadores);
+	lista.Close(&lista);
 	BD.Close(&BD);
 
 }
