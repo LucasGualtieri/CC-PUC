@@ -17,12 +17,6 @@ public class Lib {
 		return scanner.nextLine();
 	}
 
-	public static void swap(int i, int menor, Lib.Jogador[] array) {
-		Lib.Jogador aux = array[i];
-		array[i] = array[menor];
-		array[menor] = aux;
-	}
-
 	// --------------------------- CLASSE TIMER ---------------------------
 
 	public static class Timer {
@@ -94,6 +88,8 @@ public class Lib {
 	public static class Jogador {
 		private int id, altura, peso, anoNascimento;
 		private String nome, universidade, cidadeNascimento, estadoNascimento;
+		private String atributoStr;
+		private int atributoInt;
 
 		public Jogador() {}
 
@@ -212,7 +208,6 @@ public class Lib {
 			this.array = new Jogador[size];
 			this.maxSize = size;
 			this.size = 0;
-			showOnUpdate = false;
 		}
 
 		public int getSize() { return this.size; }
@@ -227,17 +222,80 @@ public class Lib {
 
 		}
 
-		private int strcmp(Jogador jog1, Jogador jog2) {
-			return jog1.getNome().compareTo(jog2.getNome());
+		public void setAtributoStr(String atributoStr) { 
+			array[size - 1].atributoStr = atributoStr;
+		}
+
+		public void setAtributoInt(int atributoInt) {
+			array[size - 1].atributoInt = atributoInt;
+		}
+
+		public boolean CompareToInt(int jog1, int jog2, Log log) {
+			
+			log.incrementarComparacoes(2);
+			if (array[jog1].atributoInt != array[jog2].atributoInt) {
+				return array[jog1].atributoInt > array[jog2].atributoInt;
+			} else {
+				return strcmp(array[jog1].nome, array[jog2].nome) > 0;
+			}
+
+		}
+
+		public boolean CompareToInt(int jog1, Jogador jog2, Log log) {
+			
+			log.incrementarComparacoes(2);
+			if (array[jog1].atributoInt != jog2.atributoInt) {
+				return array[jog1].atributoInt > jog2.atributoInt;
+			} else {
+				return strcmp(array[jog1].nome, jog2.nome) > 0;
+			}
+
+		}
+
+		private int strcmp(String str1, String str2) { return str1.compareTo(str2); }
+
+		public boolean CompareToStr(int jog1, int jog2, Log log) {
+			
+			log.incrementarComparacoes();
+			int strComp = strcmp(array[jog1].atributoStr, array[jog2].atributoStr);
+
+			if (strComp == 0) {
+				log.incrementarComparacoes();
+				strComp = strcmp(array[jog1].nome, array[jog2].nome);
+			}
+
+			return strComp > 0;
+		}
+
+		public boolean CompareToStr(int jog1, String str, Log log) {
+			log.incrementarComparacoes();
+			return array[jog1].atributoStr.contains(str);
+		}
+
+		public int CompareToStr(int jog1, int jog2) {
+			return strcmp(array[jog1].nome, array[jog2].nome);
+		}
+
+		public void swap(int jog1, int jog2, Log log) {
+			Jogador aux = array[jog1];
+			array[jog1] = array[jog2];
+			array[jog2] = aux;
+			log.incrementarMovimentacoes(3);
+		}
+
+		private void swap(int jog1, int jog2) {
+			Jogador aux = array[jog1];
+			array[jog1] = array[jog2];
+			array[jog2] = aux;
 		}
 
 		public void SortByNome() {
 			for (int i = 0; i < size - 1; i++) {
 				int menor = i;
 				for (int j = i; j < size; j++) {
-					if (array[menor] > array[j]) menor = j;
+					if (CompareToStr(menor, j) > 0) menor = j;
 				}
-				swap();
+				swap(i, menor);
 			}
 		}
 
@@ -247,19 +305,6 @@ public class Lib {
 		// Criar os dois atributos int atributoInt e String atributoStr
 		// Criar o lista.SetAtributoInt e lista.SetAtributoStr
 		// Refatorar a classe para ter tipo generico? Tavez implique em uma sintaxe feia com o Lib.Lista<Jogador>
-
-		public void SortByNome() {
-			int j;
-			Jogador temp;
-			for (int i = 1; i < this.size; i++) {
-				temp = array[i];
-				j = i - 1;
-				while (j >= 0 && strcmp(this.array[j], temp) > 0) {
-					this.array[j + 1] = this.array[j--];
-				}
-				this.array[j + 1] = temp;
-			}
-		}
 
 		public void Mostrar() {
 			if (this.size == 0) {

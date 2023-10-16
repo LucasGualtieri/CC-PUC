@@ -4,15 +4,6 @@ import TP02.Libs.Lib;
 
 class TP02Q07 {
 
-	static boolean AnoNascimentoCmp(Lib.Jogador jog1, Lib.Jogador jog2, Lib.Log log) {
-		log.incrementarComparacoes(2);
-		if (jog1.getAnoNascimento() != jog2.getAnoNascimento()) {
-			return jog1.getAnoNascimento() > jog2.getAnoNascimento();
-		} else {
-			return jog1.getNome().compareTo(jog2.getNome()) > 0;
-		}
-	}
-
 	static void InsertionSort(Lib.Lista lista, Lib.Log log) {
 
 		int	N = lista.getSize();
@@ -22,7 +13,7 @@ class TP02Q07 {
 		for (int i = 1; i < N; i++) {
 			Lib.Jogador temp = array[i];
 			j = i - 1;
-			while (j >= 0 && AnoNascimentoCmp(array[j], temp, log)) {
+			while (j >= 0 && lista.CompareToInt(j, temp, log)) {
 				array[j + 1] = array[j--];
 				log.incrementarMovimentacoes(1);
 			}
@@ -40,37 +31,42 @@ class TP02Q07 {
 		Lib.Log log = new Lib.Log();
 
 		Lib.Lista BD = new Lib.Lista("../tmp/players.csv", BD_SIZE);
-		Lib.Lista listaJogadores = new Lib.Lista(465); // Tamanho de entradas do pri.in
+		Lib.Lista lista = new Lib.Lista(465); // Tamanho de entradas do pri.in
 
 		String inputPUBIN = new String();
 		
 		while (!(inputPUBIN = Lib.readStr()).equals("FIM")) {
 			int id = Integer.parseInt(inputPUBIN);
-			listaJogadores.Inserir(BD.Get(id));
+			lista.Inserir(BD.Get(id));
+			lista.setAtributoInt(BD.Get(id).getAnoNascimento());
 		}
 
+		// lista.SortByNome();
+
 		timer.Start();
-		InsertionSort(listaJogadores, log);
+		InsertionSort(lista, log);
 		timer.Stop();
 
-		listaJogadores.Mostrar();
+		lista.Mostrar();
 
-		log.RegistroOrdenacao("794989_insercao.txt", timer);		
+		log.RegistroOrdenacao("794989_insercao.txt", timer);
 
 	}
 
 	// Não consegue ordenar por nome como desempate, precisaria ordenar o array duas vezes
-	// static int BinarySearch(int x, int right, Lib.Log log, Lib.Jogador[] array) {
+	// static int BinarySearch(Lib.Jogador temp, int right, Lib.Log log, Lib.Jogador[] array) {
 
-	// 	int	left = 0, pivotValue, pivot;
-	// 	do {
+	// 	int	left = 0, pivotValue = 0, pivot = 0;
+	// 	int x = temp.getAnoNascimento();
+	// 	while (left <= right) {
 	// 		pivot = (left + right) / 2;
 	// 		pivotValue = array[pivot].getAnoNascimento();
-	// 		if (pivotValue < x) left = pivot + 1;
-	// 		else right = pivot - 1;
+	// 		if (pivotValue > x) right = pivot - 1;
+	// 		else left = pivot + 1;
 	// 		log.incrementarComparacoes();
-	// 	} while (left <= right);
+	// 	}
 		
+	// 	log.incrementarComparacoes();
 	// 	return pivotValue <= x ? pivot + 1 : pivot;
 	// }
 
@@ -79,16 +75,16 @@ class TP02Q07 {
 	// 	int N = lista.getSize();
 	// 	Lib.Jogador[] array = lista.array;
 
-	// 	Lib.Jogador tmp;
+	// 	Lib.Jogador temp;
 	// 	int shiftIndex;
 	// 	for (int i = 1; i < N; i++) {
-	// 		tmp = array[i];
-	// 		shiftIndex = BinarySearch(tmp.getAnoNascimento(), i - 1, log, array);
+	// 		temp = array[i];
+	// 		shiftIndex = BinarySearch(temp, i - 1, log, array);
 	// 		for (int j = i; j > shiftIndex; j--) {
 	// 			array[j] = array[j - 1];
 	// 			log.incrementarMovimentacoes(1);
 	// 		}
-	// 		array[shiftIndex] = tmp;
+	// 		array[shiftIndex] = temp;
 	// 		log.incrementarMovimentacoes(2);
 	// 	}
 	// }

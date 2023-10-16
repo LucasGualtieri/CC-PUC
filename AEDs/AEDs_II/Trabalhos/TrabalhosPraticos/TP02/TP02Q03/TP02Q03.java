@@ -4,62 +4,44 @@ import TP02.Libs.Lib;
 
 class TP02Q03 {
 
-	// public static boolean Lista compareTo(int index, String nome) {
-
-	// }
-
-	static boolean PesquisaSequencial(String nome, Lib.Lista lista, Lib.Log resultado) {
+	static boolean PesquisaSequencial(String nome, Lib.Lista lista, Lib.Log log) {
 
 		boolean hasFound = false;
 		
 		for (int i = 0; i < lista.getSize(); i++) {
-			if (lista.array[i].getNome().contains(nome)) {
-			// if (lista.compareTo(i, nome);) {
+			if (lista.CompareToStr(i, nome, log)) {
 				i = lista.getSize();
 				hasFound = true;
 			}
-			resultado.incrementarComparacoes();
+			log.incrementarComparacoes();
 		}
 
 		return hasFound;
 	}
-
-	// static boolean PesquisaSequencial(String nome, Lib.Lista lista, Lib.Log resultado) {
-
-	// 	boolean hasFound = false;
-		
-	// 	for (int i = 0; i < lista.getSize(); i++) {
-	// 		if (lista.array[i].getNome().contains(nome)) {
-	// 		if (lista.compareToInt(i, nome);) {
-	// 			i = lista.getSize();
-	// 			hasFound = true;
-	// 		}
-	// 		resultado.incrementarComparacoes();
-	// 	}
-
-	// 	return hasFound;
-	// }
 
 	static final int BD_SIZE = 3922;
 
 	public static void main(String[] args) throws Exception {
 
 		Lib.Timer timer = new Lib.Timer();
-		Lib.Log resultado = new Lib.Log();
+		Lib.Log log = new Lib.Log();
 
 		Lib.Lista BD = new Lib.Lista("../tmp/players.csv", BD_SIZE);
-		Lib.Lista listaJogadores = new Lib.Lista(74); // Tamanho de entradas do pri.in
+		Lib.Lista lista = new Lib.Lista(74); // Tamanho de entradas do pri.in
 
 		String inputPUBIN = new String();
 		
 		while (!(inputPUBIN = Lib.readStr()).equals("FIM")) {
 			int id = Integer.parseInt(inputPUBIN);
-			listaJogadores.Inserir(BD.Get(id));
+			lista.Inserir(BD.Get(id));
+			lista.setAtributoStr(BD.Get(id).getNome());
 		}
+
+		// lista.Mostrar();
 
 		timer.Start();
 		while (!(inputPUBIN = Lib.readStr()).equals("FIM")) {
-			boolean hasFound = PesquisaSequencial(inputPUBIN, listaJogadores, resultado);
+			boolean hasFound = PesquisaSequencial(inputPUBIN, lista, log);
 			System.out.println(hasFound ? "SIM" : "NAO");
 		}
 		timer.Stop();
