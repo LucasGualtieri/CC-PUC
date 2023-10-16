@@ -4,7 +4,7 @@ import TP02.Libs.Lib;
 
 class TP02Q05 {
 
-	static void SelectionSort(Lib.Lista lista, Lib.Log log) {
+	static void SelectionSort(Lib.Log log, Lib.Lista lista) {
 
 		int i, j, menor;
 		for (i = 0; i < lista.getSize() - 1; i++) {
@@ -36,7 +36,7 @@ class TP02Q05 {
 		}
 
 		timer.Start();
-		SelectionSort(lista, log);
+		SelectionSort(log, lista);
 		timer.Stop();
 
 		lista.Mostrar();

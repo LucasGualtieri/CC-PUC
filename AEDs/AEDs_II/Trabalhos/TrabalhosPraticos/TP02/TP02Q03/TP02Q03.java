@@ -4,7 +4,7 @@ import TP02.Libs.Lib;
 
 class TP02Q03 {
 
-	static boolean PesquisaSequencial(String nome, Lib.Lista lista, Lib.Log log) {
+	static boolean PesquisaSequencial(String nome, Lib.Log log, Lib.Lista lista) {
 
 		boolean hasFound = false;
 		
@@ -41,7 +41,7 @@ class TP02Q03 {
 
 		timer.Start();
 		while (!(inputPUBIN = Lib.readStr()).equals("FIM")) {
-			boolean hasFound = PesquisaSequencial(inputPUBIN, lista, log);
+			boolean hasFound = PesquisaSequencial(inputPUBIN, log, lista);
 			System.out.println(hasFound ? "SIM" : "NAO");
 		}
 		timer.Stop();

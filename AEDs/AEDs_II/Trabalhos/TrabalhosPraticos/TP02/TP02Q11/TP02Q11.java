@@ -4,7 +4,7 @@ import TP02.Libs.Lib;
 
 class TP02Q11 {
 
-	static void CountingSort(Lib.Lista lista, Lib.Log log) {
+	static void CountingSort(Lib.Log log, Lib.Lista lista) {
 
 		int	N = lista.getSize();
 		Lib.Jogador[] array = lista.array;
@@ -43,22 +43,22 @@ class TP02Q11 {
 		Lib.Log log = new Lib.Log();
 
 		Lib.Lista BD = new Lib.Lista("../tmp/players.csv", BD_SIZE);
-		Lib.Lista listaJogadores = new Lib.Lista(465); // Tamanho de entradas do pri.in
+		Lib.Lista lista = new Lib.Lista(465); // Tamanho de entradas do pri.in
 
 		String inputPUBIN = new String();
 		
 		while (!(inputPUBIN = Lib.readStr()).equals("FIM")) {
 			int id = Integer.parseInt(inputPUBIN);
-			listaJogadores.Inserir(BD.Get(id));
+			lista.Inserir(BD.Get(id));
 		}
 
-	 	listaJogadores.SortByNome();
+	 	lista.SortByNome();
 
 		timer.Start();
-		CountingSort(listaJogadores, log);
+		CountingSort(log, lista);
 		timer.Stop();
 
-		listaJogadores.Mostrar();
+		lista.Mostrar();
 
 		log.RegistroOrdenacao("794989_countingsort.txt", timer);		
 

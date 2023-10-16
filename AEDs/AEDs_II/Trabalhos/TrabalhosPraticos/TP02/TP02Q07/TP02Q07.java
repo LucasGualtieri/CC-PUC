@@ -4,7 +4,7 @@ import TP02.Libs.Lib;
 
 class TP02Q07 {
 
-	static void InsertionSort(Lib.Lista lista, Lib.Log log) {
+	static void InsertionSort(Lib.Log log, Lib.Lista lista) {
 
 		int	N = lista.getSize();
 		Lib.Jogador[] array = lista.array;
@@ -41,10 +41,9 @@ class TP02Q07 {
 			lista.setAtributoInt(BD.Get(id).getAnoNascimento());
 		}
 
-		// lista.SortByNome();
-
 		timer.Start();
-		InsertionSort(lista, log);
+		InsertionSort(log, lista);
+		// BinaryInsertionSort(log, lista);
 		timer.Stop();
 
 		lista.Mostrar();
@@ -53,40 +52,48 @@ class TP02Q07 {
 
 	}
 
-	// Não consegue ordenar por nome como desempate, precisaria ordenar o array duas vezes
-	// static int BinarySearch(Lib.Jogador temp, int right, Lib.Log log, Lib.Jogador[] array) {
-
-	// 	int	left = 0, pivotValue = 0, pivot = 0;
-	// 	int x = temp.getAnoNascimento();
-	// 	while (left <= right) {
-	// 		pivot = (left + right) / 2;
-	// 		pivotValue = array[pivot].getAnoNascimento();
-	// 		if (pivotValue > x) right = pivot - 1;
-	// 		else left = pivot + 1;
-	// 		log.incrementarComparacoes();
-	// 	}
+	static void BinaryInsertionSort(Lib.Log log, Lib.Lista lista) {
 		
-	// 	log.incrementarComparacoes();
-	// 	return pivotValue <= x ? pivot + 1 : pivot;
-	// }
+		int N = lista.getSize();
+		Lib.Jogador[] array = lista.array;
 
-	// static void InsertionSort(Lib.Lista lista, Lib.Log log) {
+		Lib.Jogador temp;
+		int shiftIndex;
+		for (int i = 1; i < N; i++) {
+			temp = array[i];
+			shiftIndex = BinarySearch(temp, i - 1, log, array);
+			for (int j = i; j > shiftIndex; j--) {
+				array[j] = array[j - 1];
+				log.incrementarMovimentacoes(1);
+			}
+			array[shiftIndex] = temp;
+			log.incrementarMovimentacoes(2);
+		}
+	}
+
+	static int BinarySearch(Lib.Jogador temp, int right, Lib.Log log, Lib.Jogador[] array) {
+
+		int	nomeComp, left = 0, pivotValue = 0, pivot = 0;
+		int tempVal = temp.getAnoNascimento();
 		
-	// 	int N = lista.getSize();
-	// 	Lib.Jogador[] array = lista.array;
+		while (left <= right) {
 
-	// 	Lib.Jogador temp;
-	// 	int shiftIndex;
-	// 	for (int i = 1; i < N; i++) {
-	// 		temp = array[i];
-	// 		shiftIndex = BinarySearch(temp, i - 1, log, array);
-	// 		for (int j = i; j > shiftIndex; j--) {
-	// 			array[j] = array[j - 1];
-	// 			log.incrementarMovimentacoes(1);
-	// 		}
-	// 		array[shiftIndex] = temp;
-	// 		log.incrementarMovimentacoes(2);
-	// 	}
-	// }
+			pivot = (left + right) / 2;
+			pivotValue = array[pivot].getAnoNascimento();
 
+			if (pivotValue == tempVal) {
+				nomeComp = temp.getNome().compareTo(array[pivot].getNome());
+				if (nomeComp < 0) right = pivot - 1;
+				else left = pivot + 1;
+			} else if (pivotValue > tempVal) {
+				right = pivot - 1;
+			} else {
+				left = pivot + 1;
+			}
+
+			log.incrementarComparacoes(2);
+		}
+		
+		return left;
+	}
 }

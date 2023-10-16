@@ -267,6 +267,19 @@ public class Lib {
 			return strComp > 0;
 		}
 
+		public int CompareToStr(int jog1, Jogador jog2, Log log) {
+			
+			log.incrementarComparacoes();
+			int strComp = strcmp(array[jog1].atributoStr, jog2.atributoStr);
+
+			if (strComp == 0) {
+				log.incrementarComparacoes();
+				strComp = strcmp(array[jog1].nome, jog2.nome);
+			}
+
+			return strComp;
+		}
+
 		public boolean CompareToStr(int jog1, String str, Log log) {
 			log.incrementarComparacoes();
 			return array[jog1].atributoStr.contains(str);
