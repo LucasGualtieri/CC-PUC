@@ -4,13 +4,13 @@ import TP02.Libs.Lib;
 
 class TP02Q15 {
 
-	static void SelectionSortParcial(int k, Lib.Lista lista, Lib.Log log) {
+	static void SelectionSortParcial(int k, Lib.Log log, Lib.Lista lista) {
 
 		int i, j, menor;
 		for (i = 0; i < k; i++) {
 			menor = i;
 			for (j = i + 1; j < lista.getSize(); j++) {
-				if (lista.CompareToStr(menor, j, log)) menor = j;
+				if (lista.CompareToStr(menor, j, log) > 0) menor = j;
 			}
 			lista.swap(i, menor, log);
 		}
@@ -38,7 +38,7 @@ class TP02Q15 {
 		int k = 10;
 
 		timer.Start();
-		SelectionSortParcial(k, lista, log);
+		SelectionSortParcial(k, log, lista);
 		timer.Stop();
 
 		lista.MostrarParcial(k);
