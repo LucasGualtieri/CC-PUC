@@ -4,9 +4,9 @@ import TP02.Libs.Lib;
 
 class TP02Q18 {
 
-	static void QuickSortRec(int k, int left, int right, Lib.Log log, Lib.Lista lista) {
+	static void QuickSort(int k, int left, int right, Lib.Log log, Lib.Lista lista) {
 		int i = left, j = right;
-		Jogador pivot = array[(right + left) / 2];
+		Lib.Jogador pivot = lista.array[(right + left) / 2];
 
 		while (i <= j) {
 			while (lista.CompareToStr(i, pivot, log) < 0) i++;
@@ -14,12 +14,12 @@ class TP02Q18 {
 			if (i <= j) lista.swap(i++, j--, log);
 		}
 
-		if (left < j) QuickSortRec(k, left, j, log, lista);
-		if (i < k && i < right) QuickSortRec(k, i, right, log, lista);
+		if (left < j) QuickSort(k, left, j, log, lista);
+		if (i < k && i < right) QuickSort(k, i, right, log, lista);
 	}
 
 	static void QuickSort(int k, Lib.Log log, Lib.Lista lista) {
-		QuickSortRec(k, 0, lista.getSize() - 1, log, lista);
+		QuickSort(k, 0, lista.getSize() - 1, log, lista);
 	}
 
 	static final int BD_SIZE = 3922;
