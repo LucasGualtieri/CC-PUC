@@ -68,7 +68,7 @@ int main() {
 
 }
 
-// Roda mais lento por algum motivo, alguns micro segundo mais lento
+// Roda mais lento por algum motivo, alguns micro segundos mais lento
 // Mas também tem um tempo mais constante, não varia mt mais que 0.000160
 // Mas faz umas 2000 comps a menos.
 // int PesoCmp(Jogador jog1, Jogador jog2, Log* log) {
