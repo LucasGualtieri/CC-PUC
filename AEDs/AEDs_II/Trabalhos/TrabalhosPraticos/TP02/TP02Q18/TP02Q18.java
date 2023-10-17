@@ -7,8 +7,8 @@ class TP02Q18 {
 	static void QuickSortRec(int k, int left, int right, Lib.Log log, Lib.Lista lista) {
 		int i = left, j = right;
 		Lib.Jogador[] array = lista.array;
-		Lib.Jogador pivot = array[left];
-		// Jogador pivot = array[(right + left) / 2];
+		Jogador pivot = array[(right + left) / 2];
+		// Lib.Jogador pivot = array[left];
 
 		while (i <= j) {
 			while (lista.CompareToStr(i, pivot, log) < 0) i++;

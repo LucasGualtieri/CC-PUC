@@ -6,8 +6,8 @@ void QuickSortRec(int left, int right, Log* log, Lista lista) {
 
 	int i = left, j = right;
 	Jogador* array = lista.array;
-	Jogador pivot = array[left];
-	// Jogador pivot = array[(right + left) / 2];
+	Jogador pivot = array[(right + left) / 2];
+	// Jogador pivot = array[left];
 
 	while (i <= j) {
 		while (lista.CompareToStr(array[i], pivot, log) < 0) i++;
