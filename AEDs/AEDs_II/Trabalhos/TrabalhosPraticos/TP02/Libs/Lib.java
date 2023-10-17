@@ -254,7 +254,7 @@ public class Lib {
 
 		private int strcmp(String str1, String str2) { return str1.compareTo(str2); }
 
-		public boolean CompareToStr(int jog1, int jog2, Log log) {
+		public int CompareToStr(int jog1, int jog2, Log log) {
 			
 			log.incrementarComparacoes();
 			int strComp = strcmp(array[jog1].atributoStr, array[jog2].atributoStr);
@@ -264,7 +264,7 @@ public class Lib {
 				strComp = strcmp(array[jog1].nome, array[jog2].nome);
 			}
 
-			return strComp > 0;
+			return strComp;
 		}
 
 		public int CompareToStr(int jog1, Jogador jog2, Log log) {
