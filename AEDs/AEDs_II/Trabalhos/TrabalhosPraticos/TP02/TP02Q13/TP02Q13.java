@@ -13,15 +13,22 @@ class TP02Q13 {
 		Lib.Jogador[] a1 = new Lib.Jogador[n1 + 1];
 		Lib.Jogador[] a2 = new Lib.Jogador[n2 + 1];
 
-		for (i = 0; i < n1; i++) a1[i] = lista.array[left + i].Clone(); // Clone???
-		for (j = 0; j < n2; j++) a2[j] = lista.array[mid + j + 1].Clone(); // Clone???
+		for (i = 0; i < n1; i++) a1[i] = lista.Get(left + i).Clone();
+		for (j = 0; j < n2; j++) a2[j] = lista.Get(mid + j + 1).Clone();
 
-		// a1[i].setUniversidade("ZZZZZZZZZZZZZ");
-		// a2[j].setUniversidade("ZZZZZZZZZZZZZ");
+		a1[i] = new Lib.Jogador();
+		a2[j] = new Lib.Jogador();
 
-		// for (i = j = 0, k = left; k <= right; k++) {
-		// 	lista.array[k] = lista.CompareToStr(i, j, log) <= 0 ? a1[i++] : a2[j++];
-		// }
+		a1[i].setUniversidade("");
+		a2[j].setUniversidade("");
+
+		for (i = j = 0, k = left; k <= right; k++) {
+			if (i < n1 && (j >= n2 || a1[i].getUniversidade().compareTo(a2[j].getUniversidade()) <= 0)) {
+				lista.array[k] = a1[i++];
+			} else {
+				lista.array[k] = a2[j++];
+			}
+		}
 	}
 
 	static void MergeSort(int left, int right, Lib.Log log, Lib.Lista lista) {
@@ -54,6 +61,8 @@ class TP02Q13 {
 			lista.Inserir(BD.Get(id));
 			lista.setAtributoStr(BD.Get(id).getUniversidade());
 		}
+
+		lista.SortByNome();
 
 		timer.Start();
 		MergeSort(log, lista);
