@@ -10,7 +10,7 @@ class TP02Q05 {
 		for (i = 0; i < lista.getSize() - 1; i++) {
 			menor = i;
 			for (j = i + 1; j < lista.getSize(); j++) {
-				if (lista.CompareToStr(menor, j, log)) menor = j;
+				if (lista.CompareToStr(menor, j, log) > 0) menor = j;
 			}
 			lista.swap(i, menor, log);
 		}
