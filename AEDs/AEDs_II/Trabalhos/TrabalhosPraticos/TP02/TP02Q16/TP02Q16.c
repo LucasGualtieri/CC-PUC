@@ -21,8 +21,7 @@ void InsertionSortParcial(int k, Log* log, Lista lista) {
 		}
 
 		array[j + 1] = temp;
-		if (i > k) log->movimentacoes += 3;
-		else log->movimentacoes += 2;
+		log->movimentacoes += i > k ? 3 : 2;
 	}
 }
 
