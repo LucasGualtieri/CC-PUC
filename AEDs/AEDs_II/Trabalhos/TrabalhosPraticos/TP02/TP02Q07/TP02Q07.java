@@ -6,6 +6,9 @@ class TP02Q07 {
 
 	static void InsertionSort(Lib.Log log, Lib.Lista lista) {
 
+		int N = lista.getSize();
+		Lib.Jogador[] array = lista.array;
+
 		for (int i = 1; i < lista.getSize(); i++) {
 			Lib.Jogador temp = array[i];
 			int j = i - 1;

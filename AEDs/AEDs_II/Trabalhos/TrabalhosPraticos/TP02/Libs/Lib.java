@@ -78,6 +78,7 @@ public class Lib {
 
 		public void incrementarComparacoes() { this.comparacoes++; }
 		public void incrementarComparacoes(int incremento) { this.comparacoes += incremento; }
+		public void incrementarMovimentacoes() { this.movimentacoes++; }
 		public void incrementarMovimentacoes(int incremento) {
 			this.movimentacoes += incremento;
 		}
