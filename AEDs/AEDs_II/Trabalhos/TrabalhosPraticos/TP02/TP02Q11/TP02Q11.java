@@ -29,9 +29,28 @@ class TP02Q11 {
 		for (int i = N - 1; i >= 0; i--) {
 			int alturaPos = array[i].getAltura() - minValue;
 			auxArray[countArray[alturaPos]-- - 1] = array[i];
+			log.incrementarMovimentacoes();
 		}
 
 		lista.array = auxArray;
+
+	}
+
+	static void InsertionSort(Lib.Log log, Lib.Lista lista) {
+
+		int N = lista.getSize();
+		Lib.Jogador[] array = lista.array;
+
+		for (int i = 1; i < lista.getSize(); i++) {
+			Lib.Jogador temp = array[i];
+			int j = i - 1;
+			while (j >= 0 && lista.CompareToInt(j, temp, log)) {
+				array[j + 1] = array[j--];
+				log.incrementarMovimentacoes(1);
+			}
+			array[j + 1] = temp;
+			log.incrementarMovimentacoes(2);
+		}
 
 	}
 
@@ -50,12 +69,13 @@ class TP02Q11 {
 		while (!(inputPUBIN = Lib.readStr()).equals("FIM")) {
 			int id = Integer.parseInt(inputPUBIN);
 			lista.Inserir(BD.Get(id));
+			lista.setAtributoInt(BD.Get(id).getAltura());
 		}
 
-	 	lista.SortByNome();
 
 		timer.Start();
 		CountingSort(log, lista);
+		InsertionSort(log, lista);
 		timer.Stop();
 
 		lista.Mostrar();
@@ -63,5 +83,4 @@ class TP02Q11 {
 		log.RegistroOrdenacao("794989_countingsort.txt", timer);		
 
 	}
-
 }
