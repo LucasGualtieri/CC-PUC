@@ -34,8 +34,7 @@ class TP02Q13Padrao {
 
 		for (i = 0; i < lSize; i++) aLeft[i] = array[left + i];
 		for (j = 0; j < rSize; j++) aRight[j] = array[mid + j + 1];
-		log.incrementarMovimentacoes(lSize);
-		log.incrementarMovimentacoes(rSize);
+		log.incrementarMovimentacoes(lSize + rSize);
 
 		aLeft[i] = aRight[j] = new Lib.Jogador("ZZ");
 
