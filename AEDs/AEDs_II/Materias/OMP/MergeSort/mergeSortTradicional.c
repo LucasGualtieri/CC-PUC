@@ -3,62 +3,56 @@
 
 // clear && gcc mergeSortTradicional.c && ./a.out
 
-void mergesort(IntArray array);
+void MergeSort(IntArray array);
 
-void mergesortRec(int *array, int left, int right);
+void MergeSortRec(int left, int right, int* array);
 
-void intercalar(int* array, int left, int mid, int right);
+void Merge(int left, int mid, int right, int* array);
 
 void main() {
 
 	IntArray array = newIntArray(10);
-	
+
 	IntArrayFillRand(0, 50, array);
 	IntArrayPrint(array);
 
-	mergesort(array);
+	MergeSort(array);
 	IntArrayPrint(array);
 
 }
 
-void mergesort(IntArray array) {
-	mergesortRec(array.array, 0, array.size - 1);
+void MergeSort(IntArray array) {
+	MergeSortRec(0, array.size - 1, array.array);
 }
 
-void mergesortRec(int *array, int left, int right){
+void MergeSortRec(int left, int right, int *array) {
 	if (left < right){
 		int mid = (left + right) / 2;
-		mergesortRec(array, left, mid);
-		mergesortRec(array, mid + 1, right);
-		intercalar(array, left, mid, right);
+		MergeSortRec(left, mid, array);
+		MergeSortRec(mid + 1, right, array);
+		Merge(left, mid, right, array);
 	}
 }
 
-void intercalar(int* array, int left, int mid, int right){
-	int n1, n2, i, j;
+void Merge(int* array, int left, int mid, int right) {
+	int leftSize, rightSize, i, j;
 
 	//Definir tamanho dos dois subarrays
-	n1 = mid - left + 1;
-	n2 = right - mid;
+	leftSize = mid - left + 1;
+	rightSize = right - mid;
 
-	int* a1 = (int*)malloc((n1 + 1) * sizeof(int)); 
-	int* a2 = (int*)malloc((n2 + 1) * sizeof(int));
+	int* aLeft = malloc((leftSize + 1) * sizeof(int)); 
+	int* aRight = malloc((rightSize + 1) * sizeof(int));
 
-	// Inicializar primeiro subarray
-	for (i = 0; i < n1; i++) {
-		a1[i] = array[left + i];
-	}
+	for (i = 0; i < leftSize; i++) aLeft[i] = array[left + i];
+	for (j = 0; j < rightSize; j++) aRight[j] = array[mid + j + 1];
 
-	// Inicializar segundo subarray
-	for (j = 0; j < n2; j++) {
-		a2[j] = array[mid+j+1];
-	}
+	aLeft[i] = aRight[j] = 0x7FFFFFFF;
 
-	// Sentinela no final dos dois arrays
-	a1[i] = a2[j] = 0x7FFFFFFF;
-
-	//Intercalacao propriamente dita
 	for (i = j = 0; left <= right; left++) {
-		array[left] = (a1[i] <= a2[j]) ? a1[i++] : a2[j++];
+		array[left] = aLeft[i] <= aRight[j] ? aLeft[i++] : aRight[j++];
 	}
+
+	free(aLeft);
+	free(aRight);
 }
