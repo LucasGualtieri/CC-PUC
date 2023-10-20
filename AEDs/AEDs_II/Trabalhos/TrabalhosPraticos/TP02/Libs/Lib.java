@@ -94,6 +94,11 @@ public class Lib {
 
 		public Jogador() {}
 
+		// Usado no MergeSort
+		public Jogador(String sentinela) {
+			this.atributoStr = sentinela;
+		}
+
 		public Jogador(String[] array) {
 			this.setId(array[0]);
 			this.setNome(array[1]);
@@ -266,6 +271,20 @@ public class Lib {
 			}
 
 			return strComp;
+		}
+
+		// Usado no MergeSort
+		public boolean CompareToStr(Jogador jog1, Jogador jog2, Log log) {
+
+			log.incrementarComparacoes();
+			int strComp = strcmp(jog1.atributoStr, jog2.atributoStr);
+
+			if (strComp == 0) {
+				log.incrementarComparacoes();
+				strComp = strcmp(jog1.nome, jog2.nome);
+			}
+
+			return strComp <= 0;
 		}
 
 		public int CompareToStr(int jog1, Jogador jog2, Log log) {

@@ -4,30 +4,24 @@ import TP02.Libs.Lib;
 
 class TP02Q13 {
 
-	static void Merge(int left, int mid, int right, Lib.Log log, Lib.Lista lista) {
-		int i, j, k;
+	static void Merge(int left, int right, Lib.Log log, Lib.Lista lista) {
+		
+		int auxSize = (right - left) + 1, mid = ((auxSize + 1) / 2);
 
-		int n1 = mid - left + 1;
-		int n2 = right - mid;
+		Lib.Jogador[] array = lista.array;
+		Lib.Jogador[] auxArray = new Lib.Jogador[auxSize];
 
-		Lib.Jogador[] a1 = new Lib.Jogador[n1 + 1];
-		Lib.Jogador[] a2 = new Lib.Jogador[n2 + 1];
+		for (int i = 0; i < auxSize; i++) auxArray[i] = array[left + i];
+		log.incrementarMovimentacoes(auxSize);
 
-		for (i = 0; i < n1; i++) a1[i] = lista.Get(left + i).Clone();
-		for (j = 0; j < n2; j++) a2[j] = lista.Get(mid + j + 1).Clone();
-
-		a1[i] = new Lib.Jogador();
-		a2[j] = new Lib.Jogador();
-
-		a1[i].setUniversidade("");
-		a2[j].setUniversidade("");
-
-		for (i = j = 0, k = left; k <= right; k++) {
-			if (i < n1 && (j >= n2 || a1[i].getUniversidade().compareTo(a2[j].getUniversidade()) <= 0)) {
-				lista.array[k] = a1[i++];
+		for (int i = 0, j = mid; left <= right; left++) {
+			if (i < mid && j < auxSize) {
+				boolean comp = lista.CompareToStr(auxArray[i], auxArray[j], log);
+				array[left] = comp ? auxArray[i++] : auxArray[j++];
 			} else {
-				lista.array[k] = a2[j++];
+				array[left] = i < mid ? auxArray[i++] : auxArray[j++];
 			}
+			log.incrementarMovimentacoes();
 		}
 	}
 
@@ -36,7 +30,7 @@ class TP02Q13 {
 			int mid = (left + right) / 2;
 			MergeSort(left, mid, log, lista);
 			MergeSort(mid + 1, right, log, lista);
-			Merge(left, mid, right, log, lista);
+			Merge(left, right, log, lista);
 		}
 	}
 
@@ -61,8 +55,6 @@ class TP02Q13 {
 			lista.Inserir(BD.Get(id));
 			lista.setAtributoStr(BD.Get(id).getUniversidade());
 		}
-
-		lista.SortByNome();
 
 		timer.Start();
 		MergeSort(log, lista);
