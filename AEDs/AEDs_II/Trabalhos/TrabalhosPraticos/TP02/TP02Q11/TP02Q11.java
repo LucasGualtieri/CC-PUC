@@ -14,7 +14,7 @@ class TP02Q11 {
 		int maxValue = array[0].getAltura();
 		int minValue = array[0].getAltura();
 
-		for (int i = 0; i < N; i++) {
+		for (int i = 1; i < N; i++) {
 			int altura = array[i].getAltura();
 			if (altura > maxValue) maxValue = altura;
 			if (altura < minValue) minValue = altura;
@@ -28,7 +28,7 @@ class TP02Q11 {
 
 		for (int i = N - 1; i >= 0; i--) {
 			int alturaPos = array[i].getAltura() - minValue;
-			auxArray[countArray[alturaPos]-- - 1] = array[i];
+			auxArray[--countArray[alturaPos]] = array[i];
 			log.incrementarMovimentacoes();
 		}
 
