@@ -2,29 +2,20 @@
 
 // clear && gcc TP02Q14.c && ./a.out < pub.in > result.txt
 
-int GetMax(int place, Lista* lista) {
-	int max = 0;
-	for (int i = 1; i < lista->size; i++) {
-		int valor = vint(lista->array[i].atributo) / place % 10;
-		if (valor > max) max = valor;
-	}
-	return max;
-}
+int GetMax(Lista* lista);
 
 void CountingSort(int place, Log* log, Lista* lista) {
 
 	int N = lista->size;
 	Jogador* array = lista->array;
 
-	int maxValue = GetMax(place, lista);
-
-	int* countArray = calloc((maxValue + 1),  sizeof(int));
+	int* countArray = calloc(10,  sizeof(int));
 
 	for (int i = 0; i < N; i++) {
 		countArray[(vint(array[i].atributo) / place) % 10]++;
 	}
 	
-	for (int i = 1; i <= maxValue; i++) countArray[i] += countArray[i - 1];
+	for (int i = 1; i < 10; i++) countArray[i] += countArray[i - 1];
 
 	Jogador* auxArray = malloc(N * sizeof(Jogador));
 
@@ -47,11 +38,7 @@ void RadixSort(Log* log, Lista* lista) {
 	int N = lista->size;
 	Jogador* array = lista->array;
 
-	int max = vint(lista->array[0].atributo);
-	for (int i = 1; i < lista->size; i++) {
-		int valor = vint(lista->array[i].atributo);
-		if (valor > max) max = valor;
-	}
+	int max = GetMax(lista);
 
 	for (int i = 1; max / i > 0; i *= 10) {
 		CountingSort(i, log, lista);
@@ -88,4 +75,13 @@ int main() {
 	lista.Close(&lista);
 	BD.Close(&BD);
 
+}
+
+int GetMax(Lista* lista) {
+	int max = vint(lista->array[0].atributo);
+	for (int i = 1; i < lista->size; i++) {
+		int valor = vint(lista->array[i].atributo);
+		if (valor > max) max = valor;
+	}
+	return max;
 }
