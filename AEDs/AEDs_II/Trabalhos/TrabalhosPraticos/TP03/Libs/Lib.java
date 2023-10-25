@@ -17,6 +17,12 @@ public class Lib {
 		return scanner.nextLine();
 	}
 
+	public static int readInt() {
+		int integer = scanner.nextInt();
+		scanner.nextLine(); // Flushing
+		return integer;
+	}
+
 	// --------------------------- CLASSE TIMER ---------------------------
 
 	public static class Timer {
@@ -187,14 +193,14 @@ public class Lib {
 		}
 
 		public void Mostrar() {
-			System.out.printf("[%d ## ", this.getId());
+			// System.out.printf("[%d ## ", this.getId());
 			System.out.printf("%s ## ", this.getNome());
 			System.out.printf("%d ## ", this.getAltura());
 			System.out.printf("%d ## ", this.getPeso());
 			System.out.printf("%d ## ", this.getAnoNascimento());
 			System.out.printf("%s ## ", this.getUniversidade());
 			System.out.printf("%s ## ", this.getCidadeNascimento());
-			System.out.printf("%s]\n", this.getEstadoNascimento());
+			System.out.printf("%s ##\n", this.getEstadoNascimento());
 		}
 
 	}
@@ -203,7 +209,7 @@ public class Lib {
 
 	public static class Lista {
 		private int maxSize, size;
-		public Jogador[] array;
+		private Jogador[] array;
 
 		public Lista(String filePath, int size) throws Exception {
 			this(size);
@@ -218,147 +224,9 @@ public class Lib {
 
 		public int getSize() { return this.size; }
 
-		public void Inserir(Jogador jogador) throws Exception {
-
-			if (this.size == this.maxSize) {
-				throw new Exception("Erro ao inserir: Fila cheia.\n");
-			}
-
-			this.array[this.size++] = jogador.Clone();
-
-		}
-
-		public void setAtributoStr(String atributoStr) { 
-			array[size - 1].atributoStr = atributoStr;
-		}
-
-		public void setAtributoInt(int atributoInt) {
-			array[size - 1].atributoInt = atributoInt;
-		}
-
-		public boolean CompareToInt(int jog1, int jog2, Log log) {
-			
-			log.incrementarComparacoes(2);
-			if (array[jog1].atributoInt != array[jog2].atributoInt) {
-				return array[jog1].atributoInt > array[jog2].atributoInt;
-			} else {
-				return strcmp(array[jog1].nome, array[jog2].nome) > 0;
-			}
-
-		}
-
-		public boolean CompareToInt(int jog1, Jogador jog2, Log log) {
-			
-			log.incrementarComparacoes(2);
-			if (array[jog1].atributoInt != jog2.atributoInt) {
-				return array[jog1].atributoInt > jog2.atributoInt;
-			} else {
-				return strcmp(array[jog1].nome, jog2.nome) > 0;
-			}
-
-		}
-
-		private int strcmp(String str1, String str2) { return str1.compareTo(str2); }
-
-		public int CompareToStr(int jog1, int jog2, Log log) {
-			
-			log.incrementarComparacoes();
-			int strComp = strcmp(array[jog1].atributoStr, array[jog2].atributoStr);
-
-			if (strComp == 0) {
-				log.incrementarComparacoes();
-				strComp = strcmp(array[jog1].nome, array[jog2].nome);
-			}
-
-			return strComp;
-		}
-
-		// Usado no MergeSort
-		public boolean CompareToStr(Jogador jog1, Jogador jog2, Log log) {
-
-			log.incrementarComparacoes();
-			int strComp = strcmp(jog1.atributoStr, jog2.atributoStr);
-
-			if (strComp == 0) {
-				log.incrementarComparacoes();
-				strComp = strcmp(jog1.nome, jog2.nome);
-			}
-
-			return strComp <= 0;
-		}
-
-		public int CompareToStr(int jog1, Jogador jog2, Log log) {
-			
-			log.incrementarComparacoes();
-			int strComp = strcmp(array[jog1].atributoStr, jog2.atributoStr);
-
-			if (strComp == 0) {
-				log.incrementarComparacoes();
-				strComp = strcmp(array[jog1].nome, jog2.nome);
-			}
-
-			return strComp;
-		}
-
-		public boolean CompareToStr(int jog1, String str, Log log) {
-			log.incrementarComparacoes();
-			return array[jog1].atributoStr.contains(str);
-		}
-
-		public int CompareToStr(int jog1, int jog2) {
-			return strcmp(array[jog1].nome, array[jog2].nome);
-		}
-
-		public void swap(int jog1, int jog2, Log log) {
-			Jogador aux = array[jog1];
-			array[jog1] = array[jog2];
-			array[jog2] = aux;
-			log.incrementarMovimentacoes(3);
-		}
-
-		private void swap(int jog1, int jog2) {
-			Jogador aux = array[jog1];
-			array[jog1] = array[jog2];
-			array[jog2] = aux;
-		}
-
-		public void SortByNome() {
-			for (int i = 0; i < size - 1; i++) {
-				int menor = i;
-				for (int j = i; j < size; j++) {
-					if (CompareToStr(menor, j) > 0) menor = j;
-				}
-				swap(i, menor);
-			}
-		}
-
-		// Tenho que:
-		// Implementar o swap tanto para o sortByNome, quanto para todos os outros methdos de ordenação
-		// Implementar o compareToInt e compareToStr
-		// Criar os dois atributos int atributoInt e String atributoStr
-		// Criar o lista.SetAtributoInt e lista.SetAtributoStr
-		// Refatorar a classe para ter tipo generico? Tavez implique em uma sintaxe feia com o Lib.Lista<Jogador>
-
-		public void Mostrar() {
-			if (this.size == 0) {
-				System.out.println("Erro ao mostrar: Fila vazia.");
-				return;
-			}
-
-			for (int i = 0; i < this.size; i++) {
-				this.array[i].Mostrar();
-			}
-		}
-
-		public void MostrarParcial(int k) {
-			if (this.size == 0) {
-				System.out.println("Erro ao mostrar: Fila vazia.");
-				return;
-			}
-
-			for (int i = 0; i < k; i++) {
-				this.array[i].Mostrar();
-			}
+		public Jogador Get(int id) { return this.array[id]; }
+		public Jogador Get(String id) {
+			return this.array[Integer.parseInt(id)];
 		}
 
 		void ImportDataBase(String filePath) throws Exception {
@@ -379,13 +247,138 @@ public class Lib {
 					}
 				}
 
-				this.Inserir(new Jogador(array));
+				this.InserirFim(new Jogador(array));
 			}
 
 		}
 
-		public Jogador Get(int id) { return this.array[id]; }
+		public void Mostrar() {
+			if (this.size == 0) {
+				System.out.println("Erro ao mostrar: Fila vazia.");
+				return;
+			}
+
+			for (int i = 0; i < this.size; i++) {
+				System.out.printf("[%d] ## ", i);
+				this.array[i].Mostrar();
+			}
+		}
+
+		// ---------------------- INSERÇÕES E REMOÇÕES ----------------------
+
+		public void InserirInicio(Jogador jogador) throws Exception {
+
+			if (size == maxSize) {
+				throw new Exception("Erro ao inserir: Lista cheia.");
+			}
+
+			for (int i = size; i > 0; i--) array[i] = array[i - 1];
+
+			array[0] = jogador.Clone();
+
+			size++;
+
+		}
+
+		public void InserirFim(Jogador jogador) throws Exception {
+
+			if (size == maxSize) {
+				throw new Exception("Erro ao inserir: Fila cheia.\n");
+			}
+
+			array[size++] = jogador.Clone();
+
+		}
+		
+		public void Inserir(String posStr, Jogador jogador) throws Exception {
+
+			if (size == maxSize) {
+				throw new Exception("Erro ao inserir: Lista cheia.");
+			}
+
+			int pos = Integer.parseInt(posStr);
+
+			for (int i = size; i > pos; i--) array[i] = array[i - 1];
+
+			array[pos] = jogador.Clone();
+
+			size++;
+
+		}
+
+		public Jogador RemoverInicio() throws Exception {
+			if (size == 0) {
+				throw new Exception("Erro ao remover: Lista vazia.");
+			}
+
+			Jogador tmp = array[0];
+
+			for (int i = 0; i < size - 1; i++) array[i] = array[i + 1];
+
+			size--;
+
+			return tmp;
+		}
+
+		public Jogador RemoverFim() throws Exception {
+			if (size == 0) {
+				throw new Exception("Erro ao remover: Lista vazia.");
+			}
+			
+			return array[--size];
+		}
+
+		public Jogador Remover(String posStr) throws Exception {
+			if (size == 0) {
+				throw new Exception("Erro ao remover: Lista vazia.");
+			}
+
+			int pos = Integer.parseInt(posStr);
+
+			Jogador tmp = array[pos];
+
+			for (int i = pos; i < size - 1; i++) array[i] = array[i + 1];
+
+			size--;
+
+			return tmp;
+		}
 
 	}
 
+	// --------------------------- CLASSE PILHA ---------------------------
+
+	public static class Pilha {
+		private Lista lista;
+
+		public Pilha(String filePath, int size) throws Exception {
+			this(size);
+			this.ImportDataBase(filePath);
+		}
+
+		public Pilha(int size) {
+			this.lista = new Lista(size);
+		}
+
+		public int getSize() { return this.lista.getSize(); }
+
+		void ImportDataBase(String filePath) throws Exception {
+			this.lista.ImportDataBase(filePath);
+		}
+
+		public void Mostrar() {
+			this.lista.Mostrar();
+		}
+
+		// ---------------------- INSERÇÕES E REMOÇÕES ----------------------
+
+		public void Inserir(Jogador jogador) throws Exception {
+			this.lista.InserirFim(jogador);
+		}
+
+		public Jogador Remover() throws Exception {
+			return this.lista.RemoverFim();
+		}
+
+	}
 }
