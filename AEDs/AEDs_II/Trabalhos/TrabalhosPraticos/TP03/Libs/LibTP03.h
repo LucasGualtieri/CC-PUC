@@ -23,6 +23,12 @@ char* readStr(FILE* stream, String input) {
 	return input;
 }
 
+int readInt() {
+	int integer;
+	scanf("%d%*c", &integer);
+	return integer;
+}
+
 // --------------------------- CLASSE SPLIT ---------------------------
 
 #define MAX_ATTRIBUTES 8
@@ -33,13 +39,25 @@ typedef struct Split {
 
 Split newSplit(FILE* CSV) {
 
-	Split split; // Inicializa o size com 8
+	Split split;
 
 	for (int i = 0; i < MAX_ATTRIBUTES; i++) {
 		if (fscanf(CSV, "%[^,\n]", split.array[i]) == 0) {
 			strcpy(split.array[i], "nao informado");
 		}
 		fgetc(CSV); // Despresando a virgula
+	}
+
+	return split;
+}
+
+Split splitSpace() {
+
+	Split split;
+
+	for (int i = 0; i < 3; i++) {
+		scanf("%[^ \n]", split.array[i]);
+		if (getchar() == '\n') i = 3;
 	}
 
 	return split;
@@ -223,14 +241,14 @@ Jogador CloneJogador(Jogador jogador) {
 
 void MostrarJogador(Jogador jogador) {
 
-	printf("[%d ## ", jogador.id);
+	// printf("[%d ## ", jogador.id);
 	printf("%s ## ", jogador.nome);
 	printf("%d ## ", jogador.altura);
 	printf("%d ## ", jogador.peso);
 	printf("%d ## ", jogador.anoNascimento);
 	printf("%s ## ", jogador.universidade);
 	printf("%s ## ", jogador.cidadeNascimento);
-	printf("%s]\n", jogador.estadoNascimento);
+	printf("%s ##\n", jogador.estadoNascimento);
 
 }
 
@@ -271,123 +289,23 @@ typedef struct Lista {
 
 	Jogador *array;
 	int maxSize, size;
-	bool showOnUpdate;
 
-	void (*Inserir) (Jogador, struct Lista*);
-
-	void (*setAtributo) (void* atributo, struct Lista lista);
-	bool (*CompareToInt) (Jogador jog1, Jogador jog2, Log* log);
-	int (*CompareToStr) (Jogador jog1, Jogador jog2, Log* log);
-	void (*SortByNome) (struct Lista);
-
-	void (*ImportDataBase) (literal filePath, struct Lista*);
 	Jogador (*Get) (int id, struct Lista);
-
+	void (*ImportDataBase) (literal filePath, struct Lista*);
 	void (*Mostrar) (struct Lista);
-	void (*MostrarParcial) (int k, struct Lista);
+
+	void (*InserirInicio) (Jogador, struct Lista*);
+	void (*InserirFim) (Jogador, struct Lista*);
+	void (*Inserir) (String pos, Jogador, struct Lista*);
+	Jogador (*RemoverInicio) (struct Lista*);
+	Jogador (*RemoverFim) (struct Lista*);
+	Jogador (*Remover) (String pos, struct Lista*);
+
 	void (*Close) (struct Lista*);
 
 } Lista;
 
-void InserirLista(Jogador jogador, Lista* lista) {
-
-	if (lista->size == lista->maxSize) {
-		fprintf(stderr, "Erro ao inserir: Lista cheia.\n");
-		return;
-	}
-
-	lista->array[lista->size++] = jogador.Clone(jogador);
-
-}
-
-void swap(Jogador* jog1, Jogador* jog2, Log* log) {
-	Jogador aux = *jog1;
-	*jog1 = *jog2;
-	*jog2 = aux;
-	log->movimentacoes += 3;
-}
-
-void SortByNomeLista(Lista lista) {
-
-	Log log;
-	int N = lista.size;
-	Jogador* array = lista.array;
-
-	for (int i = 0; i < N - 1; i++) {
-		int menor = i;
-		for (int j = i + 1; j < N; j++) {
-			if (strcmp(array[menor].nome, array[j].nome) > 0) {
-				menor = j;
-			}
-		}
-		swap(&array[i], &array[menor], &log);
-	}
-
-}
-
-void setAtributoLista(void* atributo, Lista lista) {
-	lista.array[lista.size - 1].atributo = atributo;
-}
-
-#define vint(var) *((int*)var) // Void to int
-
-bool CompareToIntLista(Jogador jog1, Jogador jog2, Log* log) {
-
-	log->comparacoes += 2;
-	if (vint(jog1.atributo) != vint(jog2.atributo)) {
-		return vint(jog1.atributo) > vint(jog2.atributo);
-	} else {
-		return strcmp(jog1.nome, jog2.nome) > 0;
-	}
-}
-
-int CompareToStrLista(Jogador jog1, Jogador jog2, Log* log) {
-
-	log->comparacoes++;
-	int strComp = strcmp(jog1.atributo, jog2.atributo);
-
-	if (strComp == 0) {
-		log->comparacoes++;
-		strComp = strcmp(jog1.nome, jog2.nome);
-	}
-
-	return strComp;
-}
-
-void MostrarLista(Lista lista) {
-
-	if (lista.size == 0) {
-		fprintf(stderr, "Erro ao mostrar: Lista vazia.\n");
-		return;
-	}
-
-	for (int i = 0; i < lista.size; i++) {
-		lista.array[i].Mostrar(lista.array[i]);
-	}
-}
-
-void MostrarParcialLista(int k, Lista lista) {
-
-	if (lista.size == 0) {
-		fprintf(stderr, "Erro ao mostrar: Lista vazia.\n");
-		return;
-	}
-
-	for (int i = 0; i < k; i++) {
-		lista.array[i].Mostrar(lista.array[i]);
-	}
-}
-
-void CloseLista(Lista* lista) {
-	
-	for (int i = 0; i < lista->size; i++) {
-		lista->array[i].Close(lista->array[i]);
-	}
-
-	free(lista->array);
-	
-	lista->maxSize = 0;
-}
+Jogador GetLista(int id, Lista lista) { return lista.array[id]; }
 
 void ImportDataBaseBD(literal filePath, Lista* BD) {
 
@@ -409,13 +327,123 @@ void ImportDataBaseBD(literal filePath, Lista* BD) {
 		jogador = newJogador();
 		jogador.Construtor(array, &jogador);
 
-		BD->Inserir(jogador, BD);
+		BD->InserirFim(jogador, BD);
 
 	}
 
 }
 
-Jogador GetLista(int id, Lista lista) { return lista.array[id]; }
+void MostrarLista(Lista lista) {
+
+	if (lista.size == 0) {
+		fprintf(stderr, "Erro ao mostrar: Lista vazia.\n");
+		return;
+	}
+
+	for (int i = 0; i < lista.size; i++) {
+		printf("[%d] ## ", i);
+		lista.array[i].Mostrar(lista.array[i]);
+	}
+}
+
+// ---------------------- INSERÇÕES E REMOÇÕES ----------------------
+
+void InserirInicioLista(Jogador jogador, Lista* lista) {
+
+	if (lista->size == lista->maxSize) {
+		fprintf(stderr, "Erro ao inserir: Lista cheia.\n");
+	}
+
+	Jogador* array = lista->array;
+
+	for (int i = lista->size; i > 0; i--) array[i] = array[i - 1];
+
+	array[0] = jogador.Clone(jogador);
+
+	lista->size++;
+
+}
+
+void InserirFimLista(Jogador jogador, Lista* lista) {
+
+	if (lista->size == lista->maxSize) {
+		fprintf(stderr, "Erro ao inserir: Lista cheia.\n");
+		return;
+	}
+
+	lista->array[lista->size++] = jogador.Clone(jogador);
+
+}
+
+void InserirLista(String posStr, Jogador jogador, Lista* lista) {
+
+	if (lista->size == lista->maxSize) {
+		fprintf(stderr, "Erro ao inserir: Lista cheia.\n");
+	}
+
+	Jogador* array = lista->array;
+	int pos = atoi(posStr);
+
+	for (int i = lista->size; i > pos; i--) array[i] = array[i - 1];
+
+	array[pos] = jogador.Clone(jogador);
+
+	lista->size++;
+
+}
+
+Jogador RemoverInicioLista(Lista* lista) {
+	if (lista->size == lista->maxSize) {
+		fprintf(stderr, "Erro ao remover: Lista vazia.\n");
+	}
+
+	Jogador* array = lista->array;
+
+	Jogador removido = array[0].Clone(array[0]);
+
+	for (int i = 0; i < lista->size - 1; i++) array[i] = array[i + 1];
+
+	lista->size--;
+
+	return removido;
+}
+
+Jogador RemoverFimLista(Lista* lista) {
+	if (lista->size == 0) {
+		fprintf(stderr, "Erro ao remover: Lista vazia.\n");
+	}
+
+	return lista->array[--lista->size];
+}
+
+Jogador RemoverLista(String posStr, Lista* lista) {
+	if (lista->size == 0) {
+		fprintf(stderr, "Erro ao remover: Lista vazia.\n");
+	}
+
+	Jogador* array = lista->array;
+
+	int pos = atoi(posStr);
+	Jogador removido = array[pos];
+
+	for (int i = pos; i < lista->size - 1; i++) array[i] = array[i + 1];
+
+	lista->size--;
+
+	return removido;
+}
+
+
+void CloseLista(Lista* lista) {
+	
+	for (int i = 0; i < lista->size; i++) {
+		lista->array[i].Close(lista->array[i]);
+	}
+
+	free(lista->array);
+	
+	lista->maxSize = 0;
+}
 
 Lista newLista(size_t maxSize) {
 
@@ -427,18 +455,17 @@ Lista newLista(size_t maxSize) {
 	lista.maxSize = maxSize;
 	lista.array = (Jogador*)malloc(maxSize * sizeof(Jogador));
 
-	lista.Inserir = InserirLista;
-
-	lista.setAtributo = setAtributoLista;
-	lista.CompareToInt = CompareToIntLista;
-	lista.CompareToStr = CompareToStrLista;
-	lista.SortByNome = SortByNomeLista;
-
-	lista.ImportDataBase = ImportDataBaseBD;
 	lista.Get = GetLista;
-
+	lista.ImportDataBase = ImportDataBaseBD;
 	lista.Mostrar = MostrarLista;
-	lista.MostrarParcial = MostrarParcialLista;
+
+	lista.InserirInicio = InserirInicioLista;
+	lista.InserirFim = InserirFimLista;
+	lista.Inserir = InserirLista;
+	lista.RemoverInicio = RemoverInicioLista;
+	lista.RemoverFim = RemoverFimLista;
+	lista.Remover = RemoverLista;
+
 	lista.Close = CloseLista;
 
 	return lista;
