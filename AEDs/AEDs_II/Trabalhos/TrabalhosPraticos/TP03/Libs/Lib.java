@@ -351,24 +351,11 @@ public class Lib {
 	public static class Pilha {
 		private Lista lista;
 
-		public Pilha(String filePath, int size) throws Exception {
-			this(size);
-			this.ImportDataBase(filePath);
-		}
-
-		public Pilha(int size) {
-			this.lista = new Lista(size);
-		}
+		public Pilha(int size) { this.lista = new Lista(size); }
 
 		public int getSize() { return this.lista.getSize(); }
 
-		void ImportDataBase(String filePath) throws Exception {
-			this.lista.ImportDataBase(filePath);
-		}
-
-		public void Mostrar() {
-			this.lista.Mostrar();
-		}
+		public void Mostrar() { this.lista.Mostrar(); }
 
 		// ---------------------- INSERÇÕES E REMOÇÕES ----------------------
 
