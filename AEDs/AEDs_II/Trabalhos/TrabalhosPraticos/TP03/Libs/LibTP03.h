@@ -1,6 +1,7 @@
 #ifndef LIB_TP02_H
 #define LIB_TP02_H
 
+#include <err.h>
 #include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -352,6 +353,7 @@ void InserirInicioLista(Jogador jogador, Lista* lista) {
 
 	if (lista->size == lista->maxSize) {
 		fprintf(stderr, "Erro ao inserir: Lista cheia.\n");
+		return;
 	}
 
 	Jogador* array = lista->array;
@@ -379,6 +381,7 @@ void InserirLista(String posStr, Jogador jogador, Lista* lista) {
 
 	if (lista->size == lista->maxSize) {
 		fprintf(stderr, "Erro ao inserir: Lista cheia.\n");
+		return;
 	}
 
 	Jogador* array = lista->array;
@@ -395,6 +398,7 @@ void InserirLista(String posStr, Jogador jogador, Lista* lista) {
 Jogador RemoverInicioLista(Lista* lista) {
 	if (lista->size == lista->maxSize) {
 		fprintf(stderr, "Erro ao remover: Lista vazia.\n");
+		exit(0);
 	}
 
 	Jogador* array = lista->array;
@@ -411,6 +415,7 @@ Jogador RemoverInicioLista(Lista* lista) {
 Jogador RemoverFimLista(Lista* lista) {
 	if (lista->size == 0) {
 		fprintf(stderr, "Erro ao remover: Lista vazia.\n");
+		exit(0);
 	}
 
 	return lista->array[--lista->size];
@@ -419,6 +424,7 @@ Jogador RemoverFimLista(Lista* lista) {
 Jogador RemoverLista(String posStr, Lista* lista) {
 	if (lista->size == 0) {
 		fprintf(stderr, "Erro ao remover: Lista vazia.\n");
+		exit(0);
 	}
 
 	Jogador* array = lista->array;
@@ -442,7 +448,7 @@ void CloseLista(Lista* lista) {
 
 	free(lista->array);
 	
-	lista->maxSize = 0;
+	lista->maxSize = lista->size = 0;
 }
 
 Lista newLista(size_t maxSize) {
@@ -469,6 +475,114 @@ Lista newLista(size_t maxSize) {
 	lista.Close = CloseLista;
 
 	return lista;
+}
+
+// --------------------------- CLASSE FILA CIRCULAR ---------------------------
+
+typedef struct FilaCircular {
+
+	Jogador *array;
+	int primeiro, ultimo;
+	int size, maxSize;
+
+	float (*getMediaAlturas) (struct FilaCircular);
+	void (*Mostrar) (struct FilaCircular);
+
+	void (*Inserir) (Jogador, struct FilaCircular*);
+	Jogador (*Remover) (struct FilaCircular*);
+
+	void (*Close) (struct FilaCircular*);
+
+} FilaCircular;
+
+float GetMediaAlturasFilaCircular(FilaCircular fila) {
+	float media = 0;
+	int jogador = fila.primeiro;
+	for (int i = 0; i < fila.size; i++) {
+		media += fila.array[jogador].altura;
+		jogador = (jogador + 1) % fila.maxSize;
+	}
+	return media / fila.size;
+}
+
+void MostrarFilaCircular(FilaCircular fila) {
+
+	if (fila.primeiro == fila.ultimo) {
+		fprintf(stderr, "Erro ao mostrar: FilaCircular vazia.\n");
+		return;
+	}
+
+	for (int i = 0, jogador = fila.primeiro; i < fila.size; i++) {
+		printf("[%d] ## ", i);
+		fila.array[i].Mostrar(fila.array[jogador]);
+		jogador = (jogador + 1) % fila.maxSize;
+	}
+}
+
+// ---------------------- INSERÇÃO E REMOÇÃO ----------------------
+
+Jogador RemoverFilaCircular(FilaCircular* fila);
+
+void InserirFilaCircular(Jogador jogador, FilaCircular* fila) {
+
+	if ((fila->ultimo + 1) % fila->maxSize == fila->primeiro) {
+		Jogador jogador = RemoverFilaCircular(fila);
+		jogador.Close(jogador);
+	}
+
+	fila->size++;
+	fila->array[fila->ultimo] = jogador.Clone(jogador);
+	fila->ultimo = (fila->ultimo + 1) % fila->maxSize;
+
+	printf("%.f\n", fila->getMediaAlturas(*fila));
+
+}
+
+Jogador RemoverFilaCircular(FilaCircular* fila) {
+	if (fila->primeiro == fila->ultimo) {
+		fprintf(stderr, "Erro ao remover: Fila Circular vazia.\n");
+		exit(0);
+	}
+
+	Jogador removido = fila->array[fila->primeiro];
+
+	fila->size--;
+	fila->primeiro = (fila->primeiro + 1) % fila->maxSize;
+
+	return removido;
+}
+
+void CloseFilaCircular(FilaCircular* fila) {
+	
+	for (int i = 0, jogador = fila->primeiro; i < fila->size; i++) {
+		fila->array[jogador].Close(fila->array[jogador]);
+		jogador = (jogador + 1) % fila->maxSize;
+	}
+
+	free(fila->array);
+
+	fila->maxSize = fila->size = 0;
+}
+
+FilaCircular newFilaCircular(size_t maxSize) {
+
+	FilaCircular fila;
+
+	if (maxSize == 0) maxSize = 80;
+
+	fila.size = fila.primeiro = fila.ultimo = 0;
+	fila.maxSize = maxSize;
+	fila.array = (Jogador*)malloc((maxSize + 1) * sizeof(Jogador));
+
+	fila.getMediaAlturas = GetMediaAlturasFilaCircular;
+	fila.Mostrar = MostrarFilaCircular;
+
+	fila.Inserir = InserirFilaCircular;
+	fila.Remover = RemoverFilaCircular;
+
+	fila.Close = CloseFilaCircular;
+
+	return fila;
 }
 
 #endif
