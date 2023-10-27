@@ -22,7 +22,7 @@ int main() {
 	Lista BD = newLista(BD_SIZE);
 	BD.ImportDataBase("../tmp/players.csv", &BD);
 
-	FilaCircular fila = newFilaCircular(6); // Tamanho de entradas do pub.in
+	FilaCircular fila = newFilaCircular(6);
 
 	char inputPUBIN[STR_MAX_LEN];
 
