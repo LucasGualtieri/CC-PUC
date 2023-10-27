@@ -357,7 +357,7 @@ public class Lib {
 
 		public void Mostrar() { this.lista.Mostrar(); }
 
-		// ---------------------- INSERÇÕES E REMOÇÕES ----------------------
+		// ---------------------- INSERÇÃO E REMOÇÃO ----------------------
 
 		public void Inserir(Jogador jogador) throws Exception {
 			this.lista.InserirFim(jogador);
@@ -365,6 +365,189 @@ public class Lib {
 
 		public Jogador Remover() throws Exception {
 			return this.lista.RemoverFim();
+		}
+
+	}
+
+	// --------------------------- CLASSE CELULA ---------------------------
+	
+	public static class Celula {
+		private Jogador jogador;
+		private Celula prox, baixo;
+		public Celula() { this.prox = null; }
+		public Celula(Jogador jogador) { this.jogador = jogador.Clone(); }
+		public Celula(Jogador jogador, Celula prox) {
+			this.jogador = jogador.Clone();
+			this.prox = this.baixo = prox;
+		}
+	}
+
+	// --------------------------- CLASSE LISTA FLEX ---------------------------
+
+	public static class ListaFlex {
+		private int size;
+		private Celula primeiro, ultimo;
+
+		public ListaFlex() {
+			primeiro = ultimo = new Celula();
+			size = 0;
+		}
+
+		public int getSize() { return this.size; }
+
+		public void Mostrar() throws Exception {
+
+			if (this.primeiro == this.ultimo) {
+				throw new Exception("Erro ao mostrar: Lista vazia.");
+			}
+
+			int contador = 0;
+			for (Celula i = this.primeiro.prox; i != null; i = i.prox) {
+				System.out.printf("[%d] ## ", contador++);
+				i.jogador.Mostrar();
+			}
+
+		}
+
+		// ---------------------- INSERÇÕES E REMOÇÕES ----------------------
+
+		public void InserirInicio(Jogador jogador) {
+
+			Celula newCelula = new Celula(jogador, primeiro.prox);
+			if (primeiro == ultimo) ultimo = newCelula;
+			primeiro.prox = newCelula;
+			this.size++;
+
+		}
+
+		public void InserirFim(Jogador jogador) {
+
+			Celula newCelula = new Celula(jogador, null);
+			ultimo = ultimo.prox = newCelula;
+			this.size++;
+
+		}
+		
+		public void Inserir(String posStr, Jogador jogador) {
+
+			int pos = Integer.parseInt(posStr);
+
+			Celula i = primeiro.prox;
+			for (int count = 0; count < pos - 1; count++, i = i.prox);
+
+			i.prox = new Celula(jogador, i.prox);
+
+			this.size++;
+
+		}
+
+		public Jogador RemoverInicio() throws Exception {
+
+			if (this.primeiro == this.ultimo) {
+				throw new Exception("Erro ao remover: Lista Flex vazia.");
+			}
+
+			Celula removido = primeiro.prox;
+			primeiro.prox = removido.prox;
+
+			this.size--;
+
+			return removido.jogador;
+
+		}
+
+		public Jogador RemoverFim() throws Exception {
+
+			if (this.primeiro == this.ultimo) {
+				throw new Exception("Erro ao remover: Lista Flex vazia.");
+			}
+			
+			Celula removido, i;
+			for (i = primeiro; i.prox.prox != null; i = i.prox);
+
+			removido = i.prox;
+			i.prox = removido.prox;
+
+			this.size--;
+
+			return removido.jogador;
+
+		}
+
+		public Jogador Remover(String posStr) throws Exception {
+
+			int pos = Integer.parseInt(posStr);
+
+			if (this.primeiro == this.ultimo) {
+				throw new Exception("Erro ao remover: Lista Flex vazia.");
+			} else if (0 > pos || pos >= this.size) {
+				throw new Exception("Erro ao remover: Posição inválida.");
+			} else if (pos == 0) {
+				return this.RemoverInicio();
+			} else if (pos == this.size - 1) {
+				return this.RemoverFim();
+			}
+
+			Celula removido, i = primeiro.prox;
+			for (int count = 0; count < pos - 1; count++, i = i.prox);
+
+			removido = i.prox;
+			i.prox = removido.prox;
+
+			this.size--;
+
+			return removido.jogador;
+
+		}
+	}
+
+	// --------------------------- CLASSE PILHA FLEX ---------------------------
+
+	public static class PilhaFlex {
+		private int size;
+		private Celula topo;
+
+		public PilhaFlex() {
+			topo = null;
+			size = 0;
+		}
+
+		public int getSize() { return this.size; }
+
+		public void Mostrar() throws Exception {
+			if (this.topo == null) {
+				throw new Exception("Erro ao mostrar: Pilha vazia.");
+			}
+
+			MostrarRec(size - 1, topo);
+		}
+
+		private void MostrarRec(int contador, Celula i) {
+			if (i.baixo != null) MostrarRec(contador - 1, i.baixo);
+			System.out.printf("[%d] ## ", contador);
+			i.jogador.Mostrar();
+		}
+
+		// ---------------------- INSERÇÃO E REMOÇÃO ----------------------
+
+		public void Inserir(Jogador jogador) {
+			topo = new Celula(jogador, topo);
+			this.size++;	
+		}
+
+		public Jogador Remover() throws Exception {
+
+			if (this.topo == null) {
+				throw new Exception("Erro ao remover: Pilha Flex vazia.");
+			}
+
+			Celula removido = topo;
+			topo = topo.baixo;
+
+			this.size--;
+
+			return removido.jogador;
+
 		}
 
 	}
