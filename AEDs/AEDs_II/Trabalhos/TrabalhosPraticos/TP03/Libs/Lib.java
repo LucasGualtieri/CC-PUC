@@ -422,8 +422,7 @@ public class Lib {
 
 		public void InserirFim(Jogador jogador) {
 
-			Celula newCelula = new Celula(jogador, null);
-			ultimo = ultimo.prox = newCelula;
+			ultimo = ultimo.prox = new Celula(jogador, null);
 			this.size++;
 
 		}
@@ -447,9 +446,7 @@ public class Lib {
 				throw new Exception("Erro ao remover: Lista Flex vazia.");
 			}
 
-			Celula removido = primeiro.prox;
-			primeiro.prox = removido.prox;
-
+			Celula removido = primeiro = primeiro.prox;
 			this.size--;
 
 			return removido.jogador;

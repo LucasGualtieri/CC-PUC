@@ -8,7 +8,7 @@ void InserirERemover(FilaFlex* fila, Lista BD) {
 
 	if (split.array[0][0] == 'I') {
 		int id = atoi(split.array[1]);
-		fila->Inserir(BD.Get(id, BD), fila);
+		printf("%.f\n", fila->Inserir(BD.Get(id, BD), fila));
 	} else {
 		Jogador jogador = fila->Remover(fila);
 		printf("(R) %s\n", jogador.nome);
@@ -28,7 +28,7 @@ int main() {
 
 	while (strcmp(readStr(0, inputPUBIN), "FIM")) {
 		int id = atoi(inputPUBIN);
-		fila.Inserir(BD.Get(id, BD), &fila);
+		printf("%.f\n", fila.Inserir(BD.Get(id, BD), &fila));
 	}
 
 	int numberOfActions = readInt();

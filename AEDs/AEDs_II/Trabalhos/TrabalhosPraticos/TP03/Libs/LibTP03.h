@@ -540,7 +540,7 @@ float InserirFilaCircular(Jogador jogador, FilaCircular* fila) {
 Jogador RemoverFilaCircular(FilaCircular* fila) {
 
 	if (fila->primeiro == fila->ultimo) {
-		fprintf(stderr, "Erro ao remover: Fila Circular vazia.\n");
+		fprintf(stderr, "Erro ao remover: Pilha Circular vazia.\n");
 		exit(0);
 	}
 
@@ -589,7 +589,7 @@ FilaCircular newFilaCircular(size_t maxSize) {
 
 typedef struct Celula {
 	Jogador jogador;
-	struct Celula* prox;
+	struct Celula *prox, *baixo;
 	void (*Close) (struct Celula*);
 } Celula;
 
@@ -602,6 +602,7 @@ Celula* newCelula(Jogador jogador, Celula* prox) {
 	Celula* celula = malloc(sizeof(Celula));
 	celula->jogador = jogador.Clone(jogador);
 	celula->prox = prox;
+	celula->baixo = prox;
 	celula->Close = CloseCelula;
 	return celula;
 }
@@ -665,7 +666,7 @@ Jogador RemoverFilaFlex(FilaFlex* fila) {
 void MostrarFilaFlex(FilaFlex fila) {
 	if (fila.size == 0) {
 		fprintf(stderr, "Erro ao mostrar: Fila Flex vazia.\n");
-		// exit(0);
+		exit(0);
 	}
 
 	int contador = 0;
@@ -673,7 +674,7 @@ void MostrarFilaFlex(FilaFlex fila) {
 		printf("[%d] ## ", contador++);
 		i->jogador.Mostrar(i->jogador);
 	}
-	// printf("SLKDJF\n");
+
 }
 
 void CloseFilaFlex(FilaFlex* fila) {
@@ -707,6 +708,93 @@ FilaFlex newFilaFlex(size_t maxSize) {
 	fila.Close = CloseFilaFlex;
 
 	return fila;
+}
+
+// --------------------------- CLASSE PILHA FLEX ---------------------------
+
+typedef struct PilhaFlex {
+
+	Celula *topo;
+	int size;
+
+	void (*Mostrar) (struct PilhaFlex);
+
+	void (*Inserir) (Jogador, struct PilhaFlex*);
+	Jogador (*Remover) (struct PilhaFlex*);
+
+	void (*Close) (struct PilhaFlex*);
+
+} PilhaFlex;
+
+// ---------------------- INSERÇÃO E REMOÇÃO ----------------------
+
+void InserirPilhaFlex(Jogador jogador, PilhaFlex* pilha) {
+	pilha->topo = newCelula(jogador, pilha->topo);
+	pilha->size++;
+}
+
+Jogador RemoverPilhaFlex(PilhaFlex* pilha) {
+
+	if (pilha->topo == NULL) {
+		fprintf(stderr, "Erro ao remover: Pilha Flex vazia.\n");
+		exit(0);
+	}
+
+	pilha->size--;
+	Celula* removida = pilha->topo;
+	pilha->topo = removida->baixo;
+	Jogador removido = removida->jogador.Clone(removida->jogador);
+	removida->Close(removida);
+
+	return removido;
+
+}
+
+void MostrarPilhaFlexRec(int contador, Celula* i) {
+	if (i->baixo != NULL) MostrarPilhaFlexRec(contador - 1, i->baixo);
+	printf("[%d] ## ", contador);
+	i->jogador.Mostrar(i->jogador);
+}
+
+void MostrarPilhaFlex(PilhaFlex pilha) {
+
+	if (pilha.size == 0) {
+		fprintf(stderr, "Erro ao mostrar: Pilha Flex vazia.\n");
+		exit(0);
+	}
+
+	MostrarPilhaFlexRec(pilha.size - 1, pilha.topo);
+
+}
+
+void ClosePilhaFlex(PilhaFlex* pilha) {
+	
+	Celula* i = pilha->topo;
+	while (i != NULL) {
+		Celula* tmp = i;
+		i = i->prox;
+		tmp->Close(tmp);
+	}
+
+	pilha->size = 0;
+
+}
+
+PilhaFlex newPilhaFlex() {
+
+	PilhaFlex pilha;
+
+	pilha.size = 0;
+	pilha.topo = NULL;
+
+	pilha.Mostrar = MostrarPilhaFlex;
+
+	pilha.Inserir = InserirPilhaFlex;
+	pilha.Remover = RemoverPilhaFlex;
+
+	pilha.Close = ClosePilhaFlex;
+
+	return pilha;
 }
 
 #endif
