@@ -488,7 +488,7 @@ typedef struct FilaCircular {
 	float (*getMediaAlturas) (struct FilaCircular);
 	void (*Mostrar) (struct FilaCircular);
 
-	void (*Inserir) (Jogador, struct FilaCircular*);
+	float (*Inserir) (Jogador, struct FilaCircular*);
 	Jogador (*Remover) (struct FilaCircular*);
 
 	void (*Close) (struct FilaCircular*);
@@ -523,7 +523,7 @@ void MostrarFilaCircular(FilaCircular fila) {
 
 Jogador RemoverFilaCircular(FilaCircular* fila);
 
-void InserirFilaCircular(Jogador jogador, FilaCircular* fila) {
+float InserirFilaCircular(Jogador jogador, FilaCircular* fila) {
 
 	if ((fila->ultimo + 1) % fila->maxSize == fila->primeiro) {
 		jogador.Close(fila->Remover(fila));
@@ -533,11 +533,12 @@ void InserirFilaCircular(Jogador jogador, FilaCircular* fila) {
 	fila->array[fila->ultimo] = jogador.Clone(jogador);
 	fila->ultimo = (fila->ultimo + 1) % fila->maxSize;
 
-	printf("%.f\n", fila->getMediaAlturas(*fila));
+	return fila->getMediaAlturas(*fila);
 
 }
 
 Jogador RemoverFilaCircular(FilaCircular* fila) {
+
 	if (fila->primeiro == fila->ultimo) {
 		fprintf(stderr, "Erro ao remover: Fila Circular vazia.\n");
 		exit(0);
@@ -570,7 +571,7 @@ FilaCircular newFilaCircular(size_t maxSize) {
 	if (maxSize == 0) maxSize = 80;
 
 	fila.size = fila.primeiro = fila.ultimo = 0;
-	fila.maxSize = maxSize;
+	fila.maxSize = maxSize + 1;
 	fila.array = (Jogador*)malloc((maxSize + 1) * sizeof(Jogador));
 
 	fila.getMediaAlturas = GetMediaAlturasFilaCircular;
@@ -615,7 +616,7 @@ typedef struct FilaFlex {
 	float (*getMediaAlturas) (struct FilaFlex);
 	void (*Mostrar) (struct FilaFlex);
 
-	void (*Inserir) (Jogador, struct FilaFlex*);
+	float (*Inserir) (Jogador, struct FilaFlex*);
 	Jogador (*Remover) (struct FilaFlex*);
 
 	void (*Close) (struct FilaFlex*);
@@ -632,7 +633,7 @@ float GetMediaAlturasFilaFlex(FilaFlex fila) {
 
 // ---------------------- INSERÇÃO E REMOÇÃO ----------------------
 
-void InserirFilaFlex(Jogador jogador, FilaFlex* fila) {
+float InserirFilaFlex(Jogador jogador, FilaFlex* fila) {
 
 	if (fila->size == fila->maxSize) { jogador.Close(fila->Remover(fila)); }
 
@@ -640,7 +641,7 @@ void InserirFilaFlex(Jogador jogador, FilaFlex* fila) {
 	else fila->ultimo = fila->ultimo->prox = newCelula(jogador, NULL);
 	fila->size++;
 
-	printf("%.f\n", fila->getMediaAlturas(*fila));
+	return fila->getMediaAlturas(*fila);
 
 }
 
@@ -668,7 +669,7 @@ void MostrarFilaFlex(FilaFlex fila) {
 	}
 
 	int contador = 0;
-	for (Celula* i = fila.primeiro; i != NULL && contador < 20; i = i->prox) {
+	for (Celula* i = fila.primeiro; i != NULL; i = i->prox) {
 		printf("[%d] ## ", contador++);
 		i->jogador.Mostrar(i->jogador);
 	}

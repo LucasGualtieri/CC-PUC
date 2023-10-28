@@ -92,7 +92,7 @@ FilaCircular newFilaCircular(size_t maxSize) {
 	
 	fila.size = 0;
 	fila.maxSize = maxSize + 1;
-	fila.array = (int*)malloc((maxSize) * sizeof(int));
+	fila.array = (int*)malloc((maxSize + 1) * sizeof(int));
 	fila.first = fila.last = 0;
 	fila.showOnUpdate = false;
 
