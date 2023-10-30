@@ -1,0 +1,13 @@
+100 80 90
+100 90 80
+
+
+100 120 30 50
+120 100 50 30
+
+if (menor != i) {
+	trocas += 2;
+	swap();
+}
+
+return array.length - trocas;
