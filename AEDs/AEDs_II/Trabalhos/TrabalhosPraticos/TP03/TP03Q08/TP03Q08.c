@@ -4,14 +4,12 @@
 
 void QuickSortRec(Celula* left, Celula* right, Log* log, ListaDupla lista) {
 
-	Celula* i = left, *j = right;
-	Celula* pivot = left;
-	// Jogador pivot = array[(right + left) / 2];
+	Celula *pivot = left, i* = left->prox, *j = right;
 
-	while (j->ant != i) { // i <= j
-		while (lista.CompareTo(i, pivot, log) < 0) i = i->prox;
-		while (lista.CompareTo(j, pivot, log) > 0) j = j->ant;
-		if (j->ant != i) { // i <= j
+	while (j->prox != i) { // i <= j
+		while (!lista.CompareTo(i, pivot, log) && i != j->prox) i = i->prox;
+		while (lista.CompareTo(j, pivot, log) && j != i->ant) j = j->ant;
+		if (j->prox != i) { // i <= j
 			swap(&i->jogador, &j->jogador, log);
 			i = i->prox, j = j->ant;
 		}
