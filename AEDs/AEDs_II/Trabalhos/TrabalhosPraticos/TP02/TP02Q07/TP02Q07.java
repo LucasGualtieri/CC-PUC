@@ -9,7 +9,7 @@ class TP02Q07 {
 		int N = lista.getSize();
 		Lib.Jogador[] array = lista.array;
 
-		for (int i = 1; i < lista.getSize(); i++) {
+		for (int i = 1; i < N; i++) {
 			Lib.Jogador temp = array[i];
 			int j = i - 1;
 			while (j >= 0 && lista.CompareToInt(j, temp, log)) {

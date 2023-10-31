@@ -40,7 +40,7 @@ public class Lib {
 	// --------------------------- CLASSE LOG ---------------------------
 
 	public static class Log {
-		private static int comparacoes, movimentacoes;
+		private int comparacoes, movimentacoes;
 
 		public Log() {
 			this(0, 0);
@@ -51,7 +51,7 @@ public class Lib {
 			this.movimentacoes = movimentacoes;
 		}
 
-		public static void RegistroPesquisa(String fileName, Lib.Timer timer) throws Exception {
+		public void RegistroPesquisa(String fileName, Lib.Timer timer) throws Exception {
 
 			PrintWriter printWriter = new PrintWriter(new FileWriter(fileName));
 
@@ -63,7 +63,7 @@ public class Lib {
 				
 		}
 
-		public static void RegistroOrdenacao(String fileName, Lib.Timer timer) throws Exception {
+		public void RegistroOrdenacao(String fileName, Lib.Timer timer) throws Exception {
 
 			PrintWriter printWriter = new PrintWriter(new FileWriter(fileName));
 
