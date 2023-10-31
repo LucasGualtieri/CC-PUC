@@ -8,7 +8,9 @@
 #include <string.h>
 #include <stdbool.h>
 
+// =======================================================================================
 // --------------------------- FUNÇÕES E DEFINIÇÕES AUXILIARES ---------------------------
+// =======================================================================================
 
 #define STR_MAX_LEN 80
 #define BD_SIZE 3923 // Quantidade Jogadores
@@ -30,7 +32,9 @@ int readInt() {
 	return integer;
 }
 
+// =======================================================================================
 // --------------------------- CLASSE SPLIT ---------------------------
+// =======================================================================================
 
 #define MAX_ATTRIBUTES 8
 
@@ -64,7 +68,9 @@ Split splitSpace() {
 	return split;
 }
 
+// =======================================================================================
 // --------------------------- CLASSE TIMER ---------------------------
+// =======================================================================================
 
 typedef struct Timer {
 	clock_t startTime;
@@ -96,7 +102,9 @@ Timer newTimer() {
 	return timer;
 }
 
+// =======================================================================================
 // --------------------------- CLASSE LOG ---------------------------
+// =======================================================================================
 
 typedef struct Log {
 	int comparacoes, movimentacoes;
@@ -132,7 +140,9 @@ Log newLog() {
 	return log;
 }
 
+// =======================================================================================
 // --------------------------- CLASSE JOGADOR ---------------------------
+// =======================================================================================
 
 typedef struct Jogador {
 
@@ -284,7 +294,9 @@ Jogador newJogador() {
 	return jogador;
 }
 
+// =======================================================================================
 // --------------------------- CLASSE LISTA ---------------------------
+// =======================================================================================
 
 typedef struct Lista {
 
@@ -477,7 +489,9 @@ Lista newLista(size_t maxSize) {
 	return lista;
 }
 
+// =======================================================================================
 // --------------------------- CLASSE FILA CIRCULAR ---------------------------
+// =======================================================================================
 
 typedef struct FilaCircular {
 
@@ -585,11 +599,13 @@ FilaCircular newFilaCircular(size_t maxSize) {
 	return fila;
 }
 
+// =======================================================================================
 // --------------------------- CLASSE CELULA ---------------------------
+// =======================================================================================
 
 typedef struct Celula {
 	Jogador jogador;
-	struct Celula *prox, *baixo;
+	struct Celula *prox, *ant, *baixo;
 	void (*Close) (struct Celula*);
 } Celula;
 
@@ -602,12 +618,15 @@ Celula* newCelula(Jogador jogador, Celula* prox) {
 	Celula* celula = malloc(sizeof(Celula));
 	celula->jogador = jogador.Clone(jogador);
 	celula->prox = prox;
+	celula->ant = prox;
 	celula->baixo = prox;
 	celula->Close = CloseCelula;
 	return celula;
 }
 
+// =======================================================================================
 // --------------------------- CLASSE FILA FLEX ---------------------------
+// =======================================================================================
 
 typedef struct FilaFlex {
 
@@ -710,7 +729,9 @@ FilaFlex newFilaFlex(size_t maxSize) {
 	return fila;
 }
 
+// =======================================================================================
 // --------------------------- CLASSE PILHA FLEX ---------------------------
+// =======================================================================================
 
 typedef struct PilhaFlex {
 
@@ -795,6 +816,101 @@ PilhaFlex newPilhaFlex() {
 	pilha.Close = ClosePilhaFlex;
 
 	return pilha;
+}
+
+// =======================================================================================
+// --------------------------- CLASSE LISTA DUPLA ---------------------------
+// =======================================================================================
+
+typedef struct ListaDupla {
+
+	Celula *primeiro, *ultimo;
+	int size;
+
+	void (*Mostrar) (struct ListaDupla);
+	void (*setAtributo) (void* atributo, struct ListaDupla lista);
+	int (*CompareTo) (Celula* jog1, Celula* jog2, Log* log);
+	void (*Inserir) (Jogador, struct ListaDupla*);
+	void (*Close) (struct ListaDupla*);
+
+} ListaDupla;
+
+// ---------------------- INSERÇÃO E REMOÇÃO ----------------------
+
+int CompareToListaDupla(Celula* cel1, Celula* cel2, Log* log) {
+
+	log->comparacoes++;
+	int strComp = strcmp(cel1->jogador.estadoNascimento, cel2->jogador.estadoNascimento);
+	// int strComp = strcmp(cel1->jogador.atributo, cel2->jogador.atributo);
+
+	if (strComp == 0) {
+		log->comparacoes++;
+		strComp = strcmp(cel1->jogador.nome, cel2->jogador.nome);
+	}
+
+	return strComp;
+}
+
+void swap(Jogador* jog1, Jogador* jog2, Log* log) {
+	Jogador aux = *jog1;
+	*jog1 = *jog2;
+	*jog2 = aux;
+	log->movimentacoes += 3;
+}
+
+void setAtributoLista(void* atributo, ListaDupla lista) {
+	// lista.array[lista.size - 1].atributo = atributo;
+}
+
+void InserirListaDupla(Jogador jogador, ListaDupla* lista) {
+
+	if (lista->size == 0) lista->primeiro = lista->ultimo = newCelula(jogador, NULL);
+	else lista->ultimo = lista->ultimo->prox = newCelula(jogador, NULL);
+	lista->size++;
+
+}
+
+void MostrarListaDupla(ListaDupla lista) {
+	if (lista.size == 0) {
+		fprintf(stderr, "Erro ao mostrar: lista Flex vazia.\n");
+		exit(0);
+	}
+
+	int contador = 0;
+	for (Celula* i = lista.primeiro; i != NULL; i = i->prox) {
+		printf("[%d] ## ", contador++);
+		i->jogador.Mostrar(i->jogador);
+	}
+
+}
+
+void CloseListaDupla(ListaDupla* lista) {
+	
+	Celula* i = lista->primeiro;
+	while (i != NULL) {
+		Celula* tmp = i;
+		i = i->prox;
+		tmp->Close(tmp);
+	}
+
+	lista->size = 0;
+}
+
+ListaDupla newListaDupla() {
+
+	ListaDupla lista;
+
+	lista.size = 0;
+	lista.primeiro = lista.ultimo = NULL;
+
+	lista.setAtributo = setAtributoLista;
+	lista.CompareTo = CompareToListaDupla;
+
+	lista.Mostrar = MostrarListaDupla;
+	lista.Inserir = InserirListaDupla;
+	lista.Close = CloseListaDupla;
+
+	return lista;
 }
 
 #endif
