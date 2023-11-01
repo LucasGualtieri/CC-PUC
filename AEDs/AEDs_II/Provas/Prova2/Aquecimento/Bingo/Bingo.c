@@ -4,8 +4,9 @@
 
 // clear && gcc Bingo.c && ./a.out < pub.in > result.txt
 
-void PreencherMatriz(int nLinhas, int nColunas, int** matriz);
-int** AllocarMatriz(int nLinhas, int nColunas);
+void PreencherMatriz(int, int, int**);
+int** AllocarMatriz(int, int);
+void DesalocarMatriz(int, int**);
 
 void RodadaDoBingo(int nLinhas, int nColunas, int** matriz) {
 
@@ -55,6 +56,8 @@ int main() {
 		jogoEmAndamento = !HaVencedor(nLinhas, nColunas, matriz);
 	}
 
+	DesalocarMatriz(nLinhas, matriz);
+
 }
 
 void PreencherMatriz(int nLinhas, int nColunas, int** matriz) {
@@ -77,4 +80,9 @@ int** AllocarMatriz(int nLinhas, int nColunas) {
 
 	return matriz;
 
+}
+
+void DesalocarMatriz(int nLinhas, int** matriz) {
+	for (int i = 0; i < nLinhas; i++) free(matriz[i]);
+	free(matriz);
 }
