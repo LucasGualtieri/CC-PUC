@@ -1,3 +1,5 @@
+package TP03.TP03Q01;
+
 import TP03.Libs.Lib;
 
 // clear && javac -cp ../.. TP03Q01.java && java -cp ../.. TP03Q01.java < pub.in > result.txt
