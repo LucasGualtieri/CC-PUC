@@ -3,24 +3,24 @@
 
 // clear && gcc TP03Q08.c && ./a.out < pub.in > result.txt
 
+int contador = 0;
+
 void QuickSortRec(Celula* left, Celula* right, Log* log, ListaDupla lista) {
 
 	Celula *pivot = left, *i = left->prox, *j = right;
-
-	while (j->prox != i) { // i <= j
-		while (lista.CompareTo(i, pivot, log) < 0) i = i->prox;
+	while (j->prox != i && j->prox != i->ant) {
+		while (j->prox != i && lista.CompareTo(i, pivot, log) < 0) i = i->prox;
 		while (lista.CompareTo(j, pivot, log) > 0) j = j->ant;
 		if (j->prox != i) {
- 			swap(&i->jogador, &j->jogador, log);
+			swap(&i->jogador, &j->jogador, log);
 			i = i->prox, j = j->ant;
 		}
 	}
 
 	swap(&pivot->jogador, &j->jogador, log);
 
-	// left < j e i < right
-	if (left != j && j != left->ant) QuickSortRec(left, j, log, lista);
-	if (i != right && right->prox != i) QuickSortRec(i, right, log, lista);
+	if (j != left) QuickSortRec(left, j->ant, log, lista);
+	if (j != right) QuickSortRec(j->prox, right, log, lista);
 }
 
 void QuickSort(Log* log, ListaDupla lista) {
