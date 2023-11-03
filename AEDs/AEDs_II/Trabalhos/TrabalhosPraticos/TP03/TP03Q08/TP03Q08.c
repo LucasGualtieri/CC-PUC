@@ -9,7 +9,7 @@ void QuickSortRec(Celula* left, Celula* right, Log* log, ListaDupla lista) {
 
 	Celula *pivot = left, *i = left->prox, *j = right;
 	while (j->prox != i && j->prox != i->ant) {
-		while (j->prox != i && lista.CompareTo(i, pivot, log) < 0) i = i->prox;
+		while (i != NULL && lista.CompareTo(i, pivot, log) < 0) i = i->prox;
 		while (lista.CompareTo(j, pivot, log) > 0) j = j->ant;
 		if (j->prox != i) {
 			swap(&i->jogador, &j->jogador, log);

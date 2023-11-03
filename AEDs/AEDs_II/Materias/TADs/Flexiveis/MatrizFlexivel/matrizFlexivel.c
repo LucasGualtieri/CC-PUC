@@ -7,7 +7,7 @@ int main() {
 
 	puts("----- MATRIZ FLEXÍVEL -----\n");
 
-	MatrizFlex matriz = newMatrizFlex(3, 3);
+	MatrizFlex matriz = newMatrizFlex(5, 5);
 	matriz.Print(matriz);
 
 	// matriz.ToggleShow(&matriz);

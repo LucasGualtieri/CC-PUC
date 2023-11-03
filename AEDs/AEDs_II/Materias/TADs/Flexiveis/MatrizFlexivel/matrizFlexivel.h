@@ -66,23 +66,42 @@ void PrintMatrizFlex(MatrizFlex matrix) {
 // 	}
 // }
 
+// void AlocarCelulas(MatrizFlex* matrix) {
+	
+// 	MatrixCell *auxLeft, *auxTop = NULL, *tmp;
+
+// 	int contador = 1;
+
+// 	matrix->start = tmp = auxLeft = newMatrixCell(contador++, NULL, auxTop);
+
+// 	for (int i = 0; i < matrix->nRows; i++) {
+// 		for (int j = 0; j < matrix->nCols - 1; j++) {
+// 			tmp = tmp->right = newMatrixCell(contador++, tmp, auxTop);
+// 			if (i != 0) auxTop = auxTop->right;
+// 		}
+// 		auxTop = auxLeft;
+// 		if (i < matrix->nRows - 1) {
+// 			tmp = auxLeft = auxLeft->bottom = newMatrixCell(contador++, NULL, auxTop);
+// 		}
+// 	}
+
+// }
+
 void AlocarCelulas(MatrizFlex* matrix) {
 	
 	MatrixCell *auxLeft, *auxTop = NULL, *tmp;
 
-	int contador = 1;
+	int contador = 10;
 
 	matrix->start = tmp = auxLeft = newMatrixCell(contador++, NULL, auxTop);
 
 	for (int i = 0; i < matrix->nRows; i++) {
+		if (i != 0) tmp = auxLeft = auxLeft->bottom = newMatrixCell(contador++, NULL, auxTop);
 		for (int j = 0; j < matrix->nCols - 1; j++) {
 			tmp = tmp->right = newMatrixCell(contador++, tmp, auxTop);
 			if (i != 0) auxTop = auxTop->right;
 		}
 		auxTop = auxLeft;
-		if (i < matrix->nRows - 1) {
-			tmp = auxLeft = auxLeft->bottom = newMatrixCell(contador++, NULL, auxTop);
-		}
 	}
 
 }

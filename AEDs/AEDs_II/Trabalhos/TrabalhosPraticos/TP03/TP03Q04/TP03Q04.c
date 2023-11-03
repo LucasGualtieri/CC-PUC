@@ -1,4 +1,4 @@
-#include "../Libs/LibTP03.h"
+#include "../Libs/LibsC/LibTP03.h"
 
 // clear && gcc TP03Q04.c && ./a.out < pub.in > result.txt
 

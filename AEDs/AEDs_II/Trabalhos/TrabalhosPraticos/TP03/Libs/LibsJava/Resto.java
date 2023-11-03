@@ -1,4 +1,4 @@
-package TP03.Libs;
+package TP03.Libs.LibsJava;
 
 import java.util.*;
 import java.io.File;
@@ -46,7 +46,7 @@ public class Lib {
 	// --------------------------- CLASSE LOG ---------------------------
 
 	public static class Log {
-		private static int comparacoes, movimentacoes;
+		private int comparacoes, movimentacoes;
 
 		public Log() {
 			this(0, 0);
@@ -57,7 +57,7 @@ public class Lib {
 			this.movimentacoes = movimentacoes;
 		}
 
-		public static void RegistroPesquisa(String fileName, Lib.Timer timer) throws Exception {
+		public void RegistroPesquisa(String fileName, Lib.Timer timer) throws Exception {
 
 			PrintWriter printWriter = new PrintWriter(new FileWriter(fileName));
 
@@ -69,7 +69,7 @@ public class Lib {
 				
 		}
 
-		public static void RegistroOrdenacao(String fileName, Lib.Timer timer) throws Exception {
+		public void RegistroOrdenacao(String fileName, Lib.Timer timer) throws Exception {
 
 			PrintWriter printWriter = new PrintWriter(new FileWriter(fileName));
 
@@ -95,15 +95,8 @@ public class Lib {
 	public static class Jogador {
 		private int id, altura, peso, anoNascimento;
 		private String nome, universidade, cidadeNascimento, estadoNascimento;
-		private String atributoStr;
-		private int atributoInt;
 
 		public Jogador() {}
-
-		// Usado no MergeSort
-		public Jogador(String sentinela) {
-			this.atributoStr = sentinela;
-		}
 
 		public Jogador(String[] array) {
 			this.setId(array[0]);
@@ -228,6 +221,8 @@ public class Lib {
 		public Jogador Get(String id) {
 			return this.array[Integer.parseInt(id)];
 		}
+
+		static final int BD_SIZE = 3922; // DEIXAR COMO ATRIBUTO DA CLASSE BD
 
 		void ImportDataBase(String filePath) throws Exception {
 		
