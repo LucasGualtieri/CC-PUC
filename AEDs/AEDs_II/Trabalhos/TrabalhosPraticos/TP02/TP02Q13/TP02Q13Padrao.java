@@ -1,3 +1,5 @@
+package TP02.TP02Q13;
+
 import TP02.Libs.Lib;
 
 // clear && javac -cp ../.. TP02Q13Padrao.java && java -cp ../.. TP02Q13Padrao.java < pub.in > result.txt

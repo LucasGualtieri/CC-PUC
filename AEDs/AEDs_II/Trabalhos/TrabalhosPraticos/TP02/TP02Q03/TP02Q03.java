@@ -1,10 +1,15 @@
+package TP02.TP02Q03;
+
 import TP02.Libs.Lib;
+import TP02.Libs.Lib.Lista;
+import TP02.Libs.Lib.Log;
+import TP02.Libs.Lib.Timer;
 
 // clear && javac -cp ../.. TP02Q03.java && java -cp ../.. TP02Q03.java < pub.in > result.txt
 
 class TP02Q03 {
 
-	static boolean PesquisaSequencial(String nome, Lib.Log log, Lib.Lista lista) {
+	static boolean PesquisaSequencial(String nome, Log log, Lista lista) {
 
 		boolean hasFound = false;
 		
@@ -23,11 +28,11 @@ class TP02Q03 {
 
 	public static void main(String[] args) throws Exception {
 
-		Lib.Timer timer = new Lib.Timer();
-		Lib.Log log = new Lib.Log();
+		Timer timer = new Timer();
+		Log log = new Log();
 
-		Lib.Lista BD = new Lib.Lista("../tmp/players.csv", BD_SIZE);
-		Lib.Lista lista = new Lib.Lista(74); // Tamanho de entradas do pri.in
+		Lista BD = new Lista("../tmp/players.csv", BD_SIZE);
+		Lista lista = new Lista(74); // Tamanho de entradas do pri.in
 
 		String inputPUBIN = new String();
 		
@@ -46,7 +51,7 @@ class TP02Q03 {
 		}
 		timer.Stop();
 
-		Lib.Log.RegistroPesquisa("794989_sequencial.txt", timer);		
+		log.RegistroPesquisa("794989_sequencial.txt", timer);		
 
 	}
 }

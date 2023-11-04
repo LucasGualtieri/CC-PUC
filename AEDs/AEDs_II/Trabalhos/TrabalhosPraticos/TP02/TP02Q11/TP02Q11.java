@@ -1,3 +1,5 @@
+package TP02.TP02Q11;
+
 import TP02.Libs.Lib;
 
 // clear && javac -cp ../.. TP02Q11.java && java -cp ../.. TP02Q11.java < pub.in > result.txt
@@ -41,7 +43,7 @@ class TP02Q11 {
 		int N = lista.getSize();
 		Lib.Jogador[] array = lista.array;
 
-		for (int i = 1; i < lista.getSize(); i++) {
+		for (int i = 1; i < N; i++) {
 			Lib.Jogador temp = array[i];
 			int j = i - 1;
 			while (j >= 0 && lista.CompareToInt(j, temp, log)) {

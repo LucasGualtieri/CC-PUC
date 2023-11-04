@@ -1,3 +1,5 @@
+package TP02.TP02Q15;
+
 import TP02.Libs.Lib;
 
 // clear && javac -cp ../.. TP02Q15.java && java -cp ../.. TP02Q15.java < pub.in > result.txt
