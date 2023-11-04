@@ -1,32 +1,31 @@
 package TP02.TP02Q13;
 
 import TP02.Libs.Lib;
-import TP02.Libs.Lib.Jogador;
-import TP02.Libs.Lib.Log;
+// import TP02.Libs.Lib.Jogador;
+// import TP02.Libs.Lib.Log;
 
 // clear && javac -cp ../.. TP02Q13Padrao.java && java -cp ../.. TP02Q13Padrao.java < pub.in > result.txt
 
 class TP02Q13Padrao {
 
-	public boolean CompareToStr(Jogador jog1, Jogador jog2, Log log) {
+	// public boolean CompareToStr(Jogador jog1, Jogador jog2, Log log) {
 
-		if (jog1.atributoStr.compareTo("ZZ") == 0) {
-			return false;
-		} else if (jog2.atributoStr.compareTo("ZZ") == 0) {
-			return true;
-		}
+	// 	if (jog1.atributoStr.compareTo("ZZ") == 0) {
+	// 		return false;
+	// 	} else if (jog2.atributoStr.compareTo("ZZ") == 0) {
+	// 		return true;
+	// 	}
 
-		log.incrementarComparacoes();
-		int strComp = 0;
-		// int strComp = strcmp(jog1.atributoStr, jog2.atributoStr);
+	// 	log.incrementarComparacoes();
+	// int strComp = strcmp(jog1.atributoStr, jog2.atributoStr);
 
-		if (strComp == 0) {
-			log.incrementarComparacoes();
-			// strComp = strcmp(jog1.getNome(), jog2.getNome());
-		}
+	// 	if (strComp == 0) {
+	// 		log.incrementarComparacoes();
+	// 		// strComp = strcmp(jog1.getNome(), jog2.getNome());
+	// 	}
 
-		return strComp <= 0;
-	}
+	// 	return strComp <= 0;
+	// }
 
 	static void Merge(int left, int mid, int right, Lib.Log log, Lib.Lista lista) {
 		
