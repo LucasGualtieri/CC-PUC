@@ -1,6 +1,8 @@
-// clear && javac -cp ../.. TP01Q03.java && java -cp ../.. TP01Q03.java < pub.in > result.txt
+package TP01.TP01Q03;
 
 import TP01.Lib;
+
+// clear && javac -cp ../.. TP01Q03.java && java -cp ../.. TP01Q03.java < pub.in > result.txt
 
 class TP01Q03 {
 

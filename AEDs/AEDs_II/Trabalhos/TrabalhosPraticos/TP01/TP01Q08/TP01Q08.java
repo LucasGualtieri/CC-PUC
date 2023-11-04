@@ -1,12 +1,10 @@
-// clear && javac -cp ../.. TP01Q08.java && java -cp ../.. TP01Q08.java < pub.in > result.txt
+package TP01.TP01Q08;
 
 import TP01.Lib;
-import java.io.File;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.text.DecimalFormat;
 import java.io.*;
-import java.util.*;
+
+// clear && javac -cp ../.. TP01Q08.java && java -cp ../.. TP01Q08.java < pub.in > result.txt
 
 class TP01Q08 {
 

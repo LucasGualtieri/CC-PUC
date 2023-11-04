@@ -1,3 +1,5 @@
+package TP01.TP01Q01;
+
 import TP01.Lib;
 
 // clear && javac -cp ../.. TP01Q01.java && java -cp ../.. TP01Q01.java < pub.in > result.txt
