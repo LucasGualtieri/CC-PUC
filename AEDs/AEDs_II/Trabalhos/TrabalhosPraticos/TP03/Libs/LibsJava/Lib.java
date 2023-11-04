@@ -251,5 +251,17 @@ public class Lib {
 			System.out.printf("%s ##\n", this.getEstadoNascimento());
 		}
 
+		public void MostrarQuickSort() {
+			System.out.printf("[%d ## ", this.getId());
+			System.out.printf("%s ## ", this.getNome());
+			System.out.printf("%d ## ", this.getAltura());
+			System.out.printf("%d ## ", this.getPeso());
+			System.out.printf("%d ## ", this.getAnoNascimento());
+			System.out.printf("%s ## ", this.getUniversidade());
+			System.out.printf("%s ## ", this.getCidadeNascimento());
+			System.out.printf("%s]\n", this.getEstadoNascimento());
+		}
+
 	}
+
 }
