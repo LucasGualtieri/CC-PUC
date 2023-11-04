@@ -1,6 +1,8 @@
 package TP02.TP02Q13;
 
 import TP02.Libs.Lib;
+import TP02.Libs.Lib.Jogador;
+import TP02.Libs.Lib.Log;
 
 // clear && javac -cp ../.. TP02Q13Padrao.java && java -cp ../.. TP02Q13Padrao.java < pub.in > result.txt
 
@@ -15,11 +17,12 @@ class TP02Q13Padrao {
 		}
 
 		log.incrementarComparacoes();
-		int strComp = strcmp(jog1.atributoStr, jog2.atributoStr);
+		int strComp = 0;
+		// int strComp = strcmp(jog1.atributoStr, jog2.atributoStr);
 
 		if (strComp == 0) {
 			log.incrementarComparacoes();
-			strComp = strcmp(jog1.nome, jog2.nome);
+			// strComp = strcmp(jog1.getNome(), jog2.getNome());
 		}
 
 		return strComp <= 0;
