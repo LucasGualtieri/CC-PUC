@@ -5,22 +5,24 @@
 
 int contador = 0;
 
+typedef CelulaDupla Celula;
+
 void QuickSortRec(Celula* left, Celula* right, Log* log, ListaDupla lista) {
 
-	Celula *pivot = left, *i = left->prox, *j = right;
-	while (j->prox != i && j->prox != i->ant) {
-		while (i != NULL && lista.CompareTo(i, pivot, log) < 0) i = i->prox;
-		while (lista.CompareTo(j, pivot, log) > 0) j = j->ant;
-		if (j->prox != i) {
+	Celula *pivot = left, *i = left->dir, *j = right;
+	while (j->dir != i && j->dir != i->esq) {
+		while (i != NULL && lista.CompareTo(i, pivot, log) < 0) i = i->dir;
+		while (lista.CompareTo(j, pivot, log) > 0) j = j->esq;
+		if (j->dir != i) {
 			swap(&i->jogador, &j->jogador, log);
-			i = i->prox, j = j->ant;
+			i = i->dir, j = j->esq;
 		}
 	}
 
 	swap(&pivot->jogador, &j->jogador, log);
 
-	if (j != left) QuickSortRec(left, j->ant, log, lista);
-	if (j != right) QuickSortRec(j->prox, right, log, lista);
+	if (j != left) QuickSortRec(left, j->esq, log, lista);
+	if (j != right) QuickSortRec(j->dir, right, log, lista);
 }
 
 void QuickSort(Log* log, ListaDupla lista) {

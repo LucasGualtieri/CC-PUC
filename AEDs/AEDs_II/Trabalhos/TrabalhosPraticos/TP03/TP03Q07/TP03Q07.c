@@ -1,8 +1,9 @@
-#include "../Libs/LibTP03.h"
+#include "../Libs/LibsC/LibTP03.h"
+#include "../Libs/LibsC/FilaFlex.h"
 
 // clear && gcc TP03Q07.c && ./a.out < pub.in > result.txt
 
-void InserirERemover(FilaFlex* fila, Lista BD) {
+void InserirERemover(FilaFlex* fila, BD BD) {
 
 	Split split = splitSpace();
 
@@ -19,7 +20,7 @@ void InserirERemover(FilaFlex* fila, Lista BD) {
 
 int main() {
 
-	Lista BD = newLista(BD_SIZE);
+	BD BD = newBD(BD_SIZE);
 	BD.ImportDataBase("../tmp/players.csv", &BD);
 
 	FilaFlex fila = newFilaFlex(5);

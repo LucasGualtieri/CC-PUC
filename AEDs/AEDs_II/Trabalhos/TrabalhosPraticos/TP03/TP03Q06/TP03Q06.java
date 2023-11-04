@@ -1,12 +1,14 @@
 package TP03.TP03Q06;
 
-import TP03.Libs.Lib;
+import TP03.Libs.LibsJava.Lib;
+import TP03.Libs.LibsJava.PilhaFlex;
+import TP03.Libs.LibsJava.Lib.BD;
 
 // clear && javac -cp ../.. TP03Q06.java && java -cp ../.. TP03Q06.java < pub.in > result.txt
 
 class TP03Q06 {
 
-	static void InserirERemover(String action, Lib.PilhaFlex pilha, Lib.Lista BD) throws Exception {
+	static void InserirERemover(String action, PilhaFlex pilha, BD BD) throws Exception {
 
 		String[] actions = action.split(" ");
 
@@ -18,12 +20,10 @@ class TP03Q06 {
 
 	}
 
-	static final int BD_SIZE = 3922;
-
 	public static void main(String[] args) throws Exception {
 
-		Lib.Lista BD = new Lib.Lista("../tmp/players.csv", BD_SIZE);
-		Lib.PilhaFlex pilha = new Lib.PilhaFlex();
+		BD BD = new BD("../tmp/players.csv");
+		PilhaFlex pilha = new PilhaFlex();
 
 		String inputPUBIN = new String();
 

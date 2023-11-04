@@ -1,9 +1,11 @@
-#ifndef LIB_CELULA_DUPLA_H
-#define LIB_CELULA_DUPLA_H
+#ifndef LIB_CELULA_H
+#define LIB_CELULA_H
+
+#include "../LibTP03.h"
 
 typedef struct Celula {
 	Jogador jogador;
-	struct Celula *prox, *ant;
+	struct Celula *dir;
 	void (*Close) (struct Celula*);
 } Celula;
 
@@ -12,12 +14,11 @@ void CloseCelula(Celula* celula) {
 	free(celula);
 }
 
-Celula* newCelula(Jogador jogador, Celula* ant, Celula* prox) {
+Celula* newCelula(Jogador jogador, Celula* dir) {
 	Celula* celula = malloc(sizeof(Celula));
 
 	celula->jogador = jogador.Clone(jogador);
-	celula->ant = ant;
-	celula->prox = prox;
+	celula->dir = dir;
 	celula->Close = CloseCelula;
 
 	return celula;

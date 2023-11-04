@@ -1,5 +1,5 @@
-#ifndef LIB_TP03_H
-#define LIB_TP03_H
+#ifndef LIB_C_TP03_H
+#define LIB_C_TP03_H
 
 #include <err.h>
 #include <time.h>

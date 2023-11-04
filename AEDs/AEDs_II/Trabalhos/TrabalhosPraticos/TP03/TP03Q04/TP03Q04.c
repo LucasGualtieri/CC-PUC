@@ -1,8 +1,9 @@
 #include "../Libs/LibsC/LibTP03.h"
+#include "../Libs/LibsC/FilaCircular.h"
 
 // clear && gcc TP03Q04.c && ./a.out < pub.in > result.txt
 
-void InserirERemover(FilaCircular* fila, Lista BD) {
+void InserirERemover(FilaCircular* fila, BD BD) {
 
 	Split split = splitSpace();
 
@@ -19,7 +20,7 @@ void InserirERemover(FilaCircular* fila, Lista BD) {
 
 int main() {
 
-	Lista BD = newLista(BD_SIZE);
+	BD BD = newBD(BD_SIZE);
 	BD.ImportDataBase("../tmp/players.csv", &BD);
 
 	FilaCircular fila = newFilaCircular(5);

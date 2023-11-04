@@ -1,8 +1,9 @@
-#include "../Libs/LibTP03.h"
+#include "../Libs/LibsC/LibTP03.h"
+#include "../Libs/LibsC/PilhaFlex.h"
 
 // clear && gcc TP03Q10.c && ./a.out < pub.in > result.txt
 
-void InserirERemover(PilhaFlex* pilha, Lista BD) {
+void InserirERemover(PilhaFlex* pilha, BD BD) {
 
 	Split split = splitSpace();
 
@@ -12,14 +13,14 @@ void InserirERemover(PilhaFlex* pilha, Lista BD) {
 	} else {
 		Jogador jogador = pilha->Remover(pilha);
 		printf("(R) %s\n", jogador.nome);
-		jogador.Close(jogador);
+		// jogador.Close(jogador);
 	}
 
 }
 
 int main() {
 
-	Lista BD = newLista(BD_SIZE);
+	BD BD = newBD(BD_SIZE);
 	BD.ImportDataBase("../tmp/players.csv", &BD);
 
 	PilhaFlex pilha = newPilhaFlex();
@@ -39,7 +40,7 @@ int main() {
 
 	pilha.Mostrar(pilha);
 
-	pilha.Close(&pilha);
-	BD.Close(&BD);
+	// pilha.Close(&pilha);
+	// BD.Close(&BD);
 
 }

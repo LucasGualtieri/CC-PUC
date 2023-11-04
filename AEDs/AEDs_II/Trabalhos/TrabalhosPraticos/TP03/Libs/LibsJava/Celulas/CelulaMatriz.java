@@ -1,4 +1,4 @@
-package TP03.Libs.LibsJava.MatrizFlex;
+package TP03.Libs.LibsJava.Celulas;
 
 public class CelulaMatriz {
 	public int valor;

@@ -1,4 +1,5 @@
-#include "../Libs/LibTP03.h"
+#include "../Libs/LibsC/LibTP03.h"
+#include "../Libs/LibsC/Lista.h"
 
 // clear && gcc TP03Q02.c && ./a.out < pub.in > result.txt
 
@@ -7,7 +8,7 @@ void RemoverEPrintar(Jogador jogador) {
 	jogador.Close(jogador);
 }
 
-void InserirERemover(Lista* lista, Lista BD) {
+void InserirERemover(Lista* lista, BD BD) {
 
 	Split split = splitSpace();
 	int id = atoi(split.array[1]);
@@ -31,7 +32,7 @@ void InserirERemover(Lista* lista, Lista BD) {
 
 int main() {
 
-	Lista BD = newLista(BD_SIZE);
+	BD BD = newBD(BD_SIZE);
 	BD.ImportDataBase("../tmp/players.csv", &BD);
 
 	Lista lista = newLista(250);
