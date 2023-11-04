@@ -1,17 +1,21 @@
 package TP02.TP02Q13;
 
 import TP02.Libs.Lib;
+import TP02.Libs.Lib.Jogador;
+import TP02.Libs.Lib.Lista;
+import TP02.Libs.Lib.Log;
+import TP02.Libs.Lib.Timer;
 
 // clear && javac -cp ../.. TP02Q13.java && java -cp ../.. TP02Q13.java < pub.in > result.txt
 
 class TP02Q13 {
 
-	static void Merge(int left, int right, Lib.Log log, Lib.Lista lista) {
+	static void Merge(int left, int right, Log log, Lista lista) {
 		
 		int auxSize = (right - left) + 1, mid = ((auxSize + 1) / 2);
 
-		Lib.Jogador[] array = lista.array;
-		Lib.Jogador[] auxArray = new Lib.Jogador[auxSize];
+		Jogador[] array = lista.array;
+		Jogador[] auxArray = new Jogador[auxSize];
 
 		for (int i = 0; i < auxSize; i++) auxArray[i] = array[left + i];
 		log.incrementarMovimentacoes(auxSize);
@@ -27,7 +31,7 @@ class TP02Q13 {
 		}
 	}
 
-	static void MergeSort(int left, int right, Lib.Log log, Lib.Lista lista) {
+	static void MergeSort(int left, int right, Log log, Lista lista) {
 		if (left < right) {
 			int mid = (left + right) / 2;
 			MergeSort(left, mid, log, lista);
@@ -36,7 +40,7 @@ class TP02Q13 {
 		}
 	}
 
-	static void MergeSort(Lib.Log log, Lib.Lista lista) {
+	static void MergeSort(Log log, Lista lista) {
 		MergeSort(0, lista.getSize() - 1, log, lista);
 	}
 
@@ -44,11 +48,11 @@ class TP02Q13 {
 
 	public static void main(String[] args) throws Exception {
 
-		Lib.Timer timer = new Lib.Timer();
-		Lib.Log log = new Lib.Log();
+		Timer timer = new Timer();
+		Log log = new Log();
 
-		Lib.Lista BD = new Lib.Lista("../tmp/players.csv", BD_SIZE);
-		Lib.Lista lista = new Lib.Lista(465); // Tamanho de entradas do pri.in
+		Lista BD = new Lista("../tmp/players.csv", BD_SIZE);
+		Lista lista = new Lista(465); // Tamanho de entradas do pri.in
 
 		String inputPUBIN = new String();
 		

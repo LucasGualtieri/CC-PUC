@@ -1,14 +1,18 @@
 package TP02.TP02Q18;
 
 import TP02.Libs.Lib;
+import TP02.Libs.Lib.Jogador;
+import TP02.Libs.Lib.Lista;
+import TP02.Libs.Lib.Log;
+import TP02.Libs.Lib.Timer;
 
 // clear && javac -cp ../.. TP02Q18.java && java -cp ../.. TP02Q18.java < pub.in > result.txt
 
 class TP02Q18 {
 
-	static void QuickSort(int k, int left, int right, Lib.Log log, Lib.Lista lista) {
+	static void QuickSort(int k, int left, int right, Log log, Lista lista) {
 		int i = left, j = right;
-		Lib.Jogador pivot = lista.array[(right + left) / 2];
+		Jogador pivot = lista.array[(right + left) / 2];
 
 		while (i <= j) {
 			while (lista.CompareToStr(i, pivot, log) < 0) i++;
@@ -20,7 +24,7 @@ class TP02Q18 {
 		if (i < k && i < right) QuickSort(k, i, right, log, lista);
 	}
 
-	static void QuickSort(int k, Lib.Log log, Lib.Lista lista) {
+	static void QuickSort(int k, Log log, Lista lista) {
 		QuickSort(k, 0, lista.getSize() - 1, log, lista);
 	}
 
@@ -28,11 +32,11 @@ class TP02Q18 {
 
 	public static void main(String[] args) throws Exception {
 
-		Lib.Timer timer = new Lib.Timer();
-		Lib.Log log = new Lib.Log();
+		Timer timer = new Timer();
+		Log log = new Log();
 
-		Lib.Lista BD = new Lib.Lista("../tmp/players.csv", BD_SIZE);
-		Lib.Lista lista = new Lib.Lista(465); // Tamanho de entradas do pri.in
+		Lista BD = new Lista("../tmp/players.csv", BD_SIZE);
+		Lista lista = new Lista(465); // Tamanho de entradas do pri.in
 
 		String inputPUBIN = new String();
 		

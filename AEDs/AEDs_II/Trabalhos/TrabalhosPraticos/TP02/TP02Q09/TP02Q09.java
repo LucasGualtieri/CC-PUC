@@ -1,10 +1,15 @@
+package TP02.TP02Q09;
+
 import TP02.Libs.Lib;
+import TP02.Libs.Lib.Lista;
+import TP02.Libs.Lib.Log;
+import TP02.Libs.Lib.Timer;
 
 // clear && javac -cp ../.. TP02Q09.java && java -cp ../.. TP02Q09.java < pub.in > result.txt
 
 class TP02Q09 {
 
-	static void buildHeap(int root, int N, Lib.Log log, Lib.Lista lista) {
+	static void buildHeap(int root, int N, Log log, Lista lista) {
 
 		int largest = root, l = 2 * root + 1, r = 2 * root + 2;
 
@@ -17,7 +22,7 @@ class TP02Q09 {
 		}
 	}
 
-	static void HeapSort(Lib.Log log, Lib.Lista lista) {
+	static void HeapSort(Log log, Lista lista) {
 
 		int N = lista.getSize();
 
@@ -34,11 +39,11 @@ class TP02Q09 {
 
 	public static void main(String[] args) throws Exception {
 
-		Lib.Timer timer = new Lib.Timer();
-		Lib.Log log = new Lib.Log();
+		Timer timer = new Timer();
+		Log log = new Log();
 
-		Lib.Lista BD = new Lib.Lista("../tmp/players.csv", BD_SIZE);
-		Lib.Lista lista = new Lib.Lista(465); // Tamanho de entradas do pri.in
+		Lista BD = new Lista("../tmp/players.csv", BD_SIZE);
+		Lista lista = new Lista(465); // Tamanho de entradas do pri.in
 
 		String inputPUBIN = new String();
 		

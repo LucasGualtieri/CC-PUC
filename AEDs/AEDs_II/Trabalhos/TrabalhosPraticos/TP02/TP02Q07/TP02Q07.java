@@ -1,16 +1,22 @@
+package TP02.TP02Q07;
+
 import TP02.Libs.Lib;
+import TP02.Libs.Lib.Jogador;
+import TP02.Libs.Lib.Lista;
+import TP02.Libs.Lib.Log;
+import TP02.Libs.Lib.Timer;
 
 // clear && javac -cp ../.. TP02Q07.java && java -cp ../.. TP02Q07.java < pub.in > result.txt
 
 class TP02Q07 {
 
-	static void InsertionSort(Lib.Log log, Lib.Lista lista) {
+	static void InsertionSort(Log log, Lista lista) {
 
 		int N = lista.getSize();
-		Lib.Jogador[] array = lista.array;
+		Jogador[] array = lista.array;
 
 		for (int i = 1; i < N; i++) {
-			Lib.Jogador temp = array[i];
+			Jogador temp = array[i];
 			int j = i - 1;
 			while (j >= 0 && lista.CompareToInt(j, temp, log)) {
 				array[j + 1] = array[j--];
@@ -26,11 +32,11 @@ class TP02Q07 {
 
 	public static void main(String[] args) throws Exception {
 
-		Lib.Timer timer = new Lib.Timer();
-		Lib.Log log = new Lib.Log();
+		Timer timer = new Timer();
+		Log log = new Log();
 
-		Lib.Lista BD = new Lib.Lista("../tmp/players.csv", BD_SIZE);
-		Lib.Lista lista = new Lib.Lista(465); // Tamanho de entradas do pri.in
+		Lista BD = new Lista("../tmp/players.csv", BD_SIZE);
+		Lista lista = new Lista(465); // Tamanho de entradas do pri.in
 
 		String inputPUBIN = new String();
 		
@@ -51,12 +57,12 @@ class TP02Q07 {
 
 	}
 
-	static void BinaryInsertionSort(Lib.Log log, Lib.Lista lista) {
+	static void BinaryInsertionSort(Log log, Lista lista) {
 		
 		int N = lista.getSize();
-		Lib.Jogador[] array = lista.array;
+		Jogador[] array = lista.array;
 
-		Lib.Jogador temp;
+		Jogador temp;
 		int shiftIndex;
 		for (int i = 1; i < N; i++) {
 			temp = array[i];
@@ -70,7 +76,7 @@ class TP02Q07 {
 		}
 	}
 
-	static int BinarySearch(Lib.Jogador temp, int right, Lib.Log log, Lib.Jogador[] array) {
+	static int BinarySearch(Jogador temp, int right, Log log, Jogador[] array) {
 
 		int	nomeComp, left = 0, pivotValue = 0, pivot = 0;
 		int tempVal = temp.getAnoNascimento();

@@ -1,17 +1,21 @@
 package TP02.TP02Q11;
 
 import TP02.Libs.Lib;
+import TP02.Libs.Lib.Jogador;
+import TP02.Libs.Lib.Lista;
+import TP02.Libs.Lib.Log;
+import TP02.Libs.Lib.Timer;
 
 // clear && javac -cp ../.. TP02Q11.java && java -cp ../.. TP02Q11.java < pub.in > result.txt
 
 class TP02Q11 {
 
-	static void CountingSort(Lib.Log log, Lib.Lista lista) {
+	static void CountingSort(Log log, Lista lista) {
 
 		int	N = lista.getSize();
-		Lib.Jogador[] array = lista.array;
+		Jogador[] array = lista.array;
 
-		Lib.Jogador[] auxArray = new Lib.Jogador[N];
+		Jogador[] auxArray = new Jogador[N];
 
 		int maxValue = array[0].getAltura();
 		int minValue = array[0].getAltura();
@@ -38,13 +42,13 @@ class TP02Q11 {
 
 	}
 
-	static void InsertionSort(Lib.Log log, Lib.Lista lista) {
+	static void InsertionSort(Log log, Lista lista) {
 
 		int N = lista.getSize();
-		Lib.Jogador[] array = lista.array;
+		Jogador[] array = lista.array;
 
 		for (int i = 1; i < N; i++) {
-			Lib.Jogador temp = array[i];
+			Jogador temp = array[i];
 			int j = i - 1;
 			while (j >= 0 && lista.CompareToInt(j, temp, log)) {
 				array[j + 1] = array[j--];
@@ -60,11 +64,11 @@ class TP02Q11 {
 
 	public static void main(String[] args) throws Exception {
 
-		Lib.Timer timer = new Lib.Timer();
-		Lib.Log log = new Lib.Log();
+		Timer timer = new Timer();
+		Log log = new Log();
 
-		Lib.Lista BD = new Lib.Lista("../tmp/players.csv", BD_SIZE);
-		Lib.Lista lista = new Lib.Lista(465); // Tamanho de entradas do pri.in
+		Lista BD = new Lista("../tmp/players.csv", BD_SIZE);
+		Lista lista = new Lista(465); // Tamanho de entradas do pri.in
 
 		String inputPUBIN = new String();
 		

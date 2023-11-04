@@ -42,8 +42,6 @@ class TP02Q03 {
 			lista.setAtributoStr(BD.Get(id).getNome());
 		}
 
-		// lista.Mostrar();
-
 		timer.Start();
 		while (!(inputPUBIN = Lib.readStr()).equals("FIM")) {
 			boolean hasFound = PesquisaSequencial(inputPUBIN, log, lista);
