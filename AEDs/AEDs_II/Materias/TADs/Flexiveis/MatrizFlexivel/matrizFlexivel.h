@@ -88,18 +88,22 @@ void PrintMatrizFlex(MatrizFlex matrix) {
 // }
 
 void AlocarCelulas(MatrizFlex* matrix) {
-	
+
 	MatrixCell *auxLeft, *auxTop = NULL, *tmp;
 
 	int contador = 10;
 
-	matrix->start = tmp = auxLeft = newMatrixCell(contador++, NULL, auxTop);
+	matrix->start = tmp = auxLeft = auxTop = newMatrixCell(contador++, NULL, auxTop);
 
-	for (int i = 0; i < matrix->nRows; i++) {
-		if (i != 0) tmp = auxLeft = auxLeft->bottom = newMatrixCell(contador++, NULL, auxTop);
+	for (int i = 0; i < matrix->nCols - 1; i++) {
+		tmp = tmp->right = newMatrixCell(contador++, NULL, auxTop);
+	}
+
+	for (int i = 0; i < matrix->nRows - 1; i++) {
+		auxTop->bottom = tmp = auxLeft = auxLeft->bottom = newMatrixCell(contador++, NULL, auxTop);
 		for (int j = 0; j < matrix->nCols - 1; j++) {
-			tmp = tmp->right = newMatrixCell(contador++, tmp, auxTop);
-			if (i != 0) auxTop = auxTop->right;
+			auxTop = auxTop->right;
+			auxTop->bottom = tmp = tmp->right = newMatrixCell(contador++, NULL, auxTop);
 		}
 		auxTop = auxLeft;
 	}
