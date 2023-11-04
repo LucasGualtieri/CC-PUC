@@ -41,7 +41,7 @@ class TP03Q11 {
 		Log log = new Log();
 
 		BD BD = new BD("../tmp/players.csv");
-		ListaDupla lista = new ListaDupla(); // Tamanho de entradas do pri.in
+		ListaDupla lista = new ListaDupla();
 
 		String inputPUBIN = new String();
 		
