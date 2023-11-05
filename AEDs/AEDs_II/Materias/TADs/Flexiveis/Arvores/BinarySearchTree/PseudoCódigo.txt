@@ -1,0 +1,103 @@
+class Nó {
+
+}
+
+class Arvore {
+
+	...
+
+	public int Remover(int valor) throws Exception {
+		
+		int removido;
+
+		if (this.raiz == null) {
+			throw new Exception("Erro ao remover na Árvore: Árvore vazia.");
+		}
+
+		return Remover(valor, this.raiz, this.raiz);
+
+	}
+
+	private int Remover(int valor, No raiz, No raizPai) {
+
+		int removido;
+
+		if (raiz == null) {
+			throw new Exception("Erro ao remover na Árvore: Elemento não pertence à árvore.");
+		} else if (valor < raiz.valor) {
+			removido = Remover(valor, raiz.esq, raiz);
+		} else if (valor > raiz.valor) {
+			removido = Remover(valor, raiz.dir, raiz);
+		} else {
+			removido = raiz.valor;
+			if (raiz.valor > raizPai.valor) {
+
+				if (raiz.dir == null) {
+					raizPai.dir = raiz.esq;
+				} else {
+					getMenorNó(raiz.dir).esq = raiz.esq;
+					raizPai.dir = raiz.dir;
+				}
+
+			} else {
+				if (raiz.dir == null) {
+					raizPai.esq = raiz.esq;
+				} else {
+					getMenorNó(raiz.dir).esq = raiz.esq;
+					raizPai.esq = raiz.dir;
+				}
+			}
+		}
+
+		return removido;
+	}
+
+}
+
+void main() {
+
+	Arvore arvore = new Arvore();
+	arvore.Inserir(6);
+	arvore.Inserir(5);
+	arvore.Inserir(10);
+	arvore.Inserir(1);
+	arvore.Inserir(7);
+	arvore.Inserir(2);
+	arvore.Inserir(11);
+	arvore.Inserir(3);
+	arvore.Inserir(8);
+	arvore.Inserir(4);
+	arvore.Inserir(9);
+
+	arvore.MostrarOrdenado();
+
+	try {
+		arvore.Iserir(10);
+	} catch(Exception erro) {
+		Print(erro); // "Erro ao inserir na árvore: Elemento repetido!"
+	}
+
+	arvore.Remover(10);
+
+	arvore.MostrarOrdenado(); // 1 2 3 4 5 6 7 8 9 10 11
+
+	Print(arvore.Pesquisar(5) ? "Encontrado" : "Não encontrado");
+
+	try {
+		Jogador pesquisado = arvore.PesquisarERetornar(5);
+	} catch (Exception erro) {
+		Print(erro); // Jogador não encontrado
+	}
+
+	try {
+		arvore.Remover(10);
+	} catch(Exception erro) {
+		Print(erro); // "Erro ao remover da Árvore: Elemento não pertece à árvore!"
+	}
+
+	int[] array = new int[] { 6, 5, 10, 1, 7, 2, 11, 3, 8, 4, 9 };
+	TreeSort(array);
+
+	ArrayPrint(array); // 1 2 3 4 5 6 7 8 9 10 11
+
+}
