@@ -36,6 +36,8 @@ int main() {
 	QuickSort(array);
 	array.Print(array);
 
+	printf("%sstá ordenado.\n", array.isSorted(array) ? "E" : "Não e");
+
 	array.Close(array);
 
 }

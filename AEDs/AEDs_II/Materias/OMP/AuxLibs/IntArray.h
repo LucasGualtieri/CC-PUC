@@ -11,11 +11,13 @@
 
 typedef struct IntArray {
 	int size, *array;
-	void (*Print)(struct IntArray);
-	void (*Fill)(struct IntArray, int sentinel, ...);
-	void (*FillRand)(int lowerLimit, int upperLimit, struct IntArray);
-	void (*FillOrdered)(int lowerLimit, int upperLimit, struct IntArray);
-	void (*Close)(struct IntArray);
+	bool (*isSorted) (struct IntArray);
+	void (*Print) (struct IntArray);
+	void (*PrintParcial) (int, struct IntArray);
+	void (*Fill) (struct IntArray, int sentinel, ...);
+	void (*FillRand) (int lowerLimit, int upperLimit, struct IntArray);
+	void (*FillOrdered) (int lowerLimit, int upperLimit, struct IntArray);
+	void (*Close) (struct IntArray);
 } IntArray;
 
 static int RandInt(int lowerLimit, int upperLimit) {
@@ -60,11 +62,36 @@ void IntArrayFillOrdered(int lowerLimit, int upperLimit, IntArray array) {
 	}
 }
 
+bool IntArrayIsSorted(IntArray intArray) {
+
+	int N = intArray.size;
+	int* array = intArray.array;
+
+	bool result = true;
+
+	for (int i = 0; i < N - 1; i++) {
+		if (array[i] > array[i + 1]) {
+			result = false;
+			i = N;
+		}
+	}
+
+	return result;
+}
+
 void IntArrayPrint(IntArray array) {
 	printf("{ ");
 	for (int i = 0; i < array.size; i++) {
 		printf("%d", array.array[i]);
 		printf("%s", i < array.size - 1 ? ", " : " }\n");
+	}
+}
+
+void IntArrayPrintParcial(int k, IntArray array) {
+	printf("{ ");
+	for (int i = 0; i < k; i++) {
+		printf("%d", array.array[i]);
+		printf("%s", i < k - 1 ? ", " : " }\n");
 	}
 }
 
@@ -79,7 +106,9 @@ IntArray newIntArray(int arraySize) {
 	IntArray array;
 	array.size = arraySize;
 	array.array = (int*)malloc(arraySize * sizeof(int));
+	array.isSorted = IntArrayIsSorted;
 	array.Print = IntArrayPrint;
+	array.PrintParcial = IntArrayPrintParcial;
 	array.Fill = IntArrayFill;
 	array.FillRand = IntArrayFillRand;
 	array.FillOrdered = IntArrayFillOrdered;

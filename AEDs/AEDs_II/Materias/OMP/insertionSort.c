@@ -3,18 +3,36 @@
 
 // clear && gcc insertionSort.c && ./a.out
 
-void InsertionSort(IntArray array) {
-	int size = array.size;
-	int* buffer = array.array;
+void InsertionSort(IntArray intArray) {
+
+	int N = intArray.size;
+	int* array = intArray.array;
 
 	int j, temp;
-	for (int i = 1; i < size; i++) {
-		temp = buffer[i];
+	for (int i = 1; i < N; i++) {
+		temp = array[i];
 		j = i - 1;
-		while (j >= 0 && buffer[j] > temp) {
-			buffer[j-- + 1] = buffer[j];
+		while (j >= 0 && array[j] > temp) {
+			array[j + 1] = array[j];
+			j--;
 		}
-		buffer[j + 1] = temp;
+		array[j + 1] = temp;
+	}
+}
+
+void PositiveInsertionSort(IntArray intArray) {
+
+	int N = intArray.size;
+	int* array = intArray.array;
+
+	for (int i = 0; i < N; i++) {
+		int tmp = array[i];
+		int j = i - 1;
+		while (j >= 0 && tmp >= 0 && (array[j] > tmp || array[j] < 0)) {
+			array[j + 1] = array[j];
+			j--;
+		}
+		array[j + 1] = tmp;
 	}
 }
 
@@ -27,7 +45,10 @@ int main() {
 	array.Print(array);
 
 	InsertionSort(array);
+	// PositiveInsertionSort(array);
 	array.Print(array);
+
+	printf("%sstá ordenado.\n", array.isSorted(array) ? "E" : "Não e");
 
 	array.Close(array);
 
