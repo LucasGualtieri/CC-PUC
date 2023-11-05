@@ -20,13 +20,16 @@ class TP02Q09 {
 			lista.swap(root, largest, log);
 			buildHeap(largest, N, log, lista);
 		}
+
 	}
 
 	static void HeapSort(Log log, Lista lista) {
 
 		int N = lista.getSize();
 
-		for (int i = N / 2 - 1; i >= 0; i--) buildHeap(i, N, log, lista);
+		for (int i = N / 2 - 1; i >= 0; i--) {
+			buildHeap(i, N, log, lista);
+		}
 
 		for (int i = N - 1; i > 0; i--) {
 			lista.swap(0, i, log);

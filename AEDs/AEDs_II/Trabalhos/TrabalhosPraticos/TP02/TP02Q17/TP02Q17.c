@@ -35,7 +35,6 @@ void HeapSortParcial(int k, Log* log, Lista lista) {
 	}
 }
 
-
 int main() {
 
 	Timer timer = newTimer();
