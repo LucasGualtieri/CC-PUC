@@ -37,43 +37,44 @@ class Arvore {
 		arvore.InsertVoid(2);
 		arvore.Insert(1);
 
-		System.out.println(arvore.Remove(4));
-		
 		arvore.Print();
 
-		// try {
-		// 	arvore.Insert(5);
-		// } catch(Exception error) {
-		// 	System.out.println(error.getMessage());
-		// }
+		int removed = arvore.RemoveDep(2);
+		System.out.printf("Removed: %d\n", removed);
 
-		// try {
-		// 	arvore.SearchAndReturn(10);
-		// } catch (Exception error) {
-		// 	System.out.println(error.getMessage());
-		// }
+		try {
+			arvore.Insert(5);
+		} catch(Exception error) {
+			System.out.println(error.getMessage());
+		}
 
-		// int searched = arvore.SearchAndReturn(5);
-		// System.out.printf("Elemento procurado: %d\n", searched);
+		try {
+			arvore.SearchAndReturn(10);
+		} catch (Exception error) {
+			System.out.println(error.getMessage());
+		}
 
-		// System.out.printf("Elemento 4 pertence à árvore? %b\n", arvore.Search(4));
-		// System.out.printf("Elemento 11 pertence à árvore? %b\n", arvore.Search(11));
+		int searched = arvore.SearchAndReturn(5);
+		System.out.printf("Elemento procurado: %d\n", searched);
 
-		// int greatestValue = arvore.getGreatest();
-		// int smallestValue = arvore.getSmallest();
+		System.out.printf("Elemento 4 pertence à árvore? %b\n", arvore.Search(4));
+		System.out.printf("Elemento 11 pertence à árvore? %b\n", arvore.Search(11));
 
-		// System.out.printf("Greatest tree value: %d\n", greatestValue);
-		// System.out.printf("Smallest tree value: %d\n", smallestValue);
+		int greatestValue = arvore.getGreatest();
+		int smallestValue = arvore.getSmallest();
 
-		// arvore.Print();
+		System.out.printf("Greatest tree value: %d\n", greatestValue);
+		System.out.printf("Smallest tree value: %d\n", smallestValue);
 
-		// System.out.println("------- ARRAY -------");
+		arvore.Print();
 
-		// int[] array = new int[] { 4, 5, 6, 3, 2, 1 };
+		System.out.println("------- ARRAY -------");
 
-		// ArrayPrint(array);
-		// TreeSort(array);
-		// ArrayPrint(array);
+		int[] array = new int[] { 4, 5, 6, 3, 2, 1 };
+
+		ArrayPrint(array);
+		TreeSort(array);
+		ArrayPrint(array);
 
 	}
 }

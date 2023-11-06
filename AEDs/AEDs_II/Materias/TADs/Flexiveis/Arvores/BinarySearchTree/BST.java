@@ -24,7 +24,7 @@ public class BST {
 			root.left = Insert(value, root.left);
 		} else {
 			this.size--;
-			throw new Exception("Erro ao inserir na Árvore: Valor repetido.");
+			throw new Exception("Erro ao inserir na Árvore: Valor " + value + " repetido.");
 		}
 		
 		return root;
@@ -50,6 +50,96 @@ public class BST {
 
 	}
 
+	// public void Remove(int value) throws Exception {
+	// 	this.root = Remove(value, this.root);
+	// 	// this.root = RemoveInt(value, this.root);
+	// }
+
+	// private Node Remove(int value, Node root) throws Exception {
+
+	// 	if (root == null) { 
+	// 		throw new Exception("Erro ao remover na árvore: Árvore vazia.");
+	// 	} else if (value < root.value) {
+	// 		root.left = Remove(value, root.left);
+	// 	} else if (value > root.value) {
+	// 		root.right = Remove(value, root.right);
+	// 	} else if (root.right == null) {
+	// 		root = root.left;
+	// 	} else if (root.left == null) {
+	// 		root = root.right;
+	// 	} else {
+	// 		root.left = GetGreatestNode(root, root.left);
+	// 	}
+
+	// 	return root;
+
+	// }
+	   
+
+	private Node GetSmallestNode(Node root) {
+		Node smallest = root;
+		while (smallest.left != null) smallest = smallest.left;
+		return smallest;
+	}
+
+	Node GetGreatestNode(Node root) { // Should be private
+		Node greatest = root;
+		while (greatest.right != null) greatest = greatest.right;
+		return greatest;
+	}
+
+	public int RemoveDep(int value) throws Exception {
+		
+		int removed;
+
+		if (this.root == null) {
+			throw new Exception("Erro ao remover na árvore: Árvore vazia.");
+		} else if (value < root.value) {
+			removed = RemoveDep(value, root.left, root);
+		} else if (value > root.value) {
+			removed = RemoveDep(value, root.right, root);
+		} else {
+			removed = root.value;
+			GetSmallestNode(root.right).left = root.left;
+			this.root = this.root.right;
+		}
+		
+		return removed;
+
+	}
+
+	private int RemoveDep(int value, Node root, Node rootParent) throws Exception {
+
+		int removed;
+
+		if (root == null) {
+			throw new Exception("Erro ao remover na Árvore: Elemento não pertence à árvore.");
+		} else if (value < root.value) {
+			removed = RemoveDep(value, root.left, root);
+		} else if (value > root.value) {
+			removed = RemoveDep(value, root.right, root);
+		} else {
+			removed = root.value;
+			if (root.value > rootParent.value) {
+				if (root.right == null) {
+					rootParent.right = root.left;
+				} else {
+					GetSmallestNode(root.right).left = root.left;
+					rootParent.right = root.right;
+				}
+			} else {
+				if (root.right == null) {
+					rootParent.left = root.left;
+				} else {
+					GetSmallestNode(root.right).left = root.left;
+					rootParent.left = root.right;
+				}
+			}
+		}
+
+		return removed;
+	}
+
 	public int SearchAndReturn(int value) throws Exception {
 		if (this.root == null) {
 			throw new Exception("Erro ao buscar na Árvore: Árvore vazia.");
@@ -62,7 +152,7 @@ public class BST {
 		int searched;
 
 		if (root == null) {
-			throw new Exception("Erro ao buscar na Árvore: Elemento não existe.");
+			throw new Exception("Erro ao buscar na Árvore: Elemento " + value + " não existe.");
 		} else if (value < root.value) {
 			searched = SearchAndReturn(value, root.left);
 		} else if (value > root.value) {
@@ -100,12 +190,6 @@ public class BST {
 
 	}
 
-	private Node GetSmallestNode(Node root) {
-		Node smallest = root;
-		while (smallest.left != null) smallest = smallest.left;
-		return smallest;
-	}
-
 	public int getGreatest() throws Exception {
 		
 		if (this.root == null) {
@@ -126,58 +210,6 @@ public class BST {
 		Node i;
 		for (i = this.root; i.left != null; i = i.left);
 		return i.value;
-	}
-
-	public int Remove(int value) throws Exception {
-		
-		int removed;
-
-		if (this.root == null) {
-			throw new Exception("Erro ao remover na Árvore: Árvore vazia.");
-		} else if (value < root.value) {
-			removed = Remove(value, root.left, root);
-		} else if (value > root.value) {
-			removed = Remove(value, root.right, root);
-		} else {
-			removed = root.value;
-			GetSmallestNode(root.right).left = root.left;
-			this.root = this.root.right;
-		}
-		
-		return removed;
-
-	}
-
-	private int Remove(int value, Node root, Node rootParent) throws Exception {
-
-		int removed;
-
-		if (root == null) {
-			throw new Exception("Erro ao remover na Árvore: Elemento não pertence à árvore.");
-		} else if (value < root.value) {
-			removed = Remove(value, root.left, root);
-		} else if (value > root.value) {
-			removed = Remove(value, root.right, root);
-		} else {
-			removed = root.value;
-			if (root.value > rootParent.value) {
-				if (root.right == null) {
-					rootParent.right = root.left;
-				} else {
-					GetSmallestNode(root.right).left = root.left;
-					rootParent.right = root.right;
-				}
-			} else {
-				if (root.right == null) {
-					rootParent.left = root.left;
-				} else {
-					GetSmallestNode(root.right).left = root.left;
-					rootParent.left = root.right;
-				}
-			}
-		}
-
-		return removed;
 	}
 
 	public int RemoveSmallest() throws Exception {
