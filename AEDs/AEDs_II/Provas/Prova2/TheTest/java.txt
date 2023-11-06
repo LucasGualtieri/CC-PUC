@@ -1,0 +1,45 @@
+A FACE começou a desenvolver um telefone celular de baixo custo.
+Um desafio, contudo, está intrigando os programadores da FACE:
+ - o aparelho não dispõe de muitos recursos de hardware,
+ e os programadores estão tendo dificuldades em escrever
+ o módulo que gerenciará os processos do sistema operacional SBC,
+ desenvolvido especialmente para a arquitetura.
+ 
+Os programadores receberam dos analistas as seguintes diretivas,
+as quais precisam ser rigorosamente seguidas:
+
+ - O sistema executa apenas um processo por vez, e cada processo até o fim.
+ - O sistema jamais pode ficar ocioso se há processos esperando para serem atendidos.
+
+Para que um processo não trave o sistema, cada processo,
+quando requisita sua execução, deve informar ao sistema: 
+ - o tempo exato, em ciclos de processamento, que sua execução durará.
+O sistema jamais permite que a execução de um processo dure mais que o tempo previsto,
+abortando-a se necessário.
+
+Ainda, se um processo se encerra antes do informado,
+o sistema aproveita os ciclos restantes para rotinas de coleta de dados
+e comunicação com o Governo.
+
+Dessarte, para todos os efeitos, a execução de um processo que informou precisar de c ciclos dura sempre exatos c ciclos.
+
+Entrada
+A primeira linha consiste de um único inteiro N, o qual representa
+o número de processos que requisitaram sua execução ao SBC.
+
+Cada uma das N linhas seguintes corresponde, a um processo e
+é formada por dois inteiros t e c que representavam respectivamente
+ - O tempo do sistema em que o processo fez sua requisição.
+ - E o número de ciclos de processamento que durará a execução do processo.
+ 
+Considere que o tempo do sistema é contado em ciclos de processamento
+e que o contador começa em 1 em cada caso de teste.
+
+Considere ainda que a entrada é finalizada em fim de arquivo.
+
+Saída
+Para cada caso de teste, imprima o valor inteiro que representa a soma,
+de todos os processos, do tempo, em ciclos de processamento,
+que cada processo espera até entrar em execução.
+
+Por favor, note que este valor pode não caber em 32 bits.

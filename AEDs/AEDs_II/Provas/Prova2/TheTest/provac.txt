@@ -1,0 +1,20 @@
+daenerys só consegue treinar um dragão por dia, mas pode demorar mais
+
+se daenerys demorar mais que um dia pra treinar um dragão,
+então ela terá dragões hibernando
+
+se ao final do dia algum dragão estiver dormindo daenerys tera de pegar uma multa
+que varia de dragão para dragão
+
+Sauron envia dragões TODOS os dias para daenerys
+
+Se daenerys tiver dragões para treinar e não estiver treinando, sauron irá mata-la
+
+Entrada
+Cada linha da entrada contém dois números
+Ti = o número de dias necessários para treinar o i-ésimo dragão
+Fi = e a multa cobrada por dia que o dragão passa dormindo.
+
+Para quaisquer i e j distintos, Ti / Fi ≠ Tj / Fj.
+A entrada possui no máximo 105 linhas e termina em fim de arquivo.
+
