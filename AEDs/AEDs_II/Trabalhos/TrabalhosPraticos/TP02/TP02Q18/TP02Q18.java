@@ -10,7 +10,7 @@ import TP02.Libs.Lib.Timer;
 
 class TP02Q18 {
 
-	static void QuickSort(int k, int left, int right, Log log, Lista lista) {
+	private static void QuickSort(int k, int left, int right, Log log, Lista lista) {
 		int i = left, j = right;
 		Jogador pivot = lista.array[(right + left) / 2];
 
@@ -24,7 +24,7 @@ class TP02Q18 {
 		if (i < k && i < right) QuickSort(k, i, right, log, lista);
 	}
 
-	static void QuickSort(int k, Log log, Lista lista) {
+	public static void QuickSort(int k, Log log, Lista lista) {
 		QuickSort(k, 0, lista.getSize() - 1, log, lista);
 	}
 

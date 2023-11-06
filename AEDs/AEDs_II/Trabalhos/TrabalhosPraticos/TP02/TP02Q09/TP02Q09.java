@@ -9,7 +9,7 @@ import TP02.Libs.Lib.Timer;
 
 class TP02Q09 {
 
-	static void buildHeap(int root, int N, Log log, Lista lista) {
+	private static void buildHeap(int root, int N, Log log, Lista lista) {
 
 		int largest = root, l = 2 * root + 1, r = 2 * root + 2;
 
@@ -23,7 +23,7 @@ class TP02Q09 {
 
 	}
 
-	static void HeapSort(Log log, Lista lista) {
+	public static void HeapSort(Log log, Lista lista) {
 
 		int N = lista.getSize();
 

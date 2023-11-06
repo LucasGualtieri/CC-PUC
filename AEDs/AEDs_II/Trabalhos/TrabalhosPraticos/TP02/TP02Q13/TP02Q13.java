@@ -10,7 +10,7 @@ import TP02.Libs.Lib.Timer;
 
 class TP02Q13 {
 
-	static void Merge(int left, int right, Log log, Lista lista) {
+	private static void Merge(int left, int right, Log log, Lista lista) {
 		
 		int auxSize = (right - left) + 1, mid = ((auxSize + 1) / 2);
 
@@ -31,7 +31,7 @@ class TP02Q13 {
 		}
 	}
 
-	static void MergeSort(int left, int right, Log log, Lista lista) {
+	private static void MergeSort(int left, int right, Log log, Lista lista) {
 		if (left < right) {
 			int mid = (left + right) / 2;
 			MergeSort(left, mid, log, lista);
@@ -40,7 +40,7 @@ class TP02Q13 {
 		}
 	}
 
-	static void MergeSort(Log log, Lista lista) {
+	public static void MergeSort(Log log, Lista lista) {
 		MergeSort(0, lista.getSize() - 1, log, lista);
 	}
 
