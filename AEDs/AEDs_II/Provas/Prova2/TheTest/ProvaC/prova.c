@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-// clear && gcc prova.c && ./a.out
+// clear && gcc prova.c && ./a.out < pub.in > result.txt
 
 typedef struct Dragao {
 	int diasParaSerTreinado, multaDiaria;

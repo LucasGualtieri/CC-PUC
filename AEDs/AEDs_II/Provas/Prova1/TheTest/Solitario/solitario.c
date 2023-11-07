@@ -48,17 +48,9 @@ int numeroSemPar(int* array, int n) {
 	int resultado;
 	for (int i = 0; i < n; i += 2) {
 		if (i < n - 1 && array[i] != array[i + 1]) {
-			// printf("IF\n");
-			// printf("I: %d\n", i);
-			// printf("array[%d]: %d\n", i, array[i]);
-			// printf("array[%d]: %d\n", i + 1, array[i + 1]);
 			resultado = array[i];
 			i = n;
 		} else if (i == n - 1) {
-			// printf("ELSE IF\n");
-			// printf("I: %d\n", i);
-			// printf("array[%d]: %d\n", i, array[i]);
-			// printf("array[%d]: %d\n", i + 1, array[i + 1]);
 			resultado = array[i];
 		}
 	}
@@ -70,26 +62,18 @@ int main() {
 	int *array, arraySize;
 
 	while ((arraySize = readInt()) != 0) {
-		// printf("arraySize: %d\n", arraySize);
 
 		array = (int*)malloc(arraySize * sizeof(int));
 
 		for (int i = 0; i < arraySize; i++) {
 			array[i] = readInt();
-			// printf("array[i]: %d\n", array[i]);
-			// lista.InserirOrdenado();
 		}
 
-		// IntArrayPrint(array, arraySize);
-		// selectionSort(array, arraySize);
 		InsertionSort(array, arraySize);
-		// IntArrayPrint(array, arraySize);
-		// exit(0);
 
 		printf("%d\n", numeroSemPar(array, arraySize));
 
 		free(array);
-		// exit(0);
 	}
 
 	return 0;
