@@ -60,7 +60,7 @@ bool lerDragao(Dragon* dragon) {
 	valoresLidos += scanf("%d", &dragon->diasDeTreino);
 	valoresLidos += scanf("%d", &dragon->multaDiaria);
 
-	dragon->maiorMultaRelativa = (float)dragon->multaDiaria / dragon->diasDeTreino;
+	dragon->maiorMultaRelativa = (float)dragon->diasDeTreino / dragon->multaDiaria;
 
 	return valoresLidos > 0 ? true : false;
 
@@ -120,11 +120,11 @@ void OrdenarPorMulta(Fila fila) {
 
 	for (int i = 0; i < N - 1; i++) {
 		for (int j = i + 1; j < N; j++) {
-			int maior = i;
-			if (array[maior].maiorMultaRelativa < array[j].maiorMultaRelativa) {
-				maior = j;
+			int menor = i;
+			if (array[menor].maiorMultaRelativa > array[j].maiorMultaRelativa) {
+				menor = j;
 			}
-			swap(&array[maior], &array[i]);
+			swap(&array[menor], &array[i]);
 		}
 	}
 
