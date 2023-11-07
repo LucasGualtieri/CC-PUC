@@ -82,7 +82,7 @@ int main() {
 	Dragon dragon;
 	Fila fila = newFila(105);
 
-	int numeroDeDias, valorDaMulta, multaTotal = 0;
+	int multaTotal = 0;
 
 	while (lerDragao(&dragon)) {
 
