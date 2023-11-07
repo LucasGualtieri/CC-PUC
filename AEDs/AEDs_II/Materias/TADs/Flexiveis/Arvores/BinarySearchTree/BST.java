@@ -50,6 +50,50 @@ public class BST {
 
 	}
 
+	public int Remove(int value) throws Exception {
+
+		if (this.root == null) {
+			throw new Exception("Erro ao remover na árvore: Árvore vazia.");
+		}
+		
+		return Remove(value, this.root);
+
+	}
+	
+	private int Remove(int value, Node root) throws Exception {
+		
+		int removed;
+
+		if (root == null) {
+			throw new Exception("Erro ao remover na árvore: Valor inexistente.");
+		} else if (value < root.value) {
+			removed = Remove(value, root.left);
+		} else if (value > root.value) {
+			removed = Remove(value, root.right);
+		} else {
+			Node parent = foo(root.right); // Problema acho que tá aqui
+			removed = root.value;
+			if (parent.left != null) {
+				parent.left = parent.left.right;
+				root.value = parent.left.value;
+			} else {
+				root.right = parent.left;
+				root.value = parent.value;
+			}
+		}
+
+		return removed;
+	}
+
+	private Node foo(Node root) {
+		while (root.left != null) {
+			if (root.left.left != null) {
+				root = root.left;
+			}
+		}
+		return root;
+	}
+
 	// public void Remove(int value) throws Exception {
 	// 	this.root = Remove(value, this.root);
 	// 	// this.root = RemoveInt(value, this.root);

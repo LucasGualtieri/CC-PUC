@@ -30,16 +30,22 @@ class Arvore {
 
 		BST arvore = new BST();
 
-		arvore.InsertVoid(4);
-		arvore.Insert(5);
-		arvore.InsertVoid(6);
-		arvore.Insert(3);
-		arvore.InsertVoid(2);
+		arvore.InsertVoid(5);
 		arvore.Insert(1);
+		// arvore.InsertVoid(9);
+		// arvore.Insert(0);
+		// arvore.InsertVoid(2);
+		// arvore.Insert(7);
+		// arvore.Insert(10);
+		// arvore.Insert(6);
 
 		arvore.Print();
+		
+		int removed = arvore.Remove(5);
 
-		// int removed = arvore.Remove(2);
+		System.out.println("Removido: " + removed);
+
+		arvore.Print();
 
 		// int removed = arvore.RemoveDep(2);
 		// System.out.printf("Removed: %d\n", removed);
