@@ -7,6 +7,8 @@ public class BST {
 		this.root = null;
 	}
 
+	public Node getRoot() { return this.root; }
+
 	public int getSize() { return this.size; }
 
 	public void Insert(int value) throws Exception {
