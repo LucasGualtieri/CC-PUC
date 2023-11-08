@@ -4,7 +4,7 @@ import java.util.Random;
 
 class Arvore {
 
-	static void TreeSort(int[] array) throws Exception {
+	public static void TreeSort(int[] array) throws Exception {
 
 		BST treeSort = new BST();
 
@@ -17,6 +17,17 @@ class Arvore {
 		}
 
 	}
+
+	// class TreeSort {
+	// 	// private static TreeSort(Node root, int[] array) {
+	// 	// 	if (root != null) {
+	// 	// 		TreeSort(root.left, array);
+	// 	// 		array[size++] = root.value;
+	// 	// 		TreeSort(root.right, array);
+	// 	// 	}
+	// 	// }
+	// }
+
 
 	static void ArrayPrint(int[] array) {
 		System.out.print("{ ");
