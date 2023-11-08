@@ -9,6 +9,27 @@ public class BST {
 
 	public int getSize() { return this.size; }
 
+	public int getHeight() throws Exception {
+		if (this.root == null) {
+			throw new Exception("Erro ao remover na árvore: Árvore vazia.");
+		}
+
+		return getHeight(0, this.root);
+
+	}
+
+	private int getHeight(int height, Node root) {
+		
+		if (root != null) {
+			height++;
+			int leftHeight = getHeight(height, root.left);
+			int rightHeight = getHeight(height, root.right);
+			height = leftHeight > rightHeight ? leftHeight : rightHeight;
+		}
+
+		return height;
+	}
+
 	public void Insert(int value) throws Exception {
 		this.size++;
 		this.root = Insert(value, root);
@@ -50,63 +71,158 @@ public class BST {
 
 	}
 
-	public int Remove(int value) throws Exception {
+	public int Delete(int value) throws Exception {
+
+		int removed;
 
 		if (this.root == null) {
 			throw new Exception("Erro ao remover na árvore: Árvore vazia.");
+		} else if (value < root.value) {
+			removed = Delete(value, root.left, root);
+		} else if (value > root.value) {
+			removed = Delete(value, root.right, root);
+		} else {
+
+			removed = root.value;
+
+			if (root.left == null && root.right == null) {
+				this.root = null;
+			} else if (root.left == null || root.right == null) {
+				this.root = value < this.root.value ? this.root.left : this.root.right;
+			} else {
+
+				Node aux = GreatestParentLeft(this.root.left);
+				
+				if (aux.right != null) {
+					this.root.value = aux.right.value;
+					aux.right = aux.right.left;
+				} else {
+					this.root.value = aux.value;
+					this.root.left = aux.right;
+				}
+			}
 		}
-		
-		return Remove(value, this.root);
+
+		return removed;
 
 	}
 	
-	private int Remove(int value, Node root) throws Exception {
+	private int Delete(int value, Node root, Node parent) throws Exception {
 		
 		int removed;
 
 		if (root == null) {
 			throw new Exception("Erro ao remover na árvore: Valor inexistente.");
 		} else if (value < root.value) {
-			removed = Remove(value, root.left);
+			removed = Delete(value, root.left, root);
 		} else if (value > root.value) {
-			removed = Remove(value, root.right);
+			removed = Delete(value, root.right, root);
 		} else {
-			Node parent = foo(root.right); // Problema acho que tá aqui
+
 			removed = root.value;
-			if (parent.left != null) {
-				parent.left = parent.left.right;
-				root.value = parent.left.value;
+
+			if (root.left == null && root.right == null) {
+				if (value < parent.value) parent.left = null;
+				else parent.right = null;
+			} else if (root.left == null || root.right == null) {
+				if (value < parent.value) parent.left = root.right;
+				else parent.right = root.left;
 			} else {
-				root.right = parent.left;
-				root.value = parent.value;
+
+				Node aux = GreatestParentLeft(root.left);
+				
+				if (aux.right != null) {
+					root.value = aux.right.value;
+					aux.right = aux.right.left;
+				} else {
+					root.left = aux.left;
+					root.value = aux.value;
+				}
+
 			}
+
 		}
 
 		return removed;
+
 	}
 
-	private Node foo(Node root) {
-		while (root.left != null) {
-			if (root.left.left != null) {
-				root = root.left;
-			}
+	private Node GreatestParentLeft(Node root) {
+
+		while (root.right != null && root.right.right != null) {
+			root = root.right;
 		}
+		
 		return root;
 	}
 
-	// public void Remove(int value) throws Exception {
-	// 	this.root = Remove(value, this.root);
+	// Remover simplificado
+	/*
+		
+		public int delete(int value) throws Exception {
+			if (this.root == null) {
+				throw new Exception("Erro ao remover na árvore: Árvore vazia.");
+			}
+			return delete(value, root, null);
+		}
+
+		private int delete(int value, Node node, Node parent) throws Exception {
+			if (node == null) {
+				throw new Exception("Erro ao remover na árvore: Valor inexistente.");
+			}
+
+			if (value < node.value) {
+				return delete(value, node.left, node);
+			} else if (value > node.value) {
+				return delete(value, node.right, node);
+			} else {
+				int removed = node.value;
+				if (node.left == null && node.right == null) {
+					replaceNode(parent, node, null);
+				} else if (node.left == null || node.right == null) {
+					replaceNode(parent, node, node.left != null ? node.left : node.right);
+				} else {
+					Node aux = greatestParentLeft(node.left);
+					if (aux.right != null) {
+						node.value = aux.right.value;
+						aux.right = aux.right.left;
+					} else {
+						node.value = aux.value;
+						node.left = aux.left;
+					}
+				}
+				return removed;
+			}
+		}
+
+		private void replaceNode(Node parent, Node oldNode, Node newNode) {
+			if (parent == null) {
+				this.root = newNode;
+			} else if (parent.left == oldNode) {
+				parent.left = newNode;
+			} else {
+				parent.right = newNode;
+			}
+		}
+
+		private Node greatestParentLeft(Node node) {
+			// Your implementation here
+		}
+	*/
+
+	// public void Delete(int value) throws Exception {
+	// 	this.root = Delete(value, this.root);
 	// 	// this.root = RemoveInt(value, this.root);
 	// }
 
-	// private Node Remove(int value, Node root) throws Exception {
+	// private Node Delete(int value, Node root) throws Exception {
 
 	// 	if (root == null) { 
 	// 		throw new Exception("Erro ao remover na árvore: Árvore vazia.");
 	// 	} else if (value < root.value) {
-	// 		root.left = Remove(value, root.left);
+	// 		root.left = Delete(value, root.left);
 	// 	} else if (value > root.value) {
-	// 		root.right = Remove(value, root.right);
+	// 		root.right = Delete(value, root.right);
 	// 	} else if (root.right == null) {
 	// 		root = root.left;
 	// 	} else if (root.left == null) {

@@ -9,9 +9,12 @@ typedef struct Pessoa {
 
 void AlteraPessoa(Pessoa* pessoa) {
 
-	Pessoa p1 = { 25, 'F' };
+	Pessoa p1;
 
 	pessoa = &p1;
+
+	pessoa->idade = 25;
+	pessoa->sexo = 'F';
 
 	printf("pessoa.idade: %d\n", pessoa->idade);
 	printf("pessoa.sexo: %c\n", pessoa->sexo);
