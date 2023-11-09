@@ -18,15 +18,15 @@ public class MatrizFlex {
 	public int getNLinhas() { return this.nLinhas; }
 	public int getNColunas() { return this.nColunas; }
 	public CelulaMatriz getInicio() { return inicio; }
-	
+
 	private void AlocarCelulas() {
 	
 		CelulaMatriz auxEsq, auxCima = null, tmp;
 
-		this.inicio = tmp = auxEsq = auxCima = new CelulaMatriz(null, auxCima);
+		this.inicio = tmp = auxEsq = auxCima = new CelulaMatriz(null, null);
 
 		for (int i = 0; i < this.nColunas - 1; i++) {
-			tmp = tmp.dir = new CelulaMatriz(tmp, auxCima);
+			tmp = tmp.dir = new CelulaMatriz(tmp, null);
 		}
 
 		for (int i = 0; i < this.nLinhas - 1; i++) {
@@ -113,4 +113,5 @@ public class MatrizFlex {
 			i = left = left.baixo;
 		}
 	}
+
 }
