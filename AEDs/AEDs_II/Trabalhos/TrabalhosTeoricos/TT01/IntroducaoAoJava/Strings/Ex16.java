@@ -1,3 +1,5 @@
+package TT01.IntroducaoAoJava.Strings;
+
 import java.util.*;
 
 // Não entendi, peguei a resposta.

@@ -1,3 +1,5 @@
+package TT01.ArquivosEmJava.Ex5;
+
 /**
  * Pilha dinamica
  * 

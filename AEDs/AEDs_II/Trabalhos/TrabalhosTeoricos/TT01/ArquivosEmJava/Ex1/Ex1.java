@@ -1,4 +1,6 @@
-import ArquivosEmJava.Arq;
+package TT01.ArquivosEmJava.Ex1;
+
+import TT01.ArquivosEmJava.Arq;
 
 class Ex1 {
 	public static void main(String[] args) {

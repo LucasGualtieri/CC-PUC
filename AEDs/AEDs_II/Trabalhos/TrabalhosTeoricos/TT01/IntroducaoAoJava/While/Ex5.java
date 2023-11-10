@@ -1,3 +1,5 @@
+package TT01.IntroducaoAoJava.While;
+
 import java.util.*;
 
 class Ex5 {

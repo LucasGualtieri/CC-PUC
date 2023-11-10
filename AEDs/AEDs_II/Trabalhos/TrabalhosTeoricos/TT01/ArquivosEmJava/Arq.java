@@ -1,9 +1,9 @@
-package ArquivosEmJava;
+package TT01.ArquivosEmJava;
 
 import java.util.Formatter;
-// import java.io.*;
 import java.util.Scanner;
 import java.io.File;
+// import java.io.*;
 // import java.nio.charset.*;
 
 public class Arq {

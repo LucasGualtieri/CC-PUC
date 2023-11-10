@@ -1,5 +1,6 @@
-import ArquivosEmJava.Arq;
+package TT01.ArquivosEmJava.Ex3;
 
+import TT01.ArquivosEmJava.Arq;
 import java.util.*;
 
 class Ex3 {

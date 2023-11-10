@@ -1,3 +1,5 @@
+package TT01.IntroducaoOO;
+
 class Ex3 {
 
 	static class Ponto {

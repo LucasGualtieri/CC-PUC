@@ -1,3 +1,5 @@
+package TT01.IntroducaoAoJava.Arrays;
+
 import java.util.*;
 
 class Ex10 {

@@ -1,3 +1,5 @@
+package TT01.IntroducaoOO;
+
 class Ex2 {
 	static class Retangulo {
 		double base, altura;

@@ -1,4 +1,6 @@
-import ArquivosEmJava.Arq;
+package TT01.ArquivosEmJava.Exemplo;
+
+import TT01.ArquivosEmJava.Arq;
 
 class ExemploArq01Escrita {
 	public static void main(String[] args) {
