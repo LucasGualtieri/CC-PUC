@@ -4,7 +4,37 @@ import java.util.Random;
 
 class Arvore {
 
-	public static void TreeSort(int[] array) throws Exception {
+	public static class TreeSort {
+
+		// N * Log(N) + N = Theta(nlogn)
+
+		static int N;
+
+		static void sort(int[] array) throws Exception {
+
+			TreeSort.N = 0;
+
+			BST tree = new BST();
+
+			for (int i = 0; i < array.length; i++) {
+				tree.Insert(array[i]);
+			}
+
+			TreeSort.sort(tree.getRoot(), array);
+
+		}
+
+		private static void sort(Node root, int[] array) {
+			if (root != null) {
+				sort(root.left, array);
+				array[TreeSort.N++] = root.value;
+				sort(root.right, array);
+			}
+		}
+
+	}
+
+	public static void TreeSortOutTree(int[] array) throws Exception {
 
 		BST treeSort = new BST();
 
@@ -18,17 +48,6 @@ class Arvore {
 
 	}
 
-	// class TreeSort {
-	// 	// private static TreeSort(Node root, int[] array) {
-	// 	// 	if (root != null) {
-	// 	// 		TreeSort(root.left, array);
-	// 	// 		array[size++] = root.value;
-	// 	// 		TreeSort(root.right, array);
-	// 	// 	}
-	// 	// }
-	// }
-
-
 	static void ArrayPrint(int[] array) {
 		System.out.print("{ ");
 		for (int i = 0; i < array.length; i++) {
@@ -38,7 +57,7 @@ class Arvore {
 	}
 
 	static int Log2(int N) {
-		return (int)(Math.log(N)/ Math.log(2));
+		return (int)(Math.log(N) / Math.log(2));
 	}
 
 	static Random generator = new Random(0);
@@ -122,42 +141,42 @@ class Arvore {
 			System.out.println(exception.getMessage());
 		}
 
-		// int removed = arvore.RemoveDep(2);
+		// removed = arvore.RemoveDep(2);
 		// System.out.printf("Removed: %d\n", removed);
 
-		// try {
-		// 	arvore.Insert(5);
-		// } catch(Exception error) {
-		// 	System.out.println(error.getMessage());
-		// }
+		try {
+			arvore.Insert(5);
+		} catch(Exception error) {
+			System.out.println(error.getMessage());
+		}
 
-		// try {
-		// 	arvore.SearchAndReturn(10);
-		// } catch (Exception error) {
-		// 	System.out.println(error.getMessage());
-		// }
+		try {
+			arvore.SearchAndReturn(10);
+		} catch (Exception error) {
+			System.out.println(error.getMessage());
+		}
 
-		// int searched = arvore.SearchAndReturn(5);
-		// System.out.printf("Elemento procurado: %d\n", searched);
+		int searched = arvore.SearchAndReturn(5);
+		System.out.printf("Elemento procurado: %d\n", searched);
 
-		// System.out.printf("Elemento 4 pertence à árvore? %b\n", arvore.Search(4));
-		// System.out.printf("Elemento 11 pertence à árvore? %b\n", arvore.Search(11));
+		System.out.printf("Elemento 5 pertence à árvore? %b\n", arvore.Search(5));
+		System.out.printf("Elemento 11 pertence à árvore? %b\n", arvore.Search(11));
 
-		// int greatestValue = arvore.getGreatest();
-		// int smallestValue = arvore.getSmallest();
+		int greatestValue = arvore.getGreatest();
+		int smallestValue = arvore.getSmallest();
 
-		// System.out.printf("Greatest tree value: %d\n", greatestValue);
-		// System.out.printf("Smallest tree value: %d\n", smallestValue);
+		System.out.printf("Greatest tree value: %d\n", greatestValue);
+		System.out.printf("Smallest tree value: %d\n", smallestValue);
 
-		// arvore.Print();
+		arvore.Print();
 
-		// System.out.println("------- ARRAY -------");
+		System.out.println("------- ARRAY -------");
 
-		// int[] array = new int[] { 4, 5, 6, 3, 2, 1 };
+		int[] array = new int[] { 4, 5, 6, 3, 2, 1 };
 
-		// ArrayPrint(array);
-		// TreeSort(array);
-		// ArrayPrint(array);
+		ArrayPrint(array);
+		TreeSort.sort(array);
+		ArrayPrint(array);
 
 	}
 }
