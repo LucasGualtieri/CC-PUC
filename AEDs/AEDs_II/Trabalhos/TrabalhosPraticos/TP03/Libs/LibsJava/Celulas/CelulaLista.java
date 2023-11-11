@@ -4,15 +4,15 @@ import TP03.Libs.LibsJava.Lib.Jogador;
 
 public class CelulaLista {
 	public Jogador jogador;
-	public CelulaLista dir;
+	public CelulaLista prox;
 
 	public CelulaLista() {
 		this.jogador = null;
-		this.dir = null;
+		this.prox = null;
 	}
 
-	public CelulaLista(Jogador jogador, CelulaLista dir) {
+	public CelulaLista(Jogador jogador, CelulaLista prox) {
 		this.jogador = jogador;
-		this.dir = dir;
+		this.prox = prox;
 	}
 }

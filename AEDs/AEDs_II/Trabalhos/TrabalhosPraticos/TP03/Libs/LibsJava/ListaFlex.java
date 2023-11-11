@@ -21,7 +21,7 @@ public class ListaFlex {
 		}
 
 		int contador = 0;
-		for (CelulaLista i = this.primeiro.dir; i != null; i = i.dir) {
+		for (CelulaLista i = this.primeiro.prox; i != null; i = i.prox) {
 			System.out.printf("[%d] ## ", contador++);
 			i.jogador.Mostrar();
 		}
@@ -32,16 +32,16 @@ public class ListaFlex {
 
 	public void InserirInicio(Jogador jogador) {
 
-		CelulaLista newCelula = new CelulaLista(jogador, primeiro.dir);
+		CelulaLista newCelula = new CelulaLista(jogador, primeiro.prox);
 		if (primeiro == ultimo) ultimo = newCelula;
-		primeiro.dir = newCelula;
+		primeiro.prox = newCelula;
 		this.size++;
 
 	}
 
 	public void InserirFim(Jogador jogador) {
 
-		ultimo = ultimo.dir = new CelulaLista(jogador, null);
+		ultimo = ultimo.prox = new CelulaLista(jogador, null);
 		this.size++;
 
 	}
@@ -50,10 +50,10 @@ public class ListaFlex {
 
 		int pos = Integer.parseInt(posStr);
 
-		CelulaLista i = primeiro.dir;
-		for (int count = 0; count < pos - 1; count++, i = i.dir);
+		CelulaLista i = primeiro.prox;
+		for (int count = 0; count < pos - 1; count++, i = i.prox);
 
-		i.dir = new CelulaLista(jogador, i.dir);
+		i.prox = new CelulaLista(jogador, i.prox);
 
 		this.size++;
 
@@ -65,7 +65,7 @@ public class ListaFlex {
 			throw new Exception("Erro ao remover: Lista Flex vazia.");
 		}
 
-		CelulaLista removido = primeiro = primeiro.dir;
+		CelulaLista removido = primeiro = primeiro.prox;
 		this.size--;
 
 		return removido.jogador;
@@ -79,10 +79,10 @@ public class ListaFlex {
 		}
 		
 		CelulaLista removido, i;
-		for (i = primeiro; i.dir.dir != null; i = i.dir);
+		for (i = primeiro; i.prox.prox != null; i = i.prox);
 
-		removido = i.dir;
-		i.dir = removido.dir;
+		removido = i.prox;
+		i.prox = removido.prox;
 
 		this.size--;
 
@@ -104,11 +104,11 @@ public class ListaFlex {
 			return this.RemoverFim();
 		}
 
-		CelulaLista removido, i = primeiro.dir;
-		for (int count = 0; count < pos - 1; count++, i = i.dir);
+		CelulaLista removido, i = primeiro.prox;
+		for (int count = 0; count < pos - 1; count++, i = i.prox);
 
-		removido = i.dir;
-		i.dir = removido.dir;
+		removido = i.prox;
+		i.prox = removido.prox;
 
 		this.size--;
 
