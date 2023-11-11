@@ -20,6 +20,9 @@ int main() {
 	pilha.Inserir(8, &pilha);
 	pilha.Inserir(4, &pilha);
 
+	printf("Pilha em ordem:\n");
+	pilha.MostrarEmOrdem(pilha);
+
 	printf("---------------\n");
 
 	int x1, x2, x3;

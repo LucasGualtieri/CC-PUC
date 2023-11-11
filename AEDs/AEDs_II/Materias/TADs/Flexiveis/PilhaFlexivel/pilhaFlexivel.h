@@ -12,6 +12,7 @@ typedef struct PilhaFlex {
 
 	void (*ToggleShow) (struct PilhaFlex*);
 	void (*Mostrar)(struct PilhaFlex);
+	void (*MostrarEmOrdem)(struct PilhaFlex);
 	void (*Close)(struct PilhaFlex*);
 	void (*Open)(struct PilhaFlex*);
 	void (*Free)(struct PilhaFlex*);
@@ -62,6 +63,26 @@ int RemoverPilhaFlex(PilhaFlex* pilha) {
 
 void ToggleShowOnUpdatePilhaFlex(PilhaFlex* pilha) {
 	pilha->showOnUpdate = pilha->showOnUpdate ? false : true;
+}
+
+void MostrarEmOrdemPilhaFlex(PilhaFlex pilha) {
+
+	if (!pilha.topo->prox) {
+		fprintf(stderr, "Erro ao mostrar: Pilha vazia.\n");
+		return;
+	}
+
+	Celula* primeiro = pilha.topo;
+	while (primeiro->prox != NULL) primeiro = primeiro->prox;
+
+	printf("{ ");
+	while (primeiro != pilha.topo) {
+		Celula* i;
+		for (i = pilha.topo; i->prox != primeiro; i = i->prox);
+		printf("%d ", i->valor);
+		primeiro = i;
+	}
+	printf("}\n");
 }
 
 void MostrarPilhaFlex(PilhaFlex pilha) {
@@ -117,6 +138,7 @@ PilhaFlex newPilhaFlex() {
 
 	pilha.ToggleShow = ToggleShowOnUpdatePilhaFlex;
 	pilha.Mostrar = MostrarPilhaFlex;
+	pilha.MostrarEmOrdem = MostrarEmOrdemPilhaFlex;
 	pilha.Close = ClosePilhaFlex;
 	pilha.Open = OpenPilhaFlex;
 	pilha.Free = FreePilhaFlex;
