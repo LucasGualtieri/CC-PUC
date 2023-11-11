@@ -42,37 +42,35 @@ void HeapSort(IntArray intArray) {
 
 void HeapSortParcial(int k, IntArray intArray) {
 
-	int N = intArray.size;
-	int* array = intArray.array;
+    int N = intArray.size;
+    int* array = intArray.array;
 
-	for (int i = k; i < N; i++) {
-		if (array[0] < array[i]) {
-			swap(&array[0], &array[i]);
-			buildMaxHeap(0, k, intArray);
-		}
-	}
+    // Build max heap
+    for (int i = N / 2 - 1; i >= 0; i--) {
+        buildMaxHeap(i, N, intArray);
+    }
 
-	for (int i = k - 1; i > 0; i--) {
-		swap(&array[0], &array[i]);
-		buildMaxHeap(0, i, intArray);
-	}
-
+    // Sort only the top K elements
+    for (int i = N - 1; i > N - k - 1; i--) {
+        swap(&array[0], &array[i]);
+        buildMaxHeap(0, i, intArray);
+    }
 }
 
 int main() {
 
-	IntArray array = newIntArray(5);
+	IntArray array = newIntArray(8);
 
 	// array.FillOrdered(10, 1, array);
-	array.FillRand(-50, 50, array);
+	array.FillRand(0, 50, array);
 	array.Print(array);
 
 	int k = 3;
 
 	// HeapSort(array);
 	HeapSortParcial(k, array);
-	array.Print(array);
-	// array.PrintParcial(k, array);
+	// array.Print(array);
+	array.PrintParcial(k, array);
 
 	array.Close(array);
 
