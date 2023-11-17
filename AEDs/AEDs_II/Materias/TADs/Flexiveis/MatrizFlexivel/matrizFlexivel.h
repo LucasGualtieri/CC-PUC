@@ -37,15 +37,12 @@ void PrintMatrizFlex(MatrizFlex matrix) {
 	// }
 
 	// printf("{ ");
-	MatrixCell* left = matrix.start;
-	while (left != NULL) {
-		MatrixCell* i = left;
-		while (i != NULL) {
-			printf("%d ", i->value);
-			i = i->right;
+	MatrixCell *i, *j;
+	for (i = matrix.start; i != NULL; i = i->bottom) {
+		for (j = i; j != NULL; j = j->right) {
+			printf("%d ", j->value);
 		}
 		printf("\n");
-		i = left = left->bottom;
 	}
 	// printf("}\n");
 }
