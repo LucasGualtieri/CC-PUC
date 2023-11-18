@@ -33,6 +33,7 @@ int main() {
 	tree.Delete(8, &tree);
 	tree.Print(tree);
 	tree.Delete(5, &tree);
+	// printf("Removido: %d\n", tree.Delete(5, &tree));
 	tree.Print(tree);
 	tree.Delete(2, &tree);
 	tree.Print(tree);
