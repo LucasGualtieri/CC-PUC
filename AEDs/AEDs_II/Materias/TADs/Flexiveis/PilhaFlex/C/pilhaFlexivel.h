@@ -1,10 +1,10 @@
 #include <stdbool.h>
-#include "../celula.h"
+#include "CelulaPilha.h"
 
 #define ERRO -0x7fffffff
 
 typedef struct PilhaFlex {
-	Celula* topo;
+	CelulaPilha* topo;
 	bool showOnUpdate, isClosed;
 
 	void (*Inserir)(int number, struct PilhaFlex*);
@@ -19,14 +19,14 @@ typedef struct PilhaFlex {
 
 } PilhaFlex;
 
-void InserirPilhaFlex(int valor, PilhaFlex* pilha) {
+void InserirPilhaFlex(int value, PilhaFlex* pilha) {
 
-	// printf("Valor: %d\n", valor);
+	// printf("Valor: %d\n", value);
 
-	Celula* newCelulaTmp = newCelula(valor, pilha->topo);
-	// printf("newCelulaTmp: %d\n", newCelulaTmp->valor);
+	CelulaPilha* newCelulaPilhaTmp = newCelulaPilha(value, pilha->topo);
+	// printf("newCelulaPilhaTmp: %d\n", newCelulaPilhaTmp->value);
 
-	if (!newCelula) {
+	if (!newCelulaPilha) {
 		fprintf(stderr, "Erro ao inserir.\n");
 		return;
 	} else if (pilha->isClosed) {
@@ -34,8 +34,8 @@ void InserirPilhaFlex(int valor, PilhaFlex* pilha) {
 		return;
 	}
 
-	pilha->topo = newCelulaTmp;
-	// printf("pilha->topo->valor: %d\n", pilha->topo->valor);
+	pilha->topo = newCelulaPilhaTmp;
+	// printf("pilha->topo->value: %d\n", pilha->topo->value);
 
 	if (pilha->showOnUpdate) pilha->Mostrar(*pilha);
 }
@@ -51,10 +51,10 @@ int RemoverPilhaFlex(PilhaFlex* pilha) {
 		return ERRO;
 	}
 
-	int removidoValor = pilha->topo->valor;
-	Celula* removidoCelula = pilha->topo;
+	int removidoValor = pilha->topo->value;
+	CelulaPilha* removidoCelulaPilha = pilha->topo;
 	pilha->topo = pilha->topo->prox;
-	free(removidoCelula);
+	free(removidoCelulaPilha);
 
 	if (pilha->showOnUpdate) pilha->Mostrar(*pilha);
 
@@ -72,14 +72,14 @@ void MostrarEmOrdemPilhaFlex(PilhaFlex pilha) {
 		return;
 	}
 
-	Celula* primeiro = pilha.topo;
+	CelulaPilha* primeiro = pilha.topo;
 	while (primeiro->prox != NULL) primeiro = primeiro->prox;
 
 	printf("{ ");
 	while (primeiro != pilha.topo) {
-		Celula* i;
+		CelulaPilha* i;
 		for (i = pilha.topo; i->prox != primeiro; i = i->prox);
-		printf("%d ", i->valor);
+		printf("%d ", i->value);
 		primeiro = i;
 	}
 	printf("}\n");
@@ -93,8 +93,8 @@ void MostrarPilhaFlex(PilhaFlex pilha) {
 	}
 
 	printf("{ ");
-	for (Celula* i = pilha.topo; i->prox; i = i->prox) {
-		printf("%d ", i->valor);
+	for (CelulaPilha* i = pilha.topo; i->prox; i = i->prox) {
+		printf("%d ", i->value);
 	}
 	printf("}\n");
 }
@@ -116,8 +116,8 @@ void ClosePilhaFlex(PilhaFlex* pilha) {
 }
 
 void FreePilhaFlex(PilhaFlex* pilha) {
-	Celula* tmp;
-	for (Celula* i = pilha->topo; !i->prox; i = tmp) {
+	CelulaPilha* tmp;
+	for (CelulaPilha* i = pilha->topo; !i->prox; i = tmp) {
 		tmp = i->prox;
 		free(i);
 	}
@@ -127,7 +127,7 @@ PilhaFlex newPilhaFlex() {
 
 	PilhaFlex pilha;
 
-	Celula* cabeca = newCelula(0, NULL);
+	CelulaPilha* cabeca = newCelulaPilha(0, NULL);
 
 	pilha.topo = cabeca;
 	pilha.showOnUpdate = false;

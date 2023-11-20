@@ -1,0 +1,71 @@
+PUC-Minas
+Instituto de Ciências Exatas e Informática
+Curso de Ciência da Computação
+Arquitetura de Computadores I
+
+Links recomendados
+
+http://sourceforge.net/projects/iverilog/
+    Icarus Verilog Interactive compiler & simulator     
+    Versão recomendada: 12 (modificada) com GTKWave
+                        no pacote de programas distribuído
+                        no Canvas/Arquivos. 
+    Pacote para Verilog e para visualização de ondas
+    Obs.: O pacote pode ser encontrado para cópia local no SharePoint 
+          https://sgapucminasbr.sharepoint.com/:f:/s/ICEI/EiKuFupdJ0NKn5cxmOzdhXwBF3dFLIV7m93RGVfHZCEGKg?e=EY114y
+
+          Existe uma versão mais nova do compilador,
+          entretanto, por ainda ser a de desenvolvimento e
+          poder apresentar problemas de execução,
+          em alguns casos, seu uso não é recomendado.
+
+https://logisim.altervista.org/
+    Editor e simulador de circuitos lógicos
+    Versão recomendada: 2.16.y.z (06/04/2022) ou superior 
+                        no pacote de programas distribuído
+                        no Canvas/Arquivos. 
+    Obs.: O pacote pode ser encontrado para cópia local em 
+          https://sgapucminasbr.sharepoint.com/:f:/s/ICEI/EiKuFupdJ0NKn5cxmOzdhXwBF3dFLIV7m93RGVfHZCEGKg?e=jkOzSP
+
+          Existem outras versões da ferramenta,
+          entretanto, apresentam incompatibilidades
+          e seus usos NÃO são recomendados.
+
+http://www.cs.duke.edu/csed/jflap/jflaptmp/
+    JFLAP v7.1 (JFLAP_Thin.jar) (27/07/2018)    
+    Pacote para Máquinas de Estados Finitos
+    no Canvas/Arquivos. 
+    Obs.: O programa também pode ser encontrado para cópia local em
+          https://sgapucminasbr.sharepoint.com/:f:/s/ICEI/EiKuFupdJ0NKn5cxmOzdhXwBF3dFLIV7m93RGVfHZCEGKg?e=jkOzSP
+     
+    IMPORTANTE:
+    A versão JFLAP8_beta.jar, mais nova,
+    apresenta erros e NÃO é recomendada.
+
+     
+http://www.cs.colby.edu/djskrien/CPUSim/
+    CPUSim v3.9.0
+    Simulador de conjunto de instruções
+    no Canvas/Arquivos. 
+    Obs.: O programa também pode ser encontrado para cópia local em
+          https://sgapucminasbr.sharepoint.com/:f:/s/ICEI/EiKuFupdJ0NKn5cxmOzdhXwBF3dFLIV7m93RGVfHZCEGKg?e=jkOzSP
+
+    IMPORTANTE:
+    As versões mais recentes (4.xx.yy), apresentam erros 
+    quando usadas com a versão mais recente do Java, 
+    e NÃO são recomendadas para uso.
+
+
+Links para utilidades:
+
+http://www.sutherland-hdl.com/online_verilog_ref_guide/vlog_ref_top.html
+    Verilog reference card
+    Manual online para Verilog
+    (melhor copiar e instalar na pasta IVI\docs ou IVerilog\docs)
+
+
+
+Qualquer dúvida sobre o uso dos programas acima
+deverá ser encaminhada ao professor, aos monitores
+ou pessoal técnico do Instituto de Informática.
+ 

@@ -33,7 +33,7 @@ class TP03Q11 {
 
 	static void QuickSort(Log log, ListaDupla lista) {
 		QuickSortRec(lista.getPrimeiro(), lista.getUltimo(), log, lista);
-	}	
+	}
 
 	public static void main(String[] args) throws Exception {
 
