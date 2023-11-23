@@ -1,3 +1,5 @@
+package TP04.TP04Q05;
+
 import java.util.*;
 import java.time.Instant;
 import java.time.Duration;
