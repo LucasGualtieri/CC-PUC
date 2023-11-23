@@ -26,6 +26,7 @@ class TP04Q05 {
 	}
 	
 	private static void TreeSort(No raiz, Log log, Fila fila) throws Exception {
+
 		if (raiz != null) {
 			TreeSort(raiz.esq, log, fila);
 			fila.Inserir(raiz.jogador);
@@ -35,11 +36,8 @@ class TP04Q05 {
 	
 	public static void main(String[] args) throws Exception {
 
-		Log log = new Log();
-		Timer timer = new Timer();
-		
 		BD BD = new BD("../tmp/players.csv");
-		Fila fila = new Fila(49);
+		Fila fila = new Fila(74);
 		
 		String inputPUBIN = new String();
 		
@@ -47,6 +45,9 @@ class TP04Q05 {
 			int id = Integer.parseInt(inputPUBIN);
 			fila.Inserir(BD.Get(id));
 		}
+
+		Log log = new Log();
+		Timer timer = new Timer();
 
 		timer.Start();
 		TreeSort(log, fila);
