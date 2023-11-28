@@ -97,7 +97,7 @@ void PreencherMatriz(Matriz m, Sapo* sapo) {
 
 	for (int i = 0; i < m.nLin; i++) {
 		for (int j = 0; j < m.nCol; j++) {
-			if (m.m[i][j] != 1) m.m[i][j] = 0;
+			m.m[i][j] = 0;
 		}
 	}
 
