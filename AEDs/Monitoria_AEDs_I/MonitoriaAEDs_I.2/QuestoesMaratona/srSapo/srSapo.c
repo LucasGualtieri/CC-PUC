@@ -22,6 +22,7 @@ int ValorPos(Matriz m, Sapo s) {
 
 	int resultado = -1;
 
+	// Testa se a posição é válida, ou seja, está dentro da matriz.
 	if ((0 < s.nCol && s.nCol <= m.nCol + 1) && (0 < s.nLin && s.nLin <= m.nLin + 1)) {
 		resultado = m.m[s.nCol - 1][s.nLin - 1];
 	}
@@ -31,28 +32,30 @@ int ValorPos(Matriz m, Sapo s) {
 
 bool EncontrarASapa(Matriz m, Sapo sapo) {
 
-	bool achou = ValorPos(m, sapo) == 2;
-	m.m[sapo.nCol - 1][sapo.nLin - 1] = -1; // Marcar onde já passou
+	bool achou = ValorPos(m, sapo) == 2; // Confere se achamos a Sapa.
+	m.m[sapo.nCol - 1][sapo.nLin - 1] = -1; // Marcar onde já passou.
 
-	sapo.nLin += 3; // Pular pra baixo
+	// Se (ValorPos(m, sapo) > 0) então é uma pedra que o Sr. Sapo pode pular.
+
+	sapo.nLin += 3; // Pular pra baixo.
 	for (int i = 0; !achou && i < 3; i++) {
 		if (ValorPos(m, sapo) > 0) achou = EncontrarASapa(m, sapo);
 		sapo.nLin--;
 	}
 
-	sapo.nLin -= 3; // Pular pra cima
+	sapo.nLin -= 3; // Pular pra cima.
 	for (int i = 0; !achou && i < 3; i++) {
 		if (ValorPos(m, sapo) > 0) achou = EncontrarASapa(m, sapo);
 		sapo.nLin++;
 	}
 
-	sapo.nCol += 3; // Pular pra direita
+	sapo.nCol += 3; // Pular pra direita.
 	for (int i = 0; !achou && i < 3; i++) {
 		if (ValorPos(m, sapo) > 0) achou = EncontrarASapa(m, sapo);
 		sapo.nCol--;
 	}
 
-	sapo.nCol -= 3; // Pular pra esquerda
+	sapo.nCol -= 3; // Pular pra esquerda.
 	for (int i = 0; !achou && i < 3; i++) {
 		if (ValorPos(m, sapo) > 0) achou = EncontrarASapa(m, sapo);
 		sapo.nCol++;
