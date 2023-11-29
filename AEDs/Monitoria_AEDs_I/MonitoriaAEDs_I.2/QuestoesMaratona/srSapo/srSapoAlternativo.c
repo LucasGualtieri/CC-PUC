@@ -3,7 +3,7 @@
 #include <stdbool.h>
 #include <unistd.h>
 
-// clear && gcc srSapo.c && ./a.out < pub.in
+// clear && gcc srSapoAlternativo.c && ./a.out < pub.in
 
 typedef struct Matriz {
 	int **m, nLin, nCol;
@@ -17,8 +17,9 @@ Matriz newMatriz();
 void closeMatriz(Matriz m);
 void PreencherMatriz(Matriz m, Sapo* sapo);
 void PrintMatriz(Matriz m);
+bool EncontrarASapa(Matriz m, Sapo sapo);
 
-int ValorPos(Matriz m, Sapo s) {
+int ValorPos(Matriz m, Sapo s) {	
 
 	int resultado = -1;
 
@@ -30,36 +31,30 @@ int ValorPos(Matriz m, Sapo s) {
 	return resultado;
 }
 
+// Se (ValorPos(m, sapo) > 0) então é uma pedra que o Sr. Sapo pode pular.
+bool EncontrarASapaAux(int nLin, int nCol, Sapo sapo, bool achou, Matriz m) {
+
+	sapo.nLin += nLin;
+	sapo.nCol += nCol;
+
+	for (int i = 0; !achou && i < 3; i++) {
+		if (ValorPos(m, sapo) > 0) achou = EncontrarASapa(m, sapo);
+		if (nLin != 0) sapo.nLin = (nLin > 0) ? sapo.nLin - 1 : sapo.nLin + 1;
+		else sapo.nCol = (nCol > 0) ? sapo.nCol - 1 : sapo.nCol + 1;
+	}
+
+	return achou;
+}
+
 bool EncontrarASapa(Matriz m, Sapo sapo) {
 
 	bool achou = ValorPos(m, sapo) == 2; // Confere se achamos a Sapa.
 	m.m[sapo.nCol - 1][sapo.nLin - 1] = -1; // Marcar onde já passou.
 
-	// Se (ValorPos(m, sapo) > 0) então é uma pedra que o Sr. Sapo pode pular.
-
-	sapo.nLin += 3; // Pular pra baixo.
-	for (int i = 0; !achou && i < 3; i++) {
-		if (ValorPos(m, sapo) > 0) achou = EncontrarASapa(m, sapo);
-		sapo.nLin--;
-	}
-
-	sapo.nLin -= 3; // Pular pra cima.
-	for (int i = 0; !achou && i < 3; i++) {
-		if (ValorPos(m, sapo) > 0) achou = EncontrarASapa(m, sapo);
-		sapo.nLin++;
-	}
-
-	sapo.nCol += 3; // Pular pra direita.
-	for (int i = 0; !achou && i < 3; i++) {
-		if (ValorPos(m, sapo) > 0) achou = EncontrarASapa(m, sapo);
-		sapo.nCol--;
-	}
-
-	sapo.nCol -= 3; // Pular pra esquerda.
-	for (int i = 0; !achou && i < 3; i++) {
-		if (ValorPos(m, sapo) > 0) achou = EncontrarASapa(m, sapo);
-		sapo.nCol++;
-	}
+	achou = EncontrarASapaAux(3, 0, sapo, achou, m); // Pulando para baixo.
+	achou = EncontrarASapaAux(-3, 0, sapo, achou, m); // Pulando para cima.
+	achou = EncontrarASapaAux(0, 3, sapo, achou, m); // Pulando para direita.
+	achou = EncontrarASapaAux(0, -3, sapo, achou, m); // Pulando para esquerda.
 
 	return achou;
 }
@@ -71,8 +66,12 @@ int main() {
 	Sapo sapo;
 	PreencherMatriz(m, &sapo);
 
+	// PrintMatriz(m);	
+
 	printf("%c\n", EncontrarASapa(m, sapo) ? 'S' : 'N');
 
+	// PrintMatriz(m);
+	
 	closeMatriz(m);
 
 	return 0;
@@ -123,7 +122,7 @@ void PrintMatriz(Matriz m) {
 
 	for (int i = 0; i < m.nLin; i++) {
 		for (int j = 0; j < m.nCol; j++) {
-			printf("%d ", m.m[j][i]);
+			printf("%2d ", m.m[j][i]);
 		}
 		printf("\n");
 	}
