@@ -14,6 +14,10 @@ public class ArvoreArvore {
 		this.raiz = null;
 	}
 
+	public ArvoreArvore(int[] alturas, BD BD) {
+		this.Montar(alturas, BD);
+	}
+
 	public No1 getRaiz() { return this.raiz; }
 
 	public static int CompareTo(Jogador jogador, No2 raiz, Log log) {
