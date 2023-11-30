@@ -22,7 +22,7 @@ class TP04Q05 {
 			arvore.Inserir(fila.Remover(), log);
 		}
 
-		TreeSort(arvore.getRoot(), log, fila);
+		TreeSort(arvore.getRaiz(), log, fila);
 	}
 	
 	private static void TreeSort(No raiz, Log log, Fila fila) throws Exception {

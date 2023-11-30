@@ -14,7 +14,7 @@ public class Arvore {
 		this.raiz = null;
 	}
 
-	public No getRoot() { return this.raiz; }
+	public No getRaiz() { return this.raiz; }
 
 	public int getSize() { return this.size; }
 
@@ -41,6 +41,17 @@ public class Arvore {
 		return jog.getNome().compareTo(raiz.jogador.getNome());
 	}
 
+	public static int CompareTo(String string, No raiz, Log log) {
+		log.incrementarComparacoes();
+		return string.compareTo(raiz.jogador.getNome());
+	}
+
+	public void Inserir(Jogador jogador) throws Exception {
+		Log log = new Log();
+		this.raiz = Inserir(jogador, this.raiz, log);
+		this.size++;
+	}
+
 	public void Inserir(Jogador jogador, Log log) throws Exception {
 		this.raiz = Inserir(jogador, this.raiz, log);
 		this.size++;
@@ -62,4 +73,5 @@ public class Arvore {
 		
 		return raiz;
 	}
+
 }
