@@ -14,6 +14,10 @@ public class ArvoreArvore {
 		this.raiz = null;
 	}
 
+	public ArvoreArvore(int[] alturas, BD BD) {
+		this.Montar(alturas, BD);
+	}
+
 	public No1 getRaiz() { return this.raiz; }
 
 	public static int CompareTo(Jogador jogador, No2 raiz, Log log) {
@@ -25,13 +29,13 @@ public class ArvoreArvore {
 		return jogador.getNome().compareTo(raiz.nome);
 	}
 
-	public void Montar(int[] alturas, BD BD) throws Exception {
+	public void Montar(int[] alturas, BD BD) {
 		for (int altura : alturas) {
 			this.raiz = this.Montar(this.raiz, altura);
 		}
 	}
 
-	private No1 Montar(No1 raiz, int alturaMod15) throws Exception {
+	private No1 Montar(No1 raiz, int alturaMod15) {
 
 		if (raiz == null) {
 			raiz = new No1(alturaMod15);
