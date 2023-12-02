@@ -4,7 +4,6 @@ import TP04.Libs.LibsJava.Lib;
 import TP04.Libs.LibsJava.Lib.BD;
 import TP04.Libs.LibsJava.Lib.Log;
 import TP04.Libs.LibsJava.Lib.Timer;
-import TP04.Libs.LibsJava.Lib.Jogador;
 import TP04.Libs.LibsJava.Celulas.No1;
 import TP04.Libs.LibsJava.Celulas.No2;
 import TP04.Libs.LibsJava.ArvoreArvore;
@@ -13,48 +12,55 @@ import TP04.Libs.LibsJava.ArvoreArvore;
 
 class TP04Q02 {
 
-	static public boolean Pesquisar(ArvoreArvore arvore, Jogador jogador, Log log) throws Exception {
+	static public boolean Pesquisar(ArvoreArvore arvore, String nome, Log log) throws Exception {
 
 		if (arvore.getRaiz() == null) {
 			throw new Exception("Erro ao remover na árvore: Árvore vazia.");
 		}
-		System.out.printf("%s raiz ", jogador.getNome());
-		return Pesquisar(arvore.getRaiz(), jogador, log);
+
+		System.out.printf("%s raiz ", nome);
+		return Pesquisar(arvore.getRaiz(), nome, log);
 	}
 	
-	static private boolean Pesquisar(No1 raiz, Jogador jogador, Log log) {
+	static private boolean Pesquisar(No1 raiz, String nome, Log log) {
 
-		boolean resultado;
-		
-		if (raiz == null) {
-			resultado = false;
-		} else if (raiz.alturaMod15 < jogador.getAltura() % 15) {
-			System.out.printf("esq ");
-			resultado = Pesquisar(raiz.esq, jogador, log);
-		} else if (raiz.alturaMod15 > jogador.getAltura() % 15) {
-			System.out.printf("dir ");
-			resultado = Pesquisar(raiz.dir, jogador, log);
-		} else {
-			resultado = Pesquisar(raiz.raiz, jogador, log);
+		boolean resultado = false;
+
+		if (raiz != null) {
+			
+			resultado = Pesquisar(raiz.raiz, nome, log);
+			
+			if (!resultado) {
+				System.out.printf("esq ");
+				resultado = Pesquisar(raiz.esq, nome, log);
+			}
+
+			if (!resultado) {
+				System.out.printf("dir ");
+				resultado = Pesquisar(raiz.dir, nome, log);
+			}
 		}
 
 		return resultado;
 	}
 
-	static private boolean Pesquisar(No2 raiz, Jogador jogador, Log log) {
+	static private boolean Pesquisar(No2 raiz, String nome, Log log) {
 
-		boolean resultado;
+		boolean resultado = false;
 		
-		if (raiz == null) {
-			resultado = false;
-		} else if (ArvoreArvore.CompareTo(jogador, raiz, log) < 0) {
-			System.out.printf("esq ");
-			resultado = Pesquisar(raiz.esq, jogador, log);
-		} else if (ArvoreArvore.CompareTo(jogador, raiz, log) > 0) {
-			System.out.printf("dir ");
-			resultado = Pesquisar(raiz.dir, jogador, log);
-		} else {
-			resultado = true;
+		if (raiz != null) {
+			
+			resultado = ArvoreArvore.CompareTo(nome, raiz, log) == 0;
+			
+			if (!resultado) {
+				System.out.printf("ESQ ");
+				resultado = Pesquisar(raiz.esq, nome, log);
+			}
+
+			if (!resultado) {
+				System.out.printf("DIR ");
+				resultado = Pesquisar(raiz.dir, nome, log);
+			}
 		}
 
 		return resultado;
@@ -79,8 +85,7 @@ class TP04Q02 {
 
 		timer.Start();
 		while (!(inputPUBIN = Lib.readStr()).equals("FIM")) {
-			Jogador pesquisado = BD.Get(inputPUBIN);
-			boolean resultado = Pesquisar(arvore, pesquisado, log);
+			boolean resultado = Pesquisar(arvore, inputPUBIN, log);
 			System.out.println(resultado ? "SIM" : "NAO");
 		}
 		timer.Stop();
