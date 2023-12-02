@@ -8,6 +8,7 @@ public class No1 {
 
 	public No1(int altura) { 
 		this.alturaMod15 = altura;
+		this.raiz = null;
 		this.esq = this.dir = null;
 	}
 }

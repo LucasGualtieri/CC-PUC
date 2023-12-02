@@ -20,6 +20,11 @@ public class ArvoreArvore {
 
 	public No1 getRaiz() { return this.raiz; }
 
+	public static int CompareTo(String nome, No2 raiz, Log log) {
+		log.incrementarComparacoes();
+		return nome.compareTo(raiz.nome);
+	}
+
 	public static int CompareTo(Jogador jogador, No2 raiz, Log log) {
 		log.incrementarComparacoes();
 		return jogador.getNome().compareTo(raiz.nome);
@@ -48,20 +53,22 @@ public class ArvoreArvore {
 		return raiz;
 	}
 
-	private No1 Pesquisar(No1 raiz, Jogador jogador) {
-
-		if (jogador.getAltura() % 15 < raiz.alturaMod15) {
-			raiz.esq = Pesquisar(raiz.esq, jogador);
-		} else if (jogador.getAltura() % 15 > raiz.alturaMod15) {
-			raiz.dir = Pesquisar(raiz.dir, jogador);
-		}
-		
-		return raiz;
-	}
-
 	public void Inserir(Jogador jogador) throws Exception {
 		No1 pesquisado = Pesquisar(this.raiz, jogador);
 		pesquisado.raiz = Inserir(pesquisado.raiz, jogador);
+	}
+
+	private No1 Pesquisar(No1 raiz, Jogador jogador) {
+
+		No1 resultado = raiz;
+
+		if (jogador.getAltura() % 15 < raiz.alturaMod15) {
+			resultado = Pesquisar(raiz.esq, jogador);
+		} else if (jogador.getAltura() % 15 > raiz.alturaMod15) {
+			resultado = Pesquisar(raiz.dir, jogador);
+		}
+
+		return resultado;
 	}
 
 	private No2 Inserir(No2 raiz, Jogador jogador) throws Exception {
