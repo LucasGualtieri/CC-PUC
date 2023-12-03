@@ -67,7 +67,8 @@ class TP04Q02Verde {
 
 	public static void main(String[] args) throws Exception {
 
-		int[] alturas = { 7, 3, 11, 1, 5, 9, 13, 0, 2, 4, 6, 8, 10, 12, 14 };
+		// int[] alturas = { 7, 3, 11, 1, 5, 9, 13, 0, 2, 4, 6, 8, 10, 12, 14 };
+		int[] alturas = { 7, 3, 11, 1, 5, 9, 12, 0, 2, 4, 6, 8, 10, 13, 14 };
 
 		Lib.BD BD = new Lib.BD("/tmp/players.csv");
 		ArvoreArvore arvore = new ArvoreArvore(alturas, BD);

@@ -110,29 +110,6 @@ public class Lib {
 		}
 
 		public Jogador Get(int id) { return this.array[id]; }
-		public Jogador Get(String nome) throws Exception {
-
-			boolean encontrado = false;
-			Jogador pesquisado = null;
-
-
-			for (int i = 0; !encontrado && i < array.length; i++) {
-				pesquisado = array[i];
-				if (pesquisado.getNome().equals(nome)) {
-					encontrado = true;
-				}
-			}
-
-			System.out.println("Nome: ");
-			System.out.println(pesquisado.getNome());
-
-			if (!encontrado) {
-				throw new Exception("Erro ao pesquiar no BD: Jogador não encontrado.");
-			}
-
-			return pesquisado;
-		}
-
 
 		void ImportDataBase(String filePath) throws Exception {
 		

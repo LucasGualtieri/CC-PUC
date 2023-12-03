@@ -133,7 +133,7 @@ public class ArvoreArvore {
 			String erro = "Erro ao inserir na Árvore: Jogador " + nome + " repetido.";
 			throw new Exception(erro);
 		}
-		
+
 		return raiz;
 	}
 }

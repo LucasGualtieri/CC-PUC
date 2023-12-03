@@ -68,21 +68,18 @@ class TP04Q02 {
 
 	public static void main(String[] args) throws Exception {
 
-		int[] alturas = { 7, 3, 11, 1, 5, 9, 13, 0, 2, 4, 6, 8, 10, 12, 14 };
+		// int[] alturas = { 7, 3, 11, 1, 5, 9, 13, 0, 2, 4, 6, 8, 10, 12, 14 }; // Enunciado
+		int[] alturas = { 7, 3, 11, 1, 5, 9, 12, 0, 2, 4, 6, 8, 10, 13, 14 };
 
 		BD BD = new BD("../tmp/players.csv");
 		ArvoreArvore arvore = new ArvoreArvore(alturas, BD);
 
 		String inputPUBIN = new String();
 
-		// arvore.Mostrar();
-
 		while (!(inputPUBIN = Lib.readStr()).equals("FIM")) {
 			int id = Integer.parseInt(inputPUBIN);
 			arvore.Inserir(BD.Get(id));
 		}
-
-		// arvore.MostrarSub();
 
 		Log log = new Log();
 		Timer timer = new Timer();
