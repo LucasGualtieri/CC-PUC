@@ -68,7 +68,7 @@ class TP04Q02 {
 
 	public static void main(String[] args) throws Exception {
 
-		// int[] alturas = { 7, 3, 11, 1, 5, 9, 13, 0, 2, 4, 6, 8, 10, 12, 14 }; // Enunciado
+		//    alturas = { 7, 3, 11, 1, 5, 9, 13, 0, 2, 4, 6, 8, 10, 12, 14 }; // Enunciado
 		int[] alturas = { 7, 3, 11, 1, 5, 9, 12, 0, 2, 4, 6, 8, 10, 13, 14 };
 
 		BD BD = new BD("../tmp/players.csv");
