@@ -18,22 +18,6 @@ public class ArvoreArvore {
 		this.Montar(alturas, BD);
 	}
 
-	public No1 getRaiz() { return this.raiz; }
-
-	public static int CompareTo(String nome, No2 raiz, Log log) {
-		log.incrementarComparacoes();
-		return nome.compareTo(raiz.nome);
-	}
-
-	public static int CompareTo(Jogador jogador, No2 raiz, Log log) {
-		log.incrementarComparacoes();
-		return jogador.getNome().compareTo(raiz.nome);
-	}
-
-	public static int CompareTo(Jogador jogador, No2 raiz) {
-		return jogador.getNome().compareTo(raiz.nome);
-	}
-
 	public void Montar(int[] alturas, BD BD) {
 		for (int altura : alturas) {
 			this.raiz = this.Montar(this.raiz, altura);
@@ -53,22 +37,87 @@ public class ArvoreArvore {
 		return raiz;
 	}
 
+	public No1 getRaiz() { return this.raiz; }
+
+	public static int CompareTo(String nome, No2 raiz, Log log) {
+		log.incrementarComparacoes();
+		return nome.compareTo(raiz.nome);
+	}
+
+	public static int CompareTo(Jogador jogador, No2 raiz, Log log) {
+		log.incrementarComparacoes();
+		return jogador.getNome().compareTo(raiz.nome);
+	}
+
+	public static int CompareTo(Jogador jogador, No2 raiz) {
+		return jogador.getNome().compareTo(raiz.nome);
+	}
+
+	public void Mostrar() throws Exception {
+
+		if (this.raiz == null) {
+			throw new Exception("Erro ao mostrar Árvore: Árvore vazia.");
+		}
+
+		System.out.print("{ ");
+		Mostrar(this.raiz);
+		System.out.println("\b\b }");
+	}
+
+	private void Mostrar(No1 raiz) {
+
+		if (raiz != null) {
+			Mostrar(raiz.esq);
+			System.out.printf("%d, ", raiz.alturaMod15);
+			Mostrar(raiz.dir);
+		}
+	}
+
+	public void MostrarSub() throws Exception {
+
+		if (this.raiz == null) {
+			throw new Exception("Erro ao mostrar Sub Árvores: Árvore vazia.");
+		}
+
+		MostrarSub(this.raiz);
+	}
+
+	private void MostrarSub(No1 raiz) {
+
+		if (raiz != null) {
+			MostrarSub(raiz.esq);
+			System.out.printf("AlturaMod15 - %d: \n", raiz.alturaMod15);
+			MostrarSub(raiz.raiz);
+			System.out.println("-----------------");
+			MostrarSub(raiz.dir);
+		}
+	}
+
+	private void MostrarSub(No2 raiz) {
+
+		if (raiz != null) {
+			MostrarSub(raiz.esq);
+			System.out.println(raiz.nome);
+			MostrarSub(raiz.dir);
+		}
+	}
+
 	public void Inserir(Jogador jogador) throws Exception {
-		No1 pesquisado = Pesquisar(this.raiz, jogador);
+		No1 pesquisado = Pesquisar(this.raiz, jogador.getAltura() % 15);
 		pesquisado.raiz = Inserir(pesquisado.raiz, jogador);
 	}
 
-	private No1 Pesquisar(No1 raiz, Jogador jogador) {
+	private No1 Pesquisar(No1 raiz, int alturaMod15) {
 
-		No1 resultado = raiz;
+		No1 pesquisado = raiz;
 
-		if (jogador.getAltura() % 15 < raiz.alturaMod15) {
-			resultado = Pesquisar(raiz.esq, jogador);
-		} else if (jogador.getAltura() % 15 > raiz.alturaMod15) {
-			resultado = Pesquisar(raiz.dir, jogador);
+		if (alturaMod15 % 15 < raiz.alturaMod15) {
+			pesquisado = Pesquisar(raiz.esq, alturaMod15);
+		} else if (alturaMod15 % 15 > raiz.alturaMod15) {
+			pesquisado = Pesquisar(raiz.dir, alturaMod15);
 		}
 
-		return resultado;
+		return pesquisado;
 	}
 
 	private No2 Inserir(No2 raiz, Jogador jogador) throws Exception {
@@ -81,7 +130,7 @@ public class ArvoreArvore {
 			raiz.dir = Inserir(raiz.dir, jogador);
 		} else {
 			String nome = jogador.getNome();
-			String erro = "Erro ao inserir na Árvore: Valor " + nome + " repetido.";
+			String erro = "Erro ao inserir na Árvore: Jogador " + nome + " repetido.";
 			throw new Exception(erro);
 		}
 		

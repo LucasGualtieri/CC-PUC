@@ -21,15 +21,15 @@ class TP04Q02 {
 		System.out.printf("%s raiz ", nome);
 		return Pesquisar(arvore.getRaiz(), nome, log);
 	}
-	
+
 	static private boolean Pesquisar(No1 raiz, String nome, Log log) {
 
 		boolean resultado = false;
 
 		if (raiz != null) {
-			
+
 			resultado = Pesquisar(raiz.raiz, nome, log);
-			
+
 			if (!resultado) {
 				System.out.printf("esq ");
 				resultado = Pesquisar(raiz.esq, nome, log);
@@ -47,11 +47,11 @@ class TP04Q02 {
 	static private boolean Pesquisar(No2 raiz, String nome, Log log) {
 
 		boolean resultado = false;
-		
+
 		if (raiz != null) {
-			
+
 			resultado = ArvoreArvore.CompareTo(nome, raiz, log) == 0;
-			
+
 			if (!resultado) {
 				System.out.printf("ESQ ");
 				resultado = Pesquisar(raiz.esq, nome, log);
@@ -67,18 +67,22 @@ class TP04Q02 {
 	}
 
 	public static void main(String[] args) throws Exception {
-		
+
 		int[] alturas = { 7, 3, 11, 1, 5, 9, 13, 0, 2, 4, 6, 8, 10, 12, 14 };
-	
+
 		BD BD = new BD("../tmp/players.csv");
 		ArvoreArvore arvore = new ArvoreArvore(alturas, BD);
-		
+
 		String inputPUBIN = new String();
+
+		// arvore.Mostrar();
 
 		while (!(inputPUBIN = Lib.readStr()).equals("FIM")) {
 			int id = Integer.parseInt(inputPUBIN);
 			arvore.Inserir(BD.Get(id));
 		}
+
+		// arvore.MostrarSub();
 
 		Log log = new Log();
 		Timer timer = new Timer();
