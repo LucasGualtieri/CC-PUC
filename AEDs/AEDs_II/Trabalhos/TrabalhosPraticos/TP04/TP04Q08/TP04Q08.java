@@ -10,6 +10,34 @@ import TP04.Libs.LibsJava.Lib.Jogador;
 
 class TP04Q08 {
 
+	public static void main(String[] args) throws Exception {
+
+		BD BD = new BD("../tmp/players.csv");
+		ReHash hash = new ReHash(25);
+
+		String inputPUBIN = new String();
+
+		while (!(inputPUBIN = Lib.readStr()).equals("FIM")) {
+			int id = Integer.parseInt(inputPUBIN);
+			hash.Inserir(BD.Get(id));
+		}
+
+		Log log = new Log();
+		Timer timer = new Timer();
+
+		BD.OrdenarPorNome(); // Para possibilitar uma pesquisa binária.
+
+		timer.Start();
+		while (!(inputPUBIN = Lib.readStr()).equals("FIM")) {
+			Jogador pesquisado = BD.PesquisarPorNome(inputPUBIN, log);
+			boolean resultado = hash.Pesquisar(pesquisado, log);
+			System.out.printf("%s %s\n", inputPUBIN, resultado ? "SIM" : "NAO");
+		}
+		timer.Stop();
+
+		log.RegistroPesquisa("794989_hashRehash.txt", timer);
+	}
+
 	static class ReHash {
 
 		private Jogador[] array;
@@ -75,31 +103,4 @@ class TP04Q08 {
 
 	}
 
-	public static void main(String[] args) throws Exception {
-
-		BD BD = new BD("../tmp/players.csv");
-		ReHash hash = new ReHash(25);
-
-		String inputPUBIN = new String();
-
-		while (!(inputPUBIN = Lib.readStr()).equals("FIM")) {
-			int id = Integer.parseInt(inputPUBIN);
-			hash.Inserir(BD.Get(id));
-		}
-
-		Log log = new Log();
-		Timer timer = new Timer();
-
-		BD.OrdenarPorNome(); // Para possibilitar uma pesquisa binária.
-
-		timer.Start();
-		while (!(inputPUBIN = Lib.readStr()).equals("FIM")) {
-			Jogador pesquisado = BD.PesquisarPorNome(inputPUBIN, log);
-			boolean resultado = hash.Pesquisar(pesquisado, log);
-			System.out.printf("%s %s\n", inputPUBIN, resultado ? "SIM" : "NAO");
-		}
-		timer.Stop();
-
-		log.RegistroPesquisa("794989_hashRehash.txt", timer);
-	}
 }
