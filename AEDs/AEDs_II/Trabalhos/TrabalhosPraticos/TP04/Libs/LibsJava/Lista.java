@@ -2,6 +2,7 @@ package TP04.Libs.LibsJava;
 
 import TP04.Libs.LibsJava.Celulas.CelulaLista;
 import TP04.Libs.LibsJava.Lib.Jogador;
+import TP04.Libs.LibsJava.Lib.Log;
 
 public class Lista {
 	private int size;
@@ -17,15 +18,32 @@ public class Lista {
 	public void Mostrar() throws Exception {
 
 		if (this.primeiro == this.ultimo) {
-			throw new Exception("Erro ao mostrar: Lista vazia.");
+			// throw new Exception("Erro ao mostrar: Lista vazia.");
 		}
 
-		int contador = 0;
 		for (CelulaLista i = this.primeiro.prox; i != null; i = i.prox) {
-			System.out.printf("[%d] ## ", contador++);
-			i.jogador.Mostrar();
+			System.out.println(i.jogador.getNome());
 		}
 
+	}
+
+	private boolean CompareToNome(Jogador jog1, Jogador jog2, Log log) {
+		log.incrementarComparacoes();
+		return jog1.getNome().equals(jog2.getNome());		
+	}
+
+	public boolean Pesquisar(Jogador jogador, Log log) {
+
+		boolean resultado = false;
+
+		for (CelulaLista i = primeiro.prox; i != null; i = i.prox) {
+			if (CompareToNome(jogador, i.jogador, log)) {
+				resultado = true;
+				i = ultimo;
+			}
+		}
+
+		return resultado;
 	}
 
 	// ---------------------- INSERÇÕES E REMOÇÕES ----------------------
