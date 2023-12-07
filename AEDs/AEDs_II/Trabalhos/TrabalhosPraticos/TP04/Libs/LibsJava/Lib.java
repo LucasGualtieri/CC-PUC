@@ -101,15 +101,94 @@ public class Lib {
 	public static class BD {
 		private Jogador[] array;
 		private int size;
+		private boolean ordenado;
 		private static final int BD_SIZE = 3922;
 
 		public BD(String filePath) throws Exception {
+			this.ordenado = false;
 			this.size = 0;
 			this.array = new Jogador[BD_SIZE];
 			this.ImportDataBase(filePath);
 		}
 
 		public Jogador Get(int id) { return this.array[id]; }
+
+		int CompareToStr(int pos, String pivot) {
+			return array[pos].getNome().compareTo(pivot);
+		}
+
+		int CompareToStr(String str1, String str2, Log log) {
+			log.incrementarComparacoes();
+			return str1.compareTo(str2);
+		}
+
+		private void swap(int i, int j) {
+			Jogador aux = array[i];
+			array[i] = array[j];
+			array[j] = aux;
+		}
+
+		private void QuickSort(int left, int right) {
+
+			int i = left, j = right;
+			Jogador pivot = array[(right + left) / 2];
+		
+			while (i <= j) {
+				while (CompareToStr(i, pivot.getNome()) < 0) i++;
+				while (CompareToStr(j, pivot.getNome()) > 0) j--;
+				if (i <= j) swap(i++, j--);
+			}
+		
+			if (left < j)  QuickSort(left, j);
+			if (i < right)  QuickSort(i, right);
+		}
+		
+		public void OrdenarPorNome() {
+			this.ordenado = true;
+			QuickSort(0, size - 1);
+		}
+
+		public void Mostrar() {
+			System.out.println("Banco de Dados:");
+			for (Jogador jogador : array) {
+				System.out.println(jogador.getNome());
+			}
+		}
+
+		public Jogador PesquisarPorNomeBinario(String nome, Log log) {
+
+			Jogador pesquisado = null;
+			int	esquerda = 0, direita = size - 1, meio;
+			
+			while (esquerda <= direita) {
+
+				meio = (esquerda + direita) / 2;
+				pesquisado = array[meio];
+
+				if (CompareToStr(nome, pesquisado.getNome(), log) < 0) {
+					direita = meio - 1;
+				} else if (CompareToStr(nome, pesquisado.getNome(), log) > 0) {
+					esquerda = meio + 1;
+				} else {
+					esquerda = direita + 1;
+				}
+			}
+
+			return pesquisado;
+		}
+
+		public Jogador PesquisarPorNome(String nome, Log log) {
+
+			Jogador pesquisado = null;
+
+			if (ordenado) {
+				pesquisado = PesquisarPorNomeBinario(nome, log);
+			} else {
+				// pesquisado = PesquisarPorNomeSequencial(nome);
+			}
+
+			return pesquisado;
+		}
 
 		void ImportDataBase(String filePath) throws Exception {
 		

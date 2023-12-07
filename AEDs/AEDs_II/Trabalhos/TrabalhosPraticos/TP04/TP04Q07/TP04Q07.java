@@ -1,4 +1,4 @@
-package TP04.TP04Q06;
+package TP04.TP04Q07;
 
 import TP04.Libs.LibsJava.Lib;
 import TP04.Libs.LibsJava.Lib.BD;
@@ -6,9 +6,9 @@ import TP04.Libs.LibsJava.Lib.Log;
 import TP04.Libs.LibsJava.Lib.Timer;
 import TP04.Libs.LibsJava.Lib.Jogador;
 
-// clear && javac -cp ../.. TP04Q06.java && java -cp ../.. TP04Q06.java < pub.in > result.txt
+// clear && javac -cp ../.. TP04Q07.java && java -cp ../.. TP04Q07.java < pub.in > result.txt
 
-class TP04Q06 {
+class TP04Q07 {
 
 	static class HashRes {
 
@@ -25,6 +25,13 @@ class TP04Q06 {
 			for (int i = 0; i < array.length; i++) array[i] = null;
 		}
 
+		public void Mostrar() {
+			System.out.println("----- Tabela Hash -----");
+			for (int i = 0; i < tabelaLen + reservaLen; i++) {
+				if (array[i] != null) System.out.println(array[i].getNome());
+			}
+		}
+
 		private int hash(Jogador jogador) {
 			return jogador.getAltura() % tabelaLen;
 		}
@@ -37,6 +44,11 @@ class TP04Q06 {
 			// else System.out.println("Erro ao inserir: Hash cheia.");
 		}
 
+		boolean CompareToStr(String str1, String str2, Log log) {
+			log.incrementarComparacoes();
+			return str1.equals(str2);
+		}
+
 		public boolean Pesquisar(Jogador jogador, Log log) {
 
 			boolean resultado = false;
@@ -44,13 +56,11 @@ class TP04Q06 {
 
 			if (array[pos] != null) {
 
-				log.incrementarComparacoes();
-				resultado = array[pos].getAltura() == jogador.getAltura();
+				resultado = CompareToStr(jogador.getNome(), array[pos].getNome(), log);
 
 				if (!resultado) {
 					for (int i = tabelaLen; !resultado && i < tabelaLen + reservaLen; i++) {
-						log.incrementarComparacoes();
-						resultado = array[i].getAltura() == jogador.getAltura();
+						resultado = CompareToStr(jogador.getNome(), array[i].getNome(), log);
 					}
 				}
 			}
@@ -79,7 +89,7 @@ class TP04Q06 {
 
 		timer.Start();
 		while (!(inputPUBIN = Lib.readStr()).equals("FIM")) {
-			Jogador pesquisado = BD.PesquisarPorNome(inputPUBIN);
+			Jogador pesquisado = BD.PesquisarPorNome(inputPUBIN, log);
 			boolean resultado = hash.Pesquisar(pesquisado, log);
 			System.out.printf("%s %s\n", inputPUBIN, resultado ? "SIM" : "NAO");
 		}
