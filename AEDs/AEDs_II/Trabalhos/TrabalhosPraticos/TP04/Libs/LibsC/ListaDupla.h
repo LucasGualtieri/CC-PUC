@@ -52,7 +52,7 @@ void MostrarListaDupla(ListaDupla lista) {
 		// errx(1, "Erro ao mostrar: Lista Dupla vazia.\n");
 	}
 
-	for (Celula* i = lista.primeiro; i != NULL; i = i->dir) {
+	for (Celula* i = lista.primeiro->dir; i != NULL; i = i->dir) {
 		puts(i->jogador.nome);
 	}
 

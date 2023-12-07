@@ -18,8 +18,17 @@ typedef char* String;
 char* readStr(FILE* stream, String input) {
 	if (!stream) stream = stdin;
 
-	fgets(input, STR_MAX_LEN, stream);
-	input[(int)strcspn(input, "\n")] = '\0';
+	// fgets(input, STR_MAX_LEN, stream);
+	// input[(int)strcspn(input, "\n")] = '\0';
+
+	int x = fscanf(stream, "%[^\n]", input);
+	if (x == 0) strcpy(input, "FIM");
+	else fgetc(stream);
+
+	// printf("x: %d\n", x);
+	// printf("input: %s\n", input);
+	// printf("strlen(input): %d\n", (int)strlen(input));
+
 	return input;
 }
 
@@ -532,7 +541,7 @@ void MostrarListaDupla(ListaDupla lista) {
 		// errx(1, "Erro ao mostrar: Lista Dupla vazia.\n");
 	}
 
-	for (Celula* i = lista.primeiro; i != NULL; i = i->dir) {
+	for (Celula* i = lista.primeiro->dir; i != NULL; i = i->dir) {
 		puts(i->jogador.nome);
 	}
 
@@ -594,6 +603,8 @@ bool PesquisarHashInd(Jogador, Log*, HashInd);
 void MostrarHashInd(HashInd);
 void CloseHashInd(HashInd);
 
+// clear && gcc TP04Q09Verde.c && ./a.out < pub.in > result.txt
+
 int main() {
 
 	BD BD = newBD(BD_SIZE);
@@ -603,7 +614,7 @@ int main() {
 
 	char inputPUBIN[STR_MAX_LEN];
 
-	while (strcmp(readStr(0, inputPUBIN), "FIM")) {
+	while (!strstr("FIMfim", readStr(0, inputPUBIN))) {
 		int id = atoi(inputPUBIN);
 		hash.Inserir(BD.Get(id, BD), hash);
 	}
@@ -616,7 +627,7 @@ int main() {
 	BD.OrdenarPorNome(&BD); // Para possibilitar uma pesquisa binária.
 
 	timer.Start(&timer);
-	while (strcmp(readStr(0, inputPUBIN), "FIM")) {
+	while (!strstr("FIMfim", readStr(0, inputPUBIN))) {
 		Jogador pesquisado = BD.PesquisarPorNome(inputPUBIN, &log, BD);
 		bool resultado = hash.Pesquisar(pesquisado, &log, hash);
 		printf("%s %s\n", inputPUBIN, resultado ? "SIM" : "NAO");
