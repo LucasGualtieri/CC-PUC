@@ -1,93 +1,68 @@
 #ifndef LIB_LISTA_DUPLA_H
 #define LIB_LISTA_DUPLA_H
 
-#include "Celulas/CelulaDupla.h"
-#include "LibTP03.h"
+#include "Celulas/Celula.h"
+#include "LibTP04.h"
 
 typedef struct ListaDupla {
 
 	int size;
-	CelulaDupla *primeiro, *ultimo;
+	Celula *primeiro, *ultimo;
 
 	void (*Mostrar) (struct ListaDupla);
-	int (*CompareTo) (CelulaDupla* jog1, CelulaDupla* jog2, Log* log);
-	void (*InserirInicio) (Jogador, struct ListaDupla*);
+	bool (*CompareTo) (Jogador, Jogador, Log*);
 	void (*InserirFim) (Jogador, struct ListaDupla*);
+	bool (*Pesquisar) (Jogador, Log*, struct ListaDupla);
 	void (*Close) (struct ListaDupla*);
 
 } ListaDupla;
 
 // ---------------------- INSERÇÃO E REMOÇÃO ----------------------
 
-int CompareToListaDupla(CelulaDupla* cel1, CelulaDupla* pivot, Log* log) {
+bool CompareToListaDupla(Jogador jog1, Jogador jog2, Log* log) {
 
 	log->comparacoes++;
 
-	Jogador jog1 = cel1->jogador, pivotJog = pivot->jogador;
+	int strComp = strcmp(jog1.nome, jog2.nome);
 
-	int strComp = strcmp(jog1.estadoNascimento, pivotJog.estadoNascimento);
-
-	if (strComp == 0) {
-		log->comparacoes++;
-		strComp = strcmp(jog1.nome, pivotJog.nome);
-	}
-
-	return strComp;
-}
-
-void InserirInicioListaDupla(Jogador jogador, ListaDupla* lista) {
-
-	CelulaDupla* new = newCelulaDupla(jogador, NULL, NULL);
-	
-	if (lista->primeiro == NULL) lista->primeiro = lista->ultimo = new;
-
-	else {
-		new->dir = lista->primeiro;
-		lista->primeiro = lista->primeiro->esq = new;
-	}
-
-	lista->size++;
-
+	return strComp == 0;
 }
 
 void InserirFimListaDupla(Jogador jogador, ListaDupla* lista) {
+	lista->ultimo = lista->ultimo->dir = newCelula(jogador, NULL, NULL);
+	lista->size++;
+}
 
-	CelulaDupla* new = newCelulaDupla(jogador, NULL, NULL);
-	
-	if (lista->ultimo == NULL) lista->ultimo = lista->primeiro = new;
+bool PesquisarListaDupla(Jogador jogador, Log* log, ListaDupla lista) {
 
-	else {
-		new->esq = lista->ultimo;
-		lista->ultimo = lista->ultimo->dir = new;
+	bool resultado = false;
+
+	for (Celula* i = lista.primeiro->dir; i != NULL; i = i->dir) {
+		if (CompareToListaDupla(jogador, i->jogador, log)) {
+			resultado = true;
+			i = lista.ultimo;
+		}
 	}
 
-	lista->size++;
-
+	return resultado;
 }
 
 void MostrarListaDupla(ListaDupla lista) {
 	if (lista.size == 0) {
-		errx(1, "Erro ao mostrar: Lista Dupla vazia.\n");
+		// errx(1, "Erro ao mostrar: Lista Dupla vazia.\n");
 	}
 
-	for (CelulaDupla* i = lista.primeiro; i != NULL; i = i->dir) {
-		printf("[%d ## ", i->jogador.id);
-		printf("%s ## ", i->jogador.nome);
-		printf("%d ## ", i->jogador.altura);
-		printf("%d ## ", i->jogador.peso);
-		printf("%d ## ", i->jogador.anoNascimento);
-		printf("%s ## ", i->jogador.universidade);
-		printf("%s ## ", i->jogador.cidadeNascimento);
-		printf("%s]\n", i->jogador.estadoNascimento);
+	for (Celula* i = lista.primeiro; i != NULL; i = i->dir) {
+		puts(i->jogador.nome);
 	}
 
 }
 
 void CloseListaDupla(ListaDupla* lista) {
 	
-	CelulaDupla* i = lista->primeiro;
+	Celula* i = lista->primeiro;
 	while (i != NULL) {
-		CelulaDupla* tmp = i;
+		Celula* tmp = i;
 		i = i->dir;
 		tmp->Close(tmp);
 	}
@@ -100,12 +75,17 @@ ListaDupla newListaDupla() {
 	ListaDupla lista;
 
 	lista.size = 0;
-	lista.primeiro = lista.ultimo = NULL;
+	Celula* new = malloc(sizeof(Celula));
+	new->jogador = newJogador();
+	new->esq = NULL;
+	new->dir = NULL;
+	new->Close = CloseCelula;
+	lista.primeiro = lista.ultimo = new;
 
 	lista.CompareTo = CompareToListaDupla;
 
-	lista.InserirInicio = InserirInicioListaDupla;
 	lista.InserirFim = InserirFimListaDupla;
+	lista.Pesquisar = PesquisarListaDupla;
 
 	lista.Mostrar = MostrarListaDupla;
 	lista.Close = CloseListaDupla;

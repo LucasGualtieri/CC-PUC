@@ -113,13 +113,13 @@ public class Lib {
 
 		public Jogador Get(int id) { return this.array[id]; }
 
-		int CompareToStr(int pos, String pivot) {
-			return array[pos].getNome().compareTo(pivot);
-		}
-
 		int CompareToStr(String str1, String str2, Log log) {
 			log.incrementarComparacoes();
 			return str1.compareTo(str2);
+		}
+
+		int CompareToStr(int pos, String pivot) {
+			return array[pos].getNome().compareTo(pivot);
 		}
 
 		private void swap(int i, int j) {

@@ -1,5 +1,5 @@
-#ifndef LIB_C_TP03_H
-#define LIB_C_TP03_H
+#ifndef LIB_C_TP04_H
+#define LIB_C_TP04_H
 
 #include <err.h>
 #include <time.h>
@@ -265,11 +265,10 @@ void MostrarJogador(Jogador jogador) {
 
 void CloseJogador(Jogador jogador) {
 
-	free(jogador.nome);
-	free(jogador.universidade);
-	free(jogador.cidadeNascimento);
-	free(jogador.estadoNascimento);
-
+	if (!jogador.nome) free(jogador.nome);
+	if (!jogador.universidade) free(jogador.universidade);
+	if (!jogador.cidadeNascimento) free(jogador.cidadeNascimento);
+	if (!jogador.estadoNascimento) free(jogador.estadoNascimento);
 }
 
 void swap(Jogador* jog1, Jogador* jog2, Log* log) {
@@ -309,17 +308,91 @@ typedef struct BD {
 
 	Jogador *array;
 	int maxSize, size;
+	bool ordenado;
 
 	Jogador (*Get) (int id, struct BD);
 	void (*ImportDataBase) (literal filePath, struct BD*);
 
+	void (*OrdenarPorNome) (struct BD*);
+	Jogador (*PesquisarPorNome) (String, Log*, struct BD);
+	void (*Mostrar) (struct BD);
 	void (*Inserir) (Jogador, struct BD*);
+
 
 	void (*Close) (struct BD*);
 
 } BD;
 
 Jogador GetBD(int id, BD BD) { return BD.array[id]; }
+
+int CompareToStr(int pos, String pivot, BD BD) {
+	return strcmp(BD.array[pos].nome, pivot);
+}
+
+int CompareToNome(String str, Jogador jog, Log* log) {
+	log->comparacoes++;
+	return strcmp(str, jog.nome);
+}
+
+void QuickSort(int left, int right, Log* log, BD BD) {
+
+	int i = left, j = right;
+	Jogador pivot = BD.array[(right + left) / 2];
+
+	while (i <= j) {
+		while (CompareToStr(i, pivot.nome, BD) < 0) i++;
+		while (CompareToStr(j, pivot.nome, BD) > 0) j--;
+		if (i <= j) swap(&BD.array[i++], &BD.array[j--], log);
+	}
+
+	if (left < j)  QuickSort(left, j, log, BD);
+	if (i < right)  QuickSort(i, right, log, BD);
+}
+
+void OrdenarPorNomeBD(BD* BD) {
+	BD->ordenado = true;
+	Log log = newLog();
+	QuickSort(0, BD->size - 1, &log, *BD);
+}
+
+Jogador PesquisarPorNomeBinario(String nome, Log* log, BD BD) {
+	Jogador pesquisado;
+	int	esquerda = 0, direita = BD.size - 1, meio;
+	
+	while (esquerda <= direita) {
+
+		meio = (esquerda + direita) / 2;
+		pesquisado = BD.array[meio];
+
+		if (CompareToNome(nome, pesquisado, log) < 0) {
+			direita = meio - 1;
+		} else if (CompareToNome(nome, pesquisado, log) > 0) {
+			esquerda = meio + 1;
+		} else {
+			esquerda = direita + 1;
+		}
+	}
+
+	return pesquisado;
+}
+
+Jogador PesquisarPorNomeBD(String nome, Log* log, BD BD) {
+	Jogador pesquisado;
+
+	if (BD.ordenado) {
+		pesquisado = PesquisarPorNomeBinario(nome, log, BD);
+	} else {
+		// pesquisado = PesquisarPorNomeSequencial(nome);
+	}
+
+	return pesquisado;
+}
+
+void MostrarBD(BD BD) {
+	for (int i = 0; i < BD.size; i++) {
+		printf("%d - %s\n", i + 1, BD.array[i].nome);
+	}
+}
 
 void ImportDataBaseBD(literal filePath, BD* BD) {
 
@@ -377,10 +450,14 @@ BD newBD(size_t maxSize) {
 
 	BD.size = 0;
 	BD.maxSize = maxSize;
+	BD.ordenado = false;
 	BD.array = (Jogador*)malloc(maxSize * sizeof(Jogador));
 
 	BD.Get = GetBD;
 	BD.ImportDataBase = ImportDataBaseBD;
+	BD.OrdenarPorNome = OrdenarPorNomeBD;
+	BD.PesquisarPorNome = PesquisarPorNomeBD;
+	BD.Mostrar = MostrarBD;
 	BD.Inserir = InserirBD;
 
 	BD.Close = CloseBD;
