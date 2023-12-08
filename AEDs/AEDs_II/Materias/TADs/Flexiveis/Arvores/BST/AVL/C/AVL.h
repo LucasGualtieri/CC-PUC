@@ -18,6 +18,7 @@ typedef struct AVL {
 	int (*Height) (struct AVL);
 
 	void (*Close) (struct AVL*);
+
 } AVL;
 
 AVL newAVL();

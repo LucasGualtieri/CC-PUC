@@ -1,0 +1,31 @@
+public void Inserir(int valor) {
+
+	bool ins = false;
+	Nó i = this.raiz;
+
+	if (i == null) {
+		i = new Nó(valor);
+		ins = true;		
+	}
+
+	while (!ins) {
+		if (valor < i.valor) {
+			if (i.esq == null) {
+				i.esq = new Nó(valor);
+				ins = true;
+			} else {
+				i = i.esq;
+			}
+		} else if (valor > i.valor) {
+			if (i.dir == null) {
+				i.dir = new Nó(valor);
+				ins = true;
+			} else {
+				i = i.dir;
+			}
+		} else {
+			print("Erro, valor duplicado");
+			ins = true;
+		}
+	}
+}
