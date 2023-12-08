@@ -39,15 +39,13 @@ void main() {
 	BD BD = newBD(BD_SIZE);
 	BD.ImportDataBase("../tmp/players.csv", &BD);
 	AVL arvore = newAVL();
-	
+
 	char inputPUBIN[STR_MAX_LEN];
-	
+
 	while (strcmp(readStr(0, inputPUBIN), "FIM")) {
 		int id = atoi(inputPUBIN);
 		arvore.Inserir(BD.Get(id, BD), &arvore);
 	}
-
-	// arvore.Mostrar(arvore);
 
 	Timer timer = newTimer();
 	Log log = newLog();
