@@ -42,7 +42,7 @@ private Node* InsertAVLAux(int value, Node* root) {
 
 private Node* Balance(Node* root) {
 
-	root->level = max(leftHeight(root), rightHeight(root)) + 1;
+	root->setLevel(root);
 
 	printf("factor: %d\n", getFactor(root));
 
@@ -73,8 +73,8 @@ private Node* SimpleRotationLeft(Node* root) {
 	root->right = aux->left;
 	aux->left = root;
 
-	root->level = max(leftHeight(root), rightHeight(root)) + 1;
-	aux->level = max(leftHeight(aux), rightHeight(aux)) + 1;
+	root->setLevel(root);
+	aux->setLevel(aux);
 
 	return aux;
 }
@@ -85,8 +85,8 @@ private Node* SimpleRotationRight(Node* root) {
 	root->left = aux->right;
 	aux->right = root;
 
-	root->level = max(leftHeight(root), rightHeight(root)) + 1;
-	aux->level = max(leftHeight(aux), rightHeight(aux)) + 1;
+	root->setLevel(root);
+	aux->setLevel(aux);
 
 	return aux;
 }

@@ -7,11 +7,16 @@ Node* newNode(int value) {
 	node->value = value;
 	node->left = node->right = NULL;
 
+	node->setLevel = SetLevelNode;
 	node->Close = CloseNode;
 
 	return node;
 }
 
+void SetLevelNode(Node* node) {
+	node->level = max(leftHeight(node), rightHeight(node)) + 1;
+}
+
 void CloseNode(Node* root) {
-	// free(root);
+	free(root);
 }

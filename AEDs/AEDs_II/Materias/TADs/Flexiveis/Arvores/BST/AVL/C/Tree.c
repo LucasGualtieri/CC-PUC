@@ -8,8 +8,10 @@
 
 #define RANDOM(minRange, maxRange) (rand() % ((maxRange + 1) - minRange)) + minRange
 
-int nextRand() {
-	return RANDOM(0, 500);
+int readInt() {
+	int integer;
+	scanf("%d%*c", &integer);
+	return integer;
 }
 
 int main() {
@@ -19,11 +21,12 @@ int main() {
 
 	do {
 		system("clear");
-		int numero = nextRand();
+		int numero = RANDOM(0, 1000);
+		// int numero = readInt();
 		printf("Inserindo o %d\n", numero);
 		tree.Insert(numero, &tree);
 		printf("Tree Height: %d\n", tree.Height(tree));
-		tree.Print(tree);
+		tree.PrintPre(tree);
 	} while (getchar() != ' ');
 
 	tree.Close(&tree);
