@@ -14,6 +14,7 @@ typedef struct AVL {
 
 	void (*Print) (struct AVL);
 	void (*PrintPre) (struct AVL);
+	void (*PrintPos) (struct AVL);
 
 	int (*Height) (struct AVL);
 
@@ -23,8 +24,7 @@ typedef struct AVL {
 
 AVL newAVL();
 
-void InsertAVL(int, AVL* tree);
-private Node* InsertAVLAux(int, Node*);
+int HeightAVL(AVL);
 
 #define max(val1, val2) (val1 > val2 ? val1 : val2)
 #define getFactor(root) (rightHeight(root) - leftHeight(root))
@@ -37,18 +37,21 @@ private Node* SimpleRotationRight(Node* root);
 private Node* DoubleRotationRightLeft(Node* root);
 private Node* DoubleRotationLeftRight(Node* root);
 
+void InsertAVL(int, AVL* tree);
+private Node* InsertAVLAux(int, Node*);
+
 // int DeleteAVL(int, AVL*);
 // private int DeleteAVLAux(int, Node**);
 // private Node* GreatestToTheLeft(Node**, Node*);
 
-void PrintPreAVL(AVL);
-private void PrintPreAVLAux(Node*);
-
 void PrintAVL(AVL);
 private void PrintAVLAux(Node*);
 
-int HeightAVL(AVL);
-private int HeightAVLAux(Node*, int);
+void PrintPreAVL(AVL);
+private void PrintPreAVLAux(Node*);
+
+void PrintPosAVL(AVL);
+private void PrintPosAVLAux(Node*);
 
 void CloseAVL(AVL*);
 private void CloseAVLAux(Node* root);

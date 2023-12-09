@@ -9,15 +9,26 @@ AVL newAVL() {
 
 	tree.root = NULL;
 
+	tree.Height = HeightAVL;
 	tree.Insert = InsertAVL;
 	// tree.Delete = DeleteAVL;
 
 	tree.Print = PrintAVL;
 	tree.PrintPre = PrintPreAVL;
-	tree.Height = HeightAVL;
+	tree.PrintPos = PrintPosAVL;
+
 	tree.Close = CloseAVL;
 	
 	return tree;
+}
+
+int HeightAVL(AVL tree) {
+
+	if (tree.root == NULL) {
+		errx(0, "Erro ao printar árvore: Árvore vazia.");
+	}
+
+	return max(leftHeight(tree.root), rightHeight(tree.root));
 }
 
 void InsertAVL(int value, AVL* tree) {
@@ -44,7 +55,7 @@ private Node* Balance(Node* root) {
 
 	root->setLevel(root);
 
-	printf("factor: %d\n", getFactor(root));
+	printf("%d factor: %d\n", root->value, getFactor(root));
 
 	if (getFactor(root) == 2) {
 		if (getFactor(root->right) == 1) {
@@ -192,16 +203,23 @@ private void PrintPreAVLAux(Node* root) {
 	}
 }
 
-int HeightAVL(AVL tree) {
+void PrintPosAVL(AVL tree) {
 
 	if (tree.root == NULL) {
 		errx(0, "Erro ao printar árvore: Árvore vazia.");
 	}
 
-	int left = leftHeight(tree.root);
-	int right = rightHeight(tree.root);
+	printf("{ ");
+	PrintPosAVLAux(tree.root);
+	printf("\b\b }\n");
+}
 
-	return left > right ? left : right;
+private void PrintPosAVLAux(Node* root) {
+	if (root != NULL) {
+		PrintPosAVLAux(root->left);
+		PrintPosAVLAux(root->right);
+		printf("%d, ", root->value);
+	}
 }
 
 void CloseAVL(AVL* tree) {
