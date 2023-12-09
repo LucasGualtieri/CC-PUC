@@ -23,11 +23,6 @@ AVL newAVL() {
 }
 
 int HeightAVL(AVL tree) {
-
-	if (tree.root == NULL) {
-		errx(0, "Erro ao printar árvore: Árvore vazia.");
-	}
-
 	return max(leftHeight(tree.root), rightHeight(tree.root));
 }
 
