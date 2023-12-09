@@ -3,7 +3,8 @@
 *
 !/**/
 !*.*
-a.out
+# a.out
+*.out
 *.exe
 *.o
 *.class
