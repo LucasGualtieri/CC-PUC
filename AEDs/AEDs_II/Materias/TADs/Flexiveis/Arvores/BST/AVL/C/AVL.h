@@ -11,6 +11,7 @@ typedef struct AVL {
 
 	void (*Insert) (int, struct AVL*);
 	int (*Delete) (int, struct AVL*);
+	Node* (*Search) (int, struct AVL);
 
 	void (*Print) (struct AVL);
 	void (*PrintPre) (struct AVL);
@@ -24,25 +25,28 @@ typedef struct AVL {
 
 AVL newAVL();
 
-int HeightAVL(AVL);
-
 #define max(val1, val2) (val1 > val2 ? val1 : val2)
 #define getFactor(root) (rightHeight(root) - leftHeight(root))
 #define rightHeight(root) (root->right == NULL ? 0 : root->right->level)
 #define leftHeight(root) (root->left == NULL ? 0 : root->left->level)
 
-private Node* Balance(Node* root);
-private Node* SimpleRotationLeft(Node* root);
-private Node* SimpleRotationRight(Node* root);
-private Node* DoubleRotationRightLeft(Node* root);
-private Node* DoubleRotationLeftRight(Node* root);
+private Node* Balance(Node*);
+private Node* SimpleRotationLeft(Node*);
+private Node* SimpleRotationRight(Node*);
+private Node* DoubleRotationRightLeft(Node*);
+private Node* DoubleRotationLeftRight(Node*);
 
-void InsertAVL(int, AVL* tree);
+void InsertAVL(int, AVL*);
 private Node* InsertAVLAux(int, Node*);
 
 // int DeleteAVL(int, AVL*);
 // private int DeleteAVLAux(int, Node**);
 // private Node* GreatestToTheLeft(Node**, Node*);
+
+Node* SearchAVL(int, AVL);
+private Node* SearchAVLAux(int, Node*);
+
+int HeightAVL(AVL);
 
 void PrintAVL(AVL);
 private void PrintAVLAux(Node*);

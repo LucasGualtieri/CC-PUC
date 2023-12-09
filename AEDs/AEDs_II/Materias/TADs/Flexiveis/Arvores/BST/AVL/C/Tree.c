@@ -19,17 +19,32 @@ int main() {
 	AVL tree = newAVL();
 	srand(time(NULL));
 
-	do {
-		system("clear");
-		int numero = RANDOM(0, 1000);
-		// int numero = readInt();
-		printf("Inserindo o %d\n", numero);
+	for (int i = 0; i < 2000000; i++) {
+		int numero = rand() % 2000000;
 		tree.Insert(numero, &tree);
-		printf("Tree Height: %d\n", tree.Height(tree));
-		tree.PrintPre(tree);
-	} while (getchar() != ' ');
+	}
+
+	printf("Tree Height: %d\n", tree.Height(tree));
+	
+	Node* search;
+
+	if ((search = tree.Search(12345, tree)) != NULL) {
+		printf("Valor %d encontrado.\n", search->value);
+	} else {
+		puts("Valor não encontrado.");
+	}
 
 	tree.Close(&tree);
 
 	return 0;
 }
+
+// do {
+// 	system("clear");
+// 	int numero = RANDOM(0, 1000);
+// 	// int numero = readInt();
+// 	printf("Inserindo o %d\n", numero);
+// 	tree.Insert(numero, &tree);
+// 	printf("Tree Height: %d\n", tree.Height(tree));
+// 	tree.PrintPre(tree);
+// } while (getchar() != ' ');

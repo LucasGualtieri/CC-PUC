@@ -9,10 +9,11 @@ AVL newAVL() {
 
 	tree.root = NULL;
 
-	tree.Height = HeightAVL;
 	tree.Insert = InsertAVL;
 	// tree.Delete = DeleteAVL;
+	tree.Search = SearchAVL;
 
+	tree.Height = HeightAVL;
 	tree.Print = PrintAVL;
 	tree.PrintPre = PrintPreAVL;
 	tree.PrintPos = PrintPosAVL;
@@ -22,55 +23,26 @@ AVL newAVL() {
 	return tree;
 }
 
-int HeightAVL(AVL tree) {
-
-	if (tree.root == NULL) {
-		errx(0, "Erro ao calcular altura da árvore: Árvore vazia.");
-	}
-
-	return max(leftHeight(tree.root), rightHeight(tree.root));
-}
-
-void InsertAVL(int value, AVL* tree) {
-	tree->root = InsertAVLAux(value, tree->root);
-}
-
-private Node* InsertAVLAux(int value, Node* root) {
-
-	if (root == NULL) {
-		root = newNode(value);
-	} else if (value < root->value) {
-		root->left = InsertAVLAux(value, root->left);
-	} else if (value > root->value) {
-		root->right = InsertAVLAux(value, root->right);
-	} else {
-		printf("Erro ao inserir na árvore: '%d' já pertece à árvore.", value);
-		// errx(0, "Erro ao inserir na árvore: '%d' já pertece à árvore.", value);
-	}
-
-	return Balance(root);
-}
-
 private Node* Balance(Node* root) {
 
 	root->setLevel(root);
 
-	printf("%d factor: %d\n", root->value, getFactor(root));
+	// printf("%d factor: %d\n", root->value, getFactor(root));
 
 	if (getFactor(root) == 2) {
 		if (getFactor(root->right) == 1) {
-			puts("SimpleRotationLeft");
+			// puts("SimpleRotationLeft");
 			root = SimpleRotationLeft(root);
 		} else {
-			puts("DoubleRotationRightLeft");
+			// puts("DoubleRotationRightLeft");
 			root = DoubleRotationRightLeft(root);
 		}
 	} else if (getFactor(root) == -2) {
 		if (getFactor(root->left) == -1) {
-			puts("SimpleRotationRight");
+			// puts("SimpleRotationRight");
 			root = SimpleRotationRight(root);
 		} else {
-			puts("DoubleRotationLeftRight");
+			// puts("DoubleRotationLeftRight");
 			root = DoubleRotationLeftRight(root);
 		}
 	}
@@ -110,6 +82,26 @@ private Node* DoubleRotationRightLeft(Node* root) {
 private Node* DoubleRotationLeftRight(Node* root) {
 	root->left = SimpleRotationLeft(root->left);
 	return SimpleRotationRight(root);
+}
+
+void InsertAVL(int value, AVL* tree) {
+	tree->root = InsertAVLAux(value, tree->root);
+}
+
+private Node* InsertAVLAux(int value, Node* root) {
+
+	if (root == NULL) {
+		root = newNode(value);
+	} else if (value < root->value) {
+		root->left = InsertAVLAux(value, root->left);
+	} else if (value > root->value) {
+		root->right = InsertAVLAux(value, root->right);
+	} else {
+		// printf("Erro ao inserir na árvore: '%d' já pertece à árvore.", value);
+		// errx(0, "Erro ao inserir na árvore: '%d' já pertece à árvore.", value);
+	}
+
+	return Balance(root);
 }
 
 // int DeleteAVL(int value, AVL* tree) {
@@ -164,6 +156,33 @@ private Node* DoubleRotationLeftRight(Node* root) {
 
 // 	return removed;
 // }
+
+Node* SearchAVL(int value, AVL tree) {
+	return SearchAVLAux(value, tree.root);
+}
+
+private Node* SearchAVLAux(int value, Node* root) {
+
+	if (root == NULL) {
+		// printf("Erro ao pesquisar na árvore: '%d' não pertece à árvore.", value);
+		// errx(0, "Erro ao pesquisar na árvore: '%d' não pertece à árvore.", value);
+	} else if (value < root->value) {
+		root = SearchAVLAux(value, root->left);
+	} else if (value > root->value) {
+		root = SearchAVLAux(value, root->right);
+	}
+
+	return root;
+}
+
+int HeightAVL(AVL tree) {
+
+	if (tree.root == NULL) {
+		errx(0, "Erro ao calcular altura da árvore: Árvore vazia.");
+	}
+
+	return max(leftHeight(tree.root), rightHeight(tree.root));
+}
 
 void PrintAVL(AVL tree) {
 
