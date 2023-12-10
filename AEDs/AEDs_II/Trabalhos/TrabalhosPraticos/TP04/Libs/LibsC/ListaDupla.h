@@ -29,7 +29,7 @@ bool CompareToListaDupla(Jogador jog1, Jogador jog2, Log* log) {
 }
 
 void InserirFimListaDupla(Jogador jogador, ListaDupla* lista) {
-	lista->ultimo = lista->ultimo->dir = newCelula(jogador, NULL, NULL);
+	lista->ultimo = lista->ultimo->prox = newCelula(jogador, NULL, NULL);
 	lista->size++;
 }
 
@@ -37,7 +37,7 @@ bool PesquisarListaDupla(Jogador jogador, Log* log, ListaDupla lista) {
 
 	bool resultado = false;
 
-	for (Celula* i = lista.primeiro->dir; i != NULL; i = i->dir) {
+	for (Celula* i = lista.primeiro->prox; i != NULL; i = i->prox) {
 		if (CompareToListaDupla(jogador, i->jogador, log)) {
 			resultado = true;
 			i = lista.ultimo;
@@ -52,7 +52,7 @@ void MostrarListaDupla(ListaDupla lista) {
 		// errx(1, "Erro ao mostrar: Lista Dupla vazia.\n");
 	}
 
-	for (Celula* i = lista.primeiro->dir; i != NULL; i = i->dir) {
+	for (Celula* i = lista.primeiro->prox; i != NULL; i = i->prox) {
 		puts(i->jogador.nome);
 	}
 
@@ -63,7 +63,7 @@ void CloseListaDupla(ListaDupla* lista) {
 	Celula* i = lista->primeiro;
 	while (i != NULL) {
 		Celula* tmp = i;
-		i = i->dir;
+		i = i->prox;
 		tmp->Close(tmp);
 	}
 
@@ -77,8 +77,8 @@ ListaDupla newListaDupla() {
 	lista.size = 0;
 	Celula* new = malloc(sizeof(Celula));
 	new->jogador = newJogador();
-	new->esq = NULL;
-	new->dir = NULL;
+	new->ant = NULL;
+	new->prox = NULL;
 	new->Close = CloseCelula;
 	lista.primeiro = lista.ultimo = new;
 

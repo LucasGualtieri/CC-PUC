@@ -5,7 +5,7 @@
 
 typedef struct Celula {
 	Jogador jogador;
-	struct Celula *esq, *dir;
+	struct Celula *ant, *prox;
 	void (*Close) (struct Celula*);
 } Celula;
 
@@ -14,12 +14,12 @@ void CloseCelula(Celula* celula) {
 	free(celula);
 }
 
-Celula* newCelula(Jogador jogador, Celula* esq, Celula* dir) {
+Celula* newCelula(Jogador jogador, Celula* ant, Celula* prox) {
 	Celula* celula = malloc(sizeof(Celula));
 
 	celula->jogador = jogador.Clone(jogador);
-	celula->esq = esq;
-	celula->dir = dir;
+	celula->ant = ant;
+	celula->prox = prox;
 	celula->Close = CloseCelula;
 
 	return celula;
