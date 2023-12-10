@@ -14,7 +14,7 @@ class TP04Q08Verde {
 	public static void main(String[] args) throws Exception {
 
 		Lib.BD BD = new Lib.BD("/tmp/players.csv");
-		ReHash hash = new ReHash(25);
+		ReHash hash = new ReHash(21);
 
 		String inputPUBIN = new String();
 

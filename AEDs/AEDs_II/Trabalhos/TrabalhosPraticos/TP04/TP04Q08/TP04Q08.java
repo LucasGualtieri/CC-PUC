@@ -13,7 +13,7 @@ class TP04Q08 {
 	public static void main(String[] args) throws Exception {
 
 		BD BD = new BD("../tmp/players.csv");
-		ReHash hash = new ReHash(25);
+		ReHash hash = new ReHash(21);
 
 		String inputPUBIN = new String();
 
@@ -71,11 +71,6 @@ class TP04Q08 {
 			if (array[pos] == null) array[pos] = jogador;
 			else if (array[colisao] == null) array[colisao] = jogador;
 			// else System.out.println("Erro ao inserir: ReHash inválida.");
-		}
-
-		boolean CompareToStr(String str1, String str2, Log log) {
-			log.incrementarComparacoes();
-			return str1.equals(str2);
 		}
 
 		boolean CompareToNome(Jogador jog1, Jogador jog2, Log log) {

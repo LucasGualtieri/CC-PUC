@@ -72,9 +72,9 @@ class TP04Q07 {
 			// else System.out.println("Erro ao inserir: Hash cheia.");
 		}
 
-		boolean CompareToStr(String str1, String str2, Log log) {
+		boolean CompareToNome(Jogador jog1, Jogador jog2, Log log) {
 			log.incrementarComparacoes();
-			return str1.equals(str2);
+			return jog1.getNome().equals(jog2.getNome());
 		}
 
 		public boolean Pesquisar(Jogador jogador, Log log) {
@@ -84,12 +84,10 @@ class TP04Q07 {
 
 			if (array[pos] != null) {
 
-				resultado = CompareToStr(jogador.getNome(), array[pos].getNome(), log);
+				resultado = CompareToNome(jogador, array[pos], log);
 
-				if (!resultado) {
-					for (int i = tabelaLen; !resultado && i < tabelaLen + reservaLen; i++) {
-						resultado = CompareToStr(jogador.getNome(), array[i].getNome(), log);
-					}
+				for (int i = 0; !resultado && i < reservaLen; i++) {
+					resultado = CompareToNome(jogador, array[i + tabelaLen], log);
 				}
 			}
 
