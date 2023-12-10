@@ -18,16 +18,8 @@ typedef char* String;
 char* readStr(FILE* stream, String input) {
 	if (!stream) stream = stdin;
 
-	// fgets(input, STR_MAX_LEN, stream);
-	// input[(int)strcspn(input, "\n")] = '\0';
-
-	int x = fscanf(stream, "%[^\n]", input);
-	if (x == 0) strcpy(input, "FIM");
-	else fgetc(stream);
-
-	// printf("x: %d\n", x);
-	// printf("input: %s\n", input);
-	// printf("strlen(input): %d\n", (int)strlen(input));
+	fgets(input, STR_MAX_LEN, stream);
+	input[(int)strcspn(input, "\n\r")] = '\0';
 
 	return input;
 }

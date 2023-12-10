@@ -19,10 +19,12 @@ typedef const char* const literal;
 typedef char* String;
 
 char* readStr(FILE* stream, String input) {
+
 	if (!stream) stream = stdin;
 
 	fgets(input, STR_MAX_LEN, stream);
-	input[(int)strcspn(input, "\n")] = '\0';
+	input[(int)strcspn(input, "\n\r")] = '\0';
+
 	return input;
 }
 
