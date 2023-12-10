@@ -1,0 +1,1 @@
+pai.cor = !(filhoEsq.cor = filhoDir.cor = false);
