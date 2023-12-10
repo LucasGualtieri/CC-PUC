@@ -30,6 +30,11 @@ int CompareToNomeAVL(Jogador jogador, No* raiz, Log* log) {
 	return strcmp(jogador.nome, raiz->jogador.nome);
 }
 
+int CompareToStrAVL(String chave, No* raiz, Log* log) {
+	log->comparacoes++;
+	return strcmp(chave, raiz->jogador.nome);
+}
+
 No* Balancear(No* raiz);
 
 No* InserirAVLAux(Jogador jogador, No* raiz, Log* log) {

@@ -21,10 +21,10 @@ bool PesquisarAux(No* raiz, String chave, Log* log) {
 	
 	if (raiz == NULL) {
 		resultado = false;
-	} else if (CompareToAVL(chave, raiz, log) < 0) {
+	} else if (CompareToStrAVL(chave, raiz, log) < 0) {
 		printf("esq ");
 		resultado = PesquisarAux(raiz->esq, chave, log);
-	} else if (CompareToAVL(chave, raiz, log) > 0) {
+	} else if (CompareToStrAVL(chave, raiz, log) > 0) {
 		printf("dir ");
 		resultado = PesquisarAux(raiz->dir, chave, log);
 	} else {
