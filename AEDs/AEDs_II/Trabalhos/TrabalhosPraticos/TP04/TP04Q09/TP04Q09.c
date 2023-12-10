@@ -2,6 +2,7 @@
 #include "../Libs/LibsC/ListaDupla.h"
 
 // clear && gcc TP04Q09.c && ./a.out < pub.in > result.txt
+// clear && gcc TP04Q09.c && ./a.out < pubTunado.in > result.txt
 
 typedef struct HashInd {
 
