@@ -1,0 +1,7 @@
+{
+	"files.associations": {
+		"*.h": "c",
+		"*.csv": "csv",
+		"iostream": "cpp"
+	}
+}

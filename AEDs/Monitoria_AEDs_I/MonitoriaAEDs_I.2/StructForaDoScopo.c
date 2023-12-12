@@ -13,7 +13,7 @@ void AlteraPessoa(Pessoa* pessoa) {
 
 	pessoa = &p1;
 
-	pessoa->idade = 25;
+	(*pessoa).idade = 25;
 	pessoa->sexo = 'F';
 
 	printf("pessoa.idade: %d\n", pessoa->idade);
