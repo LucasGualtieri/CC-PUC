@@ -1,0 +1,3 @@
+Nome: Eduardo Sobrenome
+Altura: 1.80
+Altura menor ou igual a 1.60m
