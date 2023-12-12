@@ -1,0 +1,16 @@
+O que é herança?
+	Herança é a propriedade que uma classe tem em herdar / compartilhar os mesmos métodos e atributos de sua classe pai.
+	A herança permite diminuir a repetição de códigos e facilita a manutenção do projeto.
+
+Quais são os três tipos de encapsulamento, e explique suas diferenças.
+	Os três tipos são:
+		- Public: Permite que métodos e atributos (publicos) de uma classe sejam acessados de fora do escopo da classe.
+		- Private: Limita o escopo dos métodos e atributos a apenas a classe.
+		- Protected: Expande o escopo do private, permitindo que os atributos (protegidos) também sejam acessado pelas classes filhas.
+
+
+O que é polimorfismo?
+	Polimorfismo permite termos muitas "versões" de um mesmo método contanto que tenham a lista de parâmetros diferente.
+	Polimorfismo também permite sobrecrita de funções quando trabalhamos com herança.
+
+Por que usar Getters e Setters e dê um exemplo. // Responda
