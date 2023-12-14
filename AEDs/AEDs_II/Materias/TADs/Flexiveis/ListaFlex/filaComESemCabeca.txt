@@ -1,0 +1,91 @@
+// Sem celula cabeça - Condição de lista vazia -> primeiro ou ultimo == null
+void InserirInicio(int x) {
+	size++;
+	primeiro = new Celula(x, primeiro);
+	if (ultimo == null) ultimo = primeiro;
+}
+
+// Com celula cabeça - Condição de lista vazia -> primeiro == ultimo
+void InserirInicio(int x) {
+	size++;
+	primeiro.prox = new Celula(x, primeiro.prox);
+	if (primeiro == ultimo) ultimo = primeiro.prox;
+}
+
+// Sem celula cabeça - Condição de lista vazia -> primeiro ou ultimo == null
+void InserirFim(int x) {
+	size++;
+	ultimo = ultimo.prox = new Celula(x, null);
+	if (primeiro == null) primeiro = ultimo;
+}
+
+// Com celula cabeça - Condição de lista vazia -> primeiro == ultimo
+void InserirFim(int x) {
+	size++;
+	ultimo = ultimo.prox = new Celula(x, null);
+}
+
+// Sem celula cabeça - Condição de lista vazia -> primeiro ou ultimo == null
+void RemoveirInicio() throws Exception {
+
+	if (primeiro == null) {
+		throw new Exception("Erro ao remover.");
+	}
+
+	size--;
+	Celula aux = primeiro;
+	primeiro = primeiro.prox;
+	free(aux);
+}
+
+// Com celula cabeça - Condição de lista vazia -> primeiro == ultimo
+void RemoveirInicio() throws Exception {
+
+	if (primeiro == ultimo) {
+		throw new Exception("Erro ao remover.");
+	}
+
+	size--;
+	Celula removida = primeiro;
+	primeiro = primeiro.prox;
+	free(aux);
+}
+
+// Sem celula cabeça - Condição de lista vazia -> primeiro ou ultimo == null
+void RemoveirFim() throws Exception {
+
+	if (primeiro == null) {
+		throw new Exception("Erro ao remover.");
+	}
+
+	Celula i, removida = ultimo;
+
+	// Condição de lista com UM elemento.
+	if (primeiro == ultimo) primeiro = ultimo = null;
+
+	else {
+		for (i = primeiro; i.prox != ultimo; i = i.prox);
+		i.prox = null;
+		ultimo = i;
+	}
+
+	size--;
+	free(removida);
+}
+
+// Com celula cabeça - Condição de lista vazia -> primeiro == ultimo
+void RemoveirFim() throws Exception {
+
+	if (primeiro == ultimo) {
+		throw new Exception("Erro ao remover.");
+	}
+
+	Celula i, removida = ultimo;
+
+	for (i = primeiro; i.prox != ultimo; i = i.prox);
+	i.prox = null;
+	ultimo = i;
+
+	size--;
+	free(removida);
+}

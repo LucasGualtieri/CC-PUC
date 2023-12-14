@@ -78,16 +78,14 @@ public class ListaFlex {
 			throw new Exception("Erro ao remover: Lista Flex vazia.");
 		}
 		
-		CelulaLista removido, i;
-		for (i = primeiro; i.prox.prox != null; i = i.prox);
+		CelulaLista i, removido = ultimo;
 
-		removido = i.prox;
-		i.prox = removido.prox;
+		for (i = primeiro; i.prox != ultimo; i = i.prox);
+		i.prox = null;
+		ultimo = i;
 
 		this.size--;
-
 		return removido.jogador;
-
 	}
 
 	public Jogador Remover(String posStr) throws Exception {
