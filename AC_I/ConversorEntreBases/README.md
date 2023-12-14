@@ -2,7 +2,7 @@
 
 ## 📝 Integrantes:
  - Lucas Gualtieri
- - Gabriel Golçalves
+ - Gabriel Gonçalves Fialho
  - Gabriel Rangel Gontijo
 
 ## 💻 Execute o programa no navegador - <a href="https://replit.com/@LucasGualtieriF/ConversorEntreBases" target="_blank">replit.com/LucasGualtieri</a>
