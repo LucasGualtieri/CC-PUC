@@ -14,7 +14,7 @@ typedef struct Node {
 
 } Node;
 
-Node* newNode(int value);
+Node* newNode(int value, bool color);
 void CloseNode(struct Node*);
 
 #endif

@@ -23,16 +23,20 @@ typedef struct RedBlack {
 
 } RedBlack;
 
+typedef struct Children {
+	Node *child, *grandChild;
+} Children;
+
 RedBlack newRedBlack();
 
-private Node* Balance(Node*);
+private Node* Balance(int, Node*, Children children);
 private Node* SimpleRotationLeft(Node*);
 private Node* SimpleRotationRight(Node*);
 private Node* DoubleRotationRightLeft(Node*);
 private Node* DoubleRotationLeftRight(Node*);
 
 void InsertRedBlack(int, RedBlack*);
-private void InsertRedBlackAux(int, Node*, Node*, Node*);
+private Children InsertRedBlackAux(int, Node*);
 
 // int DeleteRedBlack(int, RedBlack*);
 // private int DeleteRedBlackAux(int, Node**);
