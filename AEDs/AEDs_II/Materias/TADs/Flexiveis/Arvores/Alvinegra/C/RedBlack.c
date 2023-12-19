@@ -29,26 +29,26 @@ private Node* Balance(int value, Node* avo, Children children) {
 	Node* filho = children.child;
 	Node* neto = children.grandChild;
 
-	if (avo) printf("avo: %d\n", avo->value);
-	else printf("avo: NULL\n");
-	if (filho) printf("filho: %d\n", filho->value);
-	else printf("filho: NULL\n");
-	if (neto) printf("neto: %d\n", neto->value);
-	else printf("neto: NULL\n");
+	// if (avo) printf("avo: %d\n", avo->value);
+	// else printf("avo: NULL\n");
+	// if (filho) printf("filho: %d\n", filho->value);
+	// else printf("filho: NULL\n");
+	// if (neto) printf("neto: %d\n", neto->value);
+	// else printf("neto: NULL\n");
 
-	if (filho->color && neto != NULL && neto->color) {
+	if (filho != NULL && filho->color && neto != NULL && neto->color) {
 		if (avo->value > filho->value && filho->value > neto->value) {
 			puts("SimpleRotationLeft");
-			avo = SimpleRotationLeft(avo);
+			// avo = SimpleRotationLeft(avo);
 		} else if (avo->value > filho->value && filho->value < neto->value) {
 			puts("DoubleRotationRightLeft");
-			avo = DoubleRotationRightLeft(avo);
+			// avo = DoubleRotationRightLeft(avo);
 		} else if (avo->value < filho->value && filho->value < neto->value) {
 			puts("SimpleRotationRight");
-			avo = SimpleRotationRight(avo);
+			// avo = SimpleRotationRight(avo);
 		} else {
 			puts("DoubleRotationLeftRight");
-			avo = DoubleRotationLeftRight(avo);
+			// avo = DoubleRotationLeftRight(avo);
 		}
 	}
 
@@ -95,37 +95,47 @@ private Children newChildren(Node* child, Node* grandChild) {
 }
 
 void InsertRedBlack(int value, RedBlack* tree) {
-	if (tree->root == NULL) tree->root = newNode(value, false);
-	else if (value < tree->root->value) tree->root->left = InsertRedBlackAux(value, tree->root).child;
-	else tree->root->right = InsertRedBlackAux(value, tree->root).child;
+	tree->root = InsertRedBlackAux(value, tree->root).child;
+	// printf("Raiz sem cor\n");
+	if (tree->root->color) tree->root->color = false;
+}
+
+bool is4No(Node* i) {
+	// printf("is4No\n");
+	return i && i->left && i->right && i->left->color && i->right->color;
+}
+
+void fragmentar(Node* i) {
+	// printf("fragmentar\n");
+	i->color = true;
+	i->right->color = i->left->color = false;
 }
 
 private Children InsertRedBlackAux(int value, Node* i) {
 
-	// if (is4No()) fragmentar();
+	if (is4No(i)) fragmentar(i);
 
-	Children children;
+	Children children = newChildren(NULL, NULL);
 
 	if (i == NULL) {
 		i = newNode(value, true);
-		children = newChildren(i, NULL);
 	} else if (value < i->value) {
 		children = InsertRedBlackAux(value, i->left);
 		i->left = children.child;
-		// newChildren(i, children.child);
 	} else if (value > i->value) {
 		children = InsertRedBlackAux(value, i->right);
 		i->right = children.child;
-		// newChildren(i, children.child);
 	} else {
 		// printf("Erro ao inserir na árvore: '%d' já pertece à árvore.", value);
 		// errx(0, "Erro ao inserir na árvore: '%d' já pertece à árvore.", value);
 	}
 
-	// return newChildren(Balance(value, i, children), children);
 	i = Balance(value, i, children);
+	// Tenho que atualizar o flilho do children???
 
-	return children;
+	// arrumar as funvoes de balanceamento
+
+	return newChildren(i, children.child);
 }
 
 // private void InsertRedBlackAux(int value, Node* avo, Node* pai, Node* i) {
