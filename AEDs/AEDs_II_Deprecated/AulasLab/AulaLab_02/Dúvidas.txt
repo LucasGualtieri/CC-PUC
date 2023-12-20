@@ -1,6 +1,0 @@
-herança em neto, super() chama o pai ou o avo?
-this.att opcional?
-chamar super no aluno nesse caso serial opcional pq n tem tratamento no pai
-como que o extends herda? Por padrao public? Como define?
-como funciona esse negocio de public construtor?
-criação de um objeto de uma classe usando new ou sem usar
