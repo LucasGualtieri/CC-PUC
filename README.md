@@ -6,9 +6,9 @@ Repositório de exercícios / projetos desenvolvidos no curso de Ciência da Com
 
 ## 📁 AEDs
 
-Algoritmos e Estruturas de Dados - [AEDs I](AEDs/AEDs_I) / [AEDs II](AEDs/AEDs_II) / [TPs](AEDs/AEDs_II/Trabalhos/TrabalhosPraticos/)
+Algoritmos e Estruturas de Dados - [AEDs I](AEDs/AEDs_I) / [AEDs II](AEDs/AEDs_II) / [AEDs III](AEDs/AEDs_III)
 
-> 📁 [Monitoria AEDs I](AEDs/Monitoria_AEDs_I/)
+> 📁 [Monitoria AEDs II](AEDs/Monitoria_AEDs_II/)
 
 ## 📁 AC I
 
