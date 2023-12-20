@@ -1,1 +1,1 @@
-Matrícula: 794989	Tempo de execução: 0.010760s	Número de comparações: 857
+Matrícula: 794989	Tempo de execução: 0.014668s	Número de comparações: 857

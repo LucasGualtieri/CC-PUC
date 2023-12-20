@@ -23,13 +23,13 @@ class TP04Q04 {
 	static private boolean Pesquisar(NoAN raiz, String chave, Log log) {
 
 		boolean resultado;
-		
+
 		if (raiz == null) {
 			resultado = false;
-		} else if (Alvinegra.CompareTo(chave, raiz, log) < 0) {
+		} else if (Alvinegra.CompareToStr(chave, raiz, log) < 0) {
 			System.out.printf("esq ");
 			resultado = Pesquisar(raiz.esq, chave, log);
-		} else if (Alvinegra.CompareTo(chave, raiz, log) > 0) {
+		} else if (Alvinegra.CompareToStr(chave, raiz, log) > 0) {
 			System.out.printf("dir ");
 			resultado = Pesquisar(raiz.dir, chave, log);
 		} else {
@@ -49,6 +49,7 @@ class TP04Q04 {
 		while (!(inputPUBIN = Lib.readStr()).equals("FIM")) {
 			int id = Integer.parseInt(inputPUBIN);
 			arvore.Inserir(BD.Get(id));
+			// arvore.MostrarPre();
 		}
 
 		Log log = new Log();
