@@ -29,14 +29,18 @@ typedef struct Children {
 
 RedBlack newRedBlack();
 
-private Node* Balance(int, Node*, Children children);
 private Node* SimpleRotationLeft(Node*);
 private Node* SimpleRotationRight(Node*);
 private Node* DoubleRotationRightLeft(Node*);
 private Node* DoubleRotationLeftRight(Node*);
+private Children Balance(Node*, Children children);
 
 void InsertRedBlack(int, RedBlack*);
 private Children InsertRedBlackAux(int, Node*);
+
+private bool is4No(Node* i);
+private void fragmentar(Node* i);
+private Children newChildren(Node* child, Node* grandChild);
 
 // int DeleteRedBlack(int, RedBlack*);
 // private int DeleteRedBlackAux(int, Node**);
