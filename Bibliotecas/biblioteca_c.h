@@ -29,7 +29,7 @@
 #define endl "\n"
 #define AND &&
 #define OR ||
-#define MaxStringLength 2000
+#define STR_MAX_LEN 2000
 #define ends 2000
 
 typedef char*		string;
@@ -167,7 +167,7 @@ char* substr(char* string, int beginning, int end) {
 
 	int length = end - beginning;
 
-	static char strAux[MaxStringLength];
+	static char strAux[STR_MAX_LEN];
 	// char* strAux = (char*)malloc((length + 1) * sizeof(char));
 
 	for (int i = 0; i < length; i++) {
@@ -310,14 +310,14 @@ char* getstr(FILE* stream) {
 	// flush just like the pause() function
 
 	// Allocate memory for string
-	char* string = (char*)malloc(MaxStringLength * sizeof(char));
+	char* string = (char*)malloc(STR_MAX_LEN * sizeof(char));
 	if (string == NULL) {
 		fprintf(stdin, "Error: Failed to allocate memory in getstr()\n");
 		return NULL;
 	}
 
 	// Reading string from file
-	if (fgets(string, MaxStringLength, stream) == NULL) {
+	if (fgets(string, STR_MAX_LEN, stream) == NULL) {
 		fprintf(stdin, "Error: Failed to read string from file in getstr()\n");
 		free(string);
 		return NULL;
