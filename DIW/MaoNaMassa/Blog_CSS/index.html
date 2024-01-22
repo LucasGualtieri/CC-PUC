@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Mão na Massa - Site de Blog - Linguagem HTML</title>
+		<link rel="stylesheet" href="style.css" />
+	</head>
+	<body>
+		<!-- Cabeçalho -->
+		<header>
+			<img src="https://source.unsplash.com/random/80x80?sig=3" alt="Site Logo" />
+			<nav class="menu-principal">
+				<ul>
+					<li><a href="index.html">Home</a></li>
+					<li><a href="patrocinio.html">Patrocínio e Anúncios</a></li>
+					<li><a href="sobre.html">Sobre Mim</a></li>
+					<li><a href="contato.html">Contato</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<!-- Conteúdo do site -->
+		<main>
+			<!-- <h1>Blog do Lucas Gualtieri</h1> -->
+			<!-- Post Número 1 -->
+			<article class="caixa-post">
+				<img class="thumbnail" src="https://source.unsplash.com/random/150x150?sig=1" alt="Imagem de destaque" />
+				<h3 class="titulo">Postagem numero 1</h3>
+				<h4 class="subtitulo">
+					<span class="data">08/05/2020</span> - <span class="autor">Lucas Gualtieri</span> -
+					<span class="categorias">Categoria 1</span>
+				</h4>
+				<p class="texto">
+					Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sequi suscipit corporis est iure distinctio
+					modi, atque fuga odit quasi dicta omnis veritatis enim. Commodi, vero.
+				</p>
+			</article>
+			<article class="caixa-post">
+				<img class="thumbnail" src="https://source.unsplash.com/random/150x150?sig=2" alt="Imagem de destaque" />
+				<h3 class="titulo">Postagem numero 2</h3>
+				<h4 class="subtitulo">
+					<span class="data">08/05/2020</span> - <span class="autor">Lucas Gualtieri</span> -
+					<span class="categorias">Categoria 2</span>
+				</h4>
+				<p class="texto">
+					Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sequi suscipit corporis est iure distinctio
+					modi, atque fuga odit quasi dicta omnis veritatis enim. Commodi, vero.
+				</p>
+			</article>
+			<article class="caixa-post">
+				<img class="thumbnail" src="https://source.unsplash.com/random/150x150?sig=3" alt="Imagem de destaque" />
+				<h3 class="titulo">Postagem numero 3</h3>
+				<h4 class="subtitulo">
+					<span class="data">08/05/2020</span> - <span class="autor">Lucas Gualtieri</span> -
+					<span class="categorias">Categoria 3</span>
+				</h4>
+				<p class="texto">
+					Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sequi suscipit corporis est iure distinctio
+					modi, atque fuga odit quasi dicta omnis veritatis enim. Commodi, vero.
+				</p>
+			</article>
+		</main>
+
+		<!-- Barra lateral -->
+		<aside>
+			<div class="caixa-pesquisa">
+				<input type="text" class="texto_pesquisa" />
+				<button class="botao_ok">Ok</button>
+			</div>
+			<div class="caixa-categoria">
+				<h3>Categorias</h1>
+				<ul>
+					<li><a href="index.html">Categoria 1</a></li>
+					<li><a href="">Categoria 2</a></li>
+					<li><a href="#">Categoria 3</a></li>
+					<li><a href="#">Categoria 4</a></li>
+				</ul>
+			</div>
+		</aside>
+
+		<!-- Rodapé -->
+		<footer>Copyright (c) PUC Minas</footer>
+	</body>
+</html>

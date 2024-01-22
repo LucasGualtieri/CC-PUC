@@ -1,0 +1,140 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+header {
+	background-color: aqua;
+	height: 80px;
+	padding: 20px;
+	/* background: url("https://source.unsplash.com/random/80x80?sig=3") no-repeat; */
+	/* border-bottom: solid 1px lightgrey; */
+}
+
+main {
+	background-color: rgb(76, 233, 141);
+	width: 70%;
+	float: left;
+	padding: 20px;
+	box-sizing: border-box;
+}
+
+aside {
+	float: right;
+	width: 30%;
+	background-color: lightcoral;
+}
+
+footer {
+	background-color: yellow;
+	clear: both;
+	text-align: center;
+	padding: 10px;
+}
+
+/* ------------------- Componente Menu Principal ------------------- */
+
+.menu-principal {
+	float: right;
+	right: 0px;
+	/* margin: 10px; */
+}
+
+.menu-principal ul {
+	list-style-type: none;
+}
+
+.menu-principal ul li {
+	display: inline-block;
+}
+
+.menu-principal ul li a {
+	text-decoration: none;
+	color: black;
+	padding: 10px;
+	font-weight: bold;
+	background-color: lightblue;
+}
+
+.menu-principal ul li a:hover {
+	background-color: black;
+	color: white;
+}
+
+/* ------------------- Componente Caixa Post ------------------- */
+
+.caixa-post {
+	padding: 10px;
+	clear: both;
+}
+
+.caixa-post img {
+	display: block;
+	float: left;
+	margin-right: 10px;
+	width: 70px;
+}
+
+.caixa-post h4 {
+	color: darkred;
+	font-size: 90%;
+	/* margin-bottom: 10px 0px; */
+}
+
+.caixa-post p.texto {
+	font-size: 80%;
+}
+
+.caixa-post .categorias {
+	background-color: navy;
+	color: white;
+	display: inline-block;
+	border-radius: 5px;
+	padding: 3px;
+}
+
+/* ------------------- Componente Caixa Pesquisa ------------------- */
+
+/* .caixa-pesquisa {
+	margin: 20px;
+	margin-bottom: 30px;
+} */
+
+/* .caixa-pesquisa h3 {
+	margin-bottom: 10px;
+} */
+
+/* ------------------- Componente Caixa Categoria ------------------- */
+
+.caixa-categoria {
+	margin: 20px;
+}
+
+/* .caixa-categoria h3 {
+	margin-bottom: 10px;
+} */
+
+.caixa-categoria ul {
+	list-style-type: none;
+}
+
+.caixa-categoria a {
+	text-decoration: none;
+	color: black;
+}
+
+/* .caixa-categoria ul li a:visited {
+	color: black;
+} */
+
+.caixa-categoria ul li a:hover {
+	color: blue;
+}
+
+/* .caixa-categoria ul li a:hover:visited {
+	color: green;
+} */
