@@ -1,0 +1,132 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+/* html {
+	height: 100%;
+} */
+
+html,
+body {
+	height: 100%;
+}
+
+body,
+ul,
+li,
+p {
+	font-size: 1.2rem;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+h1 {
+	font-size: 120%;
+	/* text-align: center; */
+}
+
+/* ------------- Header ------------- */
+
+header {
+	background-color: rgb(128, 128, 128);
+	padding: 10px;
+	display: flex;
+	justify-content: space-between;
+	gap: 10px;
+	align-items: center;
+}
+
+header a {
+	text-decoration: none;
+	color: white;
+}
+
+header nav {
+	display: flex;
+	align-items: center;
+}
+
+header nav ul {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+}
+
+header nav ul li {
+	list-style-type: none;
+}
+
+/* ------------- Main ------------- */
+
+main {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: 10px;
+}
+
+main section {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	/* align-items: center; */
+	flex-wrap: wrap;
+	max-width: 800px;
+	grid-gap: 10px; /* Just 'gap' will work */
+}
+
+main section div {
+	flex: 1 1 200px;
+	text-align: center;
+}
+
+main section img {
+	max-width: 100%;
+	display: block;
+}
+
+.card {
+	display: grid;
+	grid-template-columns: 1fr auto;
+	align-items: center;
+	justify-items: baseline;
+	grid-gap: 10px;
+}
+
+.banner {
+	grid-column: 3;
+	grid-row: 2 / 5;
+}
+
+@media screen and (max-width: 600px) {
+	main section {
+		grid-template-columns: 1fr 1fr;
+	}
+
+	.card {
+		display: block;
+	}
+
+	.banner {
+		grid-column: auto;
+		grid-row: auto;
+	}
+}
+
+/* ------------- Footer ------------- */
+
+footer {
+	background-color: rgb(128, 128, 128);
+	padding: 10px;
+	display: flex;
+	justify-content: center;
+	/* align-items: center; */
+	color: white;
+	text-align: center;
+}
