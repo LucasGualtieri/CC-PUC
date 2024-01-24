@@ -29,7 +29,6 @@ body {
 
 h1 {
 	font-size: 120%;
-	text-align: center;
 }
 
 /* ------------- Header ------------- */
@@ -65,11 +64,18 @@ header nav ul li {
 
 /* ------------- Main ------------- */
 
+main {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 10px;
+}
+
 main section {
 	display: flex;
 	flex-wrap: wrap;
 	max-width: 800px;
-	margin: 0 auto;
+	margin: 0 10px 0 10px;
 	gap: 10px;
 }
 
