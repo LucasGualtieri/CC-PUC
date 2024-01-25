@@ -5,6 +5,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Layout Flex</title>
 		<link rel="stylesheet" href="style.css" />
+		<script src="https://kit.fontawesome.com/ff675087ee.js" crossorigin="anonymous"></script>
 	</head>
 	<body>
 		<!-- Cabeçalho -->
@@ -12,7 +13,12 @@
 			<img src="https://source.unsplash.com/random/40x40?sig=3" alt="Site Logo" />
 			<!-- marca -->
 			<nav>
-				<ul>
+				<input type="checkbox" id="menu-toggle" />
+				<label for="menu-toggle" class="menu-icon">
+					<i class="fa fa-bars open" id="menu-open"></i>
+					<i class="fa-solid fa-xmark" id="menu-close"></i>
+				</label>
+				<ul class="menu">
 					<li><a href="#">Home</a></li>
 					<li><a href="#">Quem Somos</a></li>
 					<li><a href="#">Serviço</a></li>
