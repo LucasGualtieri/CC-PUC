@@ -1,0 +1,289 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+html,
+body {
+	height: 100%;
+	font-size: 115%;
+	font-family: "Inter", sans-serif;
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	gap: 20px;
+}
+
+img {
+	width: 100%;
+}
+
+/* ------------- Header ------------- */
+
+header {
+	background-color: lightgrey;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 10px;
+	width: 100%;
+	padding: 10px;
+}
+
+header img {
+	width: 70px;
+}
+
+header a {
+	text-decoration: none;
+	color: white;
+}
+
+/* header a:visited {
+	color: gray;
+} */
+
+header nav {
+	display: flex;
+	align-items: center;
+}
+
+.menu {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 10px;
+}
+
+.menu li {
+	list-style-type: none;
+}
+
+#menu-toggle {
+	display: none;
+}
+
+.menu-icon {
+	display: none;
+}
+
+.search-mobile {
+	position: absolute;
+	visibility: hidden;
+}
+
+.search {
+	/* flex-shrink: 1; */
+	height: 100%;
+	padding: 5px;
+	display: flex;
+	gap: 10px;
+}
+
+.search-bar {
+	border-radius: 5px;
+	height: 100%;
+	width: auto;
+	border-style: none;
+	padding: 10px;
+	/* padding: 10px; */
+}
+
+.search-button {
+	border-radius: 5px;
+	border-color: green;
+	height: 100%;
+	padding: 10px;
+	color: green;
+	border-style: solid;
+	background-color: transparent;
+}
+
+.search-button:hover {
+	transition: background-color 0.25s;
+	background-color: green;
+	color: white;
+}
+
+@media screen and (max-width: 767px) {
+	.search {
+		position: absolute;
+		visibility: hidden;
+	}
+
+	.search-mobile {
+		position: relative;
+		visibility: visible;
+	}
+
+	.search-button {
+		color: white;
+		background-color: green;
+	}
+
+	.search-button:hover {
+		transition: background-color 0.25s;
+		background-color: transparent;
+		color: green;
+	}
+
+	main {
+		padding-top: 86px;
+	}
+
+	header {
+		position: fixed;
+		width: 100%;
+		justify-content: space-between;
+	}
+
+	header a {
+		font-size: larger;
+	}
+
+	#menu-close {
+		display: none;
+	}
+
+	.menu {
+		/* display: none; */
+		display: flex;
+		flex-wrap: nowrap;
+		position: fixed;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 5%;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 0%;
+		background-color: rgb(0, 0, 0, 0.75);
+		overflow: hidden;
+		-webkit-transition: height 0.3s;
+		-moz-transition: height 0.3s;
+		-o-transition: height 0.3s;
+		transition: height 0.3s;
+	}
+
+	.menu-icon {
+		display: block;
+		color: white;
+		z-index: 1;
+	}
+
+	.menu-icon i {
+		font-size: 1.7em;
+	}
+
+	#menu-toggle:checked ~ label #menu-open {
+		display: none;
+	}
+
+	#menu-toggle:checked ~ label #menu-close {
+		display: block;
+	}
+
+	#menu-toggle:checked ~ .menu {
+		height: 100%;
+	}
+}
+
+/* ----------------------------------------------- */
+
+main {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	align-items: center;
+	max-width: 1300px;
+	margin: 0 20px 0 20px;
+	/* padding: 20px 0 20px 0; */
+}
+
+.texto-principal {
+	text-align: center;
+	background-color: lightgray;
+	padding: 20px 50px;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	font-size: 90%;
+}
+
+.card-area {
+	width: 100%;
+	display: flex;
+	/* justify-content: space-between; */
+	gap: 20px;
+}
+
+@media screen and (min-width: 576px) and (max-width: 767px) {
+	.card-area {
+		display: grid;
+		grid-template-columns: repeat(2, auto);
+	}
+}
+
+@media screen and (max-width: 575px) {
+	.card-area {
+		flex-direction: column;
+	}
+}
+
+.infos {
+	display: flex;
+	/* background-color: red; */
+	gap: 20px;
+	/* text-align: center; */
+}
+
+.infos h1 {
+	font-size: 100%;
+}
+
+.infos p {
+	font-size: 80%;
+}
+
+.quick-access a {
+	/* text-decoration: none; */
+	color: white;
+}
+
+.infos .grid-color {
+	background-color: lightgrey;
+	padding: 10px;
+	display: flex;
+	min-width: 25%;
+	flex-direction: column;
+	/* justify-content: space-between; */
+	align-items: center;
+	gap: 10px;
+	text-align: center;
+}
+
+@media screen and (max-width: 767px) {
+	.infos {
+		flex-direction: column;
+	}
+
+	.grid-color {
+		max-width: 1000px !important;
+	}
+}
+
+footer {
+	width: 100%;
+	background-image: url(imagens/bg1.jpg);
+	background-size: cover;
+	background-position: 0px -250px;
+	padding: 15px;
+	color: white;
+	font-size: 80%;
+}
