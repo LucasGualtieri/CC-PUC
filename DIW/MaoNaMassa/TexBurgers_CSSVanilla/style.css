@@ -251,6 +251,10 @@ main {
 	font-size: 80%;
 }
 
+.quick-access {
+	width: 100%;
+}
+
 .quick-access a {
 	/* text-decoration: none; */
 	color: white;
@@ -260,7 +264,7 @@ main {
 	background-color: lightgrey;
 	padding: 10px;
 	display: flex;
-	min-width: 25%;
+	min-width: 30%;
 	flex-direction: column;
 	/* justify-content: space-between; */
 	align-items: center;
