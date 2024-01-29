@@ -1,0 +1,118 @@
+/* * {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+} */
+
+html,
+body {
+	height: 100%;
+	/* font-size: 115%; */
+	/* font-family: "Inter", sans-serif; */
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	gap: 20px;
+}
+
+img {
+	width: 100%;
+}
+
+/* ----------------- Modal Start ----------------- */
+
+.modal {
+	text-align: center;
+}
+
+/* ----------------- Modal End ----------------- */
+
+/* ----------------- Header Start ----------------- */
+
+header {
+	background-color: rgb(105, 1, 105);
+}
+
+header .row {
+	text-align: center;
+	padding: 10px;
+	justify-content: center;
+}
+
+.header {
+	align-items: center;
+}
+
+.nav {
+	gap: 10px;
+	/* justify-content: center; */
+}
+
+.nav a {
+	background-color: rgb(139, 0, 139);
+	color: white;
+}
+
+.nav a:hover {
+	background-color: rgb(179, 0, 179);
+	color: white;
+}
+
+.active {
+	background-color: rgb(65, 0, 65) !important;
+}
+
+.logo {
+	width: 100%;
+	max-width: 100px;
+	margin-bottom: 5%;
+}
+
+/* ----------------- Header End ----------------- */
+
+/* ----------------- Main Start ----------------- */
+
+.carousel-row {
+	margin-bottom: 20px;
+}
+
+main .card {
+	margin-bottom: 15px;
+}
+
+.card-body {
+	text-align: center;
+}
+
+.custom-button {
+	background-color: rgb(179, 0, 179);
+	color: white;
+}
+
+/* .aside {
+	background-color: red;
+	display: flex;
+	padding: 0;
+	flex: 1;
+}
+
+.aside nav {
+	width: 100%;
+	background-color: blue;
+} */
+
+/* ----------------- Main End ----------------- */
+
+/* ----------------- Footer Start ----------------- */
+
+footer {
+	color: white;
+	text-align: center;
+	padding: 10px;
+	background-color: rgb(105, 1, 105);
+}
+
+/* ----------------- Footer End ----------------- */
