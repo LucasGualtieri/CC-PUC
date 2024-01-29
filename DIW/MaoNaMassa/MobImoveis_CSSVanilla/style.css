@@ -206,7 +206,7 @@ footer {
 }
 
 .modal-footer {
-	/* flex-wrap: nowrap; */
+	flex-wrap: nowrap;
 }
 
 /* ------------- Modal End ------------- */
