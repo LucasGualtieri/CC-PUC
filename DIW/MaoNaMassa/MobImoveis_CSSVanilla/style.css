@@ -1,0 +1,321 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+html,
+body {
+	height: 100%;
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	gap: 20px;
+	font-size: 115%;
+	font-family: "Inter", sans-serif;
+}
+
+ul,
+p,
+label {
+	margin: 0;
+}
+
+img {
+	width: 100%;
+}
+
+:root {
+	--primary-color: rgb(105, 1, 105);
+	--secondary-color: rgb(139, 0, 139);
+	--lighter-purple: rgb(175, 0, 175);
+	--third-color: rgb(65, 0, 65);
+	--yellow-brand: #fcba03;
+	--secondary-yellow: #ffd050;
+}
+
+/* ------------- Header Start ------------- */
+
+header {
+	background-color: var(--primary-color);
+	padding: 10px 30px;
+	display: flex;
+	width: 100%;
+	justify-content: space-between;
+	gap: 10px;
+	align-items: center;
+}
+
+header nav {
+	width: 75%;
+}
+
+.menu {
+	display: flex;
+	gap: 10px;
+	flex-wrap: wrap;
+	justify-content: center;
+	height: 100%;
+}
+
+.menu a {
+	text-decoration: none;
+	color: white;
+}
+
+.menu li {
+	text-align: center;
+	list-style-type: none;
+	background-color: var(--secondary-color);
+	flex-grow: 1;
+	border-radius: 5px;
+	padding: 10px;
+}
+
+.menu li:hover {
+	transition: background-color 0.2s;
+	background-color: var(--lighter-purple);
+}
+
+.active {
+	background-color: var(--third-color) !important;
+}
+
+.logo {
+	max-width: 100px;
+}
+
+/* ------------- Header End ------------- */
+
+/* ------------- Main Start ------------- */
+
+main {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	max-width: 1200px;
+	margin: 0 20px;
+}
+
+.first-row {
+	display: flex;
+	justify-content: space-between;
+	gap: 20px;
+}
+
+.carousel {
+	width: 80%;
+}
+
+.aside {
+	/* background-color: red; */
+	width: 20%;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.modal-button {
+	font-size: 90%;
+	padding: 10px;
+	color: white;
+	border-style: none;
+	background-color: var(--yellow-brand);
+	width: 100%;
+	border-radius: 5px;
+	height: 25%;
+}
+
+.modal-button:hover {
+	color: white;
+	transition: background-color 0.2s;
+	background-color: var(--secondary-yellow);
+}
+
+.modal-button:active {
+	transition: background-color 0.2s;
+	background-color: var(--yellow-brand);
+}
+
+.modal-button:focus,
+.modal-button:active {
+	outline: none;
+}
+
+.card-area {
+	display: flex;
+	gap: 10px;
+	text-align: center;
+}
+
+.card-area a {
+	color: white;
+	background-color: var(--yellow-brand);
+}
+
+.card-area a:hover {
+	transition: background-color 0.2s;
+	color: white;
+	background-color: var(--secondary-yellow);
+}
+
+.card-area a:active {
+	transition: background-color 0.2s;
+	background-color: var(--yellow-brand);
+}
+
+.card-area a:focus,
+.card-area a:active {
+	outline: none;
+}
+
+#mobile-menu-checkbox {
+	display: none;
+}
+
+/* ------------- Main End ------------- */
+
+/* ------------- Footer Start ------------- */
+
+footer {
+	background-color: var(--primary-color);
+	padding: 10px;
+	display: flex;
+	width: 100%;
+	justify-content: center;
+	color: white;
+	text-align: center;
+}
+
+/* ------------- Footer End ------------- */
+
+/* ------------- Modal Start ------------- */
+
+.modal {
+	text-align: center;
+}
+
+.modal-body {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+.modal-footer {
+	/* flex-wrap: nowrap; */
+}
+
+/* ------------- Modal End ------------- */
+
+.menu-icons {
+	display: none;
+}
+
+.menu {
+	height: 0%;
+}
+
+@media screen and (max-width: 795px) {
+	.first-row {
+		flex-direction: column;
+	}
+
+	.aside,
+	.carousel {
+		width: 100%;
+	}
+
+	.aside,
+	.card-area {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	.modal-button {
+		height: 100%;
+	}
+}
+
+@media screen and (max-width: 575px) {
+	header {
+		position: fixed;
+		z-index: 16;
+		width: 100%;
+	}
+
+	header a {
+		font-size: larger;
+	}
+
+	header nav {
+		width: auto;
+	}
+
+	#menu-close {
+		display: none;
+		position: sticky;
+		z-index: 1;
+	}
+
+	.menu {
+		display: flex;
+		position: fixed;
+		flex-direction: column;
+		/* flex-wrap: nowrap; */
+		justify-content: center;
+
+		gap: 20px;
+		padding: 0 20px;
+		top: 0;
+		left: 0;
+		height: 0%;
+		width: 100%;
+		background-color: rgb(0, 0, 0, 0.75);
+
+		overflow: hidden;
+		-webkit-transition: height 0.3s;
+		-moz-transition: height 0.3s;
+		-o-transition: height 0.3s;
+		transition: height 0.3s;
+	}
+
+	.menu-icons {
+		display: block;
+		color: white;
+		z-index: 999;
+	}
+
+	.menu li {
+		flex-grow: 0;
+	}
+
+	.menu-icons i {
+		font-size: 1.7em;
+	}
+
+	#mobile-menu-checkbox:checked ~ label #menu-open {
+		display: none;
+	}
+
+	#mobile-menu-checkbox:checked ~ label #menu-close {
+		display: block;
+	}
+
+	#mobile-menu-checkbox:checked ~ .menu {
+		height: 100%;
+	}
+
+	main {
+		margin-top: 100px;
+	}
+
+	.aside,
+	.card-area {
+		display: flex;
+		flex-direction: column;
+	}
+}
