@@ -1,0 +1,432 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box !important;
+}
+
+html,
+body {
+	height: 100%;
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	/* align-items: center; */
+	gap: 20px;
+	/* font-size: 115%; */
+	/* font-weight: 600; */
+	/* font-family: "Inter", sans-serif; */
+	background-color: var(--quinary-color);
+}
+
+ul,
+p,
+label,
+h1,
+h2 {
+	margin: 0;
+}
+
+img {
+	width: 100%;
+}
+
+.youtube-player {
+	aspect-ratio: 16 / 9;
+	/* width: 100%; */
+}
+
+:root {
+	--primary-color: #354f26;
+	--secondary-color: #49703e;
+	--tertiary-color: #67aa60;
+	--quaternary-color: #b1e6ad;
+	--quinary-color: #f8f4ec;
+}
+
+/* ------------- Header Start ------------- */
+
+header {
+	background-color: var(--secondary-color);
+	padding: 10px 30px;
+	display: flex;
+	width: 100%;
+	justify-content: space-between;
+	gap: 10px;
+	align-items: center;
+}
+
+header nav {
+	width: 75%;
+}
+
+.menu {
+	display: flex;
+	gap: 10px;
+	flex-wrap: wrap;
+	justify-content: center;
+	height: 100%;
+}
+
+.menu a {
+	text-decoration: none;
+	color: white;
+}
+
+.menu li {
+	text-align: center;
+	list-style-type: none;
+	background-color: var(--tertiary-color);
+	flex-grow: 1;
+	border-radius: 5px;
+	padding: 10px;
+}
+
+.menu li:hover {
+	transition: background-color 0.2s;
+	background-color: var(--quaternary-color);
+}
+
+.page-active {
+	background-color: var(--primary-color) !important;
+}
+
+.logo {
+	max-width: 100px;
+}
+
+#mobile-menu-checkbox {
+	display: none;
+}
+
+.menu-icons {
+	display: none;
+}
+
+.menu {
+	height: 0%;
+}
+
+@media screen and (max-width: 575px) {
+	header {
+		position: fixed;
+		z-index: 16;
+		width: 100%;
+	}
+
+	header a {
+		font-size: larger;
+	}
+
+	header nav {
+		width: auto;
+	}
+
+	#menu-close {
+		display: none;
+		position: sticky;
+		z-index: 1;
+	}
+
+	.menu {
+		display: flex;
+		position: fixed;
+		flex-direction: column;
+		/* flex-wrap: nowrap; */
+		justify-content: center;
+
+		gap: 20px;
+		padding: 0 20px;
+		top: 0;
+		left: 0;
+		height: 0%;
+		width: 100%;
+		background-color: rgb(0, 0, 0, 0.75);
+
+		overflow: hidden;
+		-webkit-transition: height 0.3s;
+		-moz-transition: height 0.3s;
+		-o-transition: height 0.3s;
+		transition: height 0.3s;
+	}
+
+	.menu-icons {
+		display: block;
+		color: white;
+		z-index: 999;
+	}
+
+	.menu li {
+		flex-grow: 0;
+	}
+
+	.menu-icons i {
+		font-size: 1.7em;
+	}
+
+	#mobile-menu-checkbox:checked ~ label #menu-open {
+		display: none;
+	}
+
+	#mobile-menu-checkbox:checked ~ label #menu-close {
+		display: block;
+	}
+
+	#mobile-menu-checkbox:checked ~ .menu {
+		height: 100%;
+	}
+
+	main {
+		margin-top: 100px;
+	}
+}
+
+/* ------------- Header End ------------- */
+
+/* ------------- Main Start ------------- */
+
+main {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	/* align-items: center; */
+}
+
+/* .carousel-inner {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+} */
+
+/* ------------- First Row Start ------------- */
+
+.first-row {
+	width: 100%;
+	margin-top: -20px;
+	background-color: var(--primary-color);
+	/* position: absolute; */
+}
+
+.carousel-page {
+	display: flex;
+	padding: 20px 40px;
+	padding-bottom: 40px;
+	background-color: var(--primary-color);
+	/* background-color: red; */
+	gap: 20px;
+}
+
+.carousel-page-title {
+	background-color: var(--primary-color);
+	text-align: center;
+	padding-top: 20px;
+}
+
+.carousel-page-title h1 {
+	font-weight: bold;
+}
+
+.carousel-description,
+.carousel-video {
+	width: 50%;
+}
+
+.carousel-indicators li {
+	background-color: #000;
+	border: 2px;
+	border-radius: 5px;
+	width: 10px;
+	height: 10px;
+}
+
+.carousel-indicators {
+	margin: 15px;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+	/* background-color: blue; */
+	width: fit-content;
+	margin: 10px;
+}
+
+@media screen and (max-width: 575px) {
+	.carousel-page {
+		flex-direction: column;
+		align-items: center;
+	}
+	.carousel-video,
+	.carousel-description {
+		width: 100%;
+	}
+}
+
+/* ------------- First Row End ------------- */
+
+/* ------------- Second Row Start ------------- */
+
+.second-row {
+	margin: 0 20px;
+	/* background-color: blue; */
+	display: flex;
+	justify-content: center;
+}
+
+.cardsfsaldkfj {
+	/* background-color: red; */
+	width: 100%;
+	max-width: 1200px;
+	display: flex;
+	gap: 20px;
+	/* justify-content: space-between; */
+	flex-wrap: wrap;
+}
+
+.card {
+	flex: 1 1 250px;
+}
+
+/* ------------- Second Row End ------------- */
+
+/* .card-area-custom {
+	max-width: 500px;
+}
+*/
+
+.card-video {
+	width: 100%;
+}
+
+.card-body {
+	padding: 0;
+}
+
+.card-area {
+	/* display: flex; */
+	/* gap: 10px; */
+	/* text-align: center; */
+	/* height: 600px; */
+}
+
+/* .card-header {
+	display: flex;
+	justify-content: space-between;
+}
+
+.card-area a {
+	color: white;
+	background-color: var(--yellow-brand);
+}
+
+.card-area a:hover {
+	transition: background-color 0.2s;
+	color: white;
+	background-color: var(--secondary-yellow);
+}
+
+.card-area a:active {
+	transition: background-color 0.2s;
+	background-color: var(--yellow-brand);
+}
+
+.card-area a:focus,
+.card-area a:active {
+	outline: none;
+}
+ */
+
+.modal-button {
+	font-size: 90%;
+	padding: 10px;
+	color: white;
+	border-style: none;
+	background-color: var(--yellow-brand);
+	width: 100%;
+	border-radius: 5px;
+	height: 25%;
+}
+
+.modal-button:hover {
+	color: white;
+	transition: background-color 0.2s;
+	background-color: var(--secondary-yellow);
+}
+
+.modal-button:active {
+	transition: background-color 0.2s;
+	background-color: var(--yellow-brand);
+}
+
+.modal-button:focus,
+.modal-button:active {
+	outline: none;
+}
+
+@media screen and (max-width: 795px) {
+	/* .first-row {
+		flex-direction: column;
+	}
+
+	.aside,
+	.carousel {
+		width: 100%;
+	}
+
+	.aside,
+	.card-area {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	.modal-button {
+		height: 100%;
+	} */
+}
+
+@media screen and (max-width: 575px) {
+	.first-row {
+		margin-top: -24px;
+	}
+
+	/* .aside,
+	.card-area {
+		display: flex;
+		flex-direction: column;
+	} */
+}
+
+/* ------------- Main End ------------- */
+
+/* ------------- Footer Start ------------- */
+
+footer {
+	background-color: var(--primary-color);
+	padding: 10px;
+	display: flex;
+	width: 100%;
+	justify-content: center;
+	color: white;
+	text-align: center;
+}
+
+/* ------------- Footer End ------------- */
+
+/* ------------- Modal Start ------------- */
+
+.modal {
+	text-align: center;
+}
+
+.modal-body {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+.modal-footer {
+	flex-wrap: nowrap;
+}
+
+/* ------------- Modal End ------------- */
