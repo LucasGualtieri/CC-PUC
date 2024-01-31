@@ -38,13 +38,20 @@
 			crossorigin="anonymous"
 		></script>
 
+		<script
+			src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+			integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+			crossorigin="anonymous"
+		></script>
+
 		<link rel="stylesheet" href="style.css" />
 	</head>
+
 	<body>
 		<!-- Cabeçalho -->
 		<header>
 			<!-- Logo -->
-			<img src="imagens/logo.png" class="logo" alt="Site Logo" />
+			<img src="imagens/teste.webp" class="logo" alt="Site Logo" />
 			<nav>
 				<input type="checkbox" id="mobile-menu-checkbox" />
 				<label for="mobile-menu-checkbox" class="menu-icons">
@@ -214,7 +221,43 @@
 				</div>
 			</section>
 			<section class="second-row">
-				<div class="cardsfsaldkfj">
+				<div class="second-row-header">
+					<h1>Lançamentos</h1>
+					<div class="dropdowns">
+						<div class="dropdown">
+							<button
+								class="btn dropdown-toggle"
+								type="button"
+								data-bs-toggle="dropdown"
+								aria-expanded="false"
+							>
+								Ordem: Popularidade
+							</button>
+							<ul class="dropdown-menu">
+								<li><a class="dropdown-item" href="#">Action</a></li>
+								<li><a class="dropdown-item" href="#">Another action</a></li>
+								<li><a class="dropdown-item" href="#">Something else here</a></li>
+							</ul>
+						</div>
+
+						<div class="dropdown">
+							<button
+								class="btn dropdown-toggle"
+								type="button"
+								data-bs-toggle="dropdown"
+								aria-expanded="false"
+							>
+								Gênero: Todos
+							</button>
+							<ul class="dropdown-menu">
+								<li><a class="dropdown-item" href="#">Action</a></li>
+								<li><a class="dropdown-item" href="#">Another action</a></li>
+								<li><a class="dropdown-item" href="#">Something else here</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="game-cards">
 					<div class="card text-center">
 						<div class="card-header">
 							<label>Game X</label>
@@ -351,6 +394,14 @@
 						</div>
 						<div class="card-footer text-muted">Mais detalhes...</div>
 					</div>
+				</div>
+				<div class="second-row-button">
+					<button type="button" class="btn">
+						<div>
+							<i class="fa-solid fa-plus"></i>
+							Carregar mais plataformas
+						</div>
+					</button>
 				</div>
 			</section>
 		</main>
