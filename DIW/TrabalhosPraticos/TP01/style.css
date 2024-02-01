@@ -297,6 +297,10 @@ main {
 	gap: 20px;
 }
 
+.second-row-header h1 {
+	color: black;
+}
+
 @media screen and (max-width: 706px) {
 	.second-row-header {
 		justify-content: center;
