@@ -25,7 +25,8 @@ ul,
 p,
 label,
 h1,
-h2 {
+h2,
+h4 {
 	margin: 0;
 }
 
@@ -39,7 +40,6 @@ img {
 
 .youtube-player {
 	aspect-ratio: 16 / 9;
-	/* width: 100%; */
 }
 
 :root {
@@ -48,6 +48,7 @@ img {
 	--tertiary-color: #67aa60;
 	--quaternary-color: #b1e6ad;
 	--quinary-color: #f8f4ec;
+	--max-width: 1200px;
 }
 
 /* ------------- Header Start ------------- */
@@ -60,6 +61,14 @@ header {
 	justify-content: space-between;
 	gap: 10px;
 	align-items: center;
+}
+
+header form {
+	flex-shrink: 0.6;
+}
+
+header i {
+	color: white;
 }
 
 header,
@@ -79,6 +88,7 @@ header nav {
 	flex-wrap: wrap;
 	justify-content: center;
 	height: 100%;
+	/* flex-shrink: 2; */
 }
 
 .menu a {
@@ -118,6 +128,30 @@ header nav {
 
 .menu {
 	height: 0%;
+}
+
+.custom-placeholder::placeholder {
+	color: white; /* Change to your desired color */
+}
+
+.input-group-prepend > .input-group-text {
+	background-color: transparent;
+	border-right: 0;
+	padding-right: 6px;
+}
+
+.form-control:not(:first-child) {
+	background-color: transparent;
+	border-left: 0;
+	border-right: 0;
+	padding-left: 6px;
+	padding-right: 6px;
+}
+
+.input-group-append > .input-group-text {
+	border-left: 0;
+	background-color: transparent;
+	padding-left: 6px;
 }
 
 @media screen and (max-width: 575px) {
@@ -226,7 +260,13 @@ main {
 	padding-bottom: 40px;
 	background-color: var(--primary-color);
 	/* background-color: red; */
-	gap: 20px;
+	gap: 35px;
+}
+
+.carousel-page iframe {
+	border-radius: 15px;
+	/* padding: 10px; */
+	/* background-color: var(--quinary-color); */
 }
 
 .carousel-page-title {
@@ -239,8 +279,29 @@ main {
 	font-weight: bold;
 }
 
-.carousel-description,
+.carousel-description {
+	/* background-color: red; */
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+.carousel-description p {
+	/* max-width: 600px; */
+	text-align: justify;
+}
+
+.carousel-description div {
+	display: flex;
+	gap: 20px;
+}
+
+.carousel-description {
+	width: 50%;
+}
+
 .carousel-video {
+	/* min-height: 55vh; */
 	width: 50%;
 }
 
@@ -279,7 +340,7 @@ main {
 /* ------------- Second Row Start ------------- */
 
 .second-row {
-	/* background-color: blue; */
+	/* background-color: red; */
 	margin: 0 20px;
 	display: flex;
 	flex-direction: column;
@@ -290,7 +351,7 @@ main {
 .second-row-header {
 	/* background-color: blue; */
 	width: 100%;
-	max-width: 1200px;
+	max-width: var(--max-width);
 	display: flex;
 	justify-content: space-between;
 	flex-wrap: wrap;
@@ -310,6 +371,8 @@ main {
 .second-row-header .dropdowns {
 	/* background-color: red; */
 	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
 	gap: 20px;
 }
 
@@ -330,10 +393,14 @@ main {
 	justify-content: space-between;
 }
 
+.dropdown-menu {
+	min-width: 194px;
+}
+
 .game-cards {
 	/* background-color: red; */
 	width: 100%;
-	max-width: 1200px;
+	max-width: var(--max-width);
 	display: flex;
 	gap: 20px;
 	flex-wrap: wrap;
@@ -377,6 +444,7 @@ main {
 	width: 100%;
 	display: flex;
 	justify-content: end;
+	max-width: var(--max-width);
 }
 
 .second-row-button .btn {
@@ -393,6 +461,409 @@ main {
 }
 
 /* ------------- Second Row End ------------- */
+
+/* ------------- Third Row Start ------------- */
+
+.third-row {
+	/* background-color: blue; */
+	margin: 0 20px;
+	/* padding: 20px; */
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 20px;
+}
+
+.third-row-header {
+	/* background-color: blue; */
+	width: 100%;
+	max-width: var(--max-width);
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	gap: 20px;
+}
+
+.third-row-header h1 {
+	color: black;
+}
+
+@media screen and (max-width: 706px) {
+	.third-row-header {
+		justify-content: center;
+	}
+}
+
+.third-row-header .dropdowns {
+	/* background-color: red; */
+	display: flex;
+	gap: 20px;
+}
+
+.third-row-header .dropdown {
+	/* background-color: red; */
+	display: flex;
+	align-items: center;
+	/* text-align: left; */
+}
+
+.third-row-header .dropdown button {
+	/* background-color: red; */
+	border: 1px;
+	border-style: solid;
+	min-width: 194px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.dropdown-menu {
+	min-width: 194px;
+}
+
+.game-cards {
+	/* background-color: red; */
+	width: 100%;
+	max-width: var(--max-width);
+	display: flex;
+	gap: 20px;
+	flex-wrap: wrap;
+}
+
+.card {
+	flex: 1 1 250px;
+}
+
+/* .card-area-custom {
+	max-width: 500px;
+}
+*/
+
+.card-video {
+	width: 100%;
+}
+
+.card-body {
+	padding: 0;
+}
+
+/* .card-area { */
+/* display: flex; */
+/* gap: 10px; */
+/* text-align: center; */
+/* height: 600px; */
+/* } */
+
+.third-row .card-header {
+	justify-content: center;
+}
+
+.card-body {
+	/* background-color: red; */
+	display: flex;
+	flex-direction: column;
+	text-align: left;
+}
+
+.card-body div {
+	padding: 10px;
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+}
+
+.card-body ul {
+	/* background-color: blue; */
+	text-align: left;
+	padding-left: 30px;
+}
+
+.third-row-button {
+	width: 100%;
+	display: flex;
+	justify-content: end;
+	max-width: var(--max-width);
+}
+
+.third-row-button .btn {
+	background-color: var(--primary-color);
+	color: white;
+}
+
+.third-row-button div {
+	/* background-color: red; */
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	justify-content: space-between;
+}
+
+/* ------------- Third Row End ------------- */
+
+/* ------------- Forth Row Start ------------- */
+
+.forth-row {
+	background-color: var(--secondary-color);
+	/* margin: 0 20px; */
+	padding: 20px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 20px;
+}
+
+.forth-row-header {
+	/* background-color: blue; */
+	width: 100%;
+	max-width: var(--max-width);
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	gap: 20px;
+}
+
+.forth-row-header h1 {
+	color: var(--quinary-color);
+}
+
+@media screen and (max-width: 706px) {
+	.forth-row-header {
+		justify-content: center;
+	}
+}
+
+.forth-row-header .dropdowns {
+	/* background-color: red; */
+	display: flex;
+	gap: 20px;
+}
+
+.forth-row-header .dropdown {
+	/* background-color: red; */
+	display: flex;
+	align-items: center;
+	/* text-align: left; */
+}
+
+.forth-row-header .dropdown button {
+	/* background-color: red; */
+	border: 1px;
+	border-style: solid;
+	min-width: 194px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.dropdown-menu {
+	min-width: 194px;
+}
+
+.game-cards {
+	/* background-color: red; */
+	width: 100%;
+	max-width: var(--max-width);
+	display: flex;
+	gap: 20px;
+	flex-wrap: wrap;
+}
+
+.card {
+	flex: 1 1 250px;
+}
+
+/* .card-area-custom {
+	max-width: 500px;
+}
+*/
+
+.card-video {
+	width: 100%;
+}
+
+.card-body {
+	padding: 0;
+}
+
+/* .card-area { */
+/* display: flex; */
+/* gap: 10px; */
+/* text-align: center; */
+/* height: 600px; */
+/* } */
+
+.forth-row .card-header {
+	justify-content: center;
+}
+
+.card-body {
+	/* background-color: red; */
+	display: flex;
+	flex-direction: column;
+	text-align: left;
+}
+
+.card-body div {
+	padding: 10px;
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+}
+
+.card-body ul {
+	/* background-color: blue; */
+	text-align: left;
+	padding-left: 30px;
+}
+
+.forth-row-button {
+	width: 100%;
+	display: flex;
+	justify-content: end;
+	max-width: var(--max-width);
+}
+
+.forth-row-button .btn {
+	background-color: var(--primary-color);
+	color: white;
+}
+
+.forth-row-button div {
+	/* background-color: red; */
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	justify-content: space-between;
+}
+
+/* ------------- Forth Row End ------------- */
+
+/* ------------- Fith Row Start ------------- */
+
+.fith-row h1 {
+	color: black;
+}
+.fith-row h2 {
+	color: black;
+}
+.fith-row p {
+	color: black;
+}
+
+.fith-row {
+	/* background-color: var(--secondary-color); */
+	display: flex;
+	justify-content: center;
+	/* margin: 0 20px; */
+	/* padding: 20px; */
+}
+
+.fith-row .creditos {
+	/* background-color: red; */
+	display: flex;
+	gap: 5%;
+	margin: 0 20px;
+	max-width: var(--max-width);
+	justify-content: space-between;
+}
+
+/* .creditos h1 {
+	text-align: center;
+} */
+
+.fith-row i {
+	font-size: 150%;
+}
+
+.fith-row .sobre {
+	/* background-color: red; */
+	width: 60%;
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+.fith-row p {
+	text-align: justify;
+}
+
+.fith-row .editorial {
+	/* background-color: blue; */
+	/* width: 40%; */
+	display: flex;
+	gap: 10px;
+	flex-direction: column;
+	/* align-items: center; */
+}
+
+.redes-sociais {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.editorial-body {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.editorial-body-creditos {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.fith-row .editorial .redes-sociais {
+	display: flex;
+}
+
+.fith-row .editorial .redes-sociais div {
+	display: flex;
+	gap: 30px;
+	font-size: 150%;
+	/* flex-wrap: wrap; */
+}
+
+@media screen and (max-width: 575px) {
+	.creditos {
+		flex-direction: column;
+		align-items: center;
+		gap: 20px !important;
+	}
+
+	.creditos h1 {
+		text-align: center;
+	}
+
+	.creditos .sobre {
+		/* background-color: blue; */
+		width: 100%;
+	}
+
+	.creditos .editorial {
+		/* background-color: red; */
+		width: 100%;
+	}
+
+	.editorial-body {
+		flex-direction: row;
+		justify-content: space-between;
+	}
+}
+
+@media screen and (max-width: 418px) {
+	.editorial-body {
+		flex-direction: column;
+	}
+	.redes-sociais,
+	.editorial-body-creditos {
+		align-items: center;
+	}
+}
+
+/* ------------- Fith Row End ------------- */
+
 /* 
 .card-area a {
 	color: white;
@@ -466,7 +937,7 @@ main {
 
 @media screen and (max-width: 575px) {
 	.first-row {
-		margin-top: -24px;
+		margin-top: -39px;
 	}
 
 	/* .aside,
@@ -481,13 +952,27 @@ main {
 /* ------------- Footer Start ------------- */
 
 footer {
+	font-size: larger;
 	background-color: var(--primary-color);
-	padding: 10px;
+	padding: 10px 15%;
 	display: flex;
 	width: 100%;
-	justify-content: center;
+	justify-content: space-between;
+	align-items: center;
 	color: white;
 	text-align: center;
+	gap: 30px;
+}
+
+footer img {
+	max-width: 60px;
+}
+
+@media screen and (max-width: 575px) {
+	footer {
+		flex-direction: column;
+		gap: 0;
+	}
 }
 
 /* ------------- Footer End ------------- */
