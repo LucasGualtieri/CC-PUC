@@ -284,6 +284,7 @@ main {
 	display: flex;
 	flex-direction: column;
 	gap: 20px;
+	width: 50%;
 }
 
 .carousel-description p {
@@ -294,10 +295,6 @@ main {
 .carousel-description div {
 	display: flex;
 	gap: 20px;
-}
-
-.carousel-description {
-	width: 50%;
 }
 
 .carousel-video {
