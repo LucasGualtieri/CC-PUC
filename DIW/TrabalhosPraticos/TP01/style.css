@@ -51,15 +51,18 @@ img {
 	--max-width: 1200px;
 }
 
+.custom-glow:focus {
+	box-shadow: none;
+}
+
 /* ------------- Header Start ------------- */
 
 header {
 	background-color: var(--secondary-color);
 	padding: 10px 30px;
 	display: flex;
-	width: 100%;
-	justify-content: space-between;
 	gap: 10px;
+	justify-content: space-between;
 	align-items: center;
 }
 
@@ -67,8 +70,17 @@ header form {
 	flex-shrink: 0.6;
 }
 
+.form-control:focus {
+	border-color: #ced4da;
+	color: var(--quinary-color);
+}
+
+.form-control {
+	color: var(--quinary-color);
+}
+
 header i {
-	color: white;
+	color: var(--quinary-color);
 }
 
 header,
@@ -80,6 +92,7 @@ p {
 
 header nav {
 	width: 75%;
+	max-width: 800px;
 }
 
 .menu {
@@ -93,7 +106,7 @@ header nav {
 
 .menu a {
 	text-decoration: none;
-	color: white;
+	color: var(--quinary-color);
 }
 
 .menu li {
@@ -131,16 +144,18 @@ header nav {
 }
 
 .custom-placeholder::placeholder {
-	color: white; /* Change to your desired color */
+	color: var(--quinary-color); /* Change to your desired color */
 }
 
 .input-group-prepend > .input-group-text {
 	background-color: transparent;
 	border-right: 0;
 	padding-right: 6px;
+	border-color: var(--quinary-color);
 }
 
 .form-control:not(:first-child) {
+	border-color: var(--quinary-color);
 	background-color: transparent;
 	border-left: 0;
 	border-right: 0;
@@ -149,6 +164,7 @@ header nav {
 }
 
 .input-group-append > .input-group-text {
+	border-color: var(--quinary-color);
 	border-left: 0;
 	background-color: transparent;
 	padding-left: 6px;
@@ -161,11 +177,16 @@ header nav {
 		width: 100%;
 	}
 
+	.form-inline {
+		z-index: -1;
+	}
+
 	header a {
 		font-size: larger;
 	}
 
 	header nav {
+		order: 1;
 		width: auto;
 	}
 
@@ -175,12 +196,15 @@ header nav {
 		z-index: 1;
 	}
 
+	header label {
+		min-width: 24px;
+	}
+
 	.menu {
-		display: flex;
-		position: fixed;
 		flex-direction: column;
+		position: fixed;
 		/* flex-wrap: nowrap; */
-		justify-content: center;
+		/* justify-content: center; */
 
 		gap: 20px;
 		padding: 0 20px;
@@ -198,7 +222,10 @@ header nav {
 	}
 
 	.menu-icons {
-		display: block;
+		/* background-color: red; */
+		display: flex;
+		justify-content: center;
+		height: 100%;
 		color: white;
 		z-index: 999;
 	}
@@ -222,6 +249,10 @@ header nav {
 	#mobile-menu-checkbox:checked ~ .menu {
 		height: 100%;
 	}
+
+	/* header nav {
+		display: none;
+	} */
 
 	main {
 		margin-top: 100px;
@@ -569,6 +600,10 @@ main {
 	gap: 5px;
 }
 
+/* .card-body div h4 {
+	text-align: center;
+} */
+
 .card-body ul {
 	/* background-color: blue; */
 	text-align: left;
@@ -777,6 +812,7 @@ main {
 	width: 60%;
 	display: flex;
 	flex-direction: column;
+	justify-content: center;
 	gap: 20px;
 }
 
