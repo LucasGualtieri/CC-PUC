@@ -1,0 +1,107 @@
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+html,
+body {
+	height: 100vh;
+}
+
+h1,
+p,
+label,
+a {
+	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+:root {
+	--lighter-black: rgb(121, 121, 121);
+}
+
+.lighter-text {
+	color: var(--lighter-black);
+}
+
+body {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: gray;
+}
+
+.card {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	background-color: white;
+	padding: 40px 30px;
+	border-radius: 10px;
+	width: 25%;
+}
+
+.card,
+h1,
+label {
+	text-align: center;
+}
+
+.inputs {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+.inputs input {
+	border-radius: 30px;
+	border-width: 1px;
+	border-style: solid;
+	padding: 15px;
+	border-color: var(--lighter-black);
+}
+
+.remember-me {
+	display: flex;
+	justify-content: space-between;
+}
+
+.remember-me #reset {
+	color: red;
+}
+
+.sign-in {
+	background-color: red;
+	border-style: none;
+	border-radius: 30px;
+	padding: 15px;
+	color: white;
+	width: 100%;
+}
+
+.sign-up a {
+	color: red;
+}
+
+.icons {
+	display: flex;
+	justify-content: space-evenly;
+	border-bottom: black;
+	/* background-color: red; */
+}
+
+.icons i {
+	font-size: 350%;
+}
+
+#facebook {
+	color: #4267b2;
+}
+
+#twitter {
+	color: #1da1f2;
+}
+
+#gmail {
+	color: #e04c47;
+}
