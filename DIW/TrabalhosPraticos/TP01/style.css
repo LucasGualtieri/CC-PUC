@@ -175,6 +175,8 @@ header nav {
 		position: fixed;
 		z-index: 16;
 		width: 100%;
+		justify-content: space-evenly;
+		padding: 10px;
 	}
 
 	.form-inline {
