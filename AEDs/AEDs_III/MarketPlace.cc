@@ -9,10 +9,10 @@ using namespace std;
 class Product {
   private:
 	static int lastId;
+	int id;
   protected:
 	double price;
 	string name;
-	int id;
   public:
 	Product() {
 		this->id = Product::lastId++;
