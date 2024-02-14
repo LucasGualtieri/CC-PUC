@@ -79,6 +79,11 @@ body {
 	font-size: 16pt;
 }
 
+.keyboard button:hover {
+	background-color: rgb(204, 204, 204);
+	transition: 0.2s;
+}
+
 .keyboard button:focus {
 	outline: none;
 }
@@ -111,9 +116,4 @@ body {
 
 #btn_plus {
 	grid-area: 4 / 1 / 6 / 1;
-}
-
-.keyboard button:hover {
-	background-color: rgb(204, 204, 204);
-	transition: 0.2s;
 }

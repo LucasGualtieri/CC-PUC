@@ -1,18 +1,84 @@
 window.onload = () => {
 	NumberButtonAssignment();
-	btn_AC.onclick = DisplayReset;
+	OperatorButtonAssignment();
+	btn_AC.onclick = DisplayResetAC;
 	btn_DEL.onclick = Backspace;
+	btn_equals.onclick = () => {
+		OperationExecution();
+		operation.value1 = 0;
+		boolTeste = false;
+	}
 	document.querySelector("#btn_comma").onclick = Comma;
 };
 
 let displayValue = "0";
+let boolTeste = true;
 
 function NumberButtonAssignment() {
 	let buttons = document.querySelectorAll(".keyboard .number");
 	let buttonOrder = [7, 8, 9, 4, 5, 6, 1, 2, 3, 0];
 	for (let i = 0; i < buttons.length; i++) {
-		buttons[i].onclick = () => Digit(buttonOrder[i]);
+		buttons[i].onclick = () => NumberInput(buttonOrder[i]);
 	}
+}
+
+function OperatorButtonAssignment() {
+	let buttons = document.querySelectorAll(".keyboard .operators button");
+	let buttonOrder = ["/", "*", "-", "+"];
+
+	for (let i = 0; i < buttons.length; i++) {
+		buttons[i].onclick = () => {
+			ClearBackground();
+			buttons[i].style.backgroundColor = "white";
+			OperationSetup(buttonOrder[i]);
+		};
+	}
+}
+
+let operation = { value1: 0,
+				  value2: 0,
+				  operator: "" };
+
+function ClearBackground() {
+	let buttons = document.querySelectorAll(".keyboard .operators button");
+	buttons.forEach((button) => {
+		button.style.backgroundColor = "rgb(72, 234, 255)";
+	});
+}
+
+function OperationSetup(operator) {
+	if (boolTeste) OperationExecution();
+	operation.value1 = parseFloat(displayValue.replace(",", "."));
+	operation.operator = operator;
+	displayValue = "0";
+}
+
+function OperationExecution() {
+	
+	let result;
+	if (operation.value1 != 0) {
+		result = operation.value1;
+		operation.value2 = parseFloat(displayValue.replace(",", "."));
+	} else {
+		result = parseFloat(displayValue.replace(",", "."));
+	}
+
+	switch (operation.operator) {
+		case "/":
+			result /= operation.value2;
+			break;
+		case "*":
+			result *= operation.value2;
+			break;
+		case "-":
+			result -= operation.value2;
+			break;
+		default:
+			result += operation.value2;
+	}
+
+	displayValue = result.toString();
+	display.innerText = displayValue;
 }
 
 function DisplayUpdate() {
@@ -33,15 +99,22 @@ function DisplayUpdate() {
 	display.innerText = strAux;
 }
 
-function DisplayReset() {
+function DisplayResetAC() {
+	operation.value1 = 0;
+	operation.value2 = 0;
+	operation.operator = "";
 	displayValue = "0";
-	DisplayUpdate();
+	boolTeste = true;
+	ClearBackground();
+	display.innerText = displayValue;
 }
 
-function Digit(n) {
+function NumberInput(n) {
 	if (displayValue == "0") displayValue = "";
+	ClearBackground();
 	displayValue += n;
 	DisplayUpdate();
+	boolTeste = true;
 }
 
 function Comma() {
@@ -56,5 +129,3 @@ function Backspace() {
 	if (displayValue.length == 0) displayValue = "0";
 	DisplayUpdate();
 }
-
-function main() {}
