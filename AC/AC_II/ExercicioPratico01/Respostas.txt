@@ -1,0 +1,5 @@
+Pergunta 1: O que acontece se um dos terminais de entrada de uma porta lógica não
+estiver conectado em 0 ou 1 (eletricamente ele deverá estar flutuando, ou seja não
+conectado a nenhum nível lógico)?
+	-	Quando um dos terminais de entrada de uma porta lógica não está conectado a 0 ou 1, e está flutuando ele pode ficar sujeito a interferências (eletromagnéticas ou a instabilidades elétricas), o que pode resultar em um comportamento imprevisível da porta lógica.
+		Isso pode levar a diferentes estados de saída, dependendo das condições específicas do ambiente. É recomendado conectar todas as entradas de uma porta lógica para garantir um comportamento consistente e previsível do circuito.
