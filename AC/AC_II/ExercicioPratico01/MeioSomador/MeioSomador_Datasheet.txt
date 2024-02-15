@@ -1,0 +1,5 @@
+Os circuitos integrados que possuem as portas lógicas necessárias (para a contrução de um meio somador) são:
+
+AND: 74HC08
+XOR: 74HC06 ou TTL 7486
+OR: 74HC32
