@@ -1,53 +1,49 @@
 window.onload = () => {
-	NumberButtonAssignment();
-	OperatorButtonAssignment();
+	operatorButtons = document.querySelectorAll(".keyboard .operators button");
+	ButtonAssignment();
 	btn_AC.onclick = DisplayResetAC;
-	btn_DEL.onclick = Backspace;
+	btn_EC.onclick = DisplayResetEC;
+	btn_DEL.onclick = () => DisplayInput("backspace");
 	btn_equals.onclick = () => {
 		OperationExecution();
-		operation.value1 = 0;
 		boolTeste = false;
-	}
-	document.querySelector("#btn_comma").onclick = Comma;
+	};
 };
 
 let displayValue = "0";
 let boolTeste = true;
+let displayMaxLen = 9;
+let operation = { value1: 0, value2: 0, lastValue: 0, operator: "" };
 
-function NumberButtonAssignment() {
+function ButtonAssignment() {
+
+	document.querySelector("#btn_comma").onclick = () => DisplayInput(",");
 	let buttons = document.querySelectorAll(".keyboard .number");
 	let buttonOrder = [7, 8, 9, 4, 5, 6, 1, 2, 3, 0];
+
 	for (let i = 0; i < buttons.length; i++) {
-		buttons[i].onclick = () => NumberInput(buttonOrder[i]);
+		buttons[i].onclick = () => DisplayInput(buttonOrder[i]);
 	}
-}
 
-function OperatorButtonAssignment() {
-	let buttons = document.querySelectorAll(".keyboard .operators button");
-	let buttonOrder = ["/", "*", "-", "+"];
+	let operatorOrder = ["/", "*", "-", "+"];
 
-	for (let i = 0; i < buttons.length; i++) {
-		buttons[i].onclick = () => {
-			ClearBackground();
-			buttons[i].style.backgroundColor = "white";
-			OperationSetup(buttonOrder[i]);
+	for (let i = 0; i < operatorButtons.length; i++) {
+		operatorButtons[i].onclick = () => {
+			OperationSetup(operatorButtons[i], operatorOrder[i]);
 		};
 	}
 }
 
-let operation = { value1: 0,
-				  value2: 0,
-				  operator: "" };
-
-function ClearBackground() {
-	let buttons = document.querySelectorAll(".keyboard .operators button");
-	buttons.forEach((button) => {
+function OperatorsBackgroundReset() {
+	operatorButtons.forEach((button) => {
 		button.style.backgroundColor = "rgb(72, 234, 255)";
 	});
 }
 
-function OperationSetup(operator) {
+function OperationSetup(button, operator) {
 	if (boolTeste) OperationExecution();
+	boolTeste = true;
+	button.style.backgroundColor = "white";
 	operation.value1 = parseFloat(displayValue.replace(",", "."));
 	operation.operator = operator;
 	displayValue = "0";
@@ -55,33 +51,37 @@ function OperationSetup(operator) {
 
 function OperationExecution() {
 	
-	let result;
-	if (operation.value1 != 0) {
-		result = operation.value1;
+	if (boolTeste) {
 		operation.value2 = parseFloat(displayValue.replace(",", "."));
+		operation.lastValue = operation.value2;
 	} else {
-		result = parseFloat(displayValue.replace(",", "."));
+		operation.value2 = operation.lastValue;
 	}
 
 	switch (operation.operator) {
 		case "/":
-			result /= operation.value2;
+			operation.value1 /= operation.value2;
 			break;
 		case "*":
-			result *= operation.value2;
+			operation.value1 *= operation.value2;
 			break;
 		case "-":
-			result -= operation.value2;
+			operation.value1 -= operation.value2;
 			break;
 		default:
-			result += operation.value2;
+			operation.value1 += operation.value2;
 	}
+	
+	displayValue = operation.value1.toFixed(displayMaxLen);
+	displayValue = displayValue.replace(/\.?0+$/, "").replace(".", ",");
+	
+	operation.value2 = 0;
 
-	displayValue = result.toString();
-	display.innerText = displayValue;
+	DisplayUpdate();
 }
 
 function DisplayUpdate() {
+
 	let [integerPart, fractionalPart] = displayValue.split(",");
 
 	let strAux = "";
@@ -100,32 +100,55 @@ function DisplayUpdate() {
 }
 
 function DisplayResetAC() {
+
+	OperatorsBackgroundReset();
+
 	operation.value1 = 0;
 	operation.value2 = 0;
 	operation.operator = "";
+
 	displayValue = "0";
-	boolTeste = true;
-	ClearBackground();
 	display.innerText = displayValue;
-}
 
-function NumberInput(n) {
-	if (displayValue == "0") displayValue = "";
-	ClearBackground();
-	displayValue += n;
-	DisplayUpdate();
+	btn_AC.disabled = true;
 	boolTeste = true;
 }
 
-function Comma() {
-	if (displayValue.indexOf(",") == -1) {
-		displayValue += ",";
-		DisplayUpdate();
-	}
+function DisplayResetEC() {
+	
+	OperatorsBackgroundReset();
+	
+	if (operation.value1 != 0) btn_AC.disabled = false;
+	else if (operation.value2 == 0) btn_AC.disabled = true;
+
+	btn_AC.style.display = "block";
+	btn_EC.style.display = "none";
+	displayValue = "0";
+
+	DisplayUpdate();
 }
 
-function Backspace() {
-	displayValue = displayValue.substring(0, displayValue.length - 1);
-	if (displayValue.length == 0) displayValue = "0";
+function DisplayInput(key) {
+
+	OperatorsBackgroundReset();
+
+	if (displayValue.length >= displayMaxLen) return;
+
+	else if (key == "," && displayValue.indexOf(",") != -1) return;
+
+	else if (displayValue == "0") displayValue = "";
+	
+	if (key == "backspace") {
+		if (displayValue.length <= 1) displayValue = "0";
+		else displayValue = displayValue.substring(0, displayValue.length - 1);
+	}
+
+	else displayValue += key;
+
+	if (displayValue != "0") {
+		btn_AC.style.display = "none";
+		btn_EC.style.display = "block";
+	}
+
 	DisplayUpdate();
 }

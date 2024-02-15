@@ -79,7 +79,7 @@ body {
 	font-size: 16pt;
 }
 
-.keyboard button:hover {
+.keyboard button:hover:not([disabled]) {
 	background-color: rgb(204, 204, 204);
 	transition: 0.2s;
 }
@@ -116,4 +116,12 @@ body {
 
 #btn_plus {
 	grid-area: 4 / 1 / 6 / 1;
+}
+
+#btn_EC {
+	display: none;
+}
+
+#btn_AC:disabled {
+	background-color: rgb(218, 218, 218);
 }
