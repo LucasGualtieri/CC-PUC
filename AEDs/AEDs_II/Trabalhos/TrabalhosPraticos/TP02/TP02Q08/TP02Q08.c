@@ -23,10 +23,9 @@ void insertionSortByColor(int color, int h, Log* log, Lista lista) {
 
 void ShellSort(Log* log, Lista lista) {
 
-	int N = lista.size;
+	int h, N = lista.size;
 	Jogador* array = lista.array;
 
-	int h;
 	for (h = 1; h < N; h = (h * 3) + 1);
 
 	while (h >= 1) {

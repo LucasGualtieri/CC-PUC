@@ -210,7 +210,8 @@ public class Lib {
 
 				this.InserirFim(new Jogador(array));
 			}
-
+			
+			fileReader.close();
 		}
 
 		public void InserirFim(Jogador jogador) throws Exception {

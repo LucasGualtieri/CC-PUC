@@ -50,6 +50,7 @@ public class Lista {
 			this.InserirFim(new Jogador(array));
 		}
 
+		fileReader.close();
 	}
 
 	public void Mostrar() {

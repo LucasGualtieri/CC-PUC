@@ -308,6 +308,7 @@ class TP04Q08Verde {
 					this.InserirFim(new Jogador(array));
 				}
 	
+				fileReader.close();
 			}
 	
 			public void InserirFim(Jogador jogador) throws Exception {

@@ -381,7 +381,7 @@ public class Lib {
 
 				this.Inserir(new Jogador(array));
 			}
-
+			fileReader.close();
 		}
 
 		public Jogador Get(int id) { return this.array[id]; }
