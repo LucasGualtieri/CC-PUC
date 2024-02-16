@@ -1,4 +1,5 @@
 window.onload = () => {
+	document.querySelector("#btn_theme-toggle").onclick = ThemeToggle;
 	operatorButtons = document.querySelectorAll(".keyboard .operators button");
 	ButtonAssignment();
 	btn_AC.onclick = DisplayResetAC;
@@ -151,4 +152,38 @@ function DisplayInput(key) {
 	}
 
 	DisplayUpdate();
+}
+
+let themeToggle = true;
+
+function ThemeToggle() {
+	
+	let DOMProps = document.documentElement.style;
+
+	body.style.transition = "background-color 0.25s";
+	document.querySelectorAll("button").forEach(button => {
+		button.style.transition = "background-color 0.25s";
+	});
+	
+	document.querySelectorAll("button").forEach(button => {
+		button.style.transition = "background-color 0.25s, color 0.25s";
+	});
+	
+	sun.style.transition = "color linear 0s";
+	moon.style.transition = "color linear 0s ";
+
+	if (!(themeToggle = !themeToggle)) {
+		DOMProps.setProperty('--background-color', 'var(--dark-background-color)');
+		DOMProps.setProperty('--number-color', 'var(--dark-number-color)');
+		DOMProps.setProperty('--text-color', 'var(--dark-text-color)');
+		sun.style.display = "block"
+		moon.style.display = "none"
+	} else {
+		moon.style.display = "block"
+		sun.style.display = "none"
+		DOMProps.setProperty('--background-color', 'var(--light-background-color)');
+		DOMProps.setProperty('--number-color', 'var(--light-number-color)');
+		DOMProps.setProperty('--text-color', 'var(--light-text-color)');
+	}
+
 }

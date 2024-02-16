@@ -17,6 +17,18 @@ p {
 :root {
 	--gap-padding: 10px;
 	--radius: 10px;
+
+	--light-text-color: black;
+	--light-background-color: white;
+	--light-number-color: white;
+	
+	--dark-text-color: white;
+	--dark-background-color: rgb(41, 41, 41);
+	--dark-number-color: rgb(2, 68, 94);
+	
+	--text-color: var(--light-text-color);
+	--background-color: var(--light-background-color);
+	--number-color: var(--light-number-color);
 }
 
 @font-face {
@@ -34,6 +46,7 @@ body {
 	justify-content: center;
 	align-items: center;
 	padding: var(--gap-padding);
+	background-color: var(--background-color);
 }
 
 .calculadora {
@@ -72,11 +85,13 @@ body {
 }
 
 .keyboard button {
+	color: var(--text-color);
 	border: solid transparent 1px;
 	border-radius: var(--radius);
 	/* font-family: "Helvetic", "Arial", sans-serif; */
 	font-weight: bold;
 	font-size: 16pt;
+	background-color: var(--number-color);
 }
 
 .keyboard button:hover:not([disabled]) {
@@ -124,4 +139,8 @@ body {
 
 #btn_AC:disabled {
 	background-color: rgb(218, 218, 218);
+}
+
+#sun {
+	display: none;
 }

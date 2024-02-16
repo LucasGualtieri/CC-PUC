@@ -47,14 +47,18 @@
 		<link rel="stylesheet" href="style.css" />
 		<script src="calculadora.js"></script>
 	</head>
-	<body>
+	<body id="body">
 		<div class="calculadora">
 			<div class="display">
 				<p id="display">0</p>
 			</div>
 			<div class="keyboard">
 				<!-- <button type="button" id="btn_ON">ON/OFF</button> -->
-				<button type="button" id="btn_ON" disabled>ON</button>
+				<button type="button" id="btn_theme-toggle">
+					<i class="fa-solid fa-moon" id="moon"></i>
+					<i class="fa-solid fa-sun" id="sun"></i>
+				</button>
+				<!-- <button type="button" id="btn_ON" disabled>ON</button> -->
 				<button type="button" id="btn_AC" disabled>AC</button>
 				<button type="button" id="btn_EC">EC</button>
 				<button type="button" id="btn_DEL">DEL</button>
