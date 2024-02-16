@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+		<script>
+			onload = () => {
+				// $("p").css("background-color", "red");
+				document.querySelectorAll("p").forEach((button) => {
+					button.style.backgroundColor = "#ffcccc";
+				});
+
+				$("li.listItem:even").css("background-color", "#ffcccc");
+				// let listItems = document.querySelectorAll("li.listItem");
+				// for (let i = 0; i < listItems.length; i++) {
+				// 	if (i % 2 == 0) {
+				// 		listItems[i].style.backgroundColor = "#ffcccc";
+				// 	}
+				// }
+
+				$("[lang=en-us]").css("font-style", "italic");
+				// document.querySelectorAll("[lang=en-us]").forEach((tag) => {
+				// 	tag.style.fontStyle = "italic";
+				// });
+			};
+		</script>
+	</head>
+	<body>
+		<h1>jQuery</h1>
+		<p id="p1">Teste com jQuery</p>
+		<p id="p2">Faremos os seguintes testes:</p>
+		<ul>
+			<li class="listItem">Testes com Seletores</li>
+			<li class="listItem">Testes de alteração de conteúdo</li>
+			<li class="listItem">Testes de alteração de formatação</li>
+			<li class="listItem">Testes de criação de comportamento</li>
+			<li>Testes com Seletores</li>
+			<li lang="en-us">CSS Manipulation Tests</li>
+			<li>Testes de alteração de conteúdo</li>
+			<li lang="en-us">Testes de alteração de formatação</li>
+		</ul>
+	</body>
+</html>
