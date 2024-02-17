@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+		<script>
+			const getAll = (string) => document.querySelectorAll(string);
+
+			function Vanilla() {
+				let array = getAll("li > [type='text'].lista");
+				array.forEach((item) => item.classList.add("marcado"));
+			}
+
+			function jQuery() {
+				// Code snippet straight up copied from the video
+				$("tr").filter(":even").css("background-color", "lightgrey");
+				// Retorna os ids dos elementos selecionados
+				let listaIDs = $(":input")
+					.map(function () {
+						return $(this).attr("id");
+					})
+					.get();
+			}
+
+			onload = () => {
+				Vanilla();
+				jQuery();
+			};
+		</script>
+
+		<style>
+			.marcado {
+				background-color: #ffaaaa;
+			}
+		</style>
+	</head>
+	<body>
+		<h1 id="h1">jQuery</h1>
+		<ul>
+			<li class="lista" id="l1">Item 1</li>
+			<li class="lista" id="l2"><strong>Item 2</strong></li>
+			<li class="lista" id="l3">Item 3</li>
+			<input class="lista" type="text" />
+		</ul>
+	</body>
+</html>
