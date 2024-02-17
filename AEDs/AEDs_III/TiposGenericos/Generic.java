@@ -2,7 +2,7 @@ package AEDs.AEDs_III.TiposGenericos;
 
 // clear && javac Main.java && java Main
 
-class Main {
+class Generic {
 	static class Caixa<tipoGenerico> {
 		private tipoGenerico objeto;
 
@@ -36,7 +36,7 @@ class Main {
 		
 		CaixaRuim cr = new CaixaRuim();
 		cr.armazena(new String("OLA MUNDO"));
-		str = (String)cr.recupera();
+		str = (String)cr.recupera(); // Exige o typecasting
 		System.out.println(str);
 	}
 }
