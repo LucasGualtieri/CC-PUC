@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+		<script>
+			onload = () => {
+				// Esse é claramente um jeito mais complicado de fazer esse contador;
+				// Mais interessante seria separa o número do resto do texto
+				const NumberParse = () => parseInt(label.innerText.split(":")[1]);
+
+				mais1.onclick = () => {
+					let inteiro = NumberParse();
+					label.innerText = `Contador: ${++inteiro}`;
+					if (inteiro > 0) menos1.disabled = false;
+				};
+				menos1.onclick = () => {
+					let inteiro = NumberParse();
+					if (inteiro > 0) {
+						label.innerText = `Contador: ${--inteiro}`;
+						if (inteiro == 0) menos1.disabled = true;
+					}
+				};
+
+				// Jeito jQuery
+				// $("#mais1").click(function () {
+				// 	let valor = parseInt($("#contador").text());
+				// 	$("#contador").text(++valor);
+				// 	if (valor > 0) menos1.disabled = false;
+				// });
+
+				// $("#menos1").click(function () {
+				// 	let valor = parseInt($("#contador").text());
+				// 	if (valor > 0) {
+				// 		$("#contador").text(--valor);
+				// 		if (valor == 0) menos1.disabled = true;
+				// 	}
+				// });
+			};
+
+		</script>
+	</head>
+	<body>
+		<h1>jQuery</h1>
+		<p id="label">Contador: 0</p>
+		<!-- <p>Contador: <span id="contador">0</span></p> -->
+		<p><button id="mais1">+1</button><button id="menos1" disabled>-1</button></p>
+	</body>
+</html>
