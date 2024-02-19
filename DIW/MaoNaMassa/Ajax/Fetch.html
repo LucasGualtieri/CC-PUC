@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+
+		<script>
+			let response = fetch("https://api.github.com/users/LucasGualtieri", {
+				method: "GET",
+			}).then((resposta) => resposta.json());
+
+			response.then((data) => (body.innerHTML += `<p>${data.bio}</p>`));
+		</script>
+	</head>
+	<body id="body">
+		<p>OLA MUNDO</p>
+	</body>
+</html>
