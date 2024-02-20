@@ -19,38 +19,69 @@ json.then(Teste);
 
 // json.catch((err) => console.error(err));
 
+// The .map() method in JavaScript is used to create a new array by applying a function
+// to each element of an existing array. It iterates over each element of the array, applies
+// a callback function to each element, and returns a new array containing the results
+// of calling the callback function on each element.
+
 function Teste(jsonVar) {
 	var resultado = jsonVar["results"];
-
-	resultado.forEach((obj) => {
-		// console.log(`Index ${index}:`);
-		// console.log(JSON.stringify(resultado[index], null, 4));
-		let teste = {
-			title: obj["title"],
-			adulto: obj["adult"] ? "Sim" : "Não",
-			imagem: obj["poster_path"],
-			id: obj["id"],
-		};
-		body.innerHTML += createCard(teste);
-	});
+	body.innerHTML = resultado.map(createCard).join("");
 }
 
 function createCard(obj) {
-	let cardString = `
-	<div class="card" style="width: 18rem">
-		<a href="https://www.themoviedb.org/movie/${obj["id"]}">
-			<img class="card-img-top" src="https://image.tmdb.org/t/p/w500/${obj["imagem"]}" alt="Card image cap" />
-		</a>
-		<div class="card-body">
-			<p class="card-text">
-				Title: ${obj["title"]}.<br>
-				18+ ${obj["adulto"]}.
-			</p>
-			<button><a href="https://www.themoviedb.org/movie/${obj["id"]}">LINK</a></button>
+	let teste = {
+		title: obj["title"],
+		adulto: obj["adult"] ? "Sim" : "Não",
+		imagem: obj["poster_path"],
+		id: obj["id"],
+	};
+	return `
+		<div class="card" style="width: 18rem">
+			<a href="https://www.themoviedb.org/movie/${teste["id"]}">
+				<img class="card-img-top" src="https://image.tmdb.org/t/p/w500/${teste["imagem"]}" alt="Card image cap" />
+			</a>
+			<div class="card-body">
+				<p class="card-text">
+					Title: ${teste["title"]}.<br>
+					18+ ${teste["adulto"]}.
+				</p>
+				<button><a href="https://www.themoviedb.org/movie/${teste["id"]}">LINK</a></button>
+			</div>
 		</div>
-	</div>`;
-	return cardString;
+	`;
 }
+
+// function Teste(jsonVar) {
+// 	var resultado = jsonVar["results"];
+
+// 	resultado.forEach((obj) => {
+// 		// console.log(`Index ${index}:`);
+// 		// console.log(JSON.stringify(resultado[index], null, 4));
+// 		let teste = {
+// 			title: obj["title"],
+// 			adulto: obj["adult"] ? "Sim" : "Não",
+// 			imagem: obj["poster_path"],
+// 			id: obj["id"],
+// 		};
+// 		body.innerHTML += createCard(teste);
+// 	});
+// }
+
+// function createCard(obj) {
+// 	let cardString = `
+// 	<div class="card" style="width: 18rem">
+// 		<img class="card-img-top" src="https://image.tmdb.org/t/p/w500/${obj["imagem"]}" alt="Card image cap" />
+// 		<div class="card-body">
+// 			<p class="card-text">
+// 				Title: ${obj["title"]}.<br>
+// 				18+ ${obj["adulto"]}.
+// 			</p>
+// 			<button><a href="https://www.themoviedb.org/movie/${obj["id"]}">LINK</a></button>
+// 		</div>
+// 	</div>`;
+// 	return cardString;
+// }
 
 onload = () => {
 	// body.innerHTML += createCard();
