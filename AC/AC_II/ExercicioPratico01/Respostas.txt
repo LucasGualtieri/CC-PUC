@@ -3,3 +3,19 @@ estiver conectado em 0 ou 1 (eletricamente ele deverá estar flutuando, ou seja 
 conectado a nenhum nível lógico)?
 	-	Quando um dos terminais de entrada de uma porta lógica não está conectado a 0 ou 1, e está flutuando ele pode ficar sujeito a interferências (eletromagnéticas ou a instabilidades elétricas), o que pode resultar em um comportamento imprevisível da porta lógica.
 		Isso pode levar a diferentes estados de saída, dependendo das condições específicas do ambiente. É recomendado conectar todas as entradas de uma porta lógica para garantir um comportamento consistente e previsível do circuito.
+
+
+Explicar agora o funcionamento de um somador de 4 bits:
+	- flçkasjfçlaskdjfaçsldfkjs....
+
+
+2) Qual o problema de tempo associado a esse tipo de somador ( pense no carry), considere o atraso médio de cada porta lógica de 10 ns.
+	- O problema desse tipo de somador é que cada um de seus somadores de 1 bit que o compõe precisam esperar pelo resultado (carry out) do anterior. Como existe um tempo propagação médio de cada porta lógica de 10ns podemos concluir que a velocidade maxima desse tipo de somador (considerando um de 4 bits) é de 100MHz o que é muito lento.
+
+3) Qual o tempo necessário para a computação de uma soma e do vai um em um somador de 4 bits?
+	- 
+4) O que seria necessário para um somador de 32 bits ?
+5) Considerando esses tempos acima, calcule a freqüência de operação de um somador de
+32 bits.
+6) Você consegue propor alguma forma de tornar essa soma mais veloz?
+
