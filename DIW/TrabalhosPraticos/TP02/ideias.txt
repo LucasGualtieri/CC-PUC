@@ -1,0 +1,12 @@
+Fazer um esquema de filtro semelhante a da kabum.com: https://www.kabum.com.br/busca/cpu
+Mudar então o HTML/CSS da página na parte de lançamentos para que caiba o filtro ao lado
+As opções de filtragem estão aqui: https://api.rawg.io/docs/#operation/games_list
+
+Dar funcionalidade ao botão mais lançamentos
+	Inicialmente 8 jogos depois 16, 24, 32, 40 e fim (Ou será que sem limite usando o código comentado do index.js)
+
+Fazer um DarkMode
+
+Fazer Um Language Toggle
+
+Fazer uma tela de carregamento

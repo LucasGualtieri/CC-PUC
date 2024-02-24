@@ -1,0 +1,1032 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box !important;
+}
+
+html,
+body {
+	scroll-behavior: smooth;
+	height: 100%;
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	/* align-items: center; */
+	gap: 20px;
+	/* font-size: 115%; */
+	/* font-weight: 600; */
+	/* font-family: "Inter", sans-serif; */
+	background-color: var(--quinary-color);
+}
+
+ul,
+p,
+label,
+h1,
+h2,
+h4 {
+	margin: 0;
+}
+
+/* p {
+	text-align: justify;
+} */
+
+img {
+	width: 100%;
+}
+
+.youtube-player {
+	aspect-ratio: 16 / 9;
+}
+
+:root {
+	--primary-color: #354f26;
+	--secondary-color: #49703e;
+	--tertiary-color: #67aa60;
+	--quaternary-color: #b1e6ad;
+	--quinary-color: #f8f4ec;
+	--max-width: 1200px;
+}
+
+.custom-glow:focus {
+	box-shadow: none;
+}
+
+/* ------------- Header Start ------------- */
+
+header {
+	background-color: var(--secondary-color);
+	padding: 10px 30px;
+	display: flex;
+	gap: 10px;
+	justify-content: space-between;
+	align-items: center;
+}
+
+header form {
+	flex-shrink: 0.6;
+}
+
+.form-control:focus {
+	border-color: #ced4da;
+	color: var(--quinary-color);
+}
+
+.form-control {
+	color: var(--quinary-color);
+}
+
+header i {
+	color: var(--quinary-color);
+}
+
+header,
+h2,
+h1,
+p {
+	color: var(--quinary-color);
+}
+
+header nav {
+	width: 75%;
+	max-width: 800px;
+}
+
+.menu {
+	display: flex;
+	gap: 10px;
+	flex-wrap: wrap;
+	justify-content: center;
+	height: 100%;
+	/* flex-shrink: 2; */
+}
+
+.menu a {
+	text-decoration: none;
+	color: var(--quinary-color);
+}
+
+.menu li {
+	text-align: center;
+	list-style-type: none;
+	background-color: var(--tertiary-color);
+	flex-grow: 1;
+	border-radius: 5px;
+	padding: 10px;
+}
+
+.menu li:hover {
+	transition: background-color 0.2s;
+	background-color: var(--quaternary-color);
+}
+
+/* .page-active {
+	background-color: var(--primary-color) !important;
+} */
+
+.logo {
+	max-width: 60px;
+}
+
+#mobile-menu-checkbox {
+	display: none;
+}
+
+.menu-icons {
+	display: none;
+}
+
+.menu {
+	height: 0%;
+}
+
+.custom-placeholder::placeholder {
+	color: var(--quinary-color); /* Change to your desired color */
+}
+
+.input-group-prepend > .input-group-text {
+	background-color: transparent;
+	border-right: 0;
+	padding-right: 6px;
+	border-color: var(--quinary-color);
+}
+
+.form-control:not(:first-child) {
+	border-color: var(--quinary-color);
+	background-color: transparent;
+	border-left: 0;
+	border-right: 0;
+	padding-left: 6px;
+	padding-right: 6px;
+}
+
+.input-group-append > .input-group-text {
+	border-color: var(--quinary-color);
+	border-left: 0;
+	background-color: transparent;
+	padding-left: 6px;
+}
+
+@media screen and (max-width: 575px) {
+	header {
+		position: fixed;
+		z-index: 16;
+		width: 100%;
+		justify-content: space-evenly;
+		padding: 10px;
+	}
+
+	.form-inline {
+		z-index: -1;
+	}
+
+	header a {
+		font-size: larger;
+	}
+
+	header nav {
+		order: 1;
+		width: auto;
+	}
+
+	#menu-close {
+		display: none;
+		position: sticky;
+		z-index: 1;
+	}
+
+	header label {
+		min-width: 24px;
+	}
+
+	.menu {
+		flex-direction: column;
+		position: fixed;
+		/* flex-wrap: nowrap; */
+		/* justify-content: center; */
+
+		gap: 20px;
+		padding: 0 20px;
+		top: 0;
+		left: 0;
+		height: 0%;
+		width: 100%;
+		background-color: rgb(0, 0, 0, 0.75);
+
+		overflow: hidden;
+		-webkit-transition: height 0.3s;
+		-moz-transition: height 0.3s;
+		-o-transition: height 0.3s;
+		transition: height 0.3s;
+	}
+
+	.menu-icons {
+		/* background-color: red; */
+		display: flex;
+		justify-content: center;
+		height: 100%;
+		color: white;
+		z-index: 999;
+	}
+
+	.menu li {
+		flex-grow: 0;
+	}
+
+	.menu-icons i {
+		font-size: 1.7em;
+	}
+
+	#mobile-menu-checkbox:checked ~ label #menu-open {
+		display: none;
+	}
+
+	#mobile-menu-checkbox:checked ~ label #menu-close {
+		display: block;
+	}
+
+	#mobile-menu-checkbox:checked ~ .menu {
+		height: 100%;
+	}
+
+	/* header nav {
+		display: none;
+	} */
+
+	main {
+		margin-top: 100px;
+	}
+}
+
+/* ------------- Header End ------------- */
+
+/* ------------- Main Start ------------- */
+
+main {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	/* align-items: center; */
+}
+
+/* .carousel-inner {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+} */
+
+/* ------------- First Row Start ------------- */
+
+.first-row {
+	width: 100%;
+	margin-top: -20px;
+	background-color: var(--primary-color);
+	/* position: absolute; */
+}
+
+.carousel-page {
+	display: flex;
+	padding: 20px 40px;
+	padding-bottom: 40px;
+	background-color: var(--primary-color);
+	/* background-color: red; */
+	gap: 35px;
+}
+
+.carousel-page iframe {
+	border-radius: 15px;
+	/* padding: 10px; */
+	/* background-color: var(--quinary-color); */
+}
+
+.carousel-page-title {
+	background-color: var(--primary-color);
+	text-align: center;
+	padding-top: 20px;
+}
+
+.carousel-page-title h1 {
+	font-weight: bold;
+}
+
+.carousel-description {
+	/* background-color: red; */
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	width: 50%;
+}
+
+.carousel-description p {
+	/* max-width: 600px; */
+	text-align: justify;
+}
+
+.carousel-description div {
+	display: flex;
+	gap: 20px;
+}
+
+.carousel-video {
+	/* min-height: 55vh; */
+	width: 50%;
+}
+
+.carousel-indicators li {
+	background-color: var(--quinary-color);
+	border: 2px;
+	border-radius: 5px;
+	width: 10px;
+	height: 10px;
+}
+
+.carousel-indicators {
+	margin: 15px;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+	/* background-color: blue; */
+	width: fit-content;
+	margin: 10px;
+}
+
+@media screen and (max-width: 575px) {
+	.carousel-page {
+		flex-direction: column;
+		align-items: center;
+	}
+	.carousel-video,
+	.carousel-description {
+		width: 100%;
+	}
+}
+
+/* ------------- First Row End ------------- */
+
+/* ------------- Second Row Start ------------- */
+
+.second-row {
+	/* background-color: red; */
+	margin: 0 20px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 20px;
+}
+
+.second-row-header {
+	/* background-color: blue; */
+	width: 100%;
+	max-width: var(--max-width);
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	gap: 20px;
+}
+
+.second-row-header h1 {
+	color: black;
+}
+
+@media screen and (max-width: 706px) {
+	.second-row-header {
+		justify-content: center;
+	}
+}
+
+.second-row-header .dropdowns {
+	/* background-color: red; */
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 20px;
+}
+
+.second-row-header .dropdown {
+	/* background-color: red; */
+	display: flex;
+	align-items: center;
+	/* text-align: left; */
+}
+
+.second-row-header .dropdown button {
+	/* background-color: red; */
+	border: 1px;
+	border-style: solid;
+	min-width: 194px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.dropdown-menu {
+	min-width: 194px;
+}
+
+.game-cards {
+	/* background-color: red; */
+	width: 100%;
+	max-width: var(--max-width);
+	display: flex;
+	gap: 20px;
+	flex-wrap: wrap;
+}
+
+.card {
+	flex: 1 1 250px;
+}
+
+/* .card-area-custom {
+	max-width: 500px;
+}
+*/
+
+.card-video {
+	width: 100%;
+}
+
+.card-body {
+	padding: 0;
+}
+
+/* .card-area { */
+/* display: flex; */
+/* gap: 10px; */
+/* text-align: center; */
+/* height: 600px; */
+/* } */
+
+.card-header {
+	display: flex;
+	justify-content: space-between;
+	font-weight: bold;
+	font-size: x-large;
+}
+.card-body {
+	display: flex;
+}
+
+.second-row-button {
+	width: 100%;
+	display: flex;
+	justify-content: end;
+	max-width: var(--max-width);
+}
+
+.second-row-button .btn {
+	background-color: var(--primary-color);
+	color: white;
+}
+
+.second-row-button div {
+	/* background-color: red; */
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	justify-content: space-between;
+}
+
+/* ------------- Second Row End ------------- */
+
+/* ------------- Third Row Start ------------- */
+
+.third-row {
+	/* background-color: blue; */
+	margin: 0 20px;
+	/* padding: 20px; */
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 20px;
+}
+
+.third-row-header {
+	/* background-color: blue; */
+	width: 100%;
+	max-width: var(--max-width);
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	gap: 20px;
+}
+
+.third-row-header h1 {
+	color: black;
+}
+
+@media screen and (max-width: 706px) {
+	.third-row-header {
+		justify-content: center;
+	}
+}
+
+.third-row-header .dropdowns {
+	/* background-color: red; */
+	display: flex;
+	gap: 20px;
+}
+
+.third-row-header .dropdown {
+	/* background-color: red; */
+	display: flex;
+	align-items: center;
+	/* text-align: left; */
+}
+
+.third-row-header .dropdown button {
+	/* background-color: red; */
+	border: 1px;
+	border-style: solid;
+	min-width: 194px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.dropdown-menu {
+	min-width: 194px;
+}
+
+.game-cards {
+	/* background-color: red; */
+	width: 100%;
+	max-width: var(--max-width);
+	display: flex;
+	gap: 20px;
+	flex-wrap: wrap;
+}
+
+.card {
+	flex: 1 1 250px;
+}
+
+/* .card-area-custom {
+	max-width: 500px;
+}
+*/
+
+.card-video {
+	width: 100%;
+}
+
+.card-body {
+	padding: 0;
+}
+
+/* .card-area { */
+/* display: flex; */
+/* gap: 10px; */
+/* text-align: center; */
+/* height: 600px; */
+/* } */
+
+.third-row .card-header {
+	justify-content: center;
+}
+
+.card-body {
+	/* background-color: red; */
+	display: flex;
+	flex-direction: column;
+	text-align: left;
+}
+
+.card-body div {
+	padding: 10px;
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+}
+
+/* .card-body div h4 {
+	text-align: center;
+} */
+
+.card-body ul {
+	/* background-color: blue; */
+	text-align: left;
+	padding-left: 30px;
+}
+
+.third-row-button {
+	width: 100%;
+	display: flex;
+	justify-content: end;
+	max-width: var(--max-width);
+}
+
+.third-row-button .btn {
+	background-color: var(--primary-color);
+	color: white;
+}
+
+.third-row-button div {
+	/* background-color: red; */
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	justify-content: space-between;
+}
+
+/* ------------- Third Row End ------------- */
+
+/* ------------- Forth Row Start ------------- */
+
+.forth-row {
+	background-color: var(--secondary-color);
+	/* margin: 0 20px; */
+	padding: 20px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 20px;
+}
+
+.forth-row-header {
+	/* background-color: blue; */
+	width: 100%;
+	max-width: var(--max-width);
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	gap: 20px;
+}
+
+.forth-row-header h1 {
+	color: var(--quinary-color);
+}
+
+@media screen and (max-width: 706px) {
+	.forth-row-header {
+		justify-content: center;
+	}
+}
+
+.forth-row-header .dropdowns {
+	/* background-color: red; */
+	display: flex;
+	gap: 20px;
+}
+
+.forth-row-header .dropdown {
+	/* background-color: red; */
+	display: flex;
+	align-items: center;
+	/* text-align: left; */
+}
+
+.forth-row-header .dropdown button {
+	/* background-color: red; */
+	border: 1px;
+	border-style: solid;
+	min-width: 194px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.dropdown-menu {
+	min-width: 194px;
+}
+
+.game-cards {
+	/* background-color: red; */
+	width: 100%;
+	max-width: var(--max-width);
+	display: flex;
+	gap: 20px;
+	flex-wrap: wrap;
+}
+
+.card {
+	flex: 1 1 250px;
+}
+
+/* .card-area-custom {
+	max-width: 500px;
+}
+*/
+
+.card-video {
+	width: 100%;
+}
+
+.card-body {
+	padding: 0;
+}
+
+/* .card-area { */
+/* display: flex; */
+/* gap: 10px; */
+/* text-align: center; */
+/* height: 600px; */
+/* } */
+
+.forth-row .card-header {
+	justify-content: center;
+}
+
+.card-body {
+	/* background-color: red; */
+	display: flex;
+	flex-direction: column;
+	text-align: left;
+}
+
+.card-body div {
+	padding: 10px;
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+}
+
+.card-body ul {
+	/* background-color: blue; */
+	text-align: left;
+	padding-left: 30px;
+}
+
+.forth-row-button {
+	width: 100%;
+	display: flex;
+	justify-content: end;
+	max-width: var(--max-width);
+}
+
+.forth-row-button .btn {
+	background-color: var(--primary-color);
+	color: white;
+}
+
+.forth-row-button div {
+	/* background-color: red; */
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	justify-content: space-between;
+}
+
+/* ------------- Forth Row End ------------- */
+
+/* ------------- Fith Row Start ------------- */
+
+.fith-row h1 {
+	color: black;
+}
+.fith-row h2 {
+	color: black;
+}
+.fith-row p {
+	color: black;
+}
+
+.fith-row {
+	/* background-color: var(--secondary-color); */
+	display: flex;
+	justify-content: center;
+	/* margin: 0 20px; */
+	/* padding: 20px; */
+}
+
+.fith-row .creditos {
+	/* background-color: red; */
+	display: flex;
+	gap: 5%;
+	margin: 0 20px;
+	max-width: var(--max-width);
+	justify-content: space-between;
+}
+
+/* .creditos h1 {
+	text-align: center;
+} */
+
+.fith-row i {
+	font-size: 150%;
+}
+
+.fith-row .sobre {
+	/* background-color: red; */
+	width: 60%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	gap: 20px;
+}
+
+.fith-row p {
+	text-align: justify;
+}
+
+.fith-row .editorial {
+	/* background-color: blue; */
+	/* width: 40%; */
+	display: flex;
+	gap: 10px;
+	flex-direction: column;
+	/* align-items: center; */
+}
+
+.redes-sociais {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.editorial-body {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.editorial-body-creditos {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.fith-row .editorial .redes-sociais {
+	display: flex;
+}
+
+.fith-row .editorial .redes-sociais div {
+	display: flex;
+	gap: 30px;
+	font-size: 150%;
+	/* flex-wrap: wrap; */
+}
+
+@media screen and (max-width: 575px) {
+	.creditos {
+		flex-direction: column;
+		align-items: center;
+		gap: 20px !important;
+	}
+
+	.creditos h1 {
+		text-align: center;
+	}
+
+	.creditos .sobre {
+		/* background-color: blue; */
+		width: 100%;
+	}
+
+	.creditos .editorial {
+		/* background-color: red; */
+		width: 100%;
+	}
+
+	.editorial-body {
+		flex-direction: row;
+		justify-content: space-between;
+	}
+}
+
+@media screen and (max-width: 418px) {
+	.editorial-body {
+		flex-direction: column;
+	}
+	.redes-sociais,
+	.editorial-body-creditos {
+		align-items: center;
+	}
+}
+
+/* ------------- Fith Row End ------------- */
+
+/* 
+.card-area a {
+	color: white;
+	background-color: var(--yellow-brand);
+}
+
+.card-area a:hover {
+	transition: background-color 0.2s;
+	color: white;
+	background-color: var(--secondary-yellow);
+}
+
+.card-area a:active {
+	transition: background-color 0.2s;
+	background-color: var(--yellow-brand);
+}
+
+.card-area a:focus,
+.card-area a:active {
+	outline: none;
+}
+ */
+
+.modal-button {
+	font-size: 90%;
+	padding: 10px;
+	color: white;
+	border-style: none;
+	background-color: var(--yellow-brand);
+	width: 100%;
+	border-radius: 5px;
+	height: 25%;
+}
+
+.modal-button:hover {
+	color: white;
+	transition: background-color 0.2s;
+	background-color: var(--secondary-yellow);
+}
+
+.modal-button:active {
+	transition: background-color 0.2s;
+	background-color: var(--yellow-brand);
+}
+
+.modal-button:focus,
+.modal-button:active {
+	outline: none;
+}
+
+@media screen and (max-width: 795px) {
+	/* .first-row {
+		flex-direction: column;
+	}
+
+	.aside,
+	.carousel {
+		width: 100%;
+	}
+
+	.aside,
+	.card-area {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	.modal-button {
+		height: 100%;
+	} */
+}
+
+@media screen and (max-width: 575px) {
+	.first-row {
+		margin-top: -39px;
+	}
+
+	/* .aside,
+	.card-area {
+		display: flex;
+		flex-direction: column;
+	} */
+}
+
+/* ------------- Main End ------------- */
+
+/* ------------- Footer Start ------------- */
+
+footer {
+	font-size: larger;
+	background-color: var(--primary-color);
+	padding: 10px 15%;
+	display: flex;
+	width: 100%;
+	justify-content: space-between;
+	align-items: center;
+	color: white;
+	text-align: center;
+	gap: 30px;
+}
+
+footer img {
+	max-width: 60px;
+}
+
+@media screen and (max-width: 575px) {
+	footer {
+		flex-direction: column;
+		gap: 0;
+	}
+}
+
+/* ------------- Footer End ------------- */
+
+/* ------------- Modal Start ------------- */
+
+.modal {
+	text-align: center;
+}
+
+.modal-body {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+.modal-footer {
+	flex-wrap: nowrap;
+}
+
+/* ------------- Modal End ------------- */
