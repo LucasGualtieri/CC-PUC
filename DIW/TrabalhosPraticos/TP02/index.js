@@ -1,9 +1,18 @@
+function main() {
+	FetchReleasesSection();
+	// FetchReleasesSection();
+	// FetchReleasesSection();
+}
+
 const options = {
 	method: "GET",
 	headers: { accept: "application/json" },
 };
 
+// Achar um jeito de esconder a KEY do usuário
 let apiKEY = "13c033a42f8549eb9612748fa44a0e3a";
+
+main();
 
 function ApiURL(endPoint, queryParamaters) {
 	return `https://api.rawg.io/api/${endPoint}?key=${apiKEY}${ObjectToString(queryParamaters)}`;
@@ -56,7 +65,10 @@ function FetchReleasesSection() {
 
 	fetch(apiURL, options)
 		.then((response) => response.json())
-		.then(MappingCards)
+		.then((json) => {
+			// FinalizarLoadingScreen();
+			MappingCards(json);
+		})
 		.catch((err) => console.error(err));
 }
 
@@ -86,14 +98,6 @@ function createCard(obj) {
 	</div>
 	`;
 }
-
-function main() {
-	FetchReleasesSection();
-	// FetchReleasesSection();
-	// FetchReleasesSection();
-}
-
-main();
 
 // let currentPage = 1;
 // const pageSize = 20; // Number of games per page
