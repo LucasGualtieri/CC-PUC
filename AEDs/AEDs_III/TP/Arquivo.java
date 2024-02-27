@@ -76,7 +76,7 @@ class Arquivo<T extends Entidade> {
 
 		short tamanhoRegistro;
 
-		for (int i = 4; i < len; i += Math.abs(tamanhoRegistro) + 2) {
+		for (int i = 4; i < len; i += 2 + Math.abs(tamanhoRegistro)) {
 
 			long endereco = arq.getFilePointer();
 			tamanhoRegistro = arq.readShort();
