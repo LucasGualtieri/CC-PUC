@@ -9,7 +9,7 @@ interface Entidade {
 	public int getID();
 	public void setID(int id);
 }
-// testes
+
 class Arquivo<T extends Entidade> {
 	Constructor<T> construtor;
 	RandomAccessFile arq;
