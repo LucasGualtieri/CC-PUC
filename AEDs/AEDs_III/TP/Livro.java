@@ -57,15 +57,21 @@ class Livro implements Entidade {
 		return ba_out.toByteArray();
 	}
 
-	public void fromByteArray(byte[] ba) throws Exception {
+	public void fromByteArray(byte[] ba) {
 
-		ByteArrayInputStream ba_in = new ByteArrayInputStream(ba);
-		DataInputStream dis = new DataInputStream(ba_in);
-
-		this.ID = dis.readInt();
-		this.titulo = dis.readUTF();
-		this.autor = dis.readUTF();
-		this.preco = dis.readFloat();
+		ByteArrayInputStream ba_in;
+		
+		try {
+			ba_in= new ByteArrayInputStream(ba);
+			DataInputStream dis = new DataInputStream(ba_in);
+	
+			this.ID = dis.readInt();
+			this.titulo = dis.readUTF();
+			this.autor = dis.readUTF();
+			this.preco = dis.readFloat();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public String toString() {

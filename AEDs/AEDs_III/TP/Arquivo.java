@@ -9,6 +9,7 @@ interface Entidade {
 	public int getID();
 	public void setID(int id);
 	public byte[] toByteArray();
+	public void fromByteArray(byte[] array);
 }
 
 class Arquivo<T extends Entidade> {
@@ -33,9 +34,15 @@ class Arquivo<T extends Entidade> {
 		objeto.getID();
 	}
 
-	public Livro Instanciador(byte[] array) throws Exception {
-		return new Livro(array);
+	public T Instanciador(byte[] array) throws Exception {
+		T objeto = this.construtor.newInstance();
+		objeto.fromByteArray(array);
+		return objeto;
 	}
+
+	// public Livro Instanciador(byte[] array) throws Exception {
+	// 	return new Livro(array);
+	// }
 
 	public void Inicializar() throws IOException {
 		arq.writeInt(0);
@@ -83,7 +90,7 @@ class Arquivo<T extends Entidade> {
 				byte[] registro = new byte[tamanhoRegistro];
 				arq.read(registro);
 				
-				Livro obj = Instanciador(registro);
+				T obj = Instanciador(registro);
 				
 				if (obj.getID() == id) {
 					arq.seek(endereco); // Volta para o indicador de tamanho
@@ -99,9 +106,9 @@ class Arquivo<T extends Entidade> {
 		return resultado;
 	}
 	
-	public Livro read(int id) throws IOException, Exception {
+	public T read(int id) throws IOException, Exception {
 		
-		Livro livroRetorno = null;
+		T objReturn = null;
 
 		arq.seek(4); // mover o ponteiro para o primeiro registro (após o cabeçalho)
 		long len = arq.length();
@@ -116,10 +123,10 @@ class Arquivo<T extends Entidade> {
 				byte[] registro = new byte[tamanhoRegistro];
 				arq.read(registro);
 				
-				Livro obj = Instanciador(registro);
+				T obj = Instanciador(registro);
 				
 				if (obj.getID() == id) {
-					livroRetorno = obj;
+					objReturn = obj;
 					arq.seek(len);
 				}
 			}
@@ -129,7 +136,7 @@ class Arquivo<T extends Entidade> {
 			}
 		}
 
-		return livroRetorno;
+		return objReturn;
 	}
 	
 	public boolean update(T newObj) throws IOException, Exception {
@@ -148,7 +155,7 @@ class Arquivo<T extends Entidade> {
 				byte[] registro = new byte[tamanhoRegistro];
 				arq.read(registro);
 				
-				Livro obj = Instanciador(registro);
+				T obj = Instanciador(registro);
 				
 				if (obj.getID() == newObj.getID()) {
 
