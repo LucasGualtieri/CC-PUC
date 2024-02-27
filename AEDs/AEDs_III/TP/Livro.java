@@ -4,7 +4,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.text.NumberFormat;
 
@@ -41,15 +40,19 @@ class Livro implements Entidade {
 	public int getID() { return this.ID; }
 	public void setID(int i) { this.ID = i; }
 
-	public byte[] toByteArray() throws Exception {
+	public byte[] toByteArray() {
 
-		ByteArrayOutputStream ba_out = new ByteArrayOutputStream();
-		DataOutputStream dos = new DataOutputStream(ba_out);
+		ByteArrayOutputStream ba_out = null;
 
-		dos.writeInt(this.ID);
-		dos.writeUTF(this.titulo);
-		dos.writeUTF(this.autor);
-		dos.writeFloat(this.preco);
+		try {
+			ba_out = new ByteArrayOutputStream();
+			DataOutputStream dos = new DataOutputStream(ba_out);
+	
+			dos.writeInt(this.ID);
+			dos.writeUTF(this.titulo);
+			dos.writeUTF(this.autor);
+			dos.writeFloat(this.preco);
+		} catch (Exception e) { e.printStackTrace(); }
 
 		return ba_out.toByteArray();
 	}
@@ -75,4 +78,6 @@ class Livro implements Entidade {
 
 		return str;
 	}
+
+	public void setTitulo(String titulo) { this.titulo = titulo; }
 }

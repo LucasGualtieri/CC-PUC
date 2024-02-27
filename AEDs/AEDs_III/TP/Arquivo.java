@@ -8,6 +8,7 @@ import java.lang.reflect.Constructor;
 interface Entidade {
 	public int getID();
 	public void setID(int id);
+	public byte[] toByteArray();
 }
 
 class Arquivo<T extends Entidade> {
@@ -41,6 +42,7 @@ class Arquivo<T extends Entidade> {
 	}
 
 	public void Inicializar(int id) throws IOException {
+		arq.seek(0);
 		arq.writeInt(id);
 	}
 
@@ -55,10 +57,8 @@ class Arquivo<T extends Entidade> {
 	
 		arq.seek(arq.length()); // Vai pro fim do arquivo para criar o registro
 		
-		long endereco = arq.getFilePointer(); // Posição do começo do registro
 		byte[] ba = obj.toByteArray();
 		short tam = (short)ba.length;
-		// arq.write(' '); // lápide
 		
 		arq.writeShort(tam);
 		arq.write(ba);
@@ -71,42 +71,111 @@ class Arquivo<T extends Entidade> {
 		boolean resultado = false;
 		
 		arq.seek(4); // mover o ponteiro para o primeiro registro (após o cabeçalho)
-		
 		long len = arq.length();
-
 		short tamanhoRegistro;
-
-		for (int i = 4; i < len; i += 2 + Math.abs(tamanhoRegistro)) {
-
+		
+		while(arq.getFilePointer() < len) {
 			long endereco = arq.getFilePointer();
 			tamanhoRegistro = arq.readShort();
-
+			
 			if (tamanhoRegistro > 0) {
+				
 				byte[] registro = new byte[tamanhoRegistro];
 				arq.read(registro);
-
+				
 				Livro obj = Instanciador(registro);
-
+				
 				if (obj.getID() == id) {
-					arq.seek(endereco);
+					arq.seek(endereco); // Volta para o indicador de tamanho
 					arq.writeShort(-tamanhoRegistro);
 					resultado = true;
-					i = (int)len;
+					arq.seek(len);
 				}
+			} else {
+				arq.seek(arq.getFilePointer() + Math.abs(tamanhoRegistro));
+			}
+		}
+		
+		return resultado;
+	}
+	
+	public Livro read(int id) throws IOException, Exception {
+		
+		Livro livroRetorno = null;
+
+		arq.seek(4); // mover o ponteiro para o primeiro registro (após o cabeçalho)
+		long len = arq.length();
+		short tamanhoRegistro;
+
+		while(arq.getFilePointer() < len) {
+
+			tamanhoRegistro = arq.readShort();
+			
+			if (tamanhoRegistro > 0) {
+				
+				byte[] registro = new byte[tamanhoRegistro];
+				arq.read(registro);
+				
+				Livro obj = Instanciador(registro);
+				
+				if (obj.getID() == id) {
+					livroRetorno = obj;
+					arq.seek(len);
+				}
+			}
+
+			else {
+				arq.seek(arq.getFilePointer() + Math.abs(tamanhoRegistro));
+			}
+		}
+
+		return livroRetorno;
+	}
+	
+	public boolean update(T newObj) throws IOException, Exception {
+		boolean resultado = false;
+		
+		arq.seek(4); // mover o ponteiro para o primeiro registro (após o cabeçalho)
+		long len = arq.length();
+		short tamanhoRegistro;
+		
+		while(arq.getFilePointer() < len) {
+			long endereco = arq.getFilePointer();
+			tamanhoRegistro = arq.readShort();
+			
+			if (tamanhoRegistro > 0) {
+				
+				byte[] registro = new byte[tamanhoRegistro];
+				arq.read(registro);
+				
+				Livro obj = Instanciador(registro);
+				
+				if (obj.getID() == newObj.getID()) {
+
+					byte[] novoRegistro = newObj.toByteArray();
+
+					if (novoRegistro.length <= registro.length) {
+						arq.seek(endereco + 2); // Volta para o começo do registro
+						arq.write(novoRegistro);
+						arq.seek(len);
+					} else {
+						arq.seek(endereco);
+						arq.writeShort(-tamanhoRegistro);
+						arq.seek(len);
+						arq.writeShort(novoRegistro.length);
+						arq.write(novoRegistro);
+					}
+
+					resultado = true;
+				}
+			} else {
+				arq.seek(arq.getFilePointer() + Math.abs(tamanhoRegistro));
 			}
 		}
 		
 		return resultado;
 	}
 
-	public Livro read(int id) {
-		Livro l = new Livro();
-
-		// código para busca sequencial do livro
-
-		return l;
-	}
-	
 	public void close() throws Exception {
 		arq.close();
 	}

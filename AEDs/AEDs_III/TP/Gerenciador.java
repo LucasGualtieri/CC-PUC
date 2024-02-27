@@ -12,31 +12,49 @@ class Gerenciador {
 		arquivoDeLivros.Inicializar(0);
 
 		Livro l1 = new Livro("Odisséia", "Homero", 15.99F);
-		Livro l2 = new Livro(5, "Ensino Híbrido", "Lilian Bacich", 39.90F);
-		// Livro l3 = new Livro();
+		// Livro l2 = new Livro(5, "Ensino Híbrido", "Lilian Bacich", 39.90F);
 
 		int id1, id2;
 	
 		id1 = arquivoDeLivros.create(l1);
 		System.out.println("Livro criado com o ID: " + id1);
 
-		id2 = arquivoDeLivros.create(l2);
-		System.out.println("Livro criado com o ID: " + id2);
+		// id2 = arquivoDeLivros.create(l2);
+		// System.out.println("Livro criado com o ID: " + id2);
 
-		boolean excluido = arquivoDeLivros.delete(id2);
-		if (excluido) {
-			System.out.println("Livro excluído com sucesso");
-		} else {
-			System.out.println("Livro já exclúido");
-		}
+		// if (arquivoDeLivros.delete(1)) {
+		// 	System.out.println("Livro excluído com sucesso");
+		// } else {
+		// 	System.out.println("Livro já exclúido");
+		// }
 
-		excluido = arquivoDeLivros.delete(id2);
-		if (excluido) {
-			System.out.println("Livro excluído com sucesso");
+		// if (arquivoDeLivros.delete(1)) {
+		// 	System.out.println("Livro excluído com sucesso");
+		// } else {
+		// 	System.out.println("Livro já exclúido");
+		// }
+
+		Livro livro = arquivoDeLivros.read(1);
+		if (livro != null) {
+			System.out.println(livro.toString());
 		} else {
-			System.out.println("Livro já exclúido");
+			System.out.println("Livro não encontrado");
 		}
 		
+		l1.setTitulo("Teste novo Titulo");
+		if (arquivoDeLivros.update(l1)) {
+			System.out.println("Livro atualizado com sucesso");
+		} else {
+			System.out.println("Livro não pode ser atualizado");
+		}
+		
+		livro = arquivoDeLivros.read(1);
+		if (livro != null) {
+			System.out.println(livro.toString());
+		} else {
+			System.out.println("Livro não encontrado");
+		}
+
 		// id2 = arquivoDeLivros.create(l2);
 		// System.out.println("Livro criado com o ID: " + id2);
 		
