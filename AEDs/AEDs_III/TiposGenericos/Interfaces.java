@@ -1,7 +1,7 @@
 package AEDs.AEDs_III.TiposGenericos;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
+// import java.lang.reflect.InvocationTargetException;
 
 // clear && javac Interfaces.java && java Interfaces
 
