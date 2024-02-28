@@ -46,7 +46,30 @@
 
 		<link rel="stylesheet" href="style.css" />
 
-		<script src="index.js"></script>
+		<!-- <script src="index.js"></script> -->
+
+		<script>
+			onload = () => {
+				console.log("Começou");
+				teste.addEventListener("input", function () {
+					let value = parseInt(this.value);
+
+					// if (value < 20) {
+					// 	teste.value = 0;
+					// } else if (valor >= 20 && valor < 40) {
+					// 	teste.value = 30;
+					// } else if (valor >= 40 && valor < 60) {
+					// 	teste.value = 50;
+					// } else if (valor >= 60 && valor < 80) {
+					// 	teste.value = 70;
+					// } else {
+					// 	teste.value = 100;
+					// }
+
+					console.log(`this.value: ${teste.value}\n`);
+				});
+			};
+		</script>
 
 		<!-- <script>
 			$(document).ready(function () {
@@ -270,367 +293,221 @@
 			</section>
 
 			<section id="second-row" class="second-row">
-				<div class="second-row-header">
-					<h1>Lançamentos de 2023</h1>
-					<div class="dropdowns">
-						<div class="dropdown">
-							<button
-								class="btn dropdown-toggle custom-glow"
-								type="button"
-								data-bs-toggle="dropdown"
-								aria-expanded="false"
-							>
-								Ordem: Popularidade
-							</button>
-							<ul class="dropdown-menu">
-								<li><a class="dropdown-item" href="#">Ano de Lançamento</a></li>
-								<li><a class="dropdown-item" href="#">Distribuidora</a></li>
-							</ul>
-						</div>
-
-						<div class="dropdown">
-							<button
-								class="btn dropdown-toggle custom-glow"
-								type="button"
-								data-bs-toggle="dropdown"
-								aria-expanded="false"
-							>
-								Gênero: Todos
-							</button>
-							<ul class="dropdown-menu">
-								<li><a class="dropdown-item" href="#">Action</a></li>
-								<li><a class="dropdown-item" href="#">Adventure</a></li>
-								<li><a class="dropdown-item" href="#">Indie</a></li>
-								<li><a class="dropdown-item" href="#">Shooter</a></li>
+				<div class="filters">
+					<div class="slider-container">
+						Metacritic
+						<br />
+						tentar um upper bound nesse slide
+						<input type="range" min="0" max="100" value="0" class="slider" id="teste" />
+					</div>
+					mappear as opçõesd de Distribuidora com as opções da API usando JS
+					<div class="dropdown">
+						<button
+							class="btn btn-secondary dropdown-toggle"
+							type="button"
+							id="dropdownMenu2"
+							data-toggle="dropdown"
+							aria-haspopup="true"
+							aria-expanded="false"
+						>
+							Dropdown
+						</button>
+						<div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+							<ul>
+								<li>
+									<input type="checkbox" id="option1" name="option1" value="Option 1" />
+									Label
+								</li>
+								<li>
+									<input type="checkbox" id="option2" name="option2" value="Option 2" />
+									Steam
+								</li>
 							</ul>
 						</div>
 					</div>
 				</div>
-				<div class="game-cards">
-					<div class="card text-center">
-						<div class="card-header">
-							<label>Dead Space</label>
-							<label>?</label>
-						</div>
-						<div class="card-body">
-							<iframe
-								class="youtube-player"
-								src="https://www.youtube.com/embed/ctQl9wa3ydE"
-								title="Dead Space Official Launch Trailer | Humanity Ends Here"
-								frameborder="0"
-								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-								allowfullscreen
-							></iframe>
-						</div>
-						<div class="card-footer text-muted">Mais detalhes...</div>
-					</div>
-					<div class="card text-center">
-						<div class="card-header">
-							<label>Atomic Heart</label>
-							<label>?</label>
-						</div>
-						<div class="card-body">
-							<iframe
-								class="youtube-player"
-								src="https://www.youtube.com/embed/_tEgeZrOOHM"
-								title="Atomic Heart - Official Trailer #1"
-								frameborder="0"
-								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-								allowfullscreen
-							></iframe>
-						</div>
-						<div class="card-footer text-muted">Mais detalhes...</div>
-					</div>
-					<div class="card text-center">
-						<div class="card-header">
-							<label>Dead Island 2</label>
-							<label>?</label>
-						</div>
-						<div class="card-body">
-							<iframe
-								class="youtube-player"
-								src="https://www.youtube.com/embed/yiHalBhBMj4"
-								title="Dead Island 2 - Launch Trailer | PS5 &amp; PS4 Games"
-								frameborder="0"
-								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-								allowfullscreen
-							></iframe>
-						</div>
-						<div class="card-footer text-muted">Mais detalhes...</div>
-					</div>
-					<div class="card text-center">
-						<div class="card-header">
-							<label>Starfield</label>
-							<label>?</label>
-						</div>
-						<div class="card-body">
-							<iframe
-								class="youtube-player"
-								src="https://www.youtube.com/embed/kfYEiTdsyas"
-								title="Starfield Official Gameplay Trailer"
-								frameborder="0"
-								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-								allowfullscreen
-							></iframe>
-						</div>
-						<div class="card-footer text-muted">Mais detalhes...</div>
-					</div>
-					<div class="card text-center">
-						<div class="card-header">
-							<label>Chants of Sennaar</label>
-							<label>?</label>
-						</div>
-						<div class="card-body">
-							<iframe
-								class="card-video youtube-player"
-								src="https://www.youtube.com/embed/__hzPH3tcvA"
-								title="Chants of Sennaar - Launch Trailer"
-								frameborder="0"
-								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-								allowfullscreen
-							></iframe>
-						</div>
-						<div class="card-footer text-muted">Mais detalhes...</div>
-					</div>
-					<div class="card text-center">
-						<div class="card-header">
-							<label>Hi-Fi RUSH</label>
-							<label>?</label>
-						</div>
-						<div class="card-body">
-							<iframe
-								class="card-video youtube-player"
-								src="https://www.youtube.com/embed/pgd4aU56Kig"
-								title="Hi-Fi RUSH |  Official Launch Trailer"
-								frameborder="0"
-								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-								allowfullscreen
-							></iframe>
-						</div>
-						<div class="card-footer text-muted">Mais detalhes...</div>
-					</div>
-					<div class="card text-center">
-						<div class="card-header">
-							<label>Humanity</label>
-							<label>?</label>
-						</div>
-						<div class="card-body">
-							<iframe
-								class="card-video youtube-player"
-								src="https://www.youtube.com/embed/62Yjl5rTXSY"
-								title="Humanity - Reveal Trailer | PS5, PS4, PSVR &amp; PS VR2 Games"
-								frameborder="0"
-								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-								allowfullscreen
-							></iframe>
-						</div>
-						<div class="card-footer text-muted">Mais detalhes...</div>
-					</div>
-					<div class="card text-center">
-						<div class="card-header">
-							<label>Lies of P</label>
-							<label>?</label>
-						</div>
-						<div class="card-body">
-							<iframe
-								class="card-video youtube-player"
-								src="https://www.youtube.com/embed/TYr1x25Z1Ak"
-								title="Lies of P - Official Release Date Trailer | PS5 &amp; PS4 Games"
-								frameborder="0"
-								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-								allowfullscreen
-							></iframe>
-						</div>
-						<div class="card-footer text-muted">Mais detalhes...</div>
-					</div>
-				</div>
-				<div class="second-row-button">
-					<button type="button" class="btn custom-glow">
-						<div>
-							<i class="fa-solid fa-plus"></i>
-							Carregar mais lançamentos
-						</div>
-					</button>
-				</div>
-			</section>
+				<div class="releases">
+					<div class="second-row-header">
+						<h1>Lançamentos de 2023</h1>
+						<div class="dropdowns">
+							<div class="dropdown">
+								<button
+									class="btn dropdown-toggle custom-glow"
+									type="button"
+									data-bs-toggle="dropdown"
+									aria-expanded="false"
+								>
+									Ordem: Popularidade
+								</button>
+								<ul class="dropdown-menu">
+									<li><a class="dropdown-item" href="#">Ano de Lançamento</a></li>
+									<li><a class="dropdown-item" href="#">Distribuidora</a></li>
+								</ul>
+							</div>
 
-			<section id="third-row" class="third-row">
-				<div class="third-row-header">
-					<h1>Plataformas</h1>
-				</div>
-				<div class="game-cards">
-					<div class="card text-center">
-						<div class="card-header">
-							<label>PC</label>
-						</div>
-						<div class="card-body">
-							<img src="imagens/dead-space.png" alt="PC Logo" />
-							<div>
-								<h4>Principais Jogos</h4>
-								<ul>
-									<li>Dead Space</li>
-									<li>Hi-Fi Rush</li>
-									<li>Metroid Prime Remastered</li>
+							<div class="dropdown">
+								<button
+									class="btn dropdown-toggle custom-glow"
+									type="button"
+									data-bs-toggle="dropdown"
+									aria-expanded="false"
+								>
+									Gênero: Todos
+								</button>
+								<ul class="dropdown-menu">
+									<li><a class="dropdown-item" href="#">Action</a></li>
+									<li><a class="dropdown-item" href="#">Adventure</a></li>
+									<li><a class="dropdown-item" href="#">Indie</a></li>
+									<li><a class="dropdown-item" href="#">Shooter</a></li>
 								</ul>
 							</div>
 						</div>
-						<div class="card-footer text-muted">Mais detalhes...</div>
 					</div>
-
-					<div class="card text-center">
-						<div class="card-header">
-							<label>Playstation</label>
+					<div class="game-cards">
+						<div class="card text-center">
+							<div class="card-header">
+								<label>Dead Space</label>
+								<label>?</label>
+							</div>
+							<div class="card-body">
+								<iframe
+									class="youtube-player"
+									src="https://www.youtube.com/embed/ctQl9wa3ydE"
+									title="Dead Space Official Launch Trailer | Humanity Ends Here"
+									frameborder="0"
+									allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+									allowfullscreen
+								></iframe>
+							</div>
+							<div class="card-footer text-muted">Mais detalhes...</div>
 						</div>
-						<div class="card-body">
-							<img src="imagens/baldurs-gate-3.png" alt="Plastation Logo" />
+						<div class="card text-center">
+							<div class="card-header">
+								<label>Atomic Heart</label>
+								<label>?</label>
+							</div>
+							<div class="card-body">
+								<iframe
+									class="youtube-player"
+									src="https://www.youtube.com/embed/_tEgeZrOOHM"
+									title="Atomic Heart - Official Trailer #1"
+									frameborder="0"
+									allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+									allowfullscreen
+								></iframe>
+							</div>
+							<div class="card-footer text-muted">Mais detalhes...</div>
+						</div>
+						<div class="card text-center">
+							<div class="card-header">
+								<label>Dead Island 2</label>
+								<label>?</label>
+							</div>
+							<div class="card-body">
+								<iframe
+									class="youtube-player"
+									src="https://www.youtube.com/embed/yiHalBhBMj4"
+									title="Dead Island 2 - Launch Trailer | PS5 &amp; PS4 Games"
+									frameborder="0"
+									allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+									allowfullscreen
+								></iframe>
+							</div>
+							<div class="card-footer text-muted">Mais detalhes...</div>
+						</div>
+						<div class="card text-center">
+							<div class="card-header">
+								<label>Starfield</label>
+								<label>?</label>
+							</div>
+							<div class="card-body">
+								<iframe
+									class="youtube-player"
+									src="https://www.youtube.com/embed/kfYEiTdsyas"
+									title="Starfield Official Gameplay Trailer"
+									frameborder="0"
+									allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+									allowfullscreen
+								></iframe>
+							</div>
+							<div class="card-footer text-muted">Mais detalhes...</div>
+						</div>
+						<div class="card text-center">
+							<div class="card-header">
+								<label>Chants of Sennaar</label>
+								<label>?</label>
+							</div>
+							<div class="card-body">
+								<iframe
+									class="card-video youtube-player"
+									src="https://www.youtube.com/embed/__hzPH3tcvA"
+									title="Chants of Sennaar - Launch Trailer"
+									frameborder="0"
+									allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+									allowfullscreen
+								></iframe>
+							</div>
+							<div class="card-footer text-muted">Mais detalhes...</div>
+						</div>
+						<div class="card text-center">
+							<div class="card-header">
+								<label>Hi-Fi RUSH</label>
+								<label>?</label>
+							</div>
+							<div class="card-body">
+								<iframe
+									class="card-video youtube-player"
+									src="https://www.youtube.com/embed/pgd4aU56Kig"
+									title="Hi-Fi RUSH |  Official Launch Trailer"
+									frameborder="0"
+									allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+									allowfullscreen
+								></iframe>
+							</div>
+							<div class="card-footer text-muted">Mais detalhes...</div>
+						</div>
+						<div class="card text-center">
+							<div class="card-header">
+								<label>Humanity</label>
+								<label>?</label>
+							</div>
+							<div class="card-body">
+								<iframe
+									class="card-video youtube-player"
+									src="https://www.youtube.com/embed/62Yjl5rTXSY"
+									title="Humanity - Reveal Trailer | PS5, PS4, PSVR &amp; PS VR2 Games"
+									frameborder="0"
+									allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+									allowfullscreen
+								></iframe>
+							</div>
+							<div class="card-footer text-muted">Mais detalhes...</div>
+						</div>
+						<div class="card text-center">
+							<div class="card-header">
+								<label>Lies of P</label>
+								<label>?</label>
+							</div>
+							<div class="card-body">
+								<iframe
+									class="card-video youtube-player"
+									src="https://www.youtube.com/embed/TYr1x25Z1Ak"
+									title="Lies of P - Official Release Date Trailer | PS5 &amp; PS4 Games"
+									frameborder="0"
+									allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+									allowfullscreen
+								></iframe>
+							</div>
+							<div class="card-footer text-muted">Mais detalhes...</div>
+						</div>
+					</div>
+					<div class="second-row-button">
+						<button type="button" class="btn custom-glow">
 							<div>
-								<h4>Principais Jogos</h4>
-								<ul>
-									<li>Baldur's Gate 3</li>
-									<li>Tetris Effect: Connected</li>
-									<li>Resident Evil 4 Remake</li>
-								</ul>
+								<i class="fa-solid fa-plus"></i>
+								Carregar mais lançamentos
 							</div>
-						</div>
-						<div class="card-footer text-muted">Mais detalhes...</div>
-					</div>
-
-					<div class="card text-center">
-						<div class="card-header">
-							<label>Xbox</label>
-						</div>
-						<div class="card-body">
-							<img src="imagens/sea-of-stars.png" alt="Xbox Logo" />
-							<div>
-								<h4>Principais Jogos</h4>
-								<ul>
-									<li>Sea of Stars</li>
-									<li>Persona 4 The Golden</li>
-									<li>Cocoon</li>
-								</ul>
-							</div>
-						</div>
-						<div class="card-footer text-muted">Mais detalhes...</div>
-					</div>
-				</div>
-				<div class="third-row-button">
-					<button type="button" class="btn custom-glow">
-						<div>
-							<i class="fa-solid fa-plus"></i>
-							Carregar mais plataformas
-						</div>
-					</button>
-				</div>
-			</section>
-
-			<section id="forth-row" class="forth-row">
-				<div class="forth-row-header">
-					<h1>Publishers</h1>
-				</div>
-				<div class="game-cards">
-					<div class="card text-center">
-						<div class="card-header">
-							<label>Ubisoft</label>
-						</div>
-						<div class="card-body">
-							<img src="imagens/avatar.jpeg" alt="PC Logo" />
-							<div>
-								<h4>Principais Jogos</h4>
-								<ul>
-									<li>Avatar: Frontiers of Pandora</li>
-									<li>Assassin's Creed Mirage</li>
-									<li>The Division Resurgence</li>
-								</ul>
-							</div>
-						</div>
-						<div class="card-footer text-muted">Mais detalhes...</div>
-					</div>
-
-					<div class="card text-center">
-						<div class="card-header">
-							<label>EA</label>
-						</div>
-						<div class="card-body">
-							<img src="imagens/hifirush.jpeg" alt="Plastation Logo" />
-							<div>
-								<h4>Principais Jogos</h4>
-								<ul>
-									<li>Hi-Fi Rush</li>
-									<li>Metroid Prime Remastered</li>
-									<li>Octopath Traveler II</li>
-								</ul>
-							</div>
-						</div>
-						<div class="card-footer text-muted">Mais detalhes...</div>
-					</div>
-
-					<div class="card text-center">
-						<div class="card-header">
-							<label>Bethesda</label>
-						</div>
-						<div class="card-body">
-							<img src="imagens/Starfield.jpg" alt="Xbox Logo" />
-							<div>
-								<h4>Principais Jogos</h4>
-								<ul>
-									<li>Starfield</li>
-									<li>Redfall</li>
-									<li>Mighty DOOM</li>
-								</ul>
-							</div>
-						</div>
-						<div class="card-footer text-muted">Mais detalhes...</div>
-					</div>
-				</div>
-				<div class="forth-row-button">
-					<button type="button" class="btn custom-glow">
-						<div>
-							<i class="fa-solid fa-plus"></i>
-							Carregar mais plataformas
-						</div>
-					</button>
-				</div>
-			</section>
-
-			<section class="fith-row">
-				<div class="creditos">
-					<div class="sobre">
-						<h1>Sobre</h1>
-						<p>
-							Bem-vindo ao nosso blog de games, um espaço dedicado aos entusiastas, jogadores e amantes da
-							indústria de videogames! Aqui, mergulhamos fundo no mundo dos jogos eletrônicos, explorando desde
-							os últimos lançamentos até os clássicos atemporais que moldaram a história dos video games.
-						</p>
-					</div>
-					<div class="editorial">
-						<h1>Editorial</h1>
-						<div class="editorial-body">
-							<div class="editorial-body-creditos">
-								<label>
-									<i class="fa-solid fa-user"></i>
-									<b>Redação: </b>
-									Lucas Gualtieri
-								</label>
-								<label>
-									<i class="fa-solid fa-user"></i>
-									<b>Pesquisa</b>
-									Lucas Gualtieri
-								</label>
-								<label>
-									<i class="fa-solid fa-user"></i>
-									<b>Gerente Geral</b>
-									Lucas Gualtieri
-								</label>
-							</div>
-							<div class="redes-sociais">
-								<h2>Redes sociais:</h2>
-								<div>
-									<i class="fa-brands fa-x-twitter"></i>
-									<i class="fa-brands fa-github"></i>
-									<i class="fa-brands fa-instagram"></i>
-								</div>
-							</div>
-						</div>
+						</button>
 					</div>
 				</div>
 			</section>
@@ -641,130 +518,5 @@
 			<label> Copyright 2024 - Disciplina de Desenvolvimento de Interfaces WEB - <b>ICEI PUC Minas</b> </label>
 			<img src="imagens/logo.png" alt="Logo" />
 		</footer>
-
-		<!-- Modal 1 -->
-		<div
-			class="modal fade"
-			id="modal1"
-			tabindex="-1"
-			role="dialog"
-			aria-labelledby="exampleModalCenterTitle"
-			aria-hidden="true"
-		>
-			<div class="modal-dialog modal-dialog-centered" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLongTitle">Torre Esmeralda</h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body">
-						<img src="imagens/apt_01.jpg" alt="" />
-						<p>
-							Um estúdio elegante e contemporâneo, com design aberto, decoração minimalista e eletrodomésticos
-							de última geração.
-						</p>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn modal-button">Ir para pagamento</button>
-						<button type="button" class="btn modal-button" data-dismiss="modal">Fechar</button>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- Modal 2 -->
-		<div
-			class="modal fade"
-			id="modal2"
-			tabindex="-1"
-			role="dialog"
-			aria-labelledby="exampleModalCenterTitle"
-			aria-hidden="true"
-		>
-			<div class="modal-dialog modal-dialog-centered" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLongTitle">Residencial Solaris</h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body">
-						<img src="imagens/apt_02.jpg" alt="" />
-						<p>
-							Um charmoso apartamento de um quarto, com decoração acolhedora, muita luz natural e um espaço de
-							convivência confortável para relaxar.
-						</p>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn modal-button">Ir para pagamento</button>
-						<button type="button" class="btn modal-button" data-dismiss="modal">Fechar</button>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- Modal 3 -->
-		<div
-			class="modal fade"
-			id="modal3"
-			tabindex="-1"
-			role="dialog"
-			aria-labelledby="exampleModalCenterTitle"
-			aria-hidden="true"
-		>
-			<div class="modal-dialog modal-dialog-centered" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLongTitle">Edifício Montanha Azul</h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body">
-						<img src="imagens/apt_03.jpg" alt="" />
-						<p>
-							Um loft de estilo industrial, com paredes de tijolos expostos, tetos altos e grandes janelas que
-							oferecem uma vista deslumbrante da cidade.
-						</p>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn modal-button">Ir para pagamento</button>
-						<button type="button" class="btn modal-button" data-dismiss="modal">Fechar</button>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- Modal 4 -->
-		<div
-			class="modal fade"
-			id="modal4"
-			tabindex="-1"
-			role="dialog"
-			aria-labelledby="exampleModalCenterTitle"
-			aria-hidden="true"
-		>
-			<div class="modal-dialog modal-dialog-centered" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLongTitle">Condomínio Girassol</h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body">
-						<img src="imagens/apt_04.jpg" alt="" />
-						<p>
-							Um luxuoso apartamento à beira-mar, com vista panorâmica para o oceano, varanda espaçosa e
-							decoração elegante inspirada no litoral, ideal para viver à beira-mar.
-						</p>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn modal-button">Ir para pagamento</button>
-						<button type="button" class="btn modal-button" data-dismiss="modal">Fechar</button>
-					</div>
-				</div>
-			</div>
-		</div>
 	</body>
 </html>
