@@ -2,46 +2,51 @@
 
 // clear && javac Gerenciador.java && java Gerenciador
 
+import java.io.File;
+
 class Gerenciador {
 	public static void main(String[] args) throws Exception {
 
 		String filePath = "dados/livros.db";
 
+		// File f = new File(filePath);
+		// f.delete();
+
 		Arquivo<Livro> arquivoDeLivros = new Arquivo<>(Livro.getConstructor(), filePath);
 
-		arquivoDeLivros.Inicializar(0);
+		// arquivoDeLivros.Inicializar(0);
 
 		Livro l1 = new Livro("Odisséia", "Homero", 15.99F);
 		// Livro l2 = new Livro(5, "Ensino Híbrido", "Lilian Bacich", 39.90F);
 
-		int id1, id2;
+		int idRetorno;
 	
-		id1 = arquivoDeLivros.create(l1);
-		System.out.println("Livro criado com o ID: " + id1);
+		idRetorno = arquivoDeLivros.create(l1);
+		System.out.println("Livro criado com o ID: " + l1.getID());
 
-		// id2 = arquivoDeLivros.create(l2);
+		// idRetorno = arquivoDeLivros.create(l2);
 		// System.out.println("Livro criado com o ID: " + id2);
 
-		// if (arquivoDeLivros.delete(1)) {
+		// if (arquivoDeLivros.delete(l1.getID())) {
 		// 	System.out.println("Livro excluído com sucesso");
 		// } else {
 		// 	System.out.println("Livro já exclúido");
 		// }
 
-		// if (arquivoDeLivros.delete(1)) {
+		// if (arquivoDeLivros.delete(l1.getID())) {
 		// 	System.out.println("Livro excluído com sucesso");
 		// } else {
 		// 	System.out.println("Livro já exclúido");
 		// }
 
-		Livro livro = arquivoDeLivros.read(1);
+		Livro livro = arquivoDeLivros.read(l1.getID());
 		if (livro != null) {
 			System.out.println(livro.toString());
 		} else {
 			System.out.println("Livro não encontrado");
 		}
 		
-		l1.setTitulo("Teste novo Titulo");
+		l1.setTitulo("Novo");
 		if (arquivoDeLivros.update(l1)) {
 			System.out.println("Livro atualizado com sucesso");
 		} else {

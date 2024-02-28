@@ -40,19 +40,17 @@ class Livro implements Entidade {
 	public int getID() { return this.ID; }
 	public void setID(int i) { this.ID = i; }
 
-	public byte[] toByteArray() {
+	public byte[] toByteArray() throws Exception {
 
 		ByteArrayOutputStream ba_out = null;
 
-		try {
-			ba_out = new ByteArrayOutputStream();
-			DataOutputStream dos = new DataOutputStream(ba_out);
-	
-			dos.writeInt(this.ID);
-			dos.writeUTF(this.titulo);
-			dos.writeUTF(this.autor);
-			dos.writeFloat(this.preco);
-		} catch (Exception e) { e.printStackTrace(); }
+		ba_out = new ByteArrayOutputStream();
+		DataOutputStream dos = new DataOutputStream(ba_out);
+
+		dos.writeInt(this.ID);
+		dos.writeUTF(this.titulo);
+		dos.writeUTF(this.autor);
+		dos.writeFloat(this.preco);
 
 		return ba_out.toByteArray();
 	}

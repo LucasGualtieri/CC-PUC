@@ -8,25 +8,31 @@ import java.lang.reflect.Constructor;
 interface Entidade {
 	public int getID();
 	public void setID(int id);
-	public byte[] toByteArray();
+	public byte[] toByteArray() throws Exception;
 	public void fromByteArray(byte[] array);
 }
 
 class Arquivo<T extends Entidade> {
 	Constructor<T> construtor;
 	RandomAccessFile arq;
+	short HEADER_SIZE;
 
 	public Arquivo(Constructor<T> construtor) {
 		this.construtor = construtor;
 	}
 
-	public Arquivo(Constructor<T> construtor, String filePath) throws FileNotFoundException {
+	public Arquivo(Constructor<T> construtor, String filePath) throws FileNotFoundException, IOException {
 		this.construtor = construtor;
 		AbrirArquivo(filePath);
 	}
 
-	private void AbrirArquivo(String filePath) throws FileNotFoundException {
+	private void AbrirArquivo(String filePath) throws FileNotFoundException, IOException {
 		arq = new RandomAccessFile(filePath, "rw");
+
+		if (arq.length() < 4) {
+			arq.seek(0);
+			arq.writeInt(0);
+		}
 	}
 
 	public void Instanciador() throws Exception {
@@ -40,20 +46,11 @@ class Arquivo<T extends Entidade> {
 		return objeto;
 	}
 
-	// public Livro Instanciador(byte[] array) throws Exception {
-	// 	return new Livro(array);
-	// }
-
 	public void Inicializar() throws IOException {
 		arq.writeInt(0);
 	}
 
-	public void Inicializar(int id) throws IOException {
-		arq.seek(0);
-		arq.writeInt(id);
-	}
-
-	public int create(Livro obj) throws Exception {
+	public int create(T obj) throws Exception {
 
 		arq.seek(0); // Ir para o começo, irrelevante somente na primeira operação
 		int ultimoID = arq.readInt(); // Recuperar o último ID
@@ -132,7 +129,7 @@ class Arquivo<T extends Entidade> {
 			}
 
 			else {
-				arq.seek(arq.getFilePointer() + Math.abs(tamanhoRegistro));
+				arq.skipBytes(Math.abs(tamanhoRegistro));
 			}
 		}
 
@@ -164,7 +161,7 @@ class Arquivo<T extends Entidade> {
 					if (novoRegistro.length <= registro.length) {
 						arq.seek(endereco + 2); // Volta para o começo do registro
 						arq.write(novoRegistro);
-						arq.seek(len);
+						arq.seek(len); // Encerra o while
 					} else {
 						arq.seek(endereco);
 						arq.writeShort(-tamanhoRegistro);
