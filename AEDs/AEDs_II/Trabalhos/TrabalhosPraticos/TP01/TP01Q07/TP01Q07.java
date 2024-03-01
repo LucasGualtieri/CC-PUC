@@ -211,7 +211,7 @@ class TP01Q07 {
 				if (Lib.isEqual(HTML.substring(i, i + 7), "<table>")) {
 					i += 7;
 				}
-			} if (i < htmlLen - 4) { // Evitando os <br>
+			} else if (i < htmlLen - 4) { // Evitando os <br>
 				if (Lib.isEqual(HTML.substring(i, i + 4), "<br>")) {
 					i += 4;
 				}
