@@ -1,0 +1,22 @@
+LOGISIM: Fazer um decodificador para um somador de 4bits e mostrar em Display de 7 segmentos hexadecimal
+TinkerCad: Fazer o somador de 1 Bit simples, sem carry in, carry out, nem display de 7 segmentos
+
+Códigos Portas Lógicas
+AND - 7408
+OR - 7432
+NOT - 7404
+XOR - 7486
+
+Datasheet para saber a qtd de energia necessária para os circuitos das portas
+
+Cathode tem que ser ligado no menos
+
+Anode tem que ser ligado no mais
+
+overflow é quando o que eu quero medir é maior do que meu sistema de medida
+
+10000
+-0101
+ 1011
+
+ igual a pegar 0101 fazer um not bit a bit e somar 1
