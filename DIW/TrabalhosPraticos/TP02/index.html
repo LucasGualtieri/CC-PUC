@@ -325,6 +325,131 @@
 							</ul>
 						</div>
 					</div>
+
+					Filtrar por tags
+					<div class="dropdown">
+						<button
+							class="btn btn-secondary dropdown-toggle"
+							type="button"
+							id="dropdownMenu2"
+							data-toggle="dropdown"
+							aria-haspopup="true"
+							aria-expanded="false"
+						>
+							Dropdown
+						</button>
+						<div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+							<ul>
+								<li>
+									<input type="checkbox" id="option1" name="option1" value="Option 1" />
+									Singleplayer
+								</li>
+								<li>
+									<input type="checkbox" id="option2" name="option2" value="Option 2" />
+									Multiplayer
+								</li>
+							</ul>
+						</div>
+					</div>
+
+					Filtrar por Genero
+					<div class="dropdown">
+						<button
+							class="btn btn-secondary dropdown-toggle"
+							type="button"
+							id="dropdownMenu2"
+							data-toggle="dropdown"
+							aria-haspopup="true"
+							aria-expanded="false"
+						>
+							Dropdown
+						</button>
+						<div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+							<ul>
+								<li>
+									<input type="checkbox" id="option1" name="option1" value="Option 1" />
+									action
+								</li>
+								<li>
+									<input type="checkbox" id="option2" name="option2" value="Option 2" />
+									Indie
+								</li>
+							</ul>
+						</div>
+					</div>
+
+					Filtrar por publishers
+					<div class="dropdown">
+						<button
+							class="btn btn-secondary dropdown-toggle"
+							type="button"
+							id="dropdownMenu2"
+							data-toggle="dropdown"
+							aria-haspopup="true"
+							aria-expanded="false"
+						>
+							Dropdown
+						</button>
+						<div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+							<ul>
+								<li>
+									<input type="checkbox" id="option1" name="option1" value="Option 1" />
+									electronic-arts
+								</li>
+								<li>
+									<input type="checkbox" id="option2" name="option2" value="Option 2" />
+									microsoft-studios
+								</li>
+							</ul>
+						</div>
+					</div>
+					Filtrar por developers
+					<div class="dropdown">
+						<button
+							class="btn btn-secondary dropdown-toggle"
+							type="button"
+							id="dropdownMenu2"
+							data-toggle="dropdown"
+							aria-haspopup="true"
+							aria-expanded="false"
+						>
+							Dropdown
+						</button>
+						<div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+							<ul>
+								<li>
+									<input type="checkbox" id="option1" name="option1" value="Option 1" />
+									valve-software
+								</li>
+								<li>
+									<input type="checkbox" id="option2" name="option2" value="Option 2" />
+									feral-interactive
+								</li>
+							</ul>
+						</div>
+					</div>
+
+					<div>
+						Filter by Date
+						<!-- Fazer um date picker e converter pra string pras usar como query parameter -->
+						<label for="start">Start date:</label>
+
+						<input
+							type="date"
+							id="start"
+							name="trip-start"
+							value="2018-07-22"
+							min="2018-01-01"
+							max="2024-12-31"
+						/>
+						<input type="text" />Data range Max
+					</div>
+
+					<div>
+						<!-- Fazer um date picker e converter pra string pras usar como query parameter -->
+						Filter by updated date
+						<input type="text" />Data 1
+					</div>
 				</div>
 				<div class="releases">
 					<div class="second-row-header">
@@ -337,11 +462,15 @@
 									data-bs-toggle="dropdown"
 									aria-expanded="false"
 								>
-									Ordem: Popularidade
+									Ordenar: Nome
 								</button>
 								<ul class="dropdown-menu">
-									<li><a class="dropdown-item" href="#">Ano de Lançamento</a></li>
-									<li><a class="dropdown-item" href="#">Distribuidora</a></li>
+									<li><a class="dropdown-item" href="#">released</a></li>
+									<li><a class="dropdown-item" href="#">added</a></li>
+									<li><a class="dropdown-item" href="#">created</a></li>
+									<li><a class="dropdown-item" href="#">updated</a></li>
+									<li><a class="dropdown-item" href="#">rating</a></li>
+									<li><a class="dropdown-item" href="#">metacritic</a></li>
 								</ul>
 							</div>
 
@@ -352,13 +481,13 @@
 									data-bs-toggle="dropdown"
 									aria-expanded="false"
 								>
-									Gênero: Todos
+									Exibir: 10 por página
 								</button>
 								<ul class="dropdown-menu">
-									<li><a class="dropdown-item" href="#">Action</a></li>
-									<li><a class="dropdown-item" href="#">Adventure</a></li>
-									<li><a class="dropdown-item" href="#">Indie</a></li>
-									<li><a class="dropdown-item" href="#">Shooter</a></li>
+									<li><a class="dropdown-item" href="#">10 por página</a></li>
+									<li><a class="dropdown-item" href="#">20 por página</a></li>
+									<li><a class="dropdown-item" href="#">30 por página</a></li>
+									<li><a class="dropdown-item" href="#">10 por página</a></li>
 								</ul>
 							</div>
 						</div>
@@ -502,12 +631,17 @@
 						</div>
 					</div>
 					<div class="second-row-button">
-						<button type="button" class="btn custom-glow">
-							<div>
-								<i class="fa-solid fa-plus"></i>
-								Carregar mais lançamentos
-							</div>
-						</button>
+						<ul>
+							<li style="display: inline"><< Página x - 1</li>
+							<li style="display: inline">Página x</li>
+							<li style="display: inline">Página x + 1 >></li>
+
+							<!-- O simbulo << só deve aparecer ser o previous do fetch for diferente de NULL -->
+							<!-- O simbulo >> só deve aparecer ser o next do fetch for diferente de NULL -->
+							<!-- Quando a página for a primeira, a disposição dos items tem que ser Pagina 1 Pagina 2 >> -->
+							<!-- Talvez fazer sem escrever "Página" -->
+							<!-- Se inspirar na Kabum -->
+						</ul>
 					</div>
 				</div>
 			</section>
