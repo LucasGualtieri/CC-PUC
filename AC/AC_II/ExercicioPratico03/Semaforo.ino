@@ -48,6 +48,10 @@ void toggleLED(int LED) {
 	digitalWrite(LED, digitalRead(LED) == HIGH ? LOW : HIGH);
 }
 
+bool isLEDOn(int LED) {
+	return digitalRead(LED) == HIGH;
+}
+
 void turnSemaforoOFF() {
 	turnOFF(redLED);
 	turnOFF(greenLED);
@@ -56,26 +60,23 @@ void turnSemaforoOFF() {
 
 void Semaforo() {
 
-	static int systemState = 1;
-
-	// Serial.print("systemState: ");
-	// Serial.println(systemState);
+	static int clkCount = 1;
 
 	turnSemaforoOFF();
 
-	if (systemState <= RED_SEMAFORO_TIME) {
+	if (clkCount <= RED_SEMAFORO_TIME) {
 		turnON(redLED);
-	} else if (systemState <= GREEN_SEMAFORO_TIME) {
+	} else if (clkCount <= GREEN_SEMAFORO_TIME) {
 		turnON(greenLED);
-	} else if (systemState <= YELLOW_SEMAFORO_TIME) {
+	} else if (clkCount <= YELLOW_SEMAFORO_TIME) {
 		turnON(yellowLED);
 	}
 
-	systemState = systemState == YELLOW_SEMAFORO_TIME ? 1 : systemState + 1;
+	clkCount = clkCount == YELLOW_SEMAFORO_TIME ? 1 : clkCount + 1;
 }
 
 void loop() { // Cada loop representa um clock
 	toggleLED(blueLED);
-	if (digitalRead(blueLED) == HIGH) Semaforo();
+	if (isLEDOn(blueLED)) Semaforo();
 	delay(CLOCK_SPEED);
 }
