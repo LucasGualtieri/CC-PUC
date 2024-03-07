@@ -1,7 +1,7 @@
 #include <stdarg.h>
 
 #define SEC_TO_MS(segundos) (segundos * 1000)
-#define CLOCK_SPEED SEC_TO_MS(0.25)
+#define CLOCK_SPEED SEC_TO_MS(1)
 
 const int redLED = 13;
 const int yellowLED = 12;
