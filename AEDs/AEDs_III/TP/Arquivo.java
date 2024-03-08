@@ -5,14 +5,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.lang.reflect.Constructor;
 
-interface Entidade {
-	public int getID();
-	public void setID(int id);
-	public byte[] toByteArray() throws Exception;
-	public void fromByteArray(byte[] array);
-}
-
-class Arquivo<T extends Entidade> {
+class Arquivo<T extends Registro> {
 	Constructor<T> construtor;
 	RandomAccessFile arq;
 	short HEADER_SIZE;

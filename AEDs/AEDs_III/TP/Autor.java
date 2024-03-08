@@ -7,33 +7,33 @@ import java.io.DataOutputStream;
 import java.lang.reflect.Constructor;
 import java.text.NumberFormat;
 
-class Livro implements Registro {
+class Autor implements Registro {
 
 	private int ID;
-	private String titulo;
-	private String autor;
-	private float preco;
+	private String nomeCompleto;
+	private int idade;
+	private int qtdLivrosEscritos;
 
-	public static Constructor<Livro> getConstructor() throws NoSuchMethodException, SecurityException {
-		return Livro.class.getConstructor();
+	public static Constructor<Autor> getConstructor() throws NoSuchMethodException, SecurityException {
+		return Autor.class.getConstructor();
 	}
 
-	public Livro() {
-		this(-1, "", "", 0F);
+	public Autor() {
+		this(-1, "", -1, -1);
 	}
 
-	public Livro(String t, String a, float p) {
+	public Autor(String t, int a, int p) {
 		this(-1, t, a, p);
 	}
 
-	public Livro(int id, String t, String a, float p) {
+	public Autor(int id, String t, int a, int p) {
 		this.ID = id;
-		this.titulo = t;
-		this.autor = a;
-		this.preco = p;
+		this.nomeCompleto = t;
+		this.idade = a;
+		this.qtdLivrosEscritos = p;
 	}
 
-	public Livro(byte[] array) throws Exception {
+	public Autor(byte[] array) throws Exception {
 		fromByteArray(array);
 	}
 
@@ -48,9 +48,9 @@ class Livro implements Registro {
 		DataOutputStream dos = new DataOutputStream(ba_out);
 
 		dos.writeInt(this.ID);
-		dos.writeUTF(this.titulo);
-		dos.writeUTF(this.autor);
-		dos.writeFloat(this.preco);
+		dos.writeUTF(this.nomeCompleto);
+		dos.writeShort(this.idade);
+		dos.writeShort(this.qtdLivrosEscritos);
 
 		return ba_out.toByteArray();
 	}
@@ -64,9 +64,9 @@ class Livro implements Registro {
 			DataInputStream dis = new DataInputStream(ba_in);
 	
 			this.ID = dis.readInt();
-			this.titulo = dis.readUTF();
-			this.autor = dis.readUTF();
-			this.preco = dis.readFloat();
+			this.nomeCompleto = dis.readUTF();
+			this.idade = dis.readShort();
+			this.qtdLivrosEscritos = dis.readShort();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -76,12 +76,13 @@ class Livro implements Registro {
 
 		String str;
 		str = "ID: " + this.ID;
-		str += "\nTítulo: " + this.titulo;
-		str += "\nAutor: " + this.autor;
-		str += "\nPreço: " + NumberFormat.getCurrencyInstance().format(this.preco);
+		str += "\nNome: " + this.nomeCompleto;
+		str += "\nIdade: " + this.idade;
+		str += "\nLivros Escritos: " + this.qtdLivrosEscritos;
 
 		return str;
 	}
 
-	public void setTitulo(String titulo) { this.titulo = titulo; }
+	public void setNomeCompleto(String nomeCompleto) { this.nomeCompleto = nomeCompleto; }
+	public void setIdade(int idade) { this.idade = idade; }
 }
