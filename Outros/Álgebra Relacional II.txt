@@ -17,18 +17,25 @@ Projetar o primeiro nome e o último nome dos atores que não são diretores;
 	A - B
 
 Projetar o primeiro nome e o último nome dos atores e diretores;
-	A = π first_name -> NomeDoAtor, last_name -> SobrenomeDoAtor (actors)
-	B = π first_name -> NomeDoDiretor, last_name -> SobrenomeDoDiretor (directors)
-	A ⨝ B
+	-- A projeção do nome e sobrenome é importante para que a U funcione
+A = π first_name -> NomeDoAtor, last_name -> SobrenomeDoAtor (actors)
+B = π first_name -> NomeDoDiretor, last_name -> SobrenomeDoDiretor (directors)
+A ∪ B
 
 Projetar o nome dos filmes que não são dirigidos por nenhum diretor;
 	A = movies ⨝ id = movie_id movies_directors
-	B = γ movie_id; COUNT(director_id) -> NumeroDeDiretores(movies_directors)
+	B = γ name, movie_id; COUNT(director_id) -> NumeroDeDiretores(A)
 	σ NumeroDeDiretores = 0 B
+
+	A = movies ⨝ id = movie_id movies_directors
+	B = σ director_id = null (A)
+	π name B
 
 Projetar primeiro nome e o último nome dos atores que não atuaram em pelo menos dois filmes;
 	A = actors ⨝ id = actor_id roles
-	B = γ actor_id; COUNT(movie_id) -> NumeroAtuacoes (A)
+	B = γ first_name, last_name, actor_id; COUNT(movie_id) -> NumeroAtuacoes (A)
 	σ NumeroAtuacoes < 2 B
+	pi CONCAT(first_name, ' ', last_name) -> NomeSobrenome B
 
 Projetar, por gênero e ano, o número médio de filmes com menos de dois atores atuando.
+	... 
