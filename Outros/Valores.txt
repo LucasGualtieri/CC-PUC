@@ -1,0 +1,9 @@
+Valores: O documento explica o conceito de valores, que são as entidades que existem durante uma computação, e como eles podem ser agrupados em tipos, que especificam as operações possíveis sobre eles.
+Tipos primitivos e compostos: O documento apresenta os tipos primitivos mais comuns, como lógico, inteiro, real e caractere, e os mecanismos básicos de estruturação de tipos compostos, como produto cartesiano, união discriminada, mapeamento, sequência, conjunto potência e recursão.
+Sistema de tipos: O documento discute as diferenças entre tipagem estática e dinâmica, equivalência estrutural e de nomes, e o princípio da completeza de tipo, que afetam a expressividade, a segurança e a eficiência de uma linguagem de programação.
+Expressões: O documento define o que são expressões, que são frases de programa que podem ser avaliadas para fornecer um valor, e os tipos de expressões mais comuns, como literal, agregado, chamada de função, expressão condicional e acesso a variáveis e constantes1.
+
+O documento fala sobre valores, que são as entidades que existem durante uma computação, e tipos, que são as especificações das classes de valores e das operações sobre eles.
+O documento apresenta os tipos primitivos mais comuns, como lógico, inteiro, real e caractere, e os tipos compostos, que são formados a partir de tipos simples usando mecanismos como produto cartesiano, união discriminada, mapeamento, sequência, conjunto potência e recursão.
+O documento também discute o sistema de tipos de uma linguagem de programação, que pode ser tipado estaticamente ou dinamicamente, e as formas de verificar a equivalência de tipos entre variáveis, que podem ser por equivalência estrutural ou por equivalência de nomes.
+O documento explica as diferentes formas de construir expressões, que são frases de programa que podem ser avaliadas para fornecer um valor, como literais, agregados, chamadas de função, expressões condicionais e acesso a variáveis e constantes1.
