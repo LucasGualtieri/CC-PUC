@@ -1,0 +1,17 @@
+A memória secundária é qualquer dispositivo de armazenamento permanente externo à placa-mãe, mas que pode ser usado como área de trabalho pelos programas de computadores.
+
+A contínua evolução do hardware tem permitido que os dispositivos de armazenamento de dados – as memórias – sejam cada vez menores, mais rápidos, de maior capacidade e mais baratos. Entretanto, existem vários tipos de memória, cada um com suas aplicações e relação custo/benefício. Os principais tipos de memória são:
+
+	- Memória primária ou principal – memória de alta velocidade para armazenamento de programas e dados em uso pelo computador. São memórias com tempo de acesso muito baixo, mas com custo por byte relativamente alto. A memória RAM é o principal exemplo de memória primária. Na maioria das vezes são memórias voláteis (que se apagam quando a máquina é desligada).
+
+	- Memória secundária – memória utilizada para armazenar grandes volumes de dados que não são comportados na memória principal ou em que a relação custo/benefício não é vantajosa. É, portanto, significativamente mais lenta, mas também mais barata que a memória primária. Programas e dados que não estão em uso imediato pelo computador, mas que devem estar facilmente acessíveis também são armazenados em memória secundária. O disco rígido é o tipo de memória secundária mais usual nos dias de hoje.
+
+	- Memória terciária – memória utilizada para armazenar gigantescos volumes de dados, quando o tempo de acesso não é um fator crítico. Exemplos de memórias terciárias são as jukeboxes de CDs ou DVDs e os silos robotizados de fitas. A memória terciária também é utilizada para fins de cópias de segurança (backups).
+
+Quando um determinado sistema requer o acesso e/ou a manipulação de um grande volume de dados, que não cabem na memória primária, ele deve usar uma memória secundária, como o disco rígido, para armazenamento desses dados.
+
+Entretanto, o disco rígido gasta muito mais tempo para acessar os dados que a memória principal. Tipicamente, considerando os dispositivos existentes hoje, o tempo de recuperação de uma informação em um disco rígido é mais de 1.000 vezes superior ao tempo de recuperação de uma informação na memória principal. Além de serem dispositivos mais lentos, eles não são acessados diretamente pela CPU, mas por meio de algum tipo de interface.
+
+Portanto, precisamos escrever algoritmos específicos para armazenamento de dados em disco, diferentes daqueles que usamos para armazenamento em memória principal. Precisamos antes disso, porém, compreender como um disco rígido funciona e esse é o nosso objetivo neste texto.
+
+O vídeo a seguir explica também essas diferenças entre os tipos de memória e apresenta os principais dispositivos de memória secundária

@@ -1,0 +1,40 @@
+Questão 1: O planejamento do tamanho de um registro em um arquivo de dados deve levar em consideração o tamanho do setor do disco rígido? Justifique sua resposta.
+	
+	- Explicação: Estrutura dos discos rígidos: Minutagem 07:00 -> https://pucminas.instructure.com/courses/191400/pages/estrutura-dos-discos-rigidos?module_item_id=4018124
+		
+	- Dúvidas:
+		- "Vai no disco, pega todo o setor e põe em memória do 'DISCO RIGIDO?'"
+		- 'Registros' de 4k? Ou bloco de registros de Tamanho 4k?
+
+		"Uma das regras de otimização em algoritmos que usam arquivos é a gente sempre tentar trabalhar com blocos de 4k. Todos os meus objetos de dados são multiplos/frações de 4k. Exemplo: Registro de cliente de 4k, ou 2k, ou 1. Não se faz uma coisa fracionada de forma a 'picar' o registro entre dois setores. Pode ser que ele seja maior que 4k, ai usamos 8k, 16k, 32k. Fazemos isso para otimizar as operações em disco"
+
+	- Resposta: 
+
+---------------------------------------------------------------------
+
+Questão 2: Considerando as características de um disco rígido, explique por que a leitura de registros sequenciais em disco é mais rápida do que a leitura de registros aleatórios.
+	
+	- Explicação: Tempo das operações em discos rígidos: Minutagem 11:06 -> https://pucminas.instructure.com/courses/191400/pages/tempo-das-operacoes-em-discos-rigidos?module_item_id=4018125
+		
+	- Resposta: Considerando que para acessar um determinado setor do disco rígido é necessário esperar:
+		X = Tempo de acesso + tempo de busca + latência rotacional + tempo de Transferência
+	Quanto mais acessos aleatórios (N = número de acessos aleatórios) mais espera tempos. N * X
+	Agora quando fazemos um acesso sequencial pagamos apenas X + algumas eventuais mudanças de cabeçote e cilindro. Dessa forma o acesso sequencial consegue diminuir muito o gargalo dos mecanismos físicos do disco rigido.
+
+---------------------------------------------------------------------
+
+Questão 3: Quantos bytes são necessários para se armazenar um caráter usando a codificação UTF-8? Justifique sua resposta.
+	
+	- Explicação: Codificação de caracteres: Minutagem 00:00 -> https://pucminas.instructure.com/courses/191400/pages/codificacao-de-caracteres?module_item_id=4018315
+		
+	- Resposta: A resposta simples é, depende. A codificação UTF-8 é uma codificação de tamanho variável, o que significa que cada caractere pode ter 1, 2, 3 ou 4 bytes de tamanho. Isso se da porque a codificação UTF-8 foi feita pra ser o encoding universal, e dessa forma precisa ser capaz de representar TODOS os caracteres de todas as línguas do mundo, inclusive linguas ficticias com o "Elfico". O caracteres "básicos" e encontrados na tabela ASCII usam apenas 1 byte, já os caracteres latinos por exemplo os caracteres acentuados da lingua portuguesa e o cidilha são reprentados com 2 bytes, enquanto os caracteres japones por exemplo são representado com 3 embora alguns caracteres mais raros possam ocupar 4 bytes.
+
+---------------------------------------------------------------------
+
+Tempo das Operações em Disco Rígido:
+	- Tempo de Acesso: Tempo necessário para o cabeçote ser posicionado no setor desejado.
+	- Tempo de Busca: Tempo para posicionamento no cilindro correto. Em média corresponde a 2/3 do tempo máximo.
+	- Latência Rotacional: Tempo para posicionamento no setor correto. Em média corresponde a 1/2 da rotação.
+	- Tempo de Transferência: Tempo de leitura ou escrita dos dados em disco.
+
+Setor do Disco Rígido: Menor unidade de dados lida ou escrita em um arquivo. Hoje em dia tem tamanho de 4096 bytes

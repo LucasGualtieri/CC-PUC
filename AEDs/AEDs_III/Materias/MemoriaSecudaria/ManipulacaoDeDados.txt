@@ -1,0 +1,13 @@
+Nesta semana, veremos quais são as característica do acesso a dados em memória secundária. Por memória secundária, estamos falando de dispositivos como os HDDs (Hard Disk Drive) e SSDs (Solid State Drive). E como não fazem parte da placa mãe do computador, esses dispositivos também são considerados memórias externas. 
+
+Há três grandes diferenças entre a memória principal e a memória secundária, como veremos nesta unidade:
+
+	1- As memórias secundárias geralmente possuem uma capacidade de armazenamento muito superior à memória principal e são muito mais baratas. No momento em que este texto foi escrito, o custo do GB em memória RAM era 140 vezes superior ao custo do GB em um HDD.
+
+	2- As memórias secundárias são bem mais lentas que a memória principal. Além do tempo extra necessário para a comunicação com um dispositivo externo, as memórias secundárias tem seus próprios mecanismos para acesso aos dados. Entre elas, a mais lenta é o disco rígido (HDD), pois esse acesso é mecânico, isto é, envolve a movimentação de peças mecânicas.
+
+	3- Nas memórias secundárias, os dados são armazenados em arquivos. Enquanto na memória principal você pode armazenar dados em qualquer posição livremente, na memória principal, eles devem ficar dentro de arquivos. De uma forma simplista, você pode imaginar que a memória secundária contém um conjunto de arquivos e que cada arquivo é apenas um vetor de bytes (de tamanho variável).
+
+Talvez, neste momento, essas três diferenças entre as memórias secundárias e a memória principal pareçam complicada, mas o objetivo desta unidade é exatamente explicá-las. Ao término da unidade, esses conceitos deverão estar muito claros para você.
+
+Então vamos lá? Siga para a próxima página e começaremos vendo o que de fato são memórias secundárias.
