@@ -1,0 +1,17 @@
+int tamanhoTotal = 16GB;
+int metade = Metade de tamanhoTotal; // Destino da intercalação
+int M;
+int SegmentoOrdenado = 4; Exemplo, teria que ser multiplicado a cada vez por M
+
+// Como aplicar a seguinte ideia? Considerando que tenho que usar parte do espaço disponivel para as filas e a "soma dos espacos das filas" (sera que ta certo isso?) para o destino das intercalações
+// 25% 25% 50%?
+// ou 1/4 1/4 1/4 1/4 Destino(4 * 1/4)
+
+FilaCircular<registro>[] caminhos = new FilaCircular<registro>[M](SegmentoOrdenado);
+
+Ideia de ter uma função que percorre as "cabeças" das fila circulares e retorna a menor cabeças
+
+for (intercalação) {
+	int fila = min(arrayDeFIlas);
+	arrayDeFIlas[fila]."atender"();
+}
