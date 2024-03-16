@@ -46,8 +46,8 @@ class Arquivo<T extends Registro> {
 	public int create(T obj) throws Exception {
 
 		arq.seek(0); // Ir para o começo, irrelevante somente na primeira operação
-		int ultimoID = arq.readInt(); // Recuperar o último ID
-		obj.setID(++ultimoID); // Setta o ID do objeto
+		int ultimoID = arq.readInt() + 1; // Recuperar o último ID
+		obj.setID(ultimoID); // Setta o ID do objeto
 		
 		arq.seek(0); // Volta pra começo
 		arq.writeInt(ultimoID); // Atualiza
@@ -62,7 +62,7 @@ class Arquivo<T extends Registro> {
 		
 		return obj.getID();
 	}
-	
+
 	public boolean delete(int id) throws IOException, Exception {
 		
 		boolean resultado = false;

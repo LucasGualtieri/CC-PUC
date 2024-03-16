@@ -54,16 +54,51 @@ class Ordenação {
 	}
 
 	// Essa alternativa aqui foi pensada para segmentos de tamanho fixo
-	void Intercalação() {
+	void Intercalação(int B // Vai dobrar de tamanho) {
+
+		// Abro os M arquivos destino
 		arrayDeArquivosEntrada[M];
-		arrayDeArquivosDestino[M];
-		for (int i = 0; i < B * M; i++) {
-			int fila = min(arrayDeFIlas);
-			registro = arrayDeFIlas[fila]."atender"();
-			filaDestino.push(registro);
+
+		// e jogo em cada uma das filas para começar a intercalação
+
+		arrayDeFilas[] = new Fila[M];
+		Arrays.fill(arrayDeFilas, new Fila(B));
+
+		int númeroDeBlocos = (Math.roundUp((float)N / B));
+		int númeroDeIntercalações = númeroDeBlocos / M;
+
+		for (int i = 0; i < númeroDeIntercalações; i++) {
+			array ArrayDestino[] = new array[B * M];
+
+			for (int j = 0; j < M; j++) {
+				arrayDeFilasDestino[j].PegarOsBPrimeiros(arrayDeArquivosEntrada[j]);
+			}
+	
+			for (int j = 0; j < B * M; j++) {
+				int fila = min(arrayDeFilas); // Retorna a fila cuja a cabeça é a menor
+				registro = arrayDeFilas[fila]."atender"();
+				ArrayDestino.push(registro);
+			}
+
+			arrayDeArquivosEntrada[i % M].Receber(ArrayDestino);
 		}
 	}
 
-	Esses são apenas pseudo códigos muito pouco pensados, na prática isso vai dar mais trabalho, mais coisas terão que ser levadas em consideração pra que esse código consiga ser genérico e ainda mais dificil que ele consiga trabalhar com registros de tamanho varíavel para todos os possíveis tamanhos de RAM e que consiga implementar o Heap.
+	void NPassadas/Intercações() {
+		int B = this.B;
+		for (...) {
+			Intercalação(B);
+			B *= 2;
+		}
+	}
+	
+	// Essa alternativa aqui foi pensada para segmentos de tamanho variavel
+	void Intercalação() {}
+
+	Esses são apenas pseudo códigos muito pouco pensados, na prática isso
+	vai dar mais trabalho, mais coisas terão que ser levadas em consideração
+	pra que esse código consiga ser genérico e ainda mais dificil que ele
+	consiga trabalhar com registros de tamanho varíavel para todos os possíveis
+	tamanhos de RAM e que consiga implementar o Heap.
 
 }
