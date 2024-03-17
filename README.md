@@ -1,6 +1,6 @@
 # 💻 CC-PUC 3/8
 
-## 📝 Descrição
+## 📝 Descrição!
 
 Repositório de exercícios / projetos desenvolvidos no curso de Ciência da Computação na PUC Minas.
 
