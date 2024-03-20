@@ -20,5 +20,10 @@ public static void foo(int max, Queue[]<T> queueArray) {
 
 {
 	int pos = foo(max, queueArray);
-	if (pos != -1) // continuarIntercalação
+	if (pos != -1) {
+		// continuarIntercalação
+		x = queueArray[pos].remove;
+		arquivos[i % 3].push(x);
+	}
+
 }
