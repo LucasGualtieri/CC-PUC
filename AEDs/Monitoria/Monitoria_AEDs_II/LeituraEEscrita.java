@@ -38,6 +38,7 @@ public class LeituraEEscrita {
 			if (pos > 0) arquivo.seek(pos - 4);
 		}
 
+		sc.close();
 		arquivo.close();
 	}
 }
