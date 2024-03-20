@@ -44,7 +44,7 @@ Intercalação() {
 			*/
 		}
 
-		destinos[i % 3].push(queueDestino().toByteArray());
+		destinos[i % M].push(queueDestino().toByteArray());
 		queueDestino.Flush();
 	}
 }
