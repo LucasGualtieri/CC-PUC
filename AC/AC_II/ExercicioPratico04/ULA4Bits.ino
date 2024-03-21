@@ -18,14 +18,17 @@ void setOutput(byte A, byte B, byte output, byte carryOut);
 class Bit {
   private:
 	byte value;
-	byte ctobyte(char c) { return '0' <= c && c <= '9' ? (c - '0') : c; } // Talvez lançar uma exceção?
-	void setValue(char value) { this->value = ctobyte(value) & 0b00000001; }
+
+	byte ctobyte(byte c) { return '0' <= c && c <= '9' ? (c - '0') : c; } // Talvez lançar uma exceção?
+	void setValue(byte value) { this->value = ctobyte(value) & 0b00000001; }
+	void setValue(const Bit& value);
 
   public:
 	Bit() { this->value = 0b00000000; }
-	Bit(byte value) { setValue(value); }
+	template<typename T>
+	Bit(T value) { setValue(value); }
 
-	int getValue() { return value; }
+	byte getValue() const { return value; }
 
 	String str() { return value == 1 ? String("1") : String("0"); }
 	String toString() { return value == 1 ? "1" : "0"; }
@@ -38,9 +41,11 @@ class Bit {
 	bool operator<=(Bit rValue) { return this->getValue() <= rValue.getValue(); }
 	Bit operator!  () { return Bit(!this->getValue()); }
 
-	Bit operator&  (Bit rValue) { return Bit(this->getValue() & rValue.getValue()); }
-	Bit operator&= (Bit rValue) {
-		*this = Bit(this->getValue() & rValue.getValue());
+	template<typename T>
+	Bit operator&  (T rValue) { return Bit(this->getValue() & Bit(rValue).getValue()); }
+	template<typename T>
+	Bit operator&= (T rValue) {
+		*this = Bit(this->getValue() & Bit(rValue).getValue());
 		return *this;
 	}
 
@@ -50,12 +55,18 @@ class Bit {
 		return *this;
 	}
 
+	Bit operator^  (Bit rValue) { return Bit(this->getValue() ^ rValue.getValue()); }
+	Bit operator^= (Bit rValue) {
+		*this = Bit(this->getValue() ^ rValue.getValue());
+		return *this;
+	}
+
 	Bit operator=(Bit bit) {
 		this->setValue(bit.getValue());
 		return *this;
 	}
 
-	Bit operator=(char bit) {
+	Bit operator=(byte bit) {
 		this->setValue(bit);
 		return *this;
 	}
@@ -64,6 +75,8 @@ class Bit {
 		return str + bit.toString();
 	}
 };
+
+void Bit::setValue(const Bit& value) { this->value = value.getValue(); }
 
 class Nibble {
   public:
@@ -80,6 +93,8 @@ void loop() {
 	String s = readString("Digite o 'OP. Code': ");
 
 	Bit b1 = s[0], b2 = s[1];
+	// Bit b1 = 0, b2 = 1;
+	// Bit b1 = Bit(1), b2 = Bit(0);
 
 	Serial.println(b1 == b2 ? "Iguais" : "Diferentes");
 
@@ -89,7 +104,7 @@ void loop() {
 
 	Serial.println("b1 | b2: " + (b1 | b2));
 
-	Serial.println("--------------------------------");
+	// Serial.println("--------------------------------");
 
 	// Teste t;
 	// int n = (t = atoi(s.c_str()));
