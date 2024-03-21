@@ -19,8 +19,8 @@ class Bit {
   private:
 	byte value;
 
-	byte ctobyte(byte c) { return '0' <= c && c <= '9' ? (c - '0') : c; } // Talvez lançar uma exceção?
-	void setValue(byte value) { this->value = ctobyte(value) & 0b00000001; }
+	byte ntobyte(byte c) { return '0' <= c && c <= '9' ? (c - '0') : c; } // Talvez lançar uma exceção?
+	void setValue(byte value) { this->value = ntobyte(value) & 0b00000001; }
 	void setValue(const Bit& value);
 
   public:
@@ -33,13 +33,19 @@ class Bit {
 	String str() { return value == 1 ? String("1") : String("0"); }
 	String toString() { return value == 1 ? "1" : "0"; }
 
-	bool operator==(Bit rValue) { return this->getValue() == rValue.getValue(); }
-	bool operator!=(Bit rValue) { return this->getValue() != rValue.getValue(); }
-	bool operator> (Bit rValue) { return this->getValue() >  rValue.getValue(); }
-	bool operator>=(Bit rValue) { return this->getValue() >= rValue.getValue(); }
-	bool operator< (Bit rValue) { return this->getValue() <  rValue.getValue(); }
-	bool operator<=(Bit rValue) { return this->getValue() <= rValue.getValue(); }
-	Bit operator!  () { return Bit(!this->getValue()); }
+	template<typename T>
+	bool operator==(T rValue)   { return this->value == Bit(rValue).getValue(); }
+	template<typename T>
+	bool operator!=(T rValue)   { return this->value != Bit(rValue).getValue(); }
+	template<typename T>
+	bool operator> (Bit rValue) { return this->value >  Bit(rValue).getValue(); }
+	template<typename T>
+	bool operator>=(Bit rValue) { return this->value >= Bit(rValue).getValue(); }
+	template<typename T>
+	bool operator< (Bit rValue) { return this->value <  Bit(rValue).getValue(); }
+	template<typename T>
+	bool operator<=(Bit rValue) { return this->value <= Bit(rValue).getValue(); }
+	Bit operator!  () { return Bit(!this->value); }
 
 	template<typename T>
 	Bit operator&  (T rValue) { return Bit(this->getValue() & Bit(rValue).getValue()); }
@@ -48,26 +54,26 @@ class Bit {
 		*this = Bit(this->getValue() & Bit(rValue).getValue());
 		return *this;
 	}
-
-	Bit operator|  (Bit rValue) { return Bit(this->getValue() | rValue.getValue()); }
-	Bit operator|= (Bit rValue) {
-		*this = Bit(this->getValue() | rValue.getValue());
+	
+	template<typename T>
+	Bit operator|  (T rValue) { return Bit(this->getValue() | Bit(rValue).getValue()); }
+	template<typename T>
+	Bit operator|= (T rValue) {
+		*this = Bit(this->getValue() | Bit(rValue).getValue());
+		return *this;
+	}
+	
+	template<typename T>
+	Bit operator^  (T rValue) { return Bit(this->getValue() ^ Bit(rValue).getValue()); }
+	template<typename T>
+	Bit operator^= (T rValue) {
+		*this = Bit(this->getValue() ^ Bit(rValue).getValue());
 		return *this;
 	}
 
-	Bit operator^  (Bit rValue) { return Bit(this->getValue() ^ rValue.getValue()); }
-	Bit operator^= (Bit rValue) {
-		*this = Bit(this->getValue() ^ rValue.getValue());
-		return *this;
-	}
-
-	Bit operator=(Bit bit) {
-		this->setValue(bit.getValue());
-		return *this;
-	}
-
-	Bit operator=(byte bit) {
-		this->setValue(bit);
+	template<typename T>
+	Bit operator=(T value) {
+		this->setValue(value);
 		return *this;
 	}
 
@@ -75,7 +81,6 @@ class Bit {
 		return str + bit.toString();
 	}
 };
-
 void Bit::setValue(const Bit& value) { this->value = value.getValue(); }
 
 class Nibble {
@@ -96,54 +101,23 @@ void loop() {
 	// Bit b1 = 0, b2 = 1;
 	// Bit b1 = Bit(1), b2 = Bit(0);
 
-	Serial.println(b1 == b2 ? "Iguais" : "Diferentes");
+	Serial.println("b1 e b2 sao: " + String((b1 == b2) ? "Iguais" : "Diferentes"));
 
 	Serial.println("b1: " + b1 + " - !b1: " + !b1);
 
 	Serial.println("b1 & b2: " + (b1 & b2));
+	Serial.println("b1 & 1: " + (b1 & 1));
+	Serial.println("b1 & '1': " + (b1 & '1'));
 
 	Serial.println("b1 | b2: " + (b1 | b2));
+	Serial.println("b1 | 0: " + (b1 | 0));
+	Serial.println("b1 | '0': " + (b1 | '0'));
+	
+	Serial.println("b1 ^ b2: " + (b1 ^ b2));
+	Serial.println("b1 ^ 1: " + (b1 ^ 1));
+	Serial.println("b1 ^ '1': " + (b1 ^ '1'));
 
-	// Serial.println("--------------------------------");
-
-	// Teste t;
-	// int n = (t = atoi(s.c_str()));
-	// Serial.println("T: " + String(t.getN()));
-	// Serial.println("N: " + String(n));
-
-	// byte A = setBit(ctobit(s[0]));
-	// byte B = setBit(ctobit(s[1]));
-	// byte code = setOpCode(ctobit(s[2]));
-	// byte carryOut = 0b00000000;
-
-	// byte output;
-
-	// switch (code) {
-	// case 0:
-	// 	Serial.print("AND -> ");
-	// 	output = A & B;
-	// 	break;
-	// case 1:
-	// 	Serial.print("OR -> ");
-	// 	output = A | B;
-	// 	break;
-	// case 2:
-	// 	Serial.print("NOT -> ");
-	// 	output = !A;
-	// 	break;
-	// case 3:
-	// 	Serial.print("SOMA -> ");
-	// 	output = A + B;
-	// 	carryOut = bitRead(output, 1);
-	// 	break;
-	// }
-
-	// output = setBit(output);
-
-	// Serial.print("Output: ");
-	// Serial.println(output);
-
-	// setOutput(A, B, output, carryOut);
+	Serial.println("--------------------------------");
 }
 
 void setLED(int count, ...) {
