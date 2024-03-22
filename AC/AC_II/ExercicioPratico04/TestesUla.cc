@@ -363,7 +363,19 @@ void TestandoNibble() {
 	println(nibble + " ^= 0100 = " + (nibble ^= 4));
 	println("nibble = " + nibble);
 
-	println("--------------------------------");
+	print("\nNibble: ");
+	for (int i = 0; i < 4; i++) {
+		print(nibble[i].str());
+	}
+
+	Nibble::bigEndian = true;
+
+	print("\nNibble: ");
+	for (int i = 0; i < 4; i++) {
+		print(nibble[i].str());
+	}
+
+	println("\n--------------------------------");
 	// nibble.forEach([](Bit bit) {
 	// 	print(bit.str());
 	// });
