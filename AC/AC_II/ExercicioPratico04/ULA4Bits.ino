@@ -588,7 +588,7 @@ void setOuput(Nibble output) {
 // }
 void loop() {
 
-	readString("Deseja começar?: ");
+	while(readString("Deseja começar?: ") != "SIM"); // Talvez tenham jeitos mais elegantes de fazer isso
 
 	String s = readString("Insira o programa: ");
 	String* array = split(' ', s);
