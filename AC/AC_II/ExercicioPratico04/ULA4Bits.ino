@@ -405,6 +405,8 @@ char Instruction::toHex(Nibble nibble) {
 
 // ---------------------------------------------------------------------
 
+void setOuput(Nibble output);
+Nibble InstructionExecution(Instruction i);
 void WaitForInput() { while (!Serial.available()); }
 
 String readString(String msg = "") {
@@ -416,7 +418,30 @@ String readString(String msg = "") {
 	return s;
 }
 
-void setLED(int count, ...) {
+String* split(char c, String s) {
+
+	int count = 1;
+
+	for (int i = 0; i < s.length(); i++) if (s[i] == c) count++;
+
+	String* array = new String[count + 1];
+
+	array[count] = "FIM";
+
+	int arrayIndex = 0;
+
+	for (int i = 0; i < s.length(); i++) {
+		if (s[i] != c) {
+			array[arrayIndex] += s[i];
+		} else {
+			arrayIndex++;
+		}
+	}
+
+	return array;
+}
+
+void setPinMode(int count, ...) {
 	va_list args;
 	va_start(args, count);
 
@@ -427,12 +452,44 @@ void setLED(int count, ...) {
 	va_end(args);
 }
 
-void setup() { 
-	Serial.begin(9600);
-	setLED(12, 1, 2, 3, 4, 5, 6, 7, 8, O0, O1, O2, O3);
+void setDigitalOutput(int state, int count, ...) {
+	va_list args;
+	va_start(args, count);
+
+	for (int i = 0; i < count; i++) {
+		digitalWrite(va_arg(args, int), state);
+	}
+
+	va_end(args);
 }
 
-Nibble InstructionExecution(Instruction i);
+void setDisplay(byte value) {
+
+	setDigitalOutput(LOW, 7, 2, 3, 4, 5, 6, 7, 8);
+
+	if (value == 0x0) setDigitalOutput(HIGH, 6, 2, 3, 4, 5, 6, 7);
+	else if (value == 0x1) setDigitalOutput(HIGH, 2, 2, 3);
+	else if (value == 0x2) setDigitalOutput(HIGH, 5, 4, 2, 8, 6, 5);
+	else if (value == 0x3) setDigitalOutput(HIGH, 5, 4, 2, 8, 3, 5);
+	else if (value == 0x4) setDigitalOutput(HIGH, 4, 7, 2, 8, 3);
+	else if (value == 0x5) setDigitalOutput(HIGH, 5, 4, 7, 8, 3, 5);
+	else if (value == 0x6) setDigitalOutput(HIGH, 6, 4, 7, 8, 6, 5, 3);
+	else if (value == 0x7) setDigitalOutput(HIGH, 3, 4, 2, 3);
+	else if (value == 0x8) setDigitalOutput(HIGH, 7, 2, 3, 4, 5, 6, 7, 8);
+	else if (value == 0x9) setDigitalOutput(HIGH, 5, 2, 3, 4, 7, 8);
+	else if (value == 0xA) setDigitalOutput(HIGH, 6, 2, 3, 4, 6, 7, 8);
+	else if (value == 0xB) setDigitalOutput(HIGH, 5, 3, 5, 6, 7, 8);
+	else if (value == 0xC) setDigitalOutput(HIGH, 4, 4, 7, 6, 5);
+	else if (value == 0xD) setDigitalOutput(HIGH, 5, 8, 6, 5, 3, 2);
+	else if (value == 0xE) setDigitalOutput(HIGH, 5, 8, 6, 5, 4, 7);
+	else if (value == 0xF) setDigitalOutput(HIGH, 4, 8, 6, 4, 7);
+}
+
+void setup() { 
+	Serial.begin(9600);
+	setPinMode(11, 2, 3, 4, 5, 6, 7, 8, O0, O1, O2, O3);
+}
+
 Nibble InstructionExecution(Instruction i) {
 	
 	Nibble output;
@@ -493,51 +550,36 @@ Nibble InstructionExecution(Instruction i) {
 	return output;
 }
 
-void setDigitalOutput(int state, int count, ...) {
-	va_list args;
-	va_start(args, count);
-
-	for (int i = 0; i < count; i++) {
-		digitalWrite(va_arg(args, int), state);
-	}
-
-	va_end(args);
-}
-
-void setDisplay(byte value) {
-
-	setDigitalOutput(LOW, 7, 2, 3, 4, 5, 6, 7, 8);
-
-	if (value == 0x0) setDigitalOutput(HIGH, 6, 2, 3, 4, 5, 6, 7);
-	else if (value == 0x1) setDigitalOutput(HIGH, 2, 2, 3);
-	// else if (0x2) setDigitalOutput(HIGH, x, ...);
-	// else if (0x3) setDigitalOutput(HIGH, x, ...);
-	// else if (0x4) setDigitalOutput(HIGH, x, ...);
-	// else if (0x5) setDigitalOutput(HIGH, x, ...);
-	// else if (0x6) setDigitalOutput(HIGH, x, ...);
-	// else if (0x7) setDigitalOutput(HIGH, x, ...);
-	// else if (0x8) setDigitalOutput(HIGH, x, ...);
-	// else if (0x9) setDigitalOutput(HIGH, x, ...);
-	// else if (0xA) setDigitalOutput(HIGH, x, ...);
-	// else if (0xB) setDigitalOutput(HIGH, x, ...);
-	// else if (0xC) setDigitalOutput(HIGH, x, ...);
-	// else if (0xD) setDigitalOutput(HIGH, x, ...);
-	// else if (0xE) setDigitalOutput(HIGH, x, ...);
-	// else if (0xF) setDigitalOutput(HIGH, x, ...);
-}
-
-void setOuput(Nibble output);
 void setOuput(Nibble output) {
+	
+	// Talvez criar uma função chamada setLED para abstrair essa parte do código
 	int LED = 10;
 	output.forEach([&LED](Bit bit) {
 		digitalWrite(LED++, bit.getValue());
 	});
 
 	setDisplay(output.toNumber());
+
+
 }
 
 void loop() {
-	String s = readString("Digite a instrucao: ");
+
+	// readString("Comecar: ");
+
+	String s = readString("Digite uma string: ");
+
+	String* array = split(' ', s);
+
+	for (int i = 0; array[i] != "FIM"; i++) {
+		Serial.println("String: " + array[i]);
+	}
+
+	delete[] array;
+
+	// String thisString = String(13, HEX); // Usar para mostrar os resultado em Hexa
+
+	s = readString("Digite a instrucao: ");
 
 	Nibble output = InstructionExecution(Instruction(s));
 	Serial.println("Output = " + output);
