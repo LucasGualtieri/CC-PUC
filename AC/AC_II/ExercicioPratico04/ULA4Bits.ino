@@ -563,26 +563,49 @@ void setOuput(Nibble output) {
 
 }
 
+// void loop() {
+
+// 	// readString("Comecar: ");
+
+// 	String s = readString("Digite uma string: ");
+
+// 	String* array = split(' ', s);
+
+// 	for (int i = 0; array[i] != "FIM"; i++) {
+// 		Serial.println("String: " + array[i]);
+// 	}
+
+// 	delete[] array;
+
+// 	// String thisString = String(13, HEX); // Usar para mostrar os resultado em Hexa
+
+// 	s = readString("Digite a instrucao: ");
+
+// 	Nibble output = InstructionExecution(Instruction(s));
+// 	Serial.println("Output = " + output);
+
+// 	setOuput(output);
+// }
 void loop() {
 
-	// readString("Comecar: ");
+	readString("Deseja começar?: ");
 
-	String s = readString("Digite uma string: ");
-
+	String s = readString("Insira o programa: ");
 	String* array = split(' ', s);
 
 	for (int i = 0; array[i] != "FIM"; i++) {
-		Serial.println("String: " + array[i]);
+		// Instruction i = array[pointerIncrement()];
+
+		// array[1] = i["W"];
+		// array[2] = i["X"];
+		// array[3] = i["Y"];
+
+		// Nibble output = InstructionExecution(i);
+
+		// setOuput(output, array);
+
 	}
 
-	delete[] array;
+	// Conferir / descomentar a exceção do Bit
 
-	// String thisString = String(13, HEX); // Usar para mostrar os resultado em Hexa
-
-	s = readString("Digite a instrucao: ");
-
-	Nibble output = InstructionExecution(Instruction(s));
-	Serial.println("Output = " + output);
-
-	setOuput(output);
 }
