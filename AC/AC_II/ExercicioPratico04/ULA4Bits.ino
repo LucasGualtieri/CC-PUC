@@ -595,15 +595,18 @@ void loop() {
 
 	for (int i = 0; array[i] != "FIM"; i++) {
 		// Instruction i = array[pointerIncrement()];
+		Instruction inst = array[i];
 
 		// array[1] = i["W"];
 		// array[2] = i["X"];
 		// array[3] = i["Y"];
 
-		// Nibble output = InstructionExecution(i);
+		Nibble output = InstructionExecution(inst);
 
+		setOuput(output);
 		// setOuput(output, array);
 
+		delay(1000);
 	}
 
 	// Conferir / descomentar a exceção do Bit
