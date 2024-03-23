@@ -1,6 +1,7 @@
 #include <iostream>
 #include <math.h>
 #include <stdio.h>
+#include <tuple>
 
 // clear && g++ TestesUla.cc -lm && ./a.out
 
@@ -11,26 +12,32 @@ typedef string String;
 
 String readString(String);
 
+void throwException(String s) {
+	Serial.println(s);
+	Serial.println("The program has stopped.");
+	exit(0);
+}
+
 class Bit {
 
-	Byte value;
+	byte value;
 
-	Byte numbertobit(Byte c) {
-		// if (c != '0' && c != '1') {
-		// 	throw runtime_error("Error on Bit - setValue(): value must be 1 or 0");
-		// }
+	byte numbertobit(byte c) {
+		// String error = "Error on Bit - setValue(" + String(c + "") + " ): value() must be 1 or 0";
+		// if (c != '0' && c != '1') throw runtime_error(error);
 		return c - '0';
 	}
 
-	void setValue(Byte value) { this->value = numbertobit(value) & 0b00000001; }
+	void setValue(byte value) { this->value = numbertobit(value) & 0b00000001; }
 	void setValue(const Bit& value);
+	// void setValue(const Bit& value) { this->value = value.getValue(); }
 
   public:
 	Bit() { this->value = 0b00000000; }
 	template<typename T>
 	Bit(T value) { setValue(value); }
 
-	Byte getValue() const { return value; }
+	byte getValue() const { return value; }
 
 	String str() { return value == 1 ? String("1") : String("0"); }
 	String toString() { return value == 1 ? "1" : "0"; }
@@ -82,17 +89,10 @@ class Bit {
 		return *this;
 	}
 
-	friend String operator+(String str, Bit bit) { // Funcionamento do Friend é complicado
-		return str + bit.toString();
-	}
-
-	friend String operator+(Bit bit, String str) { // Funcionamento do Friend é complicado
-		return bit.toString() + str;
-	}
-
-	friend String operator+=(String& str, Bit bit) { // Funcionamento do Friend é complicado
-		return str += bit.toString();
-	}
+	// Funcionamento do Friend é complicado
+	friend String operator+(String str, Bit bit) { return str + bit.toString(); }
+	friend String operator+(Bit bit, String str) { return bit.toString() + str;	}
+	friend String operator+=(String& str, Bit bit) { return str += bit.toString();	}
 };
 void Bit::setValue(const Bit& value) { this->value = value.getValue(); }
 
@@ -100,47 +100,45 @@ class Nibble {
 
 	Bit bits[4];
 
-	Byte chartobyte(Byte c) {
+	byte chartobyte(byte c) {
 		if (('A' <= c && c <= 'F')) c -= 55;
 		else if (('a' <= c && c <= 'f')) c -= 55 + 32;
 		else if ('0' <= c && c <= '9') c -= '0';
 		return c;
 	}
 
-	void setArray(Byte Byte) {
-		if (Byte > 15) throw runtime_error("Error on Nibble - Constructor(): value > 15");
+	int ToNumber(Nibble value);
 
-		for (int i = 0; i < length; Byte /= 2, i++) {
-			bits[i] = Byte % 2;
+	void setArray(byte b) {
+		// String error = String("Error on Nibble - Invalid assignment: value must be Hex");
+		if (b > 15) {
+			String s = "Error on Nibble - Invalid assignment: value(";
+			// s += "Error on Nibble - Invalid assignment: value(%d - '%c') must be Hex", b, b;
+			throwException(s);
+		}
+
+		for (int i = 0; i < length; b /= 2, i++) {
+			bits[i] = b % 2;
 		}
 	}
 
-	Byte endianess(Byte pos) {
+	void setArray(Nibble nibble);
+
+	byte endianess(byte pos) {
 		if (bigEndian) pos = length - pos - 1; 
 		return pos;
-	}
-
-	int nibbleToNumber(Nibble value) {
-		int result = 0;
-		for (int i = 0; i < length; i++) {
-			int teste = (value[i] * pow(2, i));
-			result += teste;
-		}
-		return result;
 	}
 
   public:
 
 	static bool bigEndian;
 
-	const Byte length = 4;
+	const byte length = 4;
 
 	Nibble() { for (int i = 0; i < length; i++) bits[i] = 0; }
 
-	Nibble(Byte value) { setArray(chartobyte(value)); }
-
 	template<typename Function>
-	void forEach(Function fn) { for (Bit bit : bits) fn(bit); } // Possível problema aqui, como ele sabe onde é o fim? Talvez trocar para um for normal
+	void forEach(Function fn); // Possível problema aqui, como ele sabe onde é o fim? Talvez trocar para um for normal
 
 	String str() {
 		String s = "";
@@ -148,7 +146,17 @@ class Nibble {
 		return s;
 	}
 
-	Bit& operator[](Byte pos) { return bits[endianess(pos)]; }
+	Bit& operator[](byte pos) { return bits[endianess(pos)]; }
+
+
+	int ToNumber() {
+		int result = 0;
+		for (int i = 0; i < length; i++) {
+			int teste = ((*this)[i] * pow(2, i));
+			result += teste;
+		}
+		return result;
+	}
 
 	template<typename T>
 	bool operator==(T rValue) {
@@ -185,29 +193,30 @@ class Nibble {
 	template<typename T>
 	bool operator> (T rValue) {
 		Nibble compared(rValue);
-		Byte val1 = nibbleToNumber(*this);
-		Byte val2 = nibbleToNumber(compared);
+		byte val1 = this->ToNumber(*this);
+		byte val2 = this->ToNumber(compared);
 		return val1 > val2;
 	}
 
+
 	template<typename T>
 	bool operator>= (T rValue) {
-		Byte val1 = nibbleToNumber(*this);
-		Byte val2 = nibbleToNumber(rValue);
+		byte val1 = this->ToNumber(*this);
+		byte val2 = this->ToNumber(rValue);
 		return val1 >= val2;
 	}
 
 	template<typename T>
 	bool operator< (T rValue) {
-		int val1 = nibbleToNumber(*this);
-		int val2 = nibbleToNumber(rValue);
+		int val1 = this->ToNumber(*this);
+		int val2 = this->ToNumber(rValue);
 		return val1 < val2;
 	}
 
 	template<typename T>
 	bool operator<= (T rValue) {
-		Byte val1 = nibbleToNumber(*this);
-		Byte val2 = nibbleToNumber(rValue);
+		byte val1 = this->ToNumber(*this);
+		byte val2 = this->ToNumber(rValue);
 		return val1 <= val2;
 	}
 
@@ -275,8 +284,12 @@ class Nibble {
 	
 	template<typename T>
 	Nibble operator=(T value) {
-
 		this->setArray(chartobyte(value));
+		return *this;
+	}
+
+	Nibble operator=(Nibble value) {
+		this->setArray(value);
 		return *this;
 	}
 
@@ -289,10 +302,145 @@ class Nibble {
 	}
 };
 
-bool Nibble::bigEndian = false ;
+template<typename Function>
+void Nibble::forEach(Function fn) { for (Bit bit : bits) fn(bit); }
+
+void Nibble::setArray(Nibble nibble) {
+	for (int i = 0; i < length; i++) {
+		bits[i] = nibble[i];
+	}
+}
+
+int Nibble::ToNumber(Nibble value) {
+	int result = 0;
+	for (int i = 0; i < length; i++) {
+		int teste = (value[i] * pow(2, i));
+		result += teste;
+	}
+	return result;
+}
+
+bool Nibble::bigEndian = false;
+
+class Instruction {
+	Nibble array[3];
+
+	void setArray(String instruction) {
+		for (int i = 0; i < 3; i++) array[i] = instruction[i];
+	}
+
+	void setArray(byte x, byte y, byte w) {
+		array[0] = x;
+		array[1] = y;
+		array[2] = w;
+	}
+
+	char toHex(Nibble nibble);
+
+	void toUpper(String& s) {
+		for (int i = 0; i < s.length(); i++) {
+			if ('a' <= s[0] && s[0] <= 'z') s[i] = s[i] - 32;
+		}
+	}
+
+  public:
+	Instruction(char x, char y, char w) { setArray(x, y, w); }
+
+	Instruction(String instruction) {
+		String error = String("Error on Instruction - Constructor(): String(" + instruction + ") is not an instruction.");
+		if (instruction.length() != 3) throwException(error);
+		setArray(instruction);
+	}
+
+	Nibble& operator[](byte pos) { return array[pos]; }
+
+	Nibble& operator[](String s) {
+		byte pos;
+		toUpper(s);
+		if (s == "w" || s == "W") pos = 0;
+		else if (s == "X" || s == "A") pos = 1;
+		else if (s == "Y" || s == "B") pos = 2;
+		else {
+			throwException("Error on Instruction - Invalid array position(" + s + ").");
+		}
+
+		return array[pos];
+	}
+
+	Instruction& operator=(String instruction) {
+		String error = String("Error on Instruction - Invalid assignment: String(" + instruction + ") is not an instruction.");
+		if (instruction.length() != 3) throwException(error);
+		setArray(instruction);
+		return *this;
+	}
+
+	template<typename T>
+	Instruction& operator=(T instruction) {
+		setArray(instruction);
+		return *this;
+	}
+
+	String str() {
+		String s = "";
+
+		s = s + toHex((*this)[0]);
+		s = s + toHex((*this)[1]);
+		s = s + toHex((*this)[2]);
+
+		return s;
+	}
+
+	friend String operator+(String str, Instruction i) { return str + i.str(); }
+
+	friend String operator+(Instruction i, String str) { return i.str() + str; }
+};
+
+char Instruction::toHex(Nibble nibble) {
+	char c;
+	int value = nibble.ToNumber();
+	if (0 <= value & value <= 9) c = '0' + value;
+	if (10 <= value & value <= 15) c = ('A' - 10) + value;
+	return c;
+}
 
 void println(String s = "") { cout << s << endl; }
 void print(String s = "") { cout << s; }
+
+void TestandoInstrucao() {
+
+	String s = readString("Ler instrução: ");
+	println("s = " + s);
+	
+	Instruction i(s);
+
+	println("i[0] = " + i[0]);
+	println("i[1] = " + i[1]);
+	println("i[2] = " + i[2]);
+	
+	// i[2] = 0xA;
+	// println("i[2] = " + i[2]);
+
+	println();
+
+	i = tuple<char, char, char> (9, 0xA, 'f');
+
+	println("i[0] = " + i[0]);
+	println("i[1] = " + i[1]);
+	println("i[2] = " + i[2]);
+
+	println();
+
+	i = "0e0";
+
+	println("i[0] = " + i[0]);
+	println("i[1] = " + i[1]);
+	println("i[2] = " + i[2]);
+
+	println("i = " + i);
+	println(i + " = i");
+
+	println("---------------");
+}
 
 void overloadTesteDoBit() {
 
@@ -364,16 +512,12 @@ void TestandoNibble() {
 	println("nibble = " + nibble);
 
 	print("\nNibble: ");
-	for (int i = 0; i < 4; i++) {
-		print(nibble[i].str());
-	}
+	for (int i = 0; i < 4; i++) print(nibble[i].str());
 
 	Nibble::bigEndian = true;
 
 	print("\nNibble: ");
-	for (int i = 0; i < 4; i++) {
-		print(nibble[i].str());
-	}
+	for (int i = 0; i < 4; i++) print(nibble[i].str());
 
 	println("\n--------------------------------");
 	// nibble.forEach([](Bit bit) {
@@ -381,11 +525,79 @@ void TestandoNibble() {
 	// });
 }
 
+Nibble InstructionExecution(Instruction i) {
+	
+	Nibble output;
+
+	switch (i[0].ToNumber()) {
+	case 0x0:
+		output = !i["B"];
+		break;
+	case 0x1:
+		output = !(!i["A"] & i["B"]);
+		break;
+	case 0x2:
+		output = !i["A"] & i["B"];
+		break;
+	case 0x3:
+		output = 0x0;
+		break;
+	case 0x4:
+		output = !(i["A"] & i["B"]);
+		break;
+	case 0x5:
+		output = !i["A"];
+		break;
+	case 0x6:
+		output = i["A"] ^ i["B"];
+		break;
+	case 0x7:
+		output = i["A"] & !i["B"];
+		break;
+	case 0x8:
+		output = !i["A"] | !i["B"];
+		break;
+	case 0x9:
+		output = !i["A"] ^ !i["B"];
+		break;
+	case 0xA:
+		output = i["B"];
+		break;
+	case 0xB:
+		output = i["A"] & i["B"];
+		break;
+	case 0xC:
+		output = 0xF;
+		break;
+	case 0xD:
+		output = i["A"] | !i["B"];
+		break;
+	case 0xE:
+		output = i["A"] | i["B"];
+		break;
+	case 0xF:
+		output = i["A"];
+		break;
+	default:
+		throw runtime_error("Error on InstructionExecution: Invalid instruction(" + i[0] + ").");
+	}
+
+	return output;
+}
+
 int main() {
 
 	while(true) {
 		// overloadTesteDoBit();
-		TestandoNibble();
+		// TestandoNibble();
+		// TestandoInstrucao();
+		Nibble output = InstructionExecution(Instruction("A04"));
+
+		// setOutput(output); // Será uma função que printará na tela o resultado? e setará os LEDS
+
+		println("Output = " + output);
+
+		break;
 	};
 	return 0;
 }
