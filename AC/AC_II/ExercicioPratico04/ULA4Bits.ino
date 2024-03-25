@@ -102,7 +102,7 @@ class Nibble {
 	void setArray(byte b) {
 
 		if (b > 15) {
-			String s = "Error on Nibble - Invalid assignment: value(" + String(b) + ")  must be Hex";
+			String s = "Error on Nibble - Invalid assignment: value(" + String(b) + ") must be Hex";
 			throwException(s);
 		}
 
