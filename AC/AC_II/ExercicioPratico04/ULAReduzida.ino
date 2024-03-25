@@ -14,13 +14,7 @@ class Bit {
 
 	byte value;
 
-	byte numbertobit(byte c) {
-		String error = "Error on Bit - setValue(" + String(c, DEC) + "): value() must be 1 or 0";
-		if (!(c == '0' || c == '1' || c == 0 || c == 1)) throwException(error);
-		return c - '0';
-	}
-
-	void setValue(byte value) { this->value = numbertobit(value) & 0b00000001; }
+	void setValue(byte value) { this->value = (value - '0') & 0b00000001; }
 	void setValue(const Bit& value);
 
   public:
@@ -36,39 +30,16 @@ class Bit {
 	bool operator==(T rValue)   { return this->value == Bit(rValue).getValue(); }
 	template<typename T>
 	bool operator!=(T rValue)   { return this->value != Bit(rValue).getValue(); }
-	template<typename T>
-	bool operator> (Bit rValue) { return this->value >  Bit(rValue).getValue(); }
-	template<typename T>
-	bool operator>=(Bit rValue) { return this->value >= Bit(rValue).getValue(); }
-	template<typename T>
-	bool operator< (Bit rValue) { return this->value <  Bit(rValue).getValue(); }
-	template<typename T>
-	bool operator<=(Bit rValue) { return this->value <= Bit(rValue).getValue(); }
 	Bit operator!  () { return Bit(!this->value); }
 
 	template<typename T>
 	Bit operator&  (T rValue) { return Bit(this->getValue() & Bit(rValue).getValue()); }
-	template<typename T>
-	Bit operator&= (T rValue) {
-		*this = Bit(this->getValue() & Bit(rValue).getValue());
-		return *this;
-	}
 	
 	template<typename T>
 	Bit operator|  (T rValue) { return Bit(this->getValue() | Bit(rValue).getValue()); }
-	template<typename T>
-	Bit operator|= (T rValue) {
-		*this = Bit(this->getValue() | Bit(rValue).getValue());
-		return *this;
-	}
 	
 	template<typename T>
 	Bit operator^  (T rValue) { return Bit(this->getValue() ^ Bit(rValue).getValue()); }
-	template<typename T>
-	Bit operator^= (T rValue) {
-		*this = Bit(this->getValue() ^ Bit(rValue).getValue());
-		return *this;
-	}
 
 	template<typename T>
 	int operator* (T rValue) { return this->getValue() * rValue; }
@@ -186,36 +157,6 @@ class Nibble {
 		return different;
 	}
 
-	template<typename T>
-	bool operator> (T rValue) {
-		Nibble compared(rValue);
-		byte val1 = this->toNumber(*this);
-		byte val2 = this->toNumber(compared);
-		return val1 > val2;
-	}
-
-
-	template<typename T>
-	bool operator>= (T rValue) {
-		byte val1 = this->toNumber(*this);
-		byte val2 = this->toNumber(rValue);
-		return val1 >= val2;
-	}
-
-	template<typename T>
-	bool operator< (T rValue) {
-		int val1 = this->toNumber(*this);
-		int val2 = this->toNumber(rValue);
-		return val1 < val2;
-	}
-
-	template<typename T>
-	bool operator<= (T rValue) {
-		byte val1 = this->toNumber(*this);
-		byte val2 = this->toNumber(rValue);
-		return val1 <= val2;
-	}
-
 	Nibble operator!() {
 		Nibble result;
 		for (int i = 0; i < length; i++) {
@@ -228,54 +169,27 @@ class Nibble {
 	Nibble operator& (T rValue) {
 		Nibble result(rValue);
 		for (int i = 0; i < length; i++) {
-			result[i] &= (*this)[i];
+			result[i] = result[i] & (*this)[i];
 		}
 		return result;
-	}
-
-	template<typename T>
-	Nibble operator&= (T rValue) {
-		Nibble result(rValue);
-		for (int i = 0; i < length; i++) {
-			(*this)[i] &= result[i];
-		}
-		return *this;
 	}
 
 	template<typename T>
 	Nibble operator| (T rValue) {
 		Nibble result(rValue);
 		for (int i = 0; i < length; i++) {
-			result[i] |= (*this)[i];
+			result[i] = result[i] | (*this)[i];
 		}
 		return result;
-	}
-
-	template<typename T>
-	Nibble operator|= (T rValue) {
-		Nibble result(rValue);
-		for (int i = 0; i < length; i++) {
-			(*this)[i] |= result[i];
-		}
-		return *this;
 	}
 
 	template<typename T>
 	Nibble operator^ (T rValue) {
 		Nibble result(rValue);
 		for (int i = 0; i < length; i++) {
-			result[i] ^= (*this)[i];
+			result[i] = result[i] ^ (*this)[i];
 		}
 		return result;
-	}
-
-	template<typename T>
-	Nibble operator^= (T rValue) {
-		Nibble result(rValue);
-		for (int i = 0; i < length; i++) {
-			(*this)[i] ^= result[i];
-		}
-		return *this;
 	}
 	
 	template<typename T>
@@ -321,10 +235,10 @@ class Instruction {
 		for (int i = 0; i < 3; i++) array[i] = instruction[i];
 	}
 
-	void setArray(byte x, byte y, byte s) {
+	void setArray(byte x, byte y, byte w) {
 		array[0] = x;
 		array[1] = y;
-		array[2] = s;
+		array[2] = w;
 	}
 
   public:
@@ -342,9 +256,9 @@ class Instruction {
 	Nibble& operator[](String s) {
 		byte pos;
 		s.toUpperCase();
-		if (s == "W" || s == "S") pos = 2;
-		else if (s == "X" || s == "A") pos = 0;
-		else if (s == "Y" || s == "B") pos = 1;
+		if (s == "w" || s == "W") pos = 0;
+		else if (s == "X" || s == "A") pos = 1;
+		else if (s == "Y" || s == "B") pos = 2;
 		else {
 			throwException("Error on Instruction - Invalid array position(" + s + ").");
 		}
@@ -393,8 +307,8 @@ class RegMem {
 
   public:
 
-	RegMem(String& s) {
-		memory = &s;
+	RegMem(String* s) {
+		memory = s;
 		*memory += " FIM";
 		PC = 0;
 		hasEnded = false;
@@ -417,17 +331,12 @@ String RegMem::str() {
 
 	String output;
 
-	output += String(PC + 4) + " | ";
+	output += String(PC + 4 - 1) + " | ";
 	output += String(W.toNumber(), HEX) + " | ";
 	output += String(X.toNumber(), HEX) + " | ";
 	output += String(Y.toNumber(), HEX) + " | ";
 
-	// int pos = PC * 4;
-	// int numOfInstructions = 5;
-	// for (int i = pos; memory->substring(i, i + 3) != "FIM" && i < (numOfInstructions * 4) + pos; i += 4) {
-	// 	output += memory->substring(i, i + 3) + " | ";
-	// }
-
+	// int pos = (PC - 1) * 4;
 	for (int i = PC * 4; memory->substring(i, i + 3) != "FIM" && i < (10 * 4) + (PC * 4); i += 4) {
 		output += memory->substring(i, i + 3) + " | ";
 	}
@@ -489,54 +398,16 @@ void setDigitalOutput(int state, int count, ...) {
 	va_end(args);
 }
 
-void setDisplay(byte value) {
-
-	setDigitalOutput(LOW, 7, 2, 3, 4, 5, 6, 7, 8);
-
-	if (value == 0x0) setDigitalOutput(HIGH, 6, 2, 3, 4, 5, 6, 7);
-	else if (value == 0x1) setDigitalOutput(HIGH, 2, 2, 3);
-	else if (value == 0x2) setDigitalOutput(HIGH, 5, 4, 2, 8, 6, 5);
-	else if (value == 0x3) setDigitalOutput(HIGH, 5, 4, 2, 8, 3, 5);
-	else if (value == 0x4) setDigitalOutput(HIGH, 4, 7, 2, 8, 3);
-	else if (value == 0x5) setDigitalOutput(HIGH, 5, 4, 7, 8, 3, 5);
-	else if (value == 0x6) setDigitalOutput(HIGH, 6, 4, 7, 8, 6, 5, 3);
-	else if (value == 0x7) setDigitalOutput(HIGH, 3, 4, 2, 3);
-	else if (value == 0x8) setDigitalOutput(HIGH, 7, 2, 3, 4, 5, 6, 7, 8);
-	else if (value == 0x9) setDigitalOutput(HIGH, 5, 2, 3, 4, 7, 8);
-	else if (value == 0xA) setDigitalOutput(HIGH, 6, 2, 3, 4, 6, 7, 8);
-	else if (value == 0xB) setDigitalOutput(HIGH, 5, 3, 5, 6, 7, 8);
-	else if (value == 0xC) setDigitalOutput(HIGH, 4, 4, 7, 6, 5);
-	else if (value == 0xD) setDigitalOutput(HIGH, 5, 8, 6, 5, 3, 2);
-	else if (value == 0xE) setDigitalOutput(HIGH, 5, 8, 6, 5, 4, 7);
-	else if (value == 0xF) setDigitalOutput(HIGH, 4, 8, 6, 4, 7);
-}
-
 void setup() { 
 	Serial.begin(9600);
 	setPinMode(11, 2, 3, 4, 5, 6, 7, 8, O0, O1, O2, O3);
-}
-
-void setOutput(RegMem program);
-void setOutput(RegMem program) {
-	
-	Nibble output = program[1];
-
-	// Talvez criar uma função chamada setLED para abstrair essa parte do código
-	int LED = 10;
-	output.forEach([&LED](Bit bit) {
-		digitalWrite(LED++, bit.getValue());
-	});
-
-	Serial.println(program.str());
-
-	setDisplay(output.toNumber());
 }
 
 Nibble InstructionExecution(Instruction i) {
 	
 	Nibble output;
 
-	switch (i["S"].toNumber()) {
+	switch (i["W"].toNumber()) {
 	case 0x0:
 		output = !i["B"];
 		break;
@@ -592,24 +463,37 @@ Nibble InstructionExecution(Instruction i) {
 	return output;
 }
 
+void setOuput(RegMem program, Nibble output);
+void setOuput(RegMem program, Nibble output) {
+	
+	// Talvez criar uma função chamada setLED para abstrair essa parte do código
+	int LED = 10;
+	output.forEach([&LED](Bit bit) {
+		digitalWrite(LED++, bit.getValue());
+	});
+
+	Serial.println(program.str());
+}
+
 void loop() {
+
+	while(readString("Deseja comecar?: ") != "SIM"); // Talvez tenham jeitos mais elegantes de fazer isso
 
 	String s = readString("Insira o programa: ");
 
-	RegMem program = s;
-	setOutput(program);
-
-	while(readString("Deseja comecar?: ") != "SIM"); // Talvez tenham jeitos mais elegantes de fazer isso
+	RegMem program = &s;
 
 	while (!program.hasFinished()) {
 
 		Instruction inst = program.next();
 
-		program[1] = InstructionExecution(inst);
-		program[2] = inst["X"];
-		program[3] = inst["Y"];
+		program[1] = inst["W"];
+		program[2] = inst["A"];
+		program[3] = inst["B"];
 
-		setOutput(program);
+		Nibble output = InstructionExecution(inst);
+
+		setOuput(program, output);
 
 		delay(1000);
 	}
