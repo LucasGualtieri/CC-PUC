@@ -605,9 +605,10 @@ void loop() {
 
 		Instruction inst = program.next();
 
-		program[1] = InstructionExecution(inst);
 		program[2] = inst["X"];
 		program[3] = inst["Y"];
+
+		program[1] = InstructionExecution(inst);
 
 		setOutput(program);
 
