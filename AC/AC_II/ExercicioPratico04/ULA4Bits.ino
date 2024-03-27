@@ -3,10 +3,17 @@
 #define O1 11
 #define O0 10
 
+extern int __heap_start, *__brkval;
+
+int freeMemory() {
+  int v;
+  return (int) &v - (__brkval == 0 ? (int) &__heap_start : (int) __brkval);
+}
+
 void throwException(String s) {
 	Serial.println(s);
 	Serial.println("The program has stopped.");
-	delay(1000);
+	Serial.flush();
 	exit(0);
 }
 
@@ -389,7 +396,35 @@ class RegMem {
 
 	String* memory;
 
-	bool hasEnded;
+	byte instructionCount;
+
+	String setStarPos(byte n) {
+
+		String temp;
+
+		if (PC + 4 == 100) n += 2;
+		else if (PC + 4 >= 10) n++;
+
+		for (int i = 0; i < n + 16; i++) temp += " ";
+		temp += "|\n";
+
+		for (int i = 0; i < n + 16; i++) temp += " ";
+		temp += "V\n";
+
+		return temp;
+	}
+
+	byte countInstructions(String s) {
+		byte count = 0;
+		for (int i = 0; i < s.length(); i++) if (s[i] == ' ') count++;
+		return count;
+	}
+
+	void setInstructionLine(int start, int n, String origem, String& output) {
+		for (int i = start; i < n && origem.substring(i, i + 3) != "FIM"; i += 4) {
+			output += origem.substring(i, i + 3) + " | ";
+		}
+	}
 
   public:
 
@@ -397,10 +432,10 @@ class RegMem {
 		memory = &s;
 		*memory += " FIM";
 		PC = 0;
-		hasEnded = false;
+		instructionCount = countInstructions(*memory);
 	}
 
-	bool hasFinished() { return hasEnded; }
+	bool hasFinished() { return memory->substring(PC * 4) == "FIM"; } //  || (PC + 4) * 4 == 100
 
 	Nibble& operator[](byte pos) {
 		if (pos == 1) return W;
@@ -422,17 +457,53 @@ String RegMem::str() {
 	output += String(X.toNumber(), HEX) + " | ";
 	output += String(Y.toNumber(), HEX) + " | ";
 
-	// int pos = PC * 4;
-	// int numOfInstructions = 5;
-	// for (int i = pos; memory->substring(i, i + 3) != "FIM" && i < (numOfInstructions * 4) + pos; i += 4) {
-	// 	output += memory->substring(i, i + 3) + " | ";
-	// }
+	static byte starPos;
+	if (PC == 0) starPos = 1;
 
-	for (int i = PC * 4; memory->substring(i, i + 3) != "FIM" && i < (10 * 4) + (PC * 4); i += 4) {
-		output += memory->substring(i, i + 3) + " | ";
+	byte itemsCount = 5 * 4;
+
+	if (PC < 4 || instructionCount <= 5) { // Linha que pode ser alterada: valor original: PC < 3
+		
+		Serial.print(setStarPos(starPos));
+		if (PC > 0) starPos += 6; // Linha que pode ser alterada: valor original: não tem o IF
+		
+		if (instructionCount <= 5) {
+			setInstructionLine(0, itemsCount, *memory, output);
+			output += "FIM";
+		}
+
+		else {
+			setInstructionLine(0, itemsCount + 1, *memory, output);
+			output += "...";
+		}
 	}
 
-	output += "FIM";
+	else if (PC < (instructionCount - 3) + 1) { // Linha que pode ser alterada: valor original: PC < instructionCount - 3
+
+		Serial.print(setStarPos(starPos));
+		
+		output += "... | ";
+
+		byte shift = (PC - 3) * 4; // Linha que pode ser alterada: valor original: (PC - 2) * 4
+
+		setInstructionLine(shift, itemsCount + shift, *memory, output);
+
+		output += "...";
+	}
+
+	else {
+
+		Serial.print(setStarPos(starPos));
+		starPos += 6;
+
+		output += "... | ";
+
+		byte shift = (instructionCount - 5) * 4;
+
+		setInstructionLine(shift, itemsCount + shift, *memory, output);
+
+		output += "FIM";
+	}
 
 	output.toUpperCase();
 
@@ -447,14 +518,12 @@ Instruction RegMem::next() {
 
 	PC++;
 
-	if (memory->substring(PC * 4) == "FIM") hasEnded = true;
-
 	return inst;
 }
 
 // ---------------------------------------------------------------------
 
-void setOuput(Nibble output);
+void setOutput(RegMem program);
 Nibble InstructionExecution(Instruction i);
 void WaitForInput() { while (!Serial.available()); }
 
@@ -511,25 +580,18 @@ void setDisplay(byte value) {
 	else if (value == 0xF) setDigitalOutput(HIGH, 4, 8, 6, 4, 7);
 }
 
-void setup() { 
-	Serial.begin(9600);
-	setPinMode(11, 2, 3, 4, 5, 6, 7, 8, O0, O1, O2, O3);
-}
-
-void setOutput(RegMem program);
 void setOutput(RegMem program) {
 	
 	Nibble output = program[1];
 
-	// Talvez criar uma função chamada setLED para abstrair essa parte do código
 	int LED = 10;
 	output.forEach([&LED](Bit bit) {
 		digitalWrite(LED++, bit.getValue());
 	});
 
-	Serial.println(program.str());
-
 	setDisplay(output.toNumber());
+
+	Serial.println(program.str());
 }
 
 Nibble InstructionExecution(Instruction i) {
@@ -590,6 +652,11 @@ Nibble InstructionExecution(Instruction i) {
 	}
 
 	return output;
+}
+
+void setup() { 
+	Serial.begin(9600);
+	setPinMode(11, 2, 3, 4, 5, 6, 7, 8, O0, O1, O2, O3);
 }
 
 void loop() {
