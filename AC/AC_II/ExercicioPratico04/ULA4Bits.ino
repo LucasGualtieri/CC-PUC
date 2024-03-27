@@ -465,28 +465,26 @@ String RegMem::str() {
 	if (PC < 4 || instructionCount <= 5) { // Linha que pode ser alterada: valor original: PC < 3
 		
 		Serial.print(setStarPos(starPos));
-		if (PC > 0) starPos += 6; // Linha que pode ser alterada: valor original: não tem o IF
+		if (0 < PC && PC < 4 || PC == 4 && instructionCount == 5) starPos += 6; // Linha que pode ser alterada: valor original: não tem o IF
 		
-		if (instructionCount <= 5) {
-			setInstructionLine(0, itemsCount, *memory, output);
-			output += "FIM";
-		}
-
-		else {
-			setInstructionLine(0, itemsCount + 1, *memory, output);
-			output += "...";
-		}
+		setInstructionLine(0, itemsCount + 1, *memory, output);
+		if (instructionCount <= 6) output += "FIM";
+		else output += "...";
 	}
 
 	else if (PC < (instructionCount - 3) + 1) { // Linha que pode ser alterada: valor original: PC < instructionCount - 3
 
 		Serial.print(setStarPos(starPos));
 		
-		output += "... | ";
+		int shift = (PC - 3) * 4, n = 0;
 
-		byte shift = (PC - 3) * 4; // Linha que pode ser alterada: valor original: (PC - 2) * 4
+		if (PC != 4) output += "... | ";
+		else {
+			shift -= 4;
+			n = 1;
+		}
 
-		setInstructionLine(shift, itemsCount + shift, *memory, output);
+		setInstructionLine(shift, itemsCount + n + shift, *memory, output);
 
 		output += "...";
 	}
@@ -496,11 +494,16 @@ String RegMem::str() {
 		Serial.print(setStarPos(starPos));
 		starPos += 6;
 
-		output += "... | ";
+		int shift = (instructionCount - 5) * 4, n = 0;
 
-		byte shift = (instructionCount - 5) * 4;
+		if (instructionCount == 6) {
+			shift -= 4;
+			n = 1;
+		}
 
-		setInstructionLine(shift, itemsCount + shift, *memory, output);
+		else output += "... | ";
+
+		setInstructionLine(shift, itemsCount + n + shift, *memory, output);
 
 		output += "FIM";
 	}
@@ -592,6 +595,7 @@ void setOutput(RegMem program) {
 	setDisplay(output.toNumber());
 
 	Serial.println(program.str());
+	// Serial.flush();
 }
 
 Nibble InstructionExecution(Instruction i) {
@@ -654,7 +658,7 @@ Nibble InstructionExecution(Instruction i) {
 	return output;
 }
 
-void setup() { 
+void setup() {
 	Serial.begin(9600);
 	setPinMode(11, 2, 3, 4, 5, 6, 7, 8, O0, O1, O2, O3);
 }
@@ -681,6 +685,9 @@ void loop() {
 
 		delay(1000);
 	}
+
+	Serial.println("\n------ END OF EXECUTION ------\n");
+	// Serial.flush();
 
 	setDigitalOutput(LOW, 11, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13);
 }
