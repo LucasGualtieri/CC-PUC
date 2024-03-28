@@ -46,28 +46,76 @@
 
 		<link rel="stylesheet" href="style.css" />
 
-		<!-- <script src="index.js"></script> -->
+		<script src="index.js"></script>
 
 		<script>
-			onload = () => {
-				console.log("Começou");
-				teste.addEventListener("input", function () {
-					let value = parseInt(this.value);
+			function MetacriticSlider() {
+				const rangeInput = document.querySelectorAll(".range-input input"),
+					priceInput = document.querySelectorAll(".price-input input"),
+					range = document.querySelector(".slider .progress");
+				let priceGap = 1;
 
-					// if (value < 20) {
-					// 	teste.value = 0;
-					// } else if (valor >= 20 && valor < 40) {
-					// 	teste.value = 30;
-					// } else if (valor >= 40 && valor < 60) {
-					// 	teste.value = 50;
-					// } else if (valor >= 60 && valor < 80) {
-					// 	teste.value = 70;
-					// } else {
-					// 	teste.value = 100;
-					// }
+				priceInput.forEach((input) => {
+					input.addEventListener("input", (e) => {
+						let minPrice = parseInt(priceInput[0].value),
+							maxPrice = parseInt(priceInput[1].value);
 
-					console.log(`this.value: ${teste.value}\n`);
+						if (maxPrice - minPrice >= priceGap && maxPrice <= rangeInput[1].max) {
+							if (e.target.className === "input-min") {
+								rangeInput[0].value = minPrice;
+								range.style.left = (minPrice / rangeInput[0].max) * 100 + "%";
+							} else {
+								rangeInput[1].value = maxPrice;
+								range.style.right = 100 - (maxPrice / rangeInput[1].max) * 100 + "%";
+							}
+						}
+					});
 				});
+
+				rangeInput.forEach((input) => {
+					input.addEventListener("input", (e) => {
+						let minVal = parseInt(rangeInput[0].value),
+							maxVal = parseInt(rangeInput[1].value);
+
+						if (maxVal - minVal < priceGap) {
+							if (e.target.className === "range-min") {
+								rangeInput[0].value = maxVal - priceGap;
+							} else {
+								rangeInput[1].value = minVal + priceGap;
+							}
+						} else {
+							priceInput[0].value = minVal;
+							priceInput[1].value = maxVal;
+							range.style.left = (minVal / rangeInput[0].max) * 100 + "%";
+							range.style.right = 100 - (maxVal / rangeInput[1].max) * 100 + "%";
+						}
+					});
+				});
+			
+			}
+
+			onload = () => {
+				// console.log("Começou");
+				// teste.addEventListener("input", function () {
+				// 	let value = parseInt(this.value);
+
+				// 	// if (value < 20) {
+				// 	// 	teste.value = 0;
+				// 	// } else if (valor >= 20 && valor < 40) {
+				// 	// 	teste.value = 30;
+				// 	// } else if (valor >= 40 && valor < 60) {
+				// 	// 	teste.value = 50;
+				// 	// } else if (valor >= 60 && valor < 80) {
+				// 	// 	teste.value = 70;
+				// 	// } else {
+				// 	// 	teste.value = 100;
+				// 	// }
+
+				// 	console.log(`this.value: ${teste.value}\n`);
+				// });
+
+				MetacriticSlider();
+				apply.onclick = () => dispatchEvent(new Event("applyFilters"));
 			};
 		</script>
 
@@ -88,7 +136,7 @@
 		</script> -->
 	</head>
 
-	<body>
+	<body id="body">
 		<!-- Cabeçalho -->
 		<header>
 			<!-- Logo -->
@@ -294,13 +342,29 @@
 
 			<section id="second-row" class="second-row">
 				<div class="filters">
-					<div class="slider-container">
-						Metacritic
-						<br />
-						tentar um upper bound nesse slide
-						<input type="range" min="0" max="100" value="0" class="slider" id="teste" />
+					<div class="d-flex">
+						<div class="wrapper">
+							<div class="price-input">
+								<div class="field">
+									<span>Min</span>
+									<input type="number" class="input-min" value="0" />
+								</div>
+								<!-- <div class="separator">-</div> -->
+								<div class="field">
+									<span>Max</span>
+									<input type="number" class="input-max" value="100" />
+								</div>
+							</div>
+							<div class="slider">
+								<div class="progress"></div>
+							</div>
+							<div class="range-input">
+								<input type="range" class="range-min" min="0" max="100" value="0" step="1" />
+								<input type="range" class="range-max" min="0" max="100" value="100" step="1" />
+							</div>
+						</div>
 					</div>
-					mappear as opçõesd de Distribuidora com as opções da API usando JS
+					<!-- mappear as opçõesd de Distribuidora com as opções da API usando JS -->
 					<div class="dropdown">
 						<button
 							class="btn btn-secondary dropdown-toggle"
@@ -310,7 +374,7 @@
 							aria-haspopup="true"
 							aria-expanded="false"
 						>
-							Dropdown
+							Stores
 						</button>
 						<div class="dropdown-menu" aria-labelledby="dropdownMenu2">
 							<ul>
@@ -326,7 +390,6 @@
 						</div>
 					</div>
 
-					Filtrar por tags
 					<div class="dropdown">
 						<button
 							class="btn btn-secondary dropdown-toggle"
@@ -336,7 +399,7 @@
 							aria-haspopup="true"
 							aria-expanded="false"
 						>
-							Dropdown
+							Tags
 						</button>
 						<div class="dropdown-menu" aria-labelledby="dropdownMenu2">
 							<ul>
@@ -352,7 +415,6 @@
 						</div>
 					</div>
 
-					Filtrar por Genero
 					<div class="dropdown">
 						<button
 							class="btn btn-secondary dropdown-toggle"
@@ -362,7 +424,7 @@
 							aria-haspopup="true"
 							aria-expanded="false"
 						>
-							Dropdown
+							Gênero
 						</button>
 						<div class="dropdown-menu" aria-labelledby="dropdownMenu2">
 							<ul>
@@ -378,7 +440,6 @@
 						</div>
 					</div>
 
-					Filtrar por publishers
 					<div class="dropdown">
 						<button
 							class="btn btn-secondary dropdown-toggle"
@@ -388,7 +449,7 @@
 							aria-haspopup="true"
 							aria-expanded="false"
 						>
-							Dropdown
+							Publishers
 						</button>
 						<div class="dropdown-menu" aria-labelledby="dropdownMenu2">
 							<ul>
@@ -403,7 +464,7 @@
 							</ul>
 						</div>
 					</div>
-					Filtrar por developers
+
 					<div class="dropdown">
 						<button
 							class="btn btn-secondary dropdown-toggle"
@@ -413,7 +474,7 @@
 							aria-haspopup="true"
 							aria-expanded="false"
 						>
-							Dropdown
+							Developers
 						</button>
 						<div class="dropdown-menu" aria-labelledby="dropdownMenu2">
 							<ul>
@@ -436,20 +497,29 @@
 
 						<input
 							type="date"
-							id="start"
+							id="dataLimiteInferior"
 							name="trip-start"
-							value="2018-07-22"
+							value="2024-04-25"
 							min="2018-01-01"
 							max="2024-12-31"
 						/>
-						<input type="text" />Data range Max
+						<input
+							type="date"
+							id="dataLimiteSuperior"
+							name="trip-start"
+							value="2024-04-25"
+							min="2018-01-01"
+							max="2024-12-31"
+						/>
 					</div>
 
-					<div>
+					<!-- <div> -->
 						<!-- Fazer um date picker e converter pra string pras usar como query parameter -->
-						Filter by updated date
-						<input type="text" />Data 1
-					</div>
+						<!-- Filter by updated date -->
+						<!-- <input type="text" />Data 1 -->
+					<!-- </div> -->
+
+					<button id="apply" type="button" class="btn btn-success">Aplicar</button>
 				</div>
 				<div class="releases">
 					<div class="second-row-header">
@@ -492,144 +562,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="game-cards">
-						<div class="card text-center">
-							<div class="card-header">
-								<label>Dead Space</label>
-								<label>?</label>
-							</div>
-							<div class="card-body">
-								<iframe
-									class="youtube-player"
-									src="https://www.youtube.com/embed/ctQl9wa3ydE"
-									title="Dead Space Official Launch Trailer | Humanity Ends Here"
-									frameborder="0"
-									allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-									allowfullscreen
-								></iframe>
-							</div>
-							<div class="card-footer text-muted">Mais detalhes...</div>
-						</div>
-						<div class="card text-center">
-							<div class="card-header">
-								<label>Atomic Heart</label>
-								<label>?</label>
-							</div>
-							<div class="card-body">
-								<iframe
-									class="youtube-player"
-									src="https://www.youtube.com/embed/_tEgeZrOOHM"
-									title="Atomic Heart - Official Trailer #1"
-									frameborder="0"
-									allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-									allowfullscreen
-								></iframe>
-							</div>
-							<div class="card-footer text-muted">Mais detalhes...</div>
-						</div>
-						<div class="card text-center">
-							<div class="card-header">
-								<label>Dead Island 2</label>
-								<label>?</label>
-							</div>
-							<div class="card-body">
-								<iframe
-									class="youtube-player"
-									src="https://www.youtube.com/embed/yiHalBhBMj4"
-									title="Dead Island 2 - Launch Trailer | PS5 &amp; PS4 Games"
-									frameborder="0"
-									allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-									allowfullscreen
-								></iframe>
-							</div>
-							<div class="card-footer text-muted">Mais detalhes...</div>
-						</div>
-						<div class="card text-center">
-							<div class="card-header">
-								<label>Starfield</label>
-								<label>?</label>
-							</div>
-							<div class="card-body">
-								<iframe
-									class="youtube-player"
-									src="https://www.youtube.com/embed/kfYEiTdsyas"
-									title="Starfield Official Gameplay Trailer"
-									frameborder="0"
-									allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-									allowfullscreen
-								></iframe>
-							</div>
-							<div class="card-footer text-muted">Mais detalhes...</div>
-						</div>
-						<div class="card text-center">
-							<div class="card-header">
-								<label>Chants of Sennaar</label>
-								<label>?</label>
-							</div>
-							<div class="card-body">
-								<iframe
-									class="card-video youtube-player"
-									src="https://www.youtube.com/embed/__hzPH3tcvA"
-									title="Chants of Sennaar - Launch Trailer"
-									frameborder="0"
-									allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-									allowfullscreen
-								></iframe>
-							</div>
-							<div class="card-footer text-muted">Mais detalhes...</div>
-						</div>
-						<div class="card text-center">
-							<div class="card-header">
-								<label>Hi-Fi RUSH</label>
-								<label>?</label>
-							</div>
-							<div class="card-body">
-								<iframe
-									class="card-video youtube-player"
-									src="https://www.youtube.com/embed/pgd4aU56Kig"
-									title="Hi-Fi RUSH |  Official Launch Trailer"
-									frameborder="0"
-									allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-									allowfullscreen
-								></iframe>
-							</div>
-							<div class="card-footer text-muted">Mais detalhes...</div>
-						</div>
-						<div class="card text-center">
-							<div class="card-header">
-								<label>Humanity</label>
-								<label>?</label>
-							</div>
-							<div class="card-body">
-								<iframe
-									class="card-video youtube-player"
-									src="https://www.youtube.com/embed/62Yjl5rTXSY"
-									title="Humanity - Reveal Trailer | PS5, PS4, PSVR &amp; PS VR2 Games"
-									frameborder="0"
-									allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-									allowfullscreen
-								></iframe>
-							</div>
-							<div class="card-footer text-muted">Mais detalhes...</div>
-						</div>
-						<div class="card text-center">
-							<div class="card-header">
-								<label>Lies of P</label>
-								<label>?</label>
-							</div>
-							<div class="card-body">
-								<iframe
-									class="card-video youtube-player"
-									src="https://www.youtube.com/embed/TYr1x25Z1Ak"
-									title="Lies of P - Official Release Date Trailer | PS5 &amp; PS4 Games"
-									frameborder="0"
-									allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-									allowfullscreen
-								></iframe>
-							</div>
-							<div class="card-footer text-muted">Mais detalhes...</div>
-						</div>
-					</div>
+					<div class="game-cards"></div>
 					<div class="second-row-button">
 						<ul>
 							<li style="display: inline"><< Página x - 1</li>

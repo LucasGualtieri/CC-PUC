@@ -42,10 +42,18 @@ function Sort(array, att, ascending = true) {
 	}
 }
 
-function FetchReleasesSection() {
+addEventListener('applyFilters', () => {
+	let date = dataLimiteInferior.value;
+	date += "," + dataLimiteSuperior.value;
+	console.log(date);
+	FetchReleasesSection(date);
+});
+
+function FetchReleasesSection(date = "2023-01-01,2024-01-01") {
+
 	let endPoint = "games";
 	let queryParamaters = {
-		dates: "2023-01-01,2024-01-01", // Como são lançamentos isso é obrigatório, o resto todo vem pela escolha do usuário
+		dates: date, // Como são lançamentos isso é obrigatório, o resto todo vem pela escolha do usuário
 		page_size: 8,
 		// genres: "shooter",
 		// ordering: "-rating",
@@ -79,21 +87,20 @@ function MappingCards(jsonVar) {
 
 	console.log(resultado);
 
-	body.innerHTML = resultado.slice(0, 8).map(createCard).join("");
+	let gameCards = document.querySelector('.game-cards');
+
+	gameCards.innerHTML = resultado.slice(0, 8).map(createCard).join("");
 }
 
 function createCard(obj) {
 	return `
-	<div class="card" style="width: 18rem">
-		<a href="https://www.themoviedb.org/movie/${obj["id"]}">
-			<img class="card-img-top" src="${obj["background_image"]}" alt="Card image cap" />
-		</a>
+	<div class="card text-center">
+		<div class="card-header">
+			<label>${obj["name"]}</label>
+			<label>${obj["metacritic"]}/100</label>
+		</div>
 		<div class="card-body">
-			<p class="card-text">
-				Title: ${obj["name"]}.<br>
-				Nota: ${obj["metacritic"]}/100.
-			</p>
-			<button><a href="https://www.themoviedb.org/movie/${obj["id"]}">LINK</a></button>
+			<img class="card-img-top" src="${obj["background_image"]}" alt="Card image cap" />
 		</div>
 	</div>
 	`;
