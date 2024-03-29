@@ -1,5 +1,5 @@
 function main() {
-	FetchReleasesSection();
+	FetchReleasesSection({ dates: "2018-01-01,2024-03-28", page_size: 8 });
 	// FetchReleasesSection();
 	// FetchReleasesSection();
 }
@@ -14,13 +14,13 @@ let apiKEY = "13c033a42f8549eb9612748fa44a0e3a";
 
 main();
 
-function ApiURL(endPoint, queryParamaters) {
-	return `https://api.rawg.io/api/${endPoint}?key=${apiKEY}${ObjectToString(queryParamaters)}`;
+function ApiURL(endPoint, queryParameters) {
+	return `https://api.rawg.io/api/${endPoint}?key=${apiKEY}${ObjectToString(queryParameters)}`;
 }
 
 function ObjectToString(obj) {
 	let string = "";
-	for (const key in obj) string += `&${key}=${obj[key]}`;
+	for (const key in obj) if (obj[key] != undefined) string += `&${key}=${obj[key]}`;
 	string = string.replaceAll(" ", "%20");
 	return string;
 }
@@ -42,32 +42,62 @@ function Sort(array, att, ascending = true) {
 	}
 }
 
-addEventListener('applyFilters', () => {
-	let date = dataLimiteInferior.value;
-	date += "," + dataLimiteSuperior.value;
-	console.log(date);
-	FetchReleasesSection(date);
-});
+addEventListener("applyFilters", () => {
+	let getParametros = (categoria) => {
+		let string = [];
 
-function FetchReleasesSection(date = "2023-01-01,2024-01-01") {
+		let array = document.querySelectorAll(`#dropdown-${categoria} li input`);
 
-	let endPoint = "games";
-	let queryParamaters = {
-		dates: date, // Como são lançamentos isso é obrigatório, o resto todo vem pela escolha do usuário
+		array.forEach((input) => {
+			if (input.checked) {
+				string.push(input.id);
+			}
+		});
+
+		let resultado = string.join(",");
+		return resultado.length > 0 ? resultado : undefined;
+	};
+
+	let date = dataLimiteInferior.value + "," + dataLimiteSuperior.value;
+
+	let genre = getParametros("generos");
+	let developer = getParametros("developers");
+	let tag = getParametros("tags");
+	let publisher = getParametros("publishers");
+
+	let radioInputs = document.querySelectorAll('input[name="order"]');
+
+	let order;
+	radioInputs.forEach((input) => {
+		if (input.checked) order = input.id;
+	});
+
+	let queryParameters = {
+		dates: date,
 		page_size: 8,
-		// genres: "shooter",
+		genres: genre,
+		developers: developer,
+		tags: tag,
+		publishers: publisher,
+		ordering: order,
 		// ordering: "-rating",
 		// ordering: "-released",
 		// metacritic: "80,100",
 	};
 
-	// let queryParamaters = {
+	FetchReleasesSection(queryParameters);
+});
+
+function FetchReleasesSection(queryParameters) {
+	let endPoint = "games";
+
+	// let queryParameters = {
 	// 	search: "Counter Strike",
 	// 	// ordering: "-released",
 	// 	page_size: 6,
 	// };
 
-	let apiURL = ApiURL(endPoint, queryParamaters);
+	let apiURL = ApiURL(endPoint, queryParameters);
 
 	console.log("API URL: " + apiURL);
 
@@ -85,9 +115,9 @@ function MappingCards(jsonVar) {
 
 	// Sort(resultado, "name");
 
-	console.log(resultado);
+	console.log("resultado: ", resultado);
 
-	let gameCards = document.querySelector('.game-cards');
+	let gameCards = document.querySelector(".game-cards");
 
 	gameCards.innerHTML = resultado.slice(0, 8).map(createCard).join("");
 }

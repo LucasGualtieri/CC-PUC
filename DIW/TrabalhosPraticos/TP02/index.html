@@ -91,7 +91,6 @@
 						}
 					});
 				});
-			
 			}
 
 			onload = () => {
@@ -116,6 +115,8 @@
 
 				MetacriticSlider();
 				apply.onclick = () => dispatchEvent(new Event("applyFilters"));
+				ordem.addEventListener("change", () => dispatchEvent(new Event("applyFilters")));
+				// ordem.addEventListener("change", ));
 			};
 		</script>
 
@@ -365,31 +366,10 @@
 						</div>
 					</div>
 					<!-- mappear as opçõesd de Distribuidora com as opções da API usando JS -->
-					<div class="dropdown">
-						<button
-							class="btn btn-secondary dropdown-toggle"
-							type="button"
-							id="dropdownMenu2"
-							data-toggle="dropdown"
-							aria-haspopup="true"
-							aria-expanded="false"
-						>
-							Stores
-						</button>
-						<div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-							<ul>
-								<li>
-									<input type="checkbox" id="option1" name="option1" value="Option 1" />
-									Label
-								</li>
-								<li>
-									<input type="checkbox" id="option2" name="option2" value="Option 2" />
-									Steam
-								</li>
-							</ul>
-						</div>
-					</div>
 
+					<!-- Tags -->
+					<!-- Para pegar a lista de Tags -->
+					<!-- https://api.rawg.io/api/tags?key=13c033a42f8549eb9612748fa44a0e3a -->
 					<div class="dropdown">
 						<button
 							class="btn btn-secondary dropdown-toggle"
@@ -402,19 +382,24 @@
 							Tags
 						</button>
 						<div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-							<ul>
+							<ul id="dropdown-tags">
 								<li>
-									<input type="checkbox" id="option1" name="option1" value="Option 1" />
-									Singleplayer
+									<input type="checkbox" id="singleplayer" name="option1" value="Option 1" />
+									<label for="singleplayer">Singleplayer</label>
 								</li>
 								<li>
-									<input type="checkbox" id="option2" name="option2" value="Option 2" />
-									Multiplayer
+									<input type="checkbox" id="multiplayer" name="option1" value="Option 1" />
+									<label for="multiplayer">Multiplayer</label>
+								</li>
+								<li>
+									<input type="checkbox" id="co-op" name="option1" value="Option 1" />
+									<label for="co-op">CO-OP</label>
 								</li>
 							</ul>
 						</div>
 					</div>
 
+					<!-- Gêneros -->
 					<div class="dropdown">
 						<button
 							class="btn btn-secondary dropdown-toggle"
@@ -427,14 +412,26 @@
 							Gênero
 						</button>
 						<div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-							<ul>
+							<ul id="dropdown-generos">
 								<li>
-									<input type="checkbox" id="option1" name="option1" value="Option 1" />
-									action
+									<input type="checkbox" id="action" name="option1" value="Option 1" />
+									<label for="Action">Action</label>
 								</li>
 								<li>
-									<input type="checkbox" id="option2" name="option2" value="Option 2" />
-									Indie
+									<input type="checkbox" id="indie" name="option2" value="Option 2" />
+									<label for="Indie">Indie</label>
+								</li>
+								<li>
+									<input type="checkbox" id="strategy" name="option2" value="Option 2" />
+									<label for="Strategy">Strategy</label>
+								</li>
+								<li>
+									<input type="checkbox" id="rpg" name="option2" value="Option 2" />
+									<label for="RPG">RPG</label>
+								</li>
+								<li>
+									<input type="checkbox" id="adventure" name="option2" value="Option 2" />
+									<label for="Adventure">Adventure</label>
 								</li>
 							</ul>
 						</div>
@@ -452,19 +449,26 @@
 							Publishers
 						</button>
 						<div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-							<ul>
+							<ul id="dropdown-publishers">
 								<li>
-									<input type="checkbox" id="option1" name="option1" value="Option 1" />
-									electronic-arts
+									<input type="checkbox" id="electronic-arts" name="option1" value="Option 1" />
+									<label for="electronic-arts">EA</label>
 								</li>
 								<li>
-									<input type="checkbox" id="option2" name="option2" value="Option 2" />
-									microsoft-studios
+									<input type="checkbox" id="microsoft-studios" name="option1" value="Option 1" />
+									<label for="microsoft-studios">Microsoft Studios</label>
+								</li>
+								<li>
+									<input type="checkbox" id="2k-games" name="option1" value="Option 1" />
+									<label for="2k-games">2K Games</label>
 								</li>
 							</ul>
 						</div>
 					</div>
 
+					<!-- Developers -->
+					<!-- Para pegar a lista de Developers -->
+					<!-- https://api.rawg.io/api/developers?key=13c033a42f8549eb9612748fa44a0e3a -->
 					<div class="dropdown">
 						<button
 							class="btn btn-secondary dropdown-toggle"
@@ -477,14 +481,14 @@
 							Developers
 						</button>
 						<div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-							<ul>
+							<ul id="dropdown-developers">
 								<li>
-									<input type="checkbox" id="option1" name="option1" value="Option 1" />
-									valve-software
+									<input type="checkbox" id="valve-software" name="option1" value="Option 1" />
+									<label for="valve-software">Valve</label>
 								</li>
 								<li>
-									<input type="checkbox" id="option2" name="option2" value="Option 2" />
-									feral-interactive
+									<input type="checkbox" id="ubisoft" name="option1" value="Option 1" />
+									<label for="ubisoft">Ubisoft</label>
 								</li>
 							</ul>
 						</div>
@@ -499,24 +503,26 @@
 							type="date"
 							id="dataLimiteInferior"
 							name="trip-start"
-							value="2024-04-25"
-							min="2018-01-01"
-							max="2024-12-31"
+							value="2018-01-01"
+							min="2000-01-01"
+							max="2024-03-28"
 						/>
+						Start
 						<input
 							type="date"
 							id="dataLimiteSuperior"
 							name="trip-start"
-							value="2024-04-25"
-							min="2018-01-01"
-							max="2024-12-31"
+							value="2024-03-28"
+							min="2000-01-01"
+							max="2024-03-28"
 						/>
+						End
 					</div>
 
 					<!-- <div> -->
-						<!-- Fazer um date picker e converter pra string pras usar como query parameter -->
-						<!-- Filter by updated date -->
-						<!-- <input type="text" />Data 1 -->
+					<!-- Fazer um date picker e converter pra string pras usar como query parameter -->
+					<!-- Filter by updated date -->
+					<!-- <input type="text" />Data 1 -->
 					<!-- </div> -->
 
 					<button id="apply" type="button" class="btn btn-success">Aplicar</button>
@@ -532,15 +538,33 @@
 									data-bs-toggle="dropdown"
 									aria-expanded="false"
 								>
-									Ordenar: Nome
+									<label>Ordenar: Nome</label>
 								</button>
-								<ul class="dropdown-menu">
-									<li><a class="dropdown-item" href="#">released</a></li>
-									<li><a class="dropdown-item" href="#">added</a></li>
-									<li><a class="dropdown-item" href="#">created</a></li>
-									<li><a class="dropdown-item" href="#">updated</a></li>
-									<li><a class="dropdown-item" href="#">rating</a></li>
-									<li><a class="dropdown-item" href="#">metacritic</a></li>
+								<ul id="ordem" class="dropdown-menu">
+									<li>
+										<input id="released" name="order" type="radio" />
+										<label for="released">Lançamento</label>
+									</li>
+									<li>
+										<input id="name" name="order" type="radio" />
+										<label for="name">Nome</label>
+									</li>
+									<li>
+										<input id="created" name="order" type="radio" />
+										<label for="created">Criado</label>
+									</li>
+									<li>
+										<input id="updated" name="order" type="radio" />
+										<label for="updated">Atualizado</label>
+									</li>
+									<li>
+										<input id="rating" name="order" type="radio" />
+										<label for="rating">Rating</label>
+									</li>
+									<li>
+										<input id="metacritic" name="order" type="radio" />
+										<label for="metacritic">Metacritic</label>
+									</li>
 								</ul>
 							</div>
 

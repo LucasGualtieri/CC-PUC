@@ -430,6 +430,8 @@ main {
 .dropdown-menu.show {
 	/* background-color: red; */
 	padding: 0 10px;
+	/* width: 206px */
+	width: -webkit-fill-available;
 }
 
 .btn-secondary {
@@ -1152,7 +1154,6 @@ header p {
 	width: 100%;
 	height: 45px;
 	align-items: center;
-	
 }
 .field input {
 	width: 100%;
@@ -1250,3 +1251,8 @@ input[type="range"]::-moz-range-thumb {
 }
 
 /* ------------- Metacritic Slider End ------------- */
+
+.ordem {
+	display: flex;
+	flex-direction: column;
+}
