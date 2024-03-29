@@ -394,7 +394,7 @@ class RegMem {
 	byte PC;
 	Nibble W, X, Y;
 
-	String* memory;
+	String memory[96];
 
 	byte instructionCount;
 
@@ -414,28 +414,37 @@ class RegMem {
 		return temp;
 	}
 
-	byte countInstructions(String s) {
-		byte count = 0;
-		for (int i = 0; i < s.length(); i++) if (s[i] == ' ') count++;
-		return count;
+	byte setMemory(char c, String& s) {
+
+		int i, index = 0;
+		for (i = 0; s.substring(index, index + 3) != "FIM" && i < 95; i++) {
+			memory[i] = s.substring(index, index + 3);
+			index += 4;
+		}
+
+		memory[i] = "FIM";
+
+		return i;
 	}
 
-	void setInstructionLine(int start, int n, String origem, String& output) {
-		for (int i = start; i < n && origem.substring(i, i + 3) != "FIM"; i += 4) {
-			output += origem.substring(i, i + 3) + " | ";
+	void setInstructionLine(int start, int n, String& output) {
+		for (int i = start; i < n && memory[i] != "FIM"; i++) {
+			output += memory[i] + " | ";
 		}
+	}
+
+	void setProgram(String& s) {
+		s += " FIM";
+		instructionCount = setMemory(' ', s);
+		PC = 0;
 	}
 
   public:
 
-	RegMem(String& s) {
-		memory = &s;
-		*memory += " FIM";
-		PC = 0;
-		instructionCount = countInstructions(*memory);
-	}
+	RegMem(String& s) { setProgram(s); }
+	RegMem() {}
 
-	bool hasFinished() { return memory->substring(PC * 4) == "FIM"; } //  || (PC + 4) * 4 == 100
+	bool hasFinished() { return memory[PC] == "FIM"; } //  || (PC + 4) * 4 == 100
 
 	Nibble& operator[](byte pos) {
 		if (pos == 1) return W;
@@ -443,12 +452,16 @@ class RegMem {
 		else if (pos == 3) return Y;
 	}
 
+	void operator=(String s) { setProgram(s); }
+
 	Instruction next();
 
 	String str();
 };
 
 String RegMem::str() {
+
+	Serial.println("freeMemory: " + String(freeMemory()));
 
 	String output;
 
@@ -460,53 +473,53 @@ String RegMem::str() {
 	static byte starPos;
 	if (PC == 0) starPos = 1;
 
-	byte itemsCount = 5 * 4;
+	byte itemsCount = 5;
 
 	if (PC < 4 || instructionCount <= 5) { // Linha que pode ser alterada: valor original: PC < 3
 		
 		Serial.print(setStarPos(starPos));
-		if (0 < PC && PC < 4 || PC == 4 && instructionCount == 5) starPos += 6; // Linha que pode ser alterada: valor original: não tem o IF
+		// if (0 < PC && PC < 4 || PC == 4 && instructionCount == 5) starPos += 6; // Linha que pode ser alterada: valor original: não tem o IF
 		
-		setInstructionLine(0, itemsCount + 1, *memory, output);
-		if (instructionCount <= 6) output += "FIM";
-		else output += "...";
+		// setInstructionLine(0, itemsCount + 1, output);
+		// if (instructionCount <= 6) output += "FIM";
+		// else output += "...";
 	}
 
-	else if (PC < (instructionCount - 3) + 1) { // Linha que pode ser alterada: valor original: PC < instructionCount - 3
+	// else if (PC < (instructionCount - 3) + 1) { // Linha que pode ser alterada: valor original: PC < instructionCount - 3
 
-		Serial.print(setStarPos(starPos));
+	// 	Serial.print(setStarPos(starPos));
 		
-		int shift = (PC - 3) * 4, n = 0;
+	// 	int shift = (PC - 3), n = 0;
 
-		if (PC != 4) output += "... | ";
-		else {
-			shift -= 4;
-			n = 1;
-		}
+	// 	if (PC != 4) output += "... | ";
+	// 	else {
+	// 		shift -= 4;
+	// 		n = 1;
+	// 	}
 
-		setInstructionLine(shift, itemsCount + n + shift, *memory, output);
+	// 	setInstructionLine(shift, itemsCount + n + shift, output);
 
-		output += "...";
-	}
+	// 	output += "...";
+	// }
 
-	else {
+	// else {
 
-		Serial.print(setStarPos(starPos));
-		starPos += 6;
+	// 	Serial.print(setStarPos(starPos));
+	// 	starPos += 6;
 
-		int shift = (instructionCount - 5) * 4, n = 0;
+	// 	int shift = (instructionCount - 5), n = 0;
 
-		if (instructionCount == 6) {
-			shift -= 4;
-			n = 1;
-		}
+	// 	if (instructionCount == 6) {
+	// 		shift -= 4;
+	// 		n = 1;
+	// 	}
 
-		else output += "... | ";
+	// 	else output += "... | ";
 
-		setInstructionLine(shift, itemsCount + n + shift, *memory, output);
+	// 	setInstructionLine(shift, itemsCount + n + shift, output);
 
-		output += "FIM";
-	}
+	// 	output += "FIM";
+	// }
 
 	output.toUpperCase();
 
@@ -514,19 +527,13 @@ String RegMem::str() {
 }
 
 Instruction RegMem::next() {
-
-	int pos = PC * 4;
-
-	Instruction inst = memory->substring(pos, pos + 3);
-
-	PC++;
-
+	Instruction inst = memory[PC++];
 	return inst;
 }
 
 // ---------------------------------------------------------------------
 
-void setOutput(RegMem program);
+void setOutput(RegMem& program);
 Nibble InstructionExecution(Instruction i);
 void WaitForInput() { while (!Serial.available()); }
 
@@ -550,51 +557,40 @@ void setPinMode(int count, ...) {
 	va_end(args);
 }
 
-template<typename... Args>
-void setDigitalOutput(int state, Args... args) {
+void setDigitalOutput(int state, int count, ...) {
+	va_list args;
+	va_start(args, count);
 
-	auto processArg = [state](const auto& arg) {
-		digitalWrite(arg, state);
-	};
+	for (int i = 0; i < count; i++) {
+		digitalWrite(va_arg(args, int), state);
+	}
 
-	// Chama a lambda para todos os parametros
-	(processArg(args), ...);
+	va_end(args);
 }
-
-// void setDigitalOutput(int state, int count, ...) {
-// 	va_list args;
-// 	va_start(args, count);
-
-// 	for (int i = 0; i < count; i++) {
-// 		digitalWrite(va_arg(args, int), state);
-// 	}
-
-// 	va_end(args);
-// }
 
 void setDisplay(byte value) {
 
-	setDigitalOutput(LOW, 2, 3, 4, 5, 6, 7, 8);
+	setDigitalOutput(LOW, 7, 2, 3, 4, 5, 6, 7, 8);
 
-	if (value == 0x0) setDigitalOutput(HIGH, 2, 3, 4, 5, 6, 7);
-	else if (value == 0x1) setDigitalOutput(HIGH, 2, 3);
-	else if (value == 0x2) setDigitalOutput(HIGH, 4, 2, 8, 6, 5);
-	else if (value == 0x3) setDigitalOutput(HIGH, 4, 2, 8, 3, 5);
-	else if (value == 0x4) setDigitalOutput(HIGH, 7, 2, 8, 3);
-	else if (value == 0x5) setDigitalOutput(HIGH, 4, 7, 8, 3, 5);
-	else if (value == 0x6) setDigitalOutput(HIGH, 4, 7, 8, 6, 5, 3);
-	else if (value == 0x7) setDigitalOutput(HIGH, 4, 2, 3);
-	else if (value == 0x8) setDigitalOutput(HIGH, 2, 3, 4, 5, 6, 7, 8);
-	else if (value == 0x9) setDigitalOutput(HIGH, 2, 3, 4, 7, 8);
-	else if (value == 0xA) setDigitalOutput(HIGH, 2, 3, 4, 6, 7, 8);
-	else if (value == 0xB) setDigitalOutput(HIGH, 3, 5, 6, 7, 8);
-	else if (value == 0xC) setDigitalOutput(HIGH, 4, 7, 6, 5);
-	else if (value == 0xD) setDigitalOutput(HIGH, 8, 6, 5, 3, 2);
-	else if (value == 0xE) setDigitalOutput(HIGH, 8, 6, 5, 4, 7);
-	else if (value == 0xF) setDigitalOutput(HIGH, 8, 6, 4, 7);
+	if (value == 0x0) setDigitalOutput(HIGH, 6, 2, 3, 4, 5, 6, 7);
+	else if (value == 0x1) setDigitalOutput(HIGH, 2, 2, 3);
+	else if (value == 0x2) setDigitalOutput(HIGH, 5, 4, 2, 8, 6, 5);
+	else if (value == 0x3) setDigitalOutput(HIGH, 5, 4, 2, 8, 3, 5);
+	else if (value == 0x4) setDigitalOutput(HIGH, 4, 7, 2, 8, 3);
+	else if (value == 0x5) setDigitalOutput(HIGH, 5, 4, 7, 8, 3, 5);
+	else if (value == 0x6) setDigitalOutput(HIGH, 6, 4, 7, 8, 6, 5, 3);
+	else if (value == 0x7) setDigitalOutput(HIGH, 3, 4, 2, 3);
+	else if (value == 0x8) setDigitalOutput(HIGH, 7, 2, 3, 4, 5, 6, 7, 8);
+	else if (value == 0x9) setDigitalOutput(HIGH, 5, 2, 3, 4, 7, 8);
+	else if (value == 0xA) setDigitalOutput(HIGH, 6, 2, 3, 4, 6, 7, 8);
+	else if (value == 0xB) setDigitalOutput(HIGH, 5, 3, 5, 6, 7, 8);
+	else if (value == 0xC) setDigitalOutput(HIGH, 4, 4, 7, 6, 5);
+	else if (value == 0xD) setDigitalOutput(HIGH, 5, 8, 6, 5, 3, 2);
+	else if (value == 0xE) setDigitalOutput(HIGH, 5, 8, 6, 5, 4, 7);
+	else if (value == 0xF) setDigitalOutput(HIGH, 4, 8, 6, 4, 7);
 }
 
-void setOutput(RegMem program) {
+void setOutput(RegMem& program) {
 	
 	Nibble output = program[1];
 
@@ -676,9 +672,12 @@ void setup() {
 
 void loop() {
 
-	String s = readString("Insira o programa: ");
+	RegMem program;
+	{
+		String s = readString("Insira o programa: ");
+		program = s;
+	}
 
-	RegMem program = s;
 	setOutput(program);
 
 	while(readString("Deseja comecar?: ") != "SIM"); // Talvez tenham jeitos mais elegantes de fazer isso
@@ -697,8 +696,10 @@ void loop() {
 		delay(1000);
 	}
 
+	Serial.println("freeMemory: " + String(freeMemory()));
+
 	Serial.println("\n------ END OF EXECUTION ------\n");
 	// Serial.flush();
 
-	setDigitalOutput(LOW,  2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13);
+	setDigitalOutput(LOW, 11, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13);
 }
