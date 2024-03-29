@@ -6,6 +6,7 @@ package TP00;
 import java.io.File;
 
 class Gerenciador {
+
 	public static void main(String[] args) throws Exception {
 
 		String pathArquivoDeLivros = "dados/livros.db";
