@@ -16,6 +16,7 @@ public class Livro implements Registro {
 	private String titulo;
 	private String autor;
 	private float preco;
+	private long address;
 	
 	@SuppressWarnings("deprecation")
 	Locale localeBR = new Locale("pt", "BR");
@@ -24,15 +25,16 @@ public class Livro implements Registro {
 		return Livro.class.getConstructor();
 	}
 
-	public Livro() { this(-1, "", "", 0F); }
+	public Livro() { this(-1, "null", "null", -0F); }
 
-	public Livro(String t, String a, float p) { this(-1, t, a, p); }
+	public Livro(String titulo, String autor, float preco) { this(-1, titulo, autor, preco); }
 
-	public Livro(int id, String t, String a, float p) {
-		this.ID = id;
-		this.titulo = t;
-		this.autor = a;
-		this.preco = p;
+	public Livro(int ID, String titulo, String autor, float preco) {
+		this.ID = ID;
+		this.titulo = titulo;
+		this.autor = autor;
+		this.preco = preco;
+		this.address = -1;
 	}
 
 	public Livro(byte[] array) throws Exception { fromByteArray(array); }
@@ -75,7 +77,7 @@ public class Livro implements Registro {
 	public String toString() {
 
 		String str = "";
-		if (this.ID != -1) str = "ID: " + this.ID + "\n";
+		if (this.ID != -1) str += "ID: " + this.ID + "\n";
 		str += "Título: " + this.titulo;
 		str += "\nAutor: " + this.autor;
 		str += "\nPreço: " + NumberFormat.getCurrencyInstance(localeBR).format(this.preco);
@@ -93,4 +95,24 @@ public class Livro implements Registro {
 		System.out.print("Insira o preço do livro: ");
 		preco = Lib.readFloat();
 	}
+
+	public void setAddress(long address) { this.address = address; }
+	public long getAddress() { return this.address; }
+
+	public void printHeader() {
+		System.out.println("ID, Título, Autor, Preço");
+	}
+
+	public String toTable() {
+		String str;
+		str = this.ID + ", ";
+		str += this.titulo  + ", ";
+		str += this.autor  + ", ";
+		str += NumberFormat.getCurrencyInstance(localeBR).format(this.preco);
+
+		return str + "\n";
+	}
+
+	public String getTitulo() { return titulo; }
+
 }

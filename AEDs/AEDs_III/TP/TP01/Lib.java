@@ -23,7 +23,10 @@ public class Lib {
 		boolean invalid = false;
 
 		do {
-			if (invalid) System.out.print("Valor inválido, tente novamente: ");
+			if (invalid) {
+				cprintf(BOLD + RED, "Valor inválido, ");
+				System.out.print("tente novamente: ");
+			}
 
 			try {
 				value = scanner.nextInt();
@@ -47,7 +50,10 @@ public class Lib {
 		boolean invalid = false;
 
 		do {
-			if (invalid) System.out.print("Valor inválido, tente novamente: ");
+			if (invalid) {
+				cprintf(BOLD + RED, "Valor inválido, ");
+				System.out.print("tente novamente: ");
+			}
 
 			try {
 				value = scanner.nextFloat();

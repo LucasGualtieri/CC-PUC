@@ -5,11 +5,16 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.lang.reflect.Constructor;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Arquivo<T extends Registro> {
+
 	Constructor<T> construtor;
-	RandomAccessFile arq;
-	short HEADER_SIZE;
+	RandomAccessFile file;
+	HashExtensivel<ParIDEndereco> indiceDireto;
+	String nome;
+	final short HEADER_SIZE = 4;
 
 	public Arquivo() {}
 
@@ -17,28 +22,52 @@ public class Arquivo<T extends Registro> {
 		this.construtor = construtor;
 	}
 
-	public Arquivo(Constructor<T> construtor, String filePath) throws FileNotFoundException, IOException {
+	public Arquivo(Constructor<T> construtor, String nome, String filePath) throws FileNotFoundException, IOException, Exception {
 		this.construtor = construtor;
 		AbrirArquivo(filePath);
+
+		this.nome = nome;
+
+		indiceDireto = new HashExtensivel<>(
+			ParIDEndereco.getConstructor(),
+			3,
+			"dados/" + nome + ".hash_d.db",
+			"dados/" + nome + ".hash_c.db"
+		);
 	}
 
-	private void AbrirArquivo(String filePath) throws FileNotFoundException, IOException {
-		arq = new RandomAccessFile(filePath, "rw");
+	public String getNome() { return nome; }
 
-		if (arq.length() < 4) {
-			arq.seek(0);
-			arq.writeInt(0);
+	private void AbrirArquivo(String filePath) throws FileNotFoundException, IOException {
+		file = new RandomAccessFile(filePath, "rw");
+
+		if (file.length() < HEADER_SIZE) {
+			file.seek(0);
+			file.writeInt(0);
 		}
 	}
 
-	public void Instanciador() throws Exception {
-		T objeto = this.construtor.newInstance();
-		objeto.getID();
-	}
+	// public void Instanciador() throws Exception {
+	// 	T objeto = this.construtor.newInstance();
+	// 	objeto.getID();
+	// }
 
 	public T Instanciador(byte[] array) throws Exception {
 		T objeto = this.construtor.newInstance();
 		objeto.fromByteArray(array);
+		return objeto;
+	}
+
+	public T Instanciador(long address, short tamanhoRegistro) throws Exception {
+
+		byte[] registro = new byte[tamanhoRegistro];
+		file.read(registro);
+
+		T objeto = this.construtor.newInstance();
+		objeto.fromByteArray(registro);
+
+		objeto.setAddress(address);
+
 		return objeto;
 	}
 
@@ -48,143 +77,163 @@ public class Arquivo<T extends Registro> {
 		return objeto;
 	}
 
-	public void Inicializar() throws IOException {
-		arq.writeInt(0);
+	public T readNewInstance(int ID) throws Exception {
+		T objeto = this.construtor.newInstance();
+		objeto.setID(ID);
+		objeto.setAll();
+		return objeto;
 	}
 
 	public int create(T obj) throws Exception {
 
-		arq.seek(0); // Ir para o começo, irrelevante somente na primeira operação
-		int ultimoID = arq.readInt() + 1; // Recuperar o último ID
-		obj.setID(ultimoID); // Setta o ID do objeto
+		file.seek(0); // Ir para o começo, irrelevante somente na primeira operação
+		int ID = file.readInt() + 1; // Recuperar o último ID
+		obj.setID(ID); // Setta o ID do objeto
 		
-		arq.seek(0); // Volta pra começo
-		arq.writeInt(ultimoID); // Atualiza
+		file.seek(0); // Volta pra começo
+		file.writeInt(ID); // Atualiza
 	
-		arq.seek(arq.length()); // Vai pro fim do arquivo para criar o registro
-		
+		file.seek(file.length()); // Vai pro fim do arquivo para criar o registro
+		long endereco = file.getFilePointer();
+
 		byte[] ba = obj.toByteArray();
-		short tam = (short)ba.length;
+		short tam = (short)ba.length; 
 		
-		arq.writeShort(tam);
-		arq.write(ba);
-		
-		return obj.getID();
+		file.writeShort(tam);
+		file.write(ba);
+
+		indiceDireto.create(new ParIDEndereco(ID, endereco));
+
+		return ID;
 	}
 
-	public boolean delete(int id) throws IOException, Exception {
+	public T read(int ID) throws IOException, Exception {
 		
-		boolean resultado = false;
-		
-		arq.seek(4); // mover o ponteiro para o primeiro registro (após o cabeçalho)
-		long len = arq.length();
-		short tamanhoRegistro;
-		
-		while(arq.getFilePointer() < len) {
-			long endereco = arq.getFilePointer();
-			tamanhoRegistro = arq.readShort();
-			
-			if (tamanhoRegistro > 0) {
-				
-				byte[] registro = new byte[tamanhoRegistro];
-				arq.read(registro);
-				
-				T obj = Instanciador(registro);
-				
-				if (obj.getID() == id) {
-					arq.seek(endereco); // Volta para o indicador de tamanho
-					arq.writeShort(-tamanhoRegistro);
-					resultado = true;
-					arq.seek(len);
-				}
-			} else {
-				arq.seek(arq.getFilePointer() + Math.abs(tamanhoRegistro));
-			}
-		}
-		
-		return resultado;
-	}
-	
-	public T read(int id) throws IOException, Exception {
-		
-		T object = null;
+		T object = construtor.newInstance();
 
-		arq.seek(4); // mover o ponteiro para o primeiro registro (após o cabeçalho)
-		long len = arq.length();
-		short tamanhoRegistro;
+		ParIDEndereco pie = indiceDireto.read(ID);
+		long address = pie != null ? pie.getEndereco() : -1;
 
-		while(arq.getFilePointer() < len) {
+		if (address != -1) {
 
-			tamanhoRegistro = arq.readShort();
-			
-			if (tamanhoRegistro > 0) {
-				
-				byte[] registro = new byte[tamanhoRegistro];
-				arq.read(registro);
-				
-				T obj = Instanciador(registro);
-				
-				if (obj.getID() == id) {
-					object = obj;
-					arq.seek(len);
-				}
-			}
+			file.seek(address);
 
-			else {
-				arq.skipBytes(Math.abs(tamanhoRegistro));
-			}
+			short tamanhoRegistro = file.readShort();
+			byte[] registro = new byte[tamanhoRegistro];
+
+			file.read(registro);
+
+			object.fromByteArray(registro);
 		}
 
-		if (object == null) throw new Exception();
+		else throw new Exception();
 
 		return object;
 	}
-	
-	public boolean update(T newObj) throws IOException, Exception {
-		boolean resultado = false;
+
+	public void update(T oldObj, T newObj) throws IOException, Exception {
+
+		short tamanhoRegistro = (short)oldObj.toByteArray().length;
+
+		byte[] novoRegistro = newObj.toByteArray();
+
+		if (novoRegistro.length <= tamanhoRegistro) {
+			file.seek(oldObj.getAddress() + 2); // Começo do registro, após o indicador de tamanho
+			file.write(novoRegistro);
+		}
 		
-		arq.seek(4); // mover o ponteiro para o primeiro registro (após o cabeçalho)
-		long len = arq.length();
-		short tamanhoRegistro;
+		else {
+			file.seek(oldObj.getAddress());
+			file.writeShort(-tamanhoRegistro);
+			file.seek(file.length());
+			file.writeShort(novoRegistro.length);
+			file.write(novoRegistro);
+		}
+	}
+
+	public void delete(int ID) throws Exception {
+
+		long address = indiceDireto.read(ID).getEndereco();
+
+		file.seek(address);
+		short tamanhoRegistro = file.readShort();
+		file.seek(address);
+		file.writeShort(-tamanhoRegistro);
+
+		indiceDireto.delete(ID);
+	}
+
+	// public void delete(T object) throws IOException, Exception {
+	// 	file.seek(object.getAddress()); // Volta para o indicador de tamanho
+	// 	file.writeShort(-(object.toByteArray().length));
+	// }
+
+	// public boolean delete(int id) throws IOException, Exception {
 		
-		while(arq.getFilePointer() < len) {
-			long endereco = arq.getFilePointer();
-			tamanhoRegistro = arq.readShort();
+	// 	boolean resultado = false;
+		
+	// 	arq.seek(HEADER_SIZE); // mover o ponteiro para o primeiro registro (após o cabeçalho)
+	// 	long len = arq.length();
+	// 	short tamanhoRegistro;
+		
+	// 	while(arq.getFilePointer() < len) {
+	// 		long endereco = arq.getFilePointer();
+	// 		tamanhoRegistro = arq.readShort();
+			
+	// 		if (tamanhoRegistro > 0) {
+				
+	// 			byte[] registro = new byte[tamanhoRegistro];
+	// 			arq.read(registro);
+				
+	// 			T obj = Instanciador(registro);
+				
+	// 			if (obj.getID() == id) {
+	// 				arq.seek(endereco); // Volta para o indicador de tamanho
+	// 				arq.writeShort(-tamanhoRegistro);
+	// 				resultado = true;
+	// 				arq.seek(len);
+	// 			}
+	// 		} else {
+	// 			arq.seek(arq.getFilePointer() + Math.abs(tamanhoRegistro));
+	// 		}
+	// 	}
+		
+	// 	return resultado;
+	// }
+
+	public List<T> Listar() throws IOException, Exception {
+
+		List<T> list = new LinkedList<>();
+
+		file.seek(HEADER_SIZE); // mover o ponteiro para o primeiro registro (após o cabeçalho)
+		long len = file.length();
+
+		while(file.getFilePointer() < len) {
+
+			short tamanhoRegistro = file.readShort();
 			
 			if (tamanhoRegistro > 0) {
 				
 				byte[] registro = new byte[tamanhoRegistro];
-				arq.read(registro);
-				
-				T obj = Instanciador(registro);
-				
-				if (obj.getID() == newObj.getID()) {
+				file.read(registro);
 
-					byte[] novoRegistro = newObj.toByteArray();
+				list.add(Instanciador(registro));
+			}
 
-					if (novoRegistro.length <= registro.length) {
-						arq.seek(endereco + 2); // Volta para o começo do registro
-						arq.write(novoRegistro);
-						arq.seek(len); // Encerra o while
-					} else {
-						arq.seek(endereco);
-						arq.writeShort(-tamanhoRegistro);
-						arq.seek(len);
-						arq.writeShort(novoRegistro.length);
-						arq.write(novoRegistro);
-					}
-
-					resultado = true;
-				}
-			} else {
-				arq.seek(arq.getFilePointer() + Math.abs(tamanhoRegistro));
+			else {
+				file.skipBytes(Math.abs(tamanhoRegistro));
 			}
 		}
-		
-		return resultado;
+
+		return list.isEmpty() ? null : list;
+	}
+
+	public void printHeader() throws Exception {
+		T objeto = this.construtor.newInstance();
+		objeto.printHeader();
 	}
 
 	public void close() throws Exception {
-		arq.close();
+		file.close();
 	}
 }
