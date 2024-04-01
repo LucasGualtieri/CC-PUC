@@ -114,7 +114,7 @@ class Principal {
 		}
 		
 		else {
-			// Lib.clearScreen();
+			Lib.clearScreen();
 			Lib.cprintf("BOLD RED", "\nAtualização cancelada.\n\n");
 			return;
 		}

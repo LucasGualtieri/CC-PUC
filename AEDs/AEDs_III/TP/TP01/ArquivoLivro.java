@@ -1,6 +1,6 @@
 package TP01;
 
-import java.io.IOException;
+// import java.io.IOException;
 import java.lang.reflect.Constructor;
 
 public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
@@ -13,7 +13,7 @@ public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
 	 * Títulos e Nomes de autores de livros ao redor do mundo
 	 * Fonte: Microsoft Copilot
 	*/
-	private final short registerAvgLength = 12; // 4 + (2 + 14) + (2 + 12) + 4.
+	// private final short registerAvgLength = 12; // 4 + (2 + 14) + (2 + 12) + 4.
 
 	@SuppressWarnings("unchecked")
 	public ArquivoLivro(String nome, String filePath) throws NoSuchMethodException, SecurityException, Exception {

@@ -6,19 +6,20 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-public class Tuple<Key, Value> {
-	private Key key;
-	private Value value;
+// public class Tuple<K, V> {
+public class Tuple<K extends Comparable<K>, V> implements Comparable<Tuple<K, V>> {
+	private K key;
+	private V value;
 
-	public Tuple(Key key, Value value) {
+	public Tuple(K key, V value) {
 		this.key = key;
 		this.value = value;
 	}
 
 	public Tuple() {}
 
-	public Key getKey() { return key; }
-	public Value getValue() { return value; }
+	public K getKey() { return key; }
+	public V getValue() { return value; }
 
 	@SuppressWarnings("unchecked")
 	public void fromByteArray(byte[] array) {
@@ -30,23 +31,23 @@ public class Tuple<Key, Value> {
 			dis = new DataInputStream(ba_in);
 
 			if (key instanceof Short) {
-				this.key = (Key)Short.valueOf(dis.readShort());
+				this.key = (K)Short.valueOf(dis.readShort());
 			}
 			else if (key instanceof Long) {
-				this.key = (Key)Long.valueOf(dis.readLong());
+				this.key = (K)Long.valueOf(dis.readLong());
 			}
 			else if (key instanceof String) {
-				this.key = (Key)String.valueOf(dis.readUTF());
+				this.key = (K)String.valueOf(dis.readUTF());
 			}
 			
 			if (value instanceof Short) {
-				this.value = (Value)Short.valueOf(dis.readShort());
+				this.value = (V)Short.valueOf(dis.readShort());
 			}
 			else if (value instanceof Long) {
-				this.value = (Value)Long.valueOf(dis.readLong());
+				this.value = (V)Long.valueOf(dis.readLong());
 			}
 			else if (value instanceof String) {
-				this.value = (Value)String.valueOf(dis.readUTF());
+				this.value = (V)String.valueOf(dis.readUTF());
 			}
 
 			dis.close();
@@ -64,7 +65,7 @@ public class Tuple<Key, Value> {
 			dos.writeShort((Short)this.key);
 		}
 		else if (key instanceof Long) {
-			dos.writeLong((long)this.key);
+			dos.writeLong((Long)this.key);
 		}
 		else if (key instanceof String) {
 			dos.writeUTF((String)this.key);
@@ -74,7 +75,7 @@ public class Tuple<Key, Value> {
 			dos.writeShort((Short)this.value);
 		}
 		else if (value instanceof Long) {
-			dos.writeLong((long)this.value);
+			dos.writeLong((Long)this.value);
 		}
 		else if (value instanceof String) {
 			dos.writeUTF((String)this.value);
@@ -89,4 +90,9 @@ public class Tuple<Key, Value> {
 		str += value + ")";
 		return str;
 	}
+
+	@Override
+    public int compareTo(Tuple<K, V> tuple) {
+        return key.compareTo(tuple.getKey());
+    }
 }

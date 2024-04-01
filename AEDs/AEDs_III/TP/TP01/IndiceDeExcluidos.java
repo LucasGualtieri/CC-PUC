@@ -8,6 +8,9 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+// Se houverem dois registros excluídos imediatamente um ao lado do outros
+// Idealmente os dois deveriam ser fundidos.
+
 public class IndiceDeExcluidos {
 	
 	private RandomAccessFile file;
@@ -44,8 +47,7 @@ public class IndiceDeExcluidos {
 
 	private void SaveData(Tuple<Short, Long> tuple) throws IOException {
 		file.seek(file.length());
-		byte[] array = tuple.toByteArray();
-		file.write(array);
+		file.write(tuple.toByteArray());
 	}
 
 	public Tuple<Short, Long> getBest(short length) throws IOException {
@@ -76,14 +78,15 @@ public class IndiceDeExcluidos {
 	// }
 
 	public void sort() {
-		Comparator<Tuple<Short, Long>> comparator = new Comparator<Tuple<Short, Long>>() {
-			@Override
-			public int compare(Tuple<Short, Long> tuple1, Tuple<Short, Long> tuple2) {
-				return Short.compare(tuple1.getKey(), tuple2.getKey());
-			}
-		};
+		// Comparator<Tuple<Short, Long>> comparator = new Comparator<Tuple<Short, Long>>() {
+		// 	@Override
+		// 	public int compare(Tuple<Short, Long> tuple1, Tuple<Short, Long> tuple2) {
+		// 		return Short.compare(tuple1.getKey(), tuple2.getKey());
+		// 	}
+		// };
 
-		Collections.sort(list, comparator);
+		// Collections.sort(list, comparator);
+		// Collections.sort(list);
 	}
 
 	public void add(Tuple<Short, Long> tuple) throws IOException {
