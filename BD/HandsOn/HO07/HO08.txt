@@ -1,0 +1,25 @@
+-- Projetar o primeiro nome e o último nome dos atores que são diretores;
+SELECT first_name, last_name
+FROM
+(SELECT first_name, last_name FROM actors) as AtoresDiretores
+INTERSECT
+(SELECT first_name, last_name FROM directors)
+
+-- Projetar o primeiro nome e o último nome dos atores que não são diretores;
+SELECT first_name, last_name
+FROM
+(SELECT first_name, last_name FROM actors) as AtoresDiretores
+EXCEPT
+(SELECT first_name, last_name FROM directors)
+
+-- Projetar o primeiro nome e o último nome dos atores e diretores;
+SELECT first_name, last_name
+FROM
+(SELECT first_name, last_name FROM actors) as AtoresDiretores
+UNION
+(SELECT first_name, last_name FROM directors)
+
+-- Projetar o nome dos filmes que não são dirigidos por nenhum diretor;
+SELECT name
+FROM movies EXCEPT 
+(SELECT name FROM movies_directors JOIN movies ON movies.id = movie_id)
