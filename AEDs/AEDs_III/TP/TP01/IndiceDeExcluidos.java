@@ -2,6 +2,7 @@ package TP01;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.util.Comparator;
 // import java.util.Collections;
 // import java.util.Comparator;
 import java.util.Iterator;
@@ -77,6 +78,14 @@ public class IndiceDeExcluidos {
 	// 	}
 	// }
 
+	// private class TupleCompare implements Comparator<Tuple<Short, Long>> {
+	// 	public int compare(Tuple<Short, Long> one, Tuple<Short, Long> two) {
+	// 		return Short.compare(one.getKey(), two.getKey());
+	// 	}
+	// }
+
+	// Ai eu teria que criar um objeto e passar esse objeto pro Collections.sort
+
 	public void sort() {
 		// Comparator<Tuple<Short, Long>> comparator = new Comparator<Tuple<Short, Long>>() {
 		// 	@Override
@@ -84,6 +93,13 @@ public class IndiceDeExcluidos {
 		// 		return Short.compare(tuple1.getKey(), tuple2.getKey());
 		// 	}
 		// };
+
+		// new Comparator<Tuple<Short, Long>>() { ... }: This part creates an anonymous inner class
+		// that implements the Comparator interface for the Tuple<Short, Long> type. It's anonymous
+		// because it doesn't have a name, and it's an inner class because it's defined within another class or method.
+
+		// { ... }: Inside the curly braces is the body of the anonymous inner class.
+		// It contains the implementation of the compare method required by the Comparator interface.
 
 		// Collections.sort(list, comparator);
 		// Collections.sort(list);
