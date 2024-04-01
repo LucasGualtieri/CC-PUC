@@ -3,7 +3,7 @@ package TP01;
 // import java.util.InputMismatchException;
 import java.util.List;
 
-// clear && javac -cp ../ Principal.java && java -cp ../ Principal.java
+// clear && javac -d Classes -cp ../ Principal.java && java -cp Classes Principal.java
 
 // Fazer uma função para listar todos os livros *válidos*
 
@@ -25,43 +25,44 @@ class Principal {
 	}
 
 	static <T extends Registro> void Create(Arquivo<T> arquivo) throws Exception {
-		
+
 		Lib.clearScreen();
 		Lib.printdiv(1, "Cadastrando na base de dados: %ss", arquivo.getNome());
-		
+
 		T object = arquivo.readNewInstance();
 		System.out.println("\n" + object + "\n");
-		
+
 		Lib.cprintf("GREEN", "1 - Confirmar cadastro.\n");
 		Lib.cprintf("RED", "2 - Cancelar cadastro.\n");
 		System.out.print("\nEscolha uma das opções acima: ");
-		
+
 		int escolha = ReadChoice(2);
-		
-		if (escolha == 1) {
-			try {
-				arquivo.create(object);
-				Lib.clearScreen();
-				// System.out.println(object + "\n");
-				Lib.cprintf("BOLD GREEN", "%s cadastrado com sucesso!\n\n", arquivo.getNome());
-			} catch (Exception e) {
-				Lib.cprintf("BOLD RED", "\n%s falha ao cadastrar.\n\n", arquivo.getNome());
-			}
-		}
+
+		Lib.clearScreen();
+
+		if (escolha != 1) Lib.cprintf("RED", "Cadastro cancelado.\n\n");
 
 		else {
-			Lib.printdiv(1, 0, "Cadastro cancelado");
+			try {
+				arquivo.create(object);
+				Lib.cprintf("BOLD GREEN", "%s cadastrado com sucesso!\n\n", arquivo.getNome());
+				System.out.println(object + "\n");
+			}
+			catch (Exception e) {
+				Lib.cprintf("BOLD RED", "Falha ao cadastrar %s.\n\n", arquivo.getNomeLowerCase());
+				// Lib.cprintf("BOLD RED", "Falha ao cadastrar %s: %s\n\n", arquivo.getNomeLowerCase(), e.getMessage());
+			}
 		}
 	}
 
 	static <T extends Registro> T Read(boolean print, Arquivo<T> arquivo) throws Exception {
-		
+
 		if (print) {
 			Lib.clearScreen();
 			Lib.printdiv(1, "Consultando na base de dados: %ss", arquivo.getNome());
 		}
-		
-		System.out.printf("Insira o ID do %s: ", arquivo.getNome());
+
+		System.out.printf("Insira o ID do %s: ", arquivo.getNomeLowerCase());
 		int ID = Lib.readInt();
 
 		T object = null;
@@ -74,10 +75,10 @@ class Principal {
 				System.out.println(object + "\n");
 			}
 		}
-		
+
 		catch (Exception e) {
 			if (print) Lib.cprintf("BOLD RED", "\n%s não encontrado.\n\n", arquivo.getNome());
-			else throw new Exception();	
+			else throw new Exception("Registro não encontrado.");	
 		}
 
 		return object;
@@ -96,16 +97,16 @@ class Principal {
 			return;
 		}
 
-		// ---------------------------------------------------------------------
+		// -----------------------------------------------------------------------------------------------
 
 		System.out.println("\n" + oldObject + "\n");
 
 		Lib.cprintf("GREEN", "1 - Atualizar os dados.\n");
 		Lib.cprintf("RED", "2 - Cancelar atualização.\n");
 		System.out.print("\nEscolha uma das opções acima: ");
-
+		
 		int escolha = ReadChoice(2);
-
+		
 		if (escolha == 1) {
 			System.out.println();
 			newObject = arquivo.readNewInstance(oldObject.getID());
@@ -113,12 +114,12 @@ class Principal {
 		}
 		
 		else {
-			Lib.clearScreen();
-			Lib.printdiv("Atualização cancelada");
+			// Lib.clearScreen();
+			Lib.cprintf("BOLD RED", "\nAtualização cancelada.\n\n");
 			return;
 		}
 
-		// ---------------------------------------------------------------------
+		// -----------------------------------------------------------------------------------------------
 
 		Lib.cprintf("GREEN", "1 - Confirmar atualização.\n");
 		Lib.cprintf("RED", "2 - Cancelar atualização.\n");
@@ -126,15 +127,20 @@ class Principal {
 
 		escolha = ReadChoice(2);
 
-		if (escolha == 1) {
-			arquivo.update(oldObject, newObject);
-			Lib.clearScreen();
-			Lib.cprintf("BOLD GREEN", "%s atualizado com sucesso!\n\n", arquivo.getNome());
-		}
+		Lib.clearScreen();
+
+		if (escolha != 1)Lib.cprintf("BOLD RED", "Atualização cancelada.\n\n");
 
 		else {
-			Lib.clearScreen();
-			Lib.printdiv("Atualização cancelada");
+			try {
+				arquivo.update(oldObject, newObject);
+				Lib.cprintf("BOLD GREEN", "%s atualizado com sucesso!\n\n", arquivo.getNome());
+				System.out.println(newObject + "\n");
+			}
+			catch (Exception e) {
+				Lib.cprintf("BOLD RED", "Falha ao atualizar %s.\n\n", arquivo.getNomeLowerCase());
+				// Lib.cprintf("BOLD RED", "Falha ao cadastrar %s: %s\n\n", arquivo.getNomeLowerCase(), e.getMessage());
+			}
 		}
 	}
 
@@ -158,23 +164,18 @@ class Principal {
 		System.out.print("\nEscolha uma das opções acima: ");
 
 		int escolha = ReadChoice(2);
+		
+		Lib.clearScreen();
 
 		if (escolha == 1) {
 			// Não usei try-catch pois não encontrei motivos para falha na exclusão.
 			arquivo.delete(object.getID());
-			Lib.clearScreen();
 			Lib.cprintf("BOLD GREEN", "%s excluído com sucesso!\n\n", arquivo.getNome());
 		}
 
-		else {
-			Lib.clearScreen();
-			Lib.printdiv("Exclusão cancelada");
-		}
+		else Lib.printdiv("Exclusão cancelada");
 	}
 
-	// Penso em fazer um esquema de paginação, ou seja, no parametro da função
-	// defino qual página será retornada, e ai o usuário teria a opção de ir para a
-	// próxima ou voltar.
 	static <T extends Registro> void Listar(Arquivo<T> arquivo) throws Exception {
 		
 		Lib.clearScreen();
@@ -201,9 +202,9 @@ class Principal {
 	static <T extends Registro> void CRUD(Arquivo<T> arquivo) throws Exception {
 
 		Lib.clearScreen();
-		
+
 		int escolha;
-		
+
 		do {
 			Lib.printdiv(1, "Base de dados: %ss", arquivo.getNome());
 
@@ -211,7 +212,7 @@ class Principal {
 			System.out.println("2 - Consultar.");
 			System.out.println("3 - Atualizar.");
 			System.out.println("4 - Deletar.");
-			System.out.printf("5 - Listar todos os %ss.\n", arquivo.getNome());
+			System.out.printf("5 - Listar todos os %ss.\n", arquivo.getNomeLowerCase());
 			System.out.println("\n0 - Voltar.");
 			System.out.print("\nEscolha uma das opções acima: ");
 
@@ -240,8 +241,10 @@ class Principal {
 
 	public static void main(String[] args) throws Exception {
 		
-		int escolha;
+		int choice;
 		
+		Arquivo<Livro> arquivo = null;
+
 		do {
 			Lib.clearScreen();
 			Lib.printdiv(1, "SGBD");
@@ -251,27 +254,28 @@ class Principal {
 			System.out.println("\n0 - Sair do programa.");
 			System.out.print("\nEscolha uma das bases de dados: ");
 			
-			escolha = ReadChoice(2);
+			choice = ReadChoice(2);
 			
-			switch (escolha) {
+			switch (choice) {
 			case 1:
-				ArquivoLivro<Livro> arquivo = new ArquivoLivro<>(
-					Livro.getConstructor(),
-					"Livro",
-					"dados/livros.db"
-				);
-				CRUD(arquivo);
-				arquivo.close();
+				arquivo = new ArquivoLivro<>("Livro", "dados/Livro/");
 				break;
 			case 2:
-				System.out.println("Base de dados: Autores");
-				// Arquivo<Autor> arquivo;
-				// arquivo = new Arquivo<>(Autor.getConstructor(), "dados/autores.db");
+				// arquivo = new ArquivoAutor<>("Autor", "dados/Autor/");
 				break;
 			}
 
-		} while (escolha != 0);
+			if (choice != 0) {
+				CRUD(arquivo);
+				arquivo.close();
+			}
+
+		} while (choice != 0);
 
 		Lib.printdiv(1, 1, "FIM DO PROGRAMA");
 	}
 }
+// Função Listar
+// Penso em fazer um esquema de paginação, ou seja, no parametro da função
+// defino qual página será retornada, e ai o usuário teria a opção de ir para a
+// próxima ou voltar.

@@ -1,0 +1,109 @@
+package TP01;
+
+import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+
+public class IndiceDeExcluidos {
+	
+	private RandomAccessFile file;
+	private List<Tuple<Short, Long>> list;
+	private final short REG_LENGTH = 2 + 8;
+
+	public IndiceDeExcluidos(String filePath) throws IOException {
+		list = new LinkedList<>();
+		ImportData(filePath);
+	}
+
+	public void close() throws IOException {
+		// SaveAllData();
+		file.close();
+	}
+
+	private void ImportData(String filePath) throws IOException {
+		file = new RandomAccessFile(filePath + "Excluidos.db", "rw");
+
+		// file.seek(0);
+
+		long fileLength = file.length();
+		Tuple<Short, Long> tuple = new Tuple<Short, Long>((short)1, (long)1);
+
+		while (file.getFilePointer() < fileLength) {
+			byte[] array = new byte[REG_LENGTH];
+			file.read(array);
+			tuple.fromByteArray(array);
+			list.add(tuple);
+		}
+
+		this.sort();
+	}
+
+	private void SaveData(Tuple<Short, Long> tuple) throws IOException {
+		file.seek(file.length());
+		byte[] array = tuple.toByteArray();
+		file.write(array);
+	}
+
+	public Tuple<Short, Long> getBest(short length) throws IOException {
+		
+		Tuple<Short, Long> result = new Tuple<>((short)0, (long)-1);
+
+		Iterator<Tuple<Short, Long>> iterator = list.iterator();
+		int index = 0;
+		while (iterator.hasNext() && length <= iterator.next().getKey()) {
+			result = list.get(index);
+			index++;
+		}
+
+		if (index > 0) list.remove(index - 1);
+
+		return result;
+	}
+
+	// private void SaveAllData() throws IOException {
+	// 	file.seek(0);
+	// 	file.setLength(0);
+
+	// 	Iterator<Tuple<Short, Long>> iterator = list.iterator();
+	// 	while (iterator.hasNext()) {
+	// 		byte[] array = iterator.next().toByteArray();
+	// 		file.write(array);
+	// 	}
+	// }
+
+	public void sort() {
+		Comparator<Tuple<Short, Long>> comparator = new Comparator<Tuple<Short, Long>>() {
+			@Override
+			public int compare(Tuple<Short, Long> tuple1, Tuple<Short, Long> tuple2) {
+				return Short.compare(tuple1.getKey(), tuple2.getKey());
+			}
+		};
+
+		Collections.sort(list, comparator);
+	}
+
+	public void add(Tuple<Short, Long> tuple) throws IOException {
+		Iterator<Tuple<Short, Long>> iterator = list.iterator();
+
+		short length = tuple.getKey();
+		int index = 0;
+		while (iterator.hasNext() && iterator.next().getKey() < length) index++;
+		list.add(index, tuple);
+
+		SaveData(tuple);
+	}
+
+	public void listAll() {
+		Iterator<Tuple<Short, Long>> iterator = list.iterator();
+		while (iterator.hasNext()) {
+			System.out.println(iterator.next());
+		}
+	}
+
+	// Um método para retornar a posição do anterior ao melhor.
+
+}
