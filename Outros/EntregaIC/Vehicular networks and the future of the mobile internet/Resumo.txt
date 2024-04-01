@@ -1,0 +1,10 @@
+O artigo examina a interação entre redes com e sem fio, com foco especial nas redes veiculares (VANETs), derivadas do primeiro experimento DARPA com Internet móvel sem fio - a Rede de Rádio por Pacotes ou PRNET. Inicialmente independente da infraestrutura, o PRNET foi projetado para apoiar operações táticas militares distantes de qualquer infraestrutura com fio. Hoje, descendentes civis mais próximos do PRNET incluem as redes veiculares e as redes pessoais baseadas em smartphones. O artigo explora a interdependência entre as redes com e sem fio e extrai mensagens para o design de uma Internet sem fio mais eficiente no futuro, com foco nas redes veiculares, que estão melhor estabelecidas comercialmente.
+
+Abordagens:
+O artigo adota uma abordagem histórica para compreender a evolução das redes móveis sem fio desde os dias iniciais do ARPANET e do PRNET até as VANETs e as redes de área pessoal baseadas em smartphones. Identifica o papel crucial da infraestrutura de Internet urbana no suporte às aplicações veiculares emergentes e explora os serviços essenciais da Internet que correspondem aos serviços na grade veicular.
+
+Desafios dos Pesquisadores:
+Os desafios incluem a gestão da mobilidade, o acesso à infraestrutura de Internet durante operações normais e a autonomia durante emergências urbanas. A escassez de espectro tornou-se um desafio crucial, enquanto a infraestrutura com fio oferece amplo espectro. Aborda também questões como endereçamento, descoberta de serviços, gerenciamento de recursos e congestionamentos, redundância de caminho e operações tolerantes a atrasos.
+
+Conclusão:
+O artigo conclui que o modelo tradicional de tratar as redes móveis sem fio como apêndices conectados via gateways de borda está se tornando economicamente inviável. Propõe a extensão dos serviços até o backbone da Internet usando redes de malha, sobreposições e virtualização. Além disso, destaca a importância de endereçamento baseado em posição, serviços de diretório e descoberta, gerenciamento de recursos e congestionamentos, redundância de caminho e codificação de rede, operações tolerantes a atrasos, acesso a dados de sensores móveis e privacidade.

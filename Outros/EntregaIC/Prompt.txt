@@ -1,0 +1,3 @@
+Faça um resumo (extenso, fale bastante) sobre o PDF e fale sobre as abordagens. Usaram grafos? Redes neurais? Estatística? Machine learning? Etc etc...
+Fale também sobre os principais desafios dos pesquisadores
+Tudo isso em PT-BR

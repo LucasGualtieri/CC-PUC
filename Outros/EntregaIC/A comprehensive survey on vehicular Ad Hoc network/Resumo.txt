@@ -1,0 +1,18 @@
+Vehicular ad hoc networks (VANETs) têm emergido como uma aplicação das redes móveis ad hoc (MANET) com potencial para melhorar a segurança rodoviária e proporcionar conforto aos viajantes. Essas redes despertaram a atenção dos pesquisadores no campo das comunicações sem fio e móveis, diferenciando-se das MANETs por sua arquitetura, desafios, características e aplicações. Abordagens diversas são utilizadas para lidar com os desafios específicos dos VANETs, incluindo o uso de grafos, redes neurais, estatística e aprendizado de máquina.
+
+Grafos: Os grafos são frequentemente utilizados para modelar a estrutura e a conectividade das redes de comunicação veicular, permitindo a análise de diferentes métricas e a simulação de cenários de comunicação entre veículos e infraestrutura.
+
+Redes Neurais: As redes neurais são empregadas em VANETs para diversas finalidades, como previsão de tráfego, detecção de anomalias, otimização de rotas e tomada de decisões em tempo real com base em dados de sensores e comunicações veiculares.
+
+Estatística: Métodos estatísticos são aplicados para analisar dados coletados de VANETs, identificar padrões de comportamento dos veículos, avaliar a eficácia de algoritmos de roteamento e prever eventos de trânsito, acidentes e congestionamentos.
+
+Aprendizado de Máquina: Técnicas de aprendizado de máquina são empregadas para desenvolver algoritmos de detecção de colisões, sistemas de recomendação de rotas, sistemas de gerenciamento de tráfego e sistemas de controle de frota em VANETs.
+
+Principais Desafios dos Pesquisadores:
+
+Segurança e Privacidade: Garantir a segurança das comunicações veiculares e proteger a privacidade dos usuários contra ataques maliciosos e intrusões.
+Roteamento Eficiente: Desenvolver algoritmos de roteamento eficientes que levem em conta a mobilidade dos veículos, as condições da rede e os requisitos de QoS.
+Gerenciamento de Mobilidade: Lidar com a alta velocidade e a imprevisibilidade dos veículos em movimento, garantindo a conectividade e a eficácia das comunicações.
+Integração com Infraestrutura: Integrar os VANETs com a infraestrutura de transporte existente, incluindo semáforos inteligentes, sistemas de controle de tráfego e redes de sensores.
+Escalabilidade e Desempenho: Garantir que os VANETs possam lidar com um grande número de veículos e manter o desempenho da rede em diferentes condições de tráfego e ambiente.
+Em suma, os VANETs representam um campo de pesquisa multidisciplinar que requer o uso de diversas abordagens, incluindo grafos, redes neurais, estatística e aprendizado de máquina, para enfrentar os desafios específicos relacionados à comunicação veicular e à segurança rodoviária. O desenvolvimento de soluções eficazes nesse domínio tem o potencial de melhorar significativamente a segurança e a eficiência do transporte rodoviário, além de proporcionar uma experiência mais confortável para os viajantes.

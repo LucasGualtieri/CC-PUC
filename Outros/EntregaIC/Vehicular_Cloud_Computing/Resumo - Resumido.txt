@@ -1,0 +1,11 @@
+Computação em Nuvem Veicular:
+
+- Foca em como dispositivos móveis, como veículos, podem atuar tanto como usuários quanto provedores de serviços em uma nuvem móvel.
+
+Computação em Nuvem Móvel (MCC): É um paradigma que permite que dispositivos móveis formem “Nuvens Móveis”, facilitando a modelagem do ambiente, descoberta de conteúdo, coleta e disseminação de dados.
+
+Nuvem Veicular: Veículos são vistos como uma poderosa fonte de recursos de computação e sensoriamento, ideais para aplicações de sensoriamento urbano e gerenciamento de tráfego veicular.
+
+Desafios da Pesquisa: Entre os principais desafios, estão a proteção da privacidade e segurança dos dados, a agregação eficiente de dados sensoriais e a gestão de conteúdo em uma rede sem autoridade central.
+
+O artigo não fala explicitamente sobre o uso de grafos, redes neurais, estatísticas ou aprendizado de máquina (machine learning) nas abordagens. Mas enfatiza a importância da colaboração e comunicação entre veículos para processar e disseminar informações de maneira eficiente e segura.

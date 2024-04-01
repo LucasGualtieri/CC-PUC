@@ -1,0 +1,44 @@
+Abstract
+Vehicular ad hoc networks (VANETs) are classified as an application of mobile ad hoc network (MANET) that has the potential in improving road safety and in providing travellers comfort. Recently VANETs have emerged to turn the attention of researchers in the field of wireless and mobile communications, they differ from MANET by their architecture, challenges, characteristics and applications. In this paper we present aspects related to this field to help researchers and developers to understand and distinguish the main features surrounding VANET in one solid document, without the need to go through other relevant papers and articles starting from VANET architecture and ending up with the most appropriate simulation tools to simulate VANET protocols and applications.
+
+Introduction
+At the present time cars and other private vehicles are used daily by many peoples. The biggest problem regarding the increased use of private transport is the increasing number of fatalities that occur due to accidents on the roads; the expense and related dangers have been recognised as a serious problem being confronted by modern society. VANET provides a wireless communication between moving vehicles, using a dedicated short range communication (DSRC). DSRC is essentially IEEE 802.11a amended for low overhead operation to 802.11p; the IEEE then standardises the whole communication stack by the 1609 family of standards referring to wireless access in vehicular environments (WAVE). Vehicle can communicate with other vehicles directly forming vehicle to vehicle communication (V2V) or communicate with fixed equipment next to the road, referred to as road side unit (RSU) forming vehicle to infrastructure communication (V2I) (Olariu and Weigle, 2009, Moustafa and Zhang, 2009, Jiang et al., 2006).
+
+These types of communications allow vehicles to share different kinds of information, for example, safety information for the purpose of accident prevention, post-accident investigation or traffic jams. Other type of information can be disseminated such as traveller related information which is considered as non-safety information. The intention behind distributing and sharing this information is to provide a safety message to warn drivers about expected hazards in order to decrease the number of accidents and save people's lives, or to provide passengers with pleasant journeys.
+
+This field attracts researchers from different fields to develop VANET applications, protocols and simulation tools. Several challenges are facing researchers and developer. Therefore, several papers and articles have tried to cover these issues. Hartenstein and Laberteaux (2008) have investigated the communication and networking aspects of this technology and addressed the security and privacy issues. While, Li and Wang (2007) focus on the routing protocols of VANET and their requirements to achieve better communication time with less consumption of network bandwidth. Lin et al. (2010) investigate the categories of routing protocols in VANET and the idea behind each of them. In this paper, we present a key document which can provide detailed information to researchers and developer so as to understand the main aspects and challenges related to VANET. It covers different issues such as network architecture, communication domains, challenges, applications and simulation tools.
+
+The rest of this paper is structured as follows. We start in Section 2 with describing the network architecture. Section 3 presents the communication domains in VANET. In Section 4, we discuss the wireless access technologies that can be used to establish the communication of the network. Section 5 presents the unique characteristics of VANET. Network challenges and requirements are discussed in Section 6. Section 7 will give a comprehensive explanation for the applications enabled by VANET communications. VANET simulation tools are given in Section 8 before we sum up our paper with a conclusion in Section 9.
+
+Section snippets
+VANET architecture
+The communication between vehicles, or between a vehicle and an RSU is achieved through a wireless medium called WAVE. This method of communication provides a wide range of information to drivers and travellers and enables safety applications to enhance road safety and provide a comfortable driving. The main system components are the application unit (AU), OBU and RSU. Typically the RSU hosts an application that provides services and the OBU is a peer device that uses the services provided. The 
+
+VANET communication domains
+As shown in Fig. 4, the communication between vehicles and the RSU and the infrastructure form three types of domains:
+1.
+In-vehicle domain: This domain consists of an OBU and one or multiple AUs. The connection could be wired or wireless using WUSB or UWB; an OBU and an AU can reside in a single device. The OBU provides a communication link to the AU in order to execute one or more of a set of applications provided by the application provider using the communication capabilities of the OBU (Olariu 
+
+
+Wireless access technology in VANET
+There are numerous wireless access technologies available today, which can be used to provide the radio interface required by the vehicles in order to communicate with each other, V2V communication, or to communicate with the RSUs, V2I communication. These communication technologies intended to improve road safety, traffic efficiency and to provide driver and passenger comfort by enabling a set of safety and non-safety applications. Some of these technologies rely on a centralised
+
+VANET characteristics
+VANET has its own unique characteristics when compared with other types of MANETs, the unique characteristics of VANET include:
+1.
+Predictable mobility: VANET differs from other types of mobile ad hoc networks in which nodes move in a random way, because vehicles are constrained by road topology and layout and by the requirement to obey road signs and traffic lights and to respond to other moving vehicles (Jakubiak and Koucheryavy, 2008, Blum et al., 2004, Li and Wang, 2007, Toor et al., 2008)
+
+
+Challenges and requirements in VANET
+Many issues arise when efforts are gathered towards running vehicular ad hoc networks in an attempt to provide an improvement to driver behaviour, with the aim of reducing the number of fatalities caused by automobile accidents. To realise the requirements that needed to deploy VANET concept, many factors that have a critical impact on achieving the VANET goal need to be taken into consideration, represented by safety applications and non-safety applications. Thus it is vital to specify the
+
+VANET applications
+V2V and V2I communications allow the development of a large number of applications and can provide a wide range of information to drivers and travellers. Integrating on-board devices with the network interface, different types of sensors and GPS receivers, grant vehicles the ability to collect, process and disseminate information about itself and its environment to other vehicles in close proximity to it. That has led to enhancement of road safety and the provision of passenger comfort (
+
+VANET simulation
+VANET is a subclass of MANET, in which each vehicle acts as a node creating a network in the road with either another node or with a road side unit (RSU) located along the road. Each vehicle is supported with wireless sensing devices, which helps to establish communications between vehicles and RSU. This technology has been used in a range of applications such as predicting the correct route, controlling accidents and avoiding traffic jams and congestion.
+
+In order to apply this technology to all 
+
+Conclusion
+This paper provides a comprehensive survey dealing with all the issues facing VANET, in particular, VANET architectures components, VANET communication domains, wireless access technologies, VANET characteristics, challenges and requirements, VANET applications and simulation tools. This investigation enables researchers to focus on the issues surrounding VANET and its applications, showing great deal of understanding of how to tackle all issues related to VANET i.e. What architecture component 

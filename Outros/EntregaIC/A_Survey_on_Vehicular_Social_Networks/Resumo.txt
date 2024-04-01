@@ -1,0 +1,11 @@
+O documento aborda as Redes Sociais Veiculares (VSNs), que são uma classe particular de redes ad hoc veiculares caracterizadas por aspectos e características sociais. O foco é em veículos da próxima geração sob a premissa de redes sociais para aplicações veiculares, como segurança e entretenimento.
+
+Tecnologias Emergentes: Discute-se o uso de tecnologias emergentes em VSNs, como comunicações veiculares que podem ser consideradas a “primeira rede social para automóveis”, onde os motoristas compartilham dados com vizinhos.
+
+Comportamento Humano: Fatores humanos e comportamento social têm grande impacto nas redes ad hoc veiculares, levando ao surgimento das VSNs, formadas quando veículos “socializam” e compartilham interesses comuns.
+
+Aplicações Baseadas em Redes Sociais: São exploradas aplicações de segurança e entretenimento que dependem de soluções de redes sociais, como disseminação de dados baseada em crowdsourcing e melhoria da mobilidade.
+
+Desafios dos Pesquisadores: Entre os principais desafios, destacam-se a integração de tecnologias e sensores, questões de segurança e privacidade, confiança entre motoristas e proteção da privacidade de localização.
+
+O documento não menciona explicitamente o uso de grafos, redes neurais, estatística ou machine learning, mas discute abordagens de disseminação de conteúdo e protocolos de roteamento em VSNs que podem implicar essas técnicas. Além disso, destaca-se a importância da cooperação entre aspectos sociais e mecanismos operacionais de redes físicas veiculares.

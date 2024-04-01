@@ -1,0 +1,11 @@
+O documento aborda o conceito de Computação em Nuvem Veicular, focando em como dispositivos móveis, como veículos, podem atuar tanto como usuários quanto provedores de serviços em uma nuvem móvel. Aqui está um resumo dos pontos principais:
+
+Computação em Nuvem Móvel (MCC): A MCC é um paradigma emergente que permite que dispositivos móveis formem “Nuvens Móveis”, facilitando a modelagem do ambiente, descoberta de conteúdo, coleta e disseminação de dados.
+
+Cenários e Desafios: O documento discute cenários como a Nuvem Veicular Móvel, que suporta aplicações como direção segura, sensoriamento urbano e transporte inteligente. Os desafios incluem questões de privacidade/segurança, filtragem e agregação de sensores, e redes seguras baseadas em conteúdo.
+
+Nuvem Veicular: Veículos são vistos como uma poderosa fonte de recursos de computação e sensoriamento, ideais para aplicações de sensoriamento urbano e gerenciamento de tráfego veicular.
+
+Desafios de Pesquisa: Entre os principais desafios, estão a proteção da privacidade e segurança dos dados, a agregação eficiente de dados sensoriais e a gestão de conteúdo em uma rede sem autoridade central.
+
+O documento não menciona explicitamente o uso de grafos, redes neurais, estatísticas ou aprendizado de máquina (machine learning) nas abordagens discutidas. No entanto, enfatiza a importância da colaboração e comunicação entre veículos para processar e disseminar informações de maneira eficiente e segura.
