@@ -1,13 +1,16 @@
-package TP01;
+package TP01.Indices;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
 // import java.util.Comparator;
 // import java.util.Collections;
 // import java.util.Comparator;
+// import java.util.LinkedList;
+// import java.util.List;
 import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.TreeSet;
+
+import TP01.Tuple;
 
 // Se houverem dois registros excluídos imediatamente um ao lado do outros
 // Idealmente os dois deveriam ser fundidos.
@@ -17,11 +20,11 @@ public class IndiceDeExcluidos {
 	
 	private RandomAccessFile file;
 	// Fazer uma árvore de tuplas?
-	private List<Tuple<Short, Long>> list;
+	private TreeSet<Tuple<Short, Long>> list;
 	private final short REG_LENGTH = 2 + 8;
 
 	public IndiceDeExcluidos(String filePath) throws IOException {
-		list = new LinkedList<>();
+		list = new TreeSet<>((var1, var2) -> var1.getKey().compareTo(var2.getKey()));
 		ImportData(filePath);
 	}
 
@@ -44,8 +47,6 @@ public class IndiceDeExcluidos {
 			tuple.fromByteArray(array);
 			list.add(tuple);
 		}
-
-		this.sort();
 	}
 
 	private void SaveData(Tuple<Short, Long> tuple) throws IOException {
@@ -55,16 +56,20 @@ public class IndiceDeExcluidos {
 
 	public Tuple<Short, Long> getBest(short length) throws IOException {
 		
-		Tuple<Short, Long> result = new Tuple<>((short)0, (long)-1);
+		Tuple<Short, Long> elemento, result = null;
 
 		Iterator<Tuple<Short, Long>> iterator = list.iterator();
-		int index = 0;
-		while (iterator.hasNext() && length <= iterator.next().getKey()) {
-			result = list.get(index);
-			index++;
+		while (iterator.hasNext()) {
+			elemento = iterator.next();
+			// System.out.println(elemento);
+			if (length <= elemento.getKey()) {
+				result = elemento;
+				break;
+			}
 		}
 
-		if (index > 0) list.remove(index - 1);
+		if (result != null) this.delete(result);
+		else result = new Tuple<>((short)0, (long)-1);
 
 		return result;
 	}
@@ -88,42 +93,14 @@ public class IndiceDeExcluidos {
 
 	// Ai eu teria que criar um objeto e passar esse objeto pro Collections.sort
 
-	public void sort() {
-		// Comparator<Tuple<Short, Long>> comparator = new Comparator<Tuple<Short, Long>>() {
-		// 	@Override
-		// 	public int compare(Tuple<Short, Long> tuple1, Tuple<Short, Long> tuple2) {
-		// 		return Short.compare(tuple1.getKey(), tuple2.getKey());
-		// 	}
-		// };
-
-		// new Comparator<Tuple<Short, Long>>() { ... }: This part creates an anonymous inner class
-		// that implements the Comparator interface for the Tuple<Short, Long> type. It's anonymous
-		// because it doesn't have a name, and it's an inner class because it's defined within another class or method.
-
-		// { ... }: Inside the curly braces is the body of the anonymous inner class.
-		// It contains the implementation of the compare method required by the Comparator interface.
-
-		// public void sortLista() {
-		// 	listaDeletados.sort((mapaA, mapaB) -> {
-		// 		Short chaveA = mapaA.keySet().iterator().next();
-		// 		Short chaveB = mapaB.keySet().iterator().next();
-		// 		return chaveA.compareTo(chaveB);
-		// 	});
-		// }
-		// Collections.sort(list, comparator);
-		// Collections.sort(list);
+	// Preciso criar um método de exclusão que marque os registros com lápides no arquivo
+	public void create(Tuple<Short, Long> tuple) throws IOException {
+		list.add(tuple);
+		SaveData(tuple);
 	}
 
-	// Preciso criar um método de exclusão que marque os registros com lápides no arquivo
-	public void add(Tuple<Short, Long> tuple) throws IOException {
-		Iterator<Tuple<Short, Long>> iterator = list.iterator();
-
-		short length = tuple.getKey();
-		int index = 0;
-		while (iterator.hasNext() && iterator.next().getKey() < length) index++;
-		list.add(index, tuple);
-
-		SaveData(tuple);
+	public void delete(Tuple<Short, Long> result) {
+		// list.remove(result);
 	}
 
 	// Preciso cuidar do reaproveitamento dos registros excluidos

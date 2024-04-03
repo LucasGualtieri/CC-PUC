@@ -1,4 +1,4 @@
-package TP01;
+package TP01.Livros;
 // package AEDs.AEDs_III.TP;
 
 import java.io.ByteArrayInputStream;
@@ -8,6 +8,9 @@ import java.io.DataOutputStream;
 import java.lang.reflect.Constructor;
 import java.text.NumberFormat;
 import java.util.Locale;
+
+import TP01.Lib;
+import TP01.Registro;
 
 
 public class Livro implements Registro {

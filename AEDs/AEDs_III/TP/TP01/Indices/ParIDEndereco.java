@@ -1,4 +1,4 @@
-package TP01;
+package TP01.Indices;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

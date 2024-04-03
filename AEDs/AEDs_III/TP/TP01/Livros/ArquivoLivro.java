@@ -1,7 +1,10 @@
-package TP01;
+package TP01.Livros;
 
 // import java.io.IOException;
 import java.lang.reflect.Constructor;
+
+import TP01.Arquivo;
+import TP01.Registro;
 
 public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
 

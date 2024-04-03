@@ -1,4 +1,4 @@
-package TP01.Restos;
+package Restos;
 
 import java.util.Arrays;
 

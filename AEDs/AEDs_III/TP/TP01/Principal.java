@@ -1,14 +1,16 @@
 package TP01;
 
-// import java.util.InputMismatchException;
 import java.util.List;
+
+import TP01.Livros.ArquivoLivro;
+import TP01.Livros.Livro;
 
 // clear && javac -d Classes -cp ../ Principal.java && java -cp Classes Principal.java
 
-// Fazer uma função para listar todos os livros *válidos*
+// O que falta, testar para achar os bugs, resolver os bugs e testar mais um tanto
+// Talvez listar possíveis Edge cases
 
-// Quando o Update diminuir demais o registro aproveitar o espaço
-// Fazer o mesmo quando na criação, quando o registro é pequeno
+// Implementar os features que estão descritos no final deste arquivo.
 
 class Principal {
 
@@ -278,6 +280,13 @@ class Principal {
 		Lib.printdiv(1, 1, "FIM DO PROGRAMA");
 	}
 }
+
+
+// Fazer uma função para listar todos os livros *válidos*
+
+// Quando o Update diminuir demais o registro aproveitar o espaço
+// Fazer o mesmo quando na criação, quando o registro é pequeno
+
 // Função Listar
 // Penso em fazer um esquema de paginação, ou seja, no parametro da função
 // defino qual página será retornada, e ai o usuário teria a opção de ir para a

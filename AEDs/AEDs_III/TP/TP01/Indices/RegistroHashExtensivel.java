@@ -8,7 +8,7 @@ conter.
 Implementado pelo Prof. Marcos Kutova
 v1.1 - 2021
 */
-package TP01;
+package TP01.Indices;
 
 import java.io.IOException;
 
