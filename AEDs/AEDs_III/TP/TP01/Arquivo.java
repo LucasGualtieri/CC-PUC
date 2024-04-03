@@ -15,7 +15,7 @@ public class Arquivo<T extends Registro> {
 	RandomAccessFile file;
 	HashExtensivel<ParIDEndereco> indiceDireto;
 	String nome;
-	private final short registerAvgLength = 12; // 4 + (2 + 14) + (2 + 12) + 4.
+	private final short registerAvgLength = 40; // 2 + 4 + (2 + 14) + (2 + 12) + 4.
 
 	private IndiceDeExcluidos excluidos; // Preciso salvar puxar da memoria
 

@@ -6,20 +6,20 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-// public class Tuple<K, V> {
-public class Tuple<K extends Comparable<K>, V> implements Comparable<Tuple<K, V>> {
-	private K key;
-	private V value;
+public class Tuple<Key, Value> {
+// public class Tuple<K extends Comparable<K>, V> implements Comparable<Tuple<K, V>> {
+	private Key key;
+	private Value value;
 
-	public Tuple(K key, V value) {
+	public Tuple(Key key, Value value) {
 		this.key = key;
 		this.value = value;
 	}
 
 	public Tuple() {}
 
-	public K getKey() { return key; }
-	public V getValue() { return value; }
+	public Key getKey() { return key; }
+	public Value getValue() { return value; }
 
 	@SuppressWarnings("unchecked")
 	public void fromByteArray(byte[] array) {
@@ -31,23 +31,23 @@ public class Tuple<K extends Comparable<K>, V> implements Comparable<Tuple<K, V>
 			dis = new DataInputStream(ba_in);
 
 			if (key instanceof Short) {
-				this.key = (K)Short.valueOf(dis.readShort());
+				this.key = (Key)Short.valueOf(dis.readShort());
 			}
 			else if (key instanceof Long) {
-				this.key = (K)Long.valueOf(dis.readLong());
+				this.key = (Key)Long.valueOf(dis.readLong());
 			}
 			else if (key instanceof String) {
-				this.key = (K)String.valueOf(dis.readUTF());
+				this.key = (Key)String.valueOf(dis.readUTF());
 			}
 			
 			if (value instanceof Short) {
-				this.value = (V)Short.valueOf(dis.readShort());
+				this.value = (Value)Short.valueOf(dis.readShort());
 			}
 			else if (value instanceof Long) {
-				this.value = (V)Long.valueOf(dis.readLong());
+				this.value = (Value)Long.valueOf(dis.readLong());
 			}
 			else if (value instanceof String) {
-				this.value = (V)String.valueOf(dis.readUTF());
+				this.value = (Value)String.valueOf(dis.readUTF());
 			}
 
 			dis.close();
@@ -91,8 +91,8 @@ public class Tuple<K extends Comparable<K>, V> implements Comparable<Tuple<K, V>
 		return str;
 	}
 
-	@Override
-    public int compareTo(Tuple<K, V> tuple) {
-        return key.compareTo(tuple.getKey());
-    }
+	// @Override
+    // public int compareTo(Tuple<Key, V> tuple) {
+    //     return key.compareTo(tuple.getKey());
+    // }
 }

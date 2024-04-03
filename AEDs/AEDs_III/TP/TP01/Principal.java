@@ -7,6 +7,9 @@ import java.util.List;
 
 // Fazer uma função para listar todos os livros *válidos*
 
+// Quando o Update diminuir demais o registro aproveitar o espaço
+// Fazer o mesmo quando na criação, quando o registro é pequeno
+
 class Principal {
 
 	static int ReadChoice(int choiceCount) {

@@ -2,7 +2,7 @@ package TP01;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.util.Comparator;
+// import java.util.Comparator;
 // import java.util.Collections;
 // import java.util.Comparator;
 import java.util.Iterator;
@@ -11,6 +11,7 @@ import java.util.List;
 
 // Se houverem dois registros excluídos imediatamente um ao lado do outros
 // Idealmente os dois deveriam ser fundidos.
+// Fazer uma árvore de excluidos?
 
 public class IndiceDeExcluidos {
 	
@@ -101,6 +102,13 @@ public class IndiceDeExcluidos {
 		// { ... }: Inside the curly braces is the body of the anonymous inner class.
 		// It contains the implementation of the compare method required by the Comparator interface.
 
+		// public void sortLista() {
+		// 	listaDeletados.sort((mapaA, mapaB) -> {
+		// 		Short chaveA = mapaA.keySet().iterator().next();
+		// 		Short chaveB = mapaB.keySet().iterator().next();
+		// 		return chaveA.compareTo(chaveB);
+		// 	});
+		// }
 		// Collections.sort(list, comparator);
 		// Collections.sort(list);
 	}
