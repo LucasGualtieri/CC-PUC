@@ -19,7 +19,10 @@ WHERE rank > 6
 
 -- Projetar o nome do diretor e o número de filmes que cada diretor dirigiu;
 SELECT first_name, last_name, COUNT(*) AS number_of_movies
-FROM movies_directors JOIN directors ON director_id = directors.id
+	FROM (
+		movies_directors JOIN directors
+		ON director_id = directors.id
+	)
 GROUP BY directors.first_name, directors.last_name;
 
 -- Projetar o gênero e o número de filmes de cada gênero; 
