@@ -252,6 +252,11 @@ public class Arquivo<T extends Registro> {
 		objeto.printHeader();
 	}
 
+	public void printHeaderCSV() throws Exception {
+		T objeto = this.construtor.newInstance();
+		objeto.printHeaderCSV();
+	}
+
 	public void close() throws Exception {
 		excluidos.close();
 		file.close();

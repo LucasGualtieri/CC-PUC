@@ -11,4 +11,5 @@ public interface Registro {
 	public String toTable();
 	public String toCSV();
 	public void printHeader();
+	public void printHeaderCSV();
 }

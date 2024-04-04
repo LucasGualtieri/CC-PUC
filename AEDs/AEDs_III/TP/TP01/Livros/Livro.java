@@ -106,6 +106,15 @@ public class Livro implements Registro {
 		System.out.println("ID, Título, Autor, Preço");
 	}
 
+	public void printHeaderCSV() {
+		System.out.println(
+			Lib.BOLD + Lib.GREEN + "ID, " +
+			Lib.RED + "Título, " +
+			Lib.BLUE + "Autor, " + 
+			Lib.YELLOW + "Preço" + Lib.RESET
+		);
+	}
+
 	public String toTable() {
 		String str;
 		str = this.ID + ", ";

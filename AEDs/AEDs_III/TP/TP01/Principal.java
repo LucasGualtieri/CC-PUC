@@ -191,7 +191,7 @@ class Principal {
 
 		Lib.printdiv(1, "Listando a base de dados: %ss", arquivo.getNome());
 
-		arquivo.printHeader();
+		arquivo.printHeaderCSV();
 
 		int[] i = {1};
 		list.forEach((teste) -> {
