@@ -21,7 +21,7 @@ public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
 	@SuppressWarnings("unchecked")
 	public ArquivoLivro(String nome, String filePath) throws NoSuchMethodException, SecurityException, Exception {
 		
-		super((Constructor<T>)Livro.getConstructor(), nome, filePath + nome.toLowerCase());
+		super((Constructor<T>)Livro.getConstructor(), nome, filePath);
 
 		// indiceIndireto = new HashExtensivel<>(
 		// 	ParTituloID.getConstructor(),

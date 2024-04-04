@@ -14,12 +14,10 @@ import TP01.Tuple;
 
 // Se houverem dois registros excluídos imediatamente um ao lado do outros
 // Idealmente os dois deveriam ser fundidos.
-// Fazer uma árvore de excluidos?
 
 public class IndiceDeExcluidos {
 	
 	private RandomAccessFile file;
-	// Fazer uma árvore de tuplas?
 	private TreeSet<Tuple<Short, Long>> list;
 	private final short REG_LENGTH = 2 + 8;
 
@@ -29,7 +27,6 @@ public class IndiceDeExcluidos {
 	}
 
 	public void close() throws IOException {
-		// SaveAllData();
 		file.close();
 	}
 
@@ -45,28 +42,15 @@ public class IndiceDeExcluidos {
 			byte[] array = new byte[REG_LENGTH];
 			file.read(array);
 			tuple.fromByteArray(array);
-			list.add(tuple);
+			if (tuple.getKey() > 0) list.add(tuple);
 		}
-	}
-
-	private void SaveData(Tuple<Short, Long> tuple) throws IOException {
-		file.seek(file.length());
-		file.write(tuple.toByteArray());
 	}
 
 	public Tuple<Short, Long> getBest(short length) throws IOException {
 		
-		Tuple<Short, Long> elemento, result = null;
-
-		Iterator<Tuple<Short, Long>> iterator = list.iterator();
-		while (iterator.hasNext()) {
-			elemento = iterator.next();
-			// System.out.println(elemento);
-			if (length <= elemento.getKey()) {
-				result = elemento;
-				break;
-			}
-		}
+		Tuple<Short, Long> result = list.higher(
+			new Tuple<>((short)(length - 1), (long)0)
+		);
 
 		if (result != null) this.delete(result);
 		else result = new Tuple<>((short)0, (long)-1);
@@ -74,39 +58,53 @@ public class IndiceDeExcluidos {
 		return result;
 	}
 
-	// private void SaveAllData() throws IOException {
-	// 	file.seek(0);
-	// 	file.setLength(0);
-
-	// 	Iterator<Tuple<Short, Long>> iterator = list.iterator();
-	// 	while (iterator.hasNext()) {
-	// 		byte[] array = iterator.next().toByteArray();
-	// 		file.write(array);
-	// 	}
-	// }
-
-	// private class TupleCompare implements Comparator<Tuple<Short, Long>> {
-	// 	public int compare(Tuple<Short, Long> one, Tuple<Short, Long> two) {
-	// 		return Short.compare(one.getKey(), two.getKey());
-	// 	}
-	// }
-
-	// Ai eu teria que criar um objeto e passar esse objeto pro Collections.sort
-
-	// Preciso criar um método de exclusão que marque os registros com lápides no arquivo
 	public void create(Tuple<Short, Long> tuple) throws IOException {
+
 		list.add(tuple);
-		SaveData(tuple);
+
+		file.seek(0);
+
+		long address, fileLength = file.length();
+
+		while((address = file.getFilePointer()) < fileLength) {
+			short lapide = file.readShort();
+
+			if (lapide < 0) {
+				file.seek(address);
+				fileLength = 0; // Encerrar o while
+			}
+			else file.skipBytes(8); // Skipando o long;
+		}
+
+		// try { Thread.sleep(1000); }
+		// catch (InterruptedException e) {}
+
+		file.write(tuple.toByteArray());
 	}
 
-	public void delete(Tuple<Short, Long> result) {
-		// list.remove(result);
-	}
+	public void delete(Tuple<Short, Long> tuple) throws IOException {
+		
+		list.remove(tuple);
+		
+		file.seek(0);
 
-	// Preciso cuidar do reaproveitamento dos registros excluidos
-	// para simplificação e como a lista de excluídos não será longa, vou percorre-la
-	// sequencialmente apenas até achar uma lapido ou chegar no fim
-	// public void add(...) {}
+		long address, fileLength = file.length();
+
+		Tuple<Short, Long> compared = new Tuple<>((short)0, (long)-1);
+
+		while((address = file.getFilePointer()) < fileLength) {
+			byte[] array = new byte[REG_LENGTH];
+			file.read(array);
+
+			compared.fromByteArray(array);
+
+			if (tuple.equals(compared)) {
+				file.seek(address);
+				file.writeShort(-tuple.getKey());
+				fileLength = 0; // Encerrar o while
+			}
+		}
+	}
 
 	public void listAll() {
 		Iterator<Tuple<Short, Long>> iterator = list.iterator();

@@ -7,10 +7,7 @@ import TP01.Livros.Livro;
 
 // clear && javac -d Classes -cp ../ Principal.java && java -cp Classes Principal.java
 
-// O que falta, testar para achar os bugs, resolver os bugs e testar mais um tanto
-// Talvez listar possíveis Edge cases
-
-// Implementar os features que estão descritos no final deste arquivo.
+// O que falta: Implementar o Update
 
 class Principal {
 
@@ -198,7 +195,7 @@ class Principal {
 
 		int[] i = {1};
 		list.forEach((teste) -> {
-			System.out.printf("%d - %s", i[0]++, teste.toTable());
+			System.out.printf("%d- %s", i[0]++, teste.toCSV());
 		});
 
 		System.out.println();
@@ -281,13 +278,11 @@ class Principal {
 	}
 }
 
+// Quando o Update diminuir demais o registro aproveitar o espaço. Se diminuir a ponto de no lixo caber um registro novo
+// Fazer o mesmo quando na criação, quando o registro é pequeno???
 
-// Fazer uma função para listar todos os livros *válidos*
+// Juntar dois registros excluídos que estejam adjacentes
 
-// Quando o Update diminuir demais o registro aproveitar o espaço
-// Fazer o mesmo quando na criação, quando o registro é pequeno
-
-// Função Listar
 // Penso em fazer um esquema de paginação, ou seja, no parametro da função
 // defino qual página será retornada, e ai o usuário teria a opção de ir para a
 // próxima ou voltar.

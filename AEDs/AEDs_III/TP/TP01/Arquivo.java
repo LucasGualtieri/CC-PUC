@@ -31,7 +31,7 @@ public class Arquivo<T extends Registro> {
 
 	public Arquivo(Constructor<T> construtor, String nome, String filePath) throws FileNotFoundException, IOException, Exception {
 		this.construtor = construtor;
-		AbrirArquivo(filePath);
+		AbrirArquivo(filePath + nome);
 
 		excluidos = new IndiceDeExcluidos(filePath + nome);
 
@@ -50,48 +50,58 @@ public class Arquivo<T extends Registro> {
 		file.seek(0);
 		int ID = file.readInt() + 1; // Recuperar o último ID
 		
-		try {
-			object.setID(ID); // Settar o ID do objeto
+		object.setID(ID); // Settar o ID do objeto
 		
-			// Voltar para o começo para atualizar o último ID.
-			file.seek(0);
-			file.writeInt(ID);
-			
-			byte[] registro = object.toByteArray();
-			short length = (short)registro.length; 
-
-			Tuple<Short, Long> tuple = excluidos.getBest(length);
-
-			long address = tuple.getValue() == -1 ? file.length() : tuple.getValue();
-
-			file.seek(address == -1 ? file.length() : address);
-
-			short difference = (short)(tuple.getKey() - length);
-
-			if (difference >= registerAvgLength) {
-				file.writeShort(length);
-				file.write(registro);
-				excluidos.create(new Tuple<>(difference, file.getFilePointer()));
-				file.writeShort(-(difference - 2));
-			}
-
-			// Inserir no fim
-			else if (tuple.getKey() == 0) {
-				file.seek(file.length());
-				file.writeShort(length);
-				file.write(registro);
-			}
-			
-			// Atualizar
-			else {
-				file.writeShort(tuple.getKey());
-				file.write(registro);
-			}
-
-			indiceDireto.create(new ParIDEndereco(ID, address));
-		} catch (Exception e) {
-			e.printStackTrace();
+		// Voltar para o começo para atualizar o último ID.
+		file.seek(0);
+		file.writeInt(ID);
+		
+		byte[] registro = object.toByteArray();
+		short length = (short)registro.length; 
+		
+		Tuple<Short, Long> tuple = excluidos.getBest(length);
+	
+		long address = tuple.getValue() == -1 ? file.length() : tuple.getValue();
+		
+		file.seek(address == -1 ? file.length() : address);
+		
+		// short difference = (short)(tuple.getKey() - length);
+		short difference = (short)(tuple.getKey() - (length + 2));
+		
+		// System.out.println("---------------------------------------");
+		// System.out.println("address:" + address);
+		// System.out.println("difference:" + difference);
+		// System.out.println("tuple.getKey():" + tuple.getKey());
+		// System.out.println("tuple.getValue():" + tuple.getValue());
+		// System.out.println("length:" + length);
+		// System.out.println("---------------------------------------");
+		
+		// Quebrar registro excluido
+		if (difference >= registerAvgLength) {
+			file.writeShort(length);
+			file.write(registro);
+			excluidos.create(new Tuple<>(difference, file.getFilePointer()));
+			file.writeShort(-difference);
+			// System.out.println("IF");
 		}
+		
+		// Inserir no fim
+		else if (tuple.getKey() == 0) {
+			file.seek(file.length());
+			file.writeShort(length);
+			file.write(registro);
+			// if () excluidos.create(tuple);
+			// System.out.println("Else IF");
+		}
+		
+		// Manter o Lixo do registro excluído
+		else {
+			// System.out.println("Else");
+			file.writeShort(tuple.getKey());
+			file.write(registro);
+		}
+		
+		indiceDireto.create(new ParIDEndereco(ID, address));
 
 		return ID;
 	}
@@ -157,6 +167,34 @@ public class Arquivo<T extends Registro> {
 		indiceDireto.delete(ID);
 	}
 
+	public List<T> Listar() throws IOException, Exception {
+
+		List<T> list = new LinkedList<>();
+
+		file.seek(HEADER_SIZE); // mover o ponteiro para o primeiro registro (após o cabeçalho)
+		long len = file.length();
+
+		while(file.getFilePointer() < len) {
+
+			short tamanhoRegistro = file.readShort();
+			// System.out.println("tamanhoRegsitro: " + tamanhoRegistro);
+			// System.out.println("address: " + (file.getFilePointer() - (long)2));
+			
+			if (tamanhoRegistro > 0) {
+				
+				byte[] registro = new byte[tamanhoRegistro];
+				file.read(registro);
+
+				// Esta linha esta causando problemas
+				list.add(Instanciador(registro));
+			}
+
+			else file.skipBytes(Math.abs(tamanhoRegistro));
+		}
+
+		return list.isEmpty() ? null : list;
+	}
+
 	// ----------------------------------------------------------------------------------
 
 	private void AbrirArquivo(String filePath) throws FileNotFoundException, IOException {
@@ -204,32 +242,6 @@ public class Arquivo<T extends Registro> {
 		objeto.setID(ID);
 		objeto.setAll();
 		return objeto;
-	}
-
-	public List<T> Listar() throws IOException, Exception {
-
-		List<T> list = new LinkedList<>();
-
-		file.seek(HEADER_SIZE); // mover o ponteiro para o primeiro registro (após o cabeçalho)
-		long len = file.length();
-
-		while(file.getFilePointer() < len) {
-
-			short tamanhoRegistro = file.readShort();
-			
-			if (tamanhoRegistro > 0) {
-				
-				byte[] registro = new byte[tamanhoRegistro];
-				file.read(registro);
-
-				// Esta linha esta causando problemas
-				list.add(Instanciador(registro));
-			}
-
-			else file.skipBytes(Math.abs(tamanhoRegistro));
-		}
-
-		return list.isEmpty() ? null : list;
 	}
 
 	public String getNome() { return nome; }

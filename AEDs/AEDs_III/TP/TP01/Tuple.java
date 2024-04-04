@@ -27,36 +27,35 @@ public class Tuple<Key, Value> implements RegistroHashExtensivel {
 
 	@SuppressWarnings("unchecked")
 	public void fromByteArray(byte[] array) {
-		ByteArrayInputStream ba_in;
+
 		DataInputStream dis;
 
 		try {
-			ba_in = new ByteArrayInputStream(array);
-			dis = new DataInputStream(ba_in);
+			dis = new DataInputStream(new ByteArrayInputStream(array));
 
-			if (key instanceof Integer) {
+			if (key.getClass() == Integer.class) {
 				this.key = (Key)Integer.valueOf(dis.readInt());
 			}
-			if (key instanceof Short) {
+			else if (key.getClass() == Short.class) {
 				this.key = (Key)Short.valueOf(dis.readShort());
 			}
-			else if (key instanceof Long) {
+			else if (key.getClass() == Long.class) {
 				this.key = (Key)Long.valueOf(dis.readLong());
 			}
-			else if (key instanceof String) {
+			else if (key.getClass() == String.class) {
 				this.key = (Key)String.valueOf(dis.readUTF());
 			}
 			
-			if (value instanceof Integer) {
+			if (value.getClass() == Integer.class) {
 				this.value = (Value)Integer.valueOf(dis.readInt());
 			}
-			if (value instanceof Short) {
+			else if (value.getClass() == Short.class) {
 				this.value = (Value)Short.valueOf(dis.readShort());
 			}
-			else if (value instanceof Long) {
+			else if (value.getClass() == Long.class) {
 				this.value = (Value)Long.valueOf(dis.readLong());
 			}
-			else if (value instanceof String) {
+			else if (value.getClass() == String.class) {
 				this.value = (Value)String.valueOf(dis.readUTF());
 			}
 
@@ -138,6 +137,10 @@ public class Tuple<Key, Value> implements RegistroHashExtensivel {
 		}
 
 		return size;
+	}
+
+	public <K, V> boolean equals(Tuple<K, V> tuple) {
+		return !(this.key != tuple.getKey() || this.value != tuple.getValue());
 	}
 
 	// @Override

@@ -9,5 +9,6 @@ public interface Registro {
 	public void fromByteArray(byte[] array);
 	public void setAll();
 	public String toTable();
+	public String toCSV();
 	public void printHeader();
 }

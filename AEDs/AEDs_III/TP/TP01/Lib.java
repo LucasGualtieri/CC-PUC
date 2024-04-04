@@ -5,14 +5,14 @@ import java.util.Scanner;
 
 public class Lib {
 
-	static final String BOLD = "\u001B[1m";
-	static final String RED = "\u001B[31m";
-	static final String GREEN = "\u001B[32m";
-	static final String YELLOW = "\u001B[33m";
-	static final String BLUE = "\u001B[34m";
-	static final String MAGENTA = "\u001B[35m";
-	static final String CYAN = "\u001B[36m";
-	static final String RESET = "\u001B[0m";
+	public static final String BOLD = "\u001B[1m";
+	public static final String RED = "\u001B[31m";
+	public static final String GREEN = "\u001B[32m";
+	public static final String YELLOW = "\u001B[33m";
+	public static final String BLUE = "\u001B[34m";
+	public static final String MAGENTA = "\u001B[35m";
+	public static final String CYAN = "\u001B[36m";
+	public static final String RESET = "\u001B[0m";
 
 	private static Scanner scanner = new Scanner(System.in);
 
@@ -115,13 +115,16 @@ public class Lib {
 	}
 
 	public static void printdiv(String text, Object...args) {
+		
+		int lineLength = 50;
+		
 		String div = "";
 
 		int textTotalLength = text.length();
 		
 		for (Object obj : args) textTotalLength += obj.toString().length() - 2;
 
-		int divSize = (50 - textTotalLength) / 2;
+		int divSize = (lineLength - textTotalLength) / 2;
 
 		for (int i = 0; i < divSize; i++) div += "-";
 

@@ -116,6 +116,17 @@ public class Livro implements Registro {
 		return str + "\n";
 	}
 
+	public String toCSV() {
+		String str;
+		str = Lib.BOLD + Lib.GREEN + this.ID + ", ";
+		str += Lib.RED + this.titulo  + ", ";
+		str += Lib.BLUE + this.autor  + ", ";
+		str += Lib.YELLOW + NumberFormat.getCurrencyInstance(localeBR).format(this.preco);
+		str += Lib.RESET;
+
+		return str + "\n";
+	}
+
 	public String getTitulo() { return titulo; }
 
 }
