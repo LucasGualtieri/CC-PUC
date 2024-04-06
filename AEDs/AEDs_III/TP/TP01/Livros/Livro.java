@@ -20,7 +20,7 @@ public class Livro implements Registro {
 	private String autor;
 	private float preco;
 	private long address;
-	
+
 	@SuppressWarnings("deprecation")
 	Locale localeBR = new Locale("pt", "BR");
 
@@ -137,5 +137,4 @@ public class Livro implements Registro {
 	}
 
 	public String getTitulo() { return titulo; }
-
 }

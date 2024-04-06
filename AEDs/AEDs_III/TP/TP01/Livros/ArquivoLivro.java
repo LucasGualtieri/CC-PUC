@@ -6,6 +6,10 @@ import java.lang.reflect.Constructor;
 import TP01.Arquivo;
 import TP01.Registro;
 
+import TP01.Indices.ParTituloID;
+import TP01.Lib;
+import TP01.Indices.HashExtensivel;
+
 public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
 
 	// HashExtensivel<ParTituloID> indiceIndireto;
@@ -18,17 +22,46 @@ public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
 	*/
 	// private final short registerAvgLength = 12; // 4 + (2 + 14) + (2 + 12) + 4.
 
+	HashExtensivel<ParTituloID> indiceTitulo;
+
 	@SuppressWarnings("unchecked")
 	public ArquivoLivro(String nome, String filePath) throws NoSuchMethodException, SecurityException, Exception {
 		
 		super((Constructor<T>)Livro.getConstructor(), nome, filePath);
 
-		// indiceIndireto = new HashExtensivel<>(
+		// indiceTitulo = new HashExtensivel<>(
 		// 	ParTituloID.getConstructor(),
 		// 	3,
-		// 	filePath + nome + ".hashIndireta_d.db",
-		// 	filePath + nome + ".hashIndireta_c.db"
+		// 	filePath + nome + ".hashTitulo_d.db",
+		// 	filePath + nome + ".hashTitulo_c.db"
 		// );
+	}
+
+	public int read() throws Exception {
+
+		// System.out.printf("Insira o ID do %s: ", getNomeLowerCase());
+		System.out.println("Buscar por:");
+		System.out.println("1 - ID.");
+		Lib.cprintf(Lib.RED, "2 - ISBN. Ainda não implementado.\n");
+		Lib.cprintf(Lib.RED, "3 - Título. Ainda não implementado.\n");
+		System.out.println("\n0 - Voltar.");
+		System.out.print("\nEscolha uma das opções acima: ");
+
+		int choice = Lib.ReadChoice(1);
+		int ID = 0;
+
+		switch (choice) {
+		case 1:
+		System.out.printf("Insira o ID do livro: ");
+		ID = Lib.readInt();
+		break;
+		default:
+			// System.out.printf("Insira o título do livro: ");
+			// ID = indiceTitulo.read(Lib.readString()).getId();
+			break;
+		}
+
+		return ID;
 	}
 
 	// Para poder testar fazer um metodo que liste os excluidos.

@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.lang.reflect.Constructor;
+// import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -15,11 +16,12 @@ import TP01.Indices.ParIDEndereco;
 public class Arquivo<T extends Registro> {
 
 	final short HEADER_SIZE = 4;
-	Constructor<T> construtor;
+	protected Constructor<T> construtor;
 	RandomAccessFile file;
 	HashExtensivel<ParIDEndereco> indiceDireto;
 	String nome;
-	private final short registerAvgLength = 40; // 2 + 4 + (2 + 14) + (2 + 12) + 4.
+	private final short registerMinLength = 20; // 2 + 4 + (2 + 3) + (2 + 3) + 4.
+	// private final short registerAvgLength = 40; // 2 + 4 + (2 + 14) + (2 + 12) + 4.
 
 	public IndiceDeExcluidos excluidos; // Preciso salvar puxar da memoria
 
@@ -46,38 +48,37 @@ public class Arquivo<T extends Registro> {
 	}
 
 	public int create(T object) throws Exception {
+		return create(true, object);
+	}
 
-		file.seek(0);
-		int ID = file.readInt() + 1; // Recuperar o último ID
-		
-		object.setID(ID); // Settar o ID do objeto
-		
-		// Voltar para o começo para atualizar o último ID.
-		file.seek(0);
-		file.writeInt(ID);
-		
-		byte[] registro = object.toByteArray();
-		short length = (short)registro.length; 
-		
-		Tuple<Short, Long> tuple = excluidos.getBest(length);
+	private int create(boolean createNewID, T object) throws Exception {
+		int ID = object.getID();
+
+		if (createNewID) {
+			file.seek(0);
+			ID = file.readInt() + 1; // Recuperar o último ID
 	
+			object.setID(ID); // Settar o ID do objeto
+	
+			// Voltar para o começo para atualizar o último ID.
+			file.seek(0);
+			file.writeInt(ID);
+		}
+
+		byte[] registro = object.toByteArray();
+		short length = (short)registro.length;
+
+		Tuple<Short, Long> tuple = excluidos.getBest(length);
+
 		long address = tuple.getValue() == -1 ? file.length() : tuple.getValue();
-		
-		file.seek(address == -1 ? file.length() : address);
-		
-		// short difference = (short)(tuple.getKey() - length);
+
+		file.seek(address);
+		// file.seek(address == -1 ? file.length() : address);
+
 		short difference = (short)(tuple.getKey() - (length + 2));
-		
-		// System.out.println("---------------------------------------");
-		// System.out.println("address:" + address);
-		// System.out.println("difference:" + difference);
-		// System.out.println("tuple.getKey():" + tuple.getKey());
-		// System.out.println("tuple.getValue():" + tuple.getValue());
-		// System.out.println("length:" + length);
-		// System.out.println("---------------------------------------");
-		
+
 		// Quebrar registro excluido
-		if (difference >= registerAvgLength) {
+		if (difference >= registerMinLength) {
 			file.writeShort(length);
 			file.write(registro);
 			excluidos.create(new Tuple<>(difference, file.getFilePointer()));
@@ -87,11 +88,10 @@ public class Arquivo<T extends Registro> {
 		
 		// Inserir no fim
 		else if (tuple.getKey() == 0) {
+			excluidos.create(tuple); // Precisa ser recriado já que o getBest deleta
 			file.seek(file.length());
 			file.writeShort(length);
 			file.write(registro);
-			// if () excluidos.create(tuple);
-			// System.out.println("Else IF");
 		}
 		
 		// Manter o Lixo do registro excluído
@@ -105,6 +105,8 @@ public class Arquivo<T extends Registro> {
 
 		return ID;
 	}
+
+	public int read() throws Exception { return -1; }
 
 	public T read(int ID) throws IOException, Exception {
 		
@@ -130,27 +132,10 @@ public class Arquivo<T extends Registro> {
 		return object;
 	}
 
-	public void update(T oldObj, T newObj) throws IOException, Exception {
-
-		System.out.println("OA MUNDO");
-		System.exit(-1);
-
-		short tamanhoRegistro = (short)oldObj.toByteArray().length;
-
-		byte[] novoRegistro = newObj.toByteArray();
-
-		if (novoRegistro.length <= tamanhoRegistro) {
-			file.seek(oldObj.getAddress() + 2); // Começo do registro, após o indicador de tamanho
-			file.write(novoRegistro);
-		}
-		
-		else {
-			file.seek(oldObj.getAddress());
-			file.writeShort(-tamanhoRegistro);
-			file.seek(file.length());
-			file.writeShort(novoRegistro.length);
-			file.write(novoRegistro);
-		}
+	public void update(int ID, T newObj) throws IOException, Exception {
+		ParIDEndereco pie = indiceDireto.read(ID);
+		delete(pie.getId());
+		create(false, newObj);
 	}
 
 	public void delete(int ID) throws Exception {

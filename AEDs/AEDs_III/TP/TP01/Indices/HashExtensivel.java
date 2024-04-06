@@ -123,6 +123,19 @@ public class HashExtensivel<T extends RegistroHashExtensivel> {
 				return null;
 		}
 
+		// Buscar um elemento no cesto
+		public T read(String chave) {
+			if (empty())
+				return null;
+			int i = 0;
+			while (i < quantidade && chave.hashCode() > elementos.get(i).hashCode())
+				i++;
+			if (i < quantidade && chave.hashCode() == elementos.get(i).hashCode())
+				return elementos.get(i);
+			else
+				return null;
+		}
+
 		// atualizar um elemento do cesto
 		public boolean update(T elem) {
 			if (empty())
@@ -267,6 +280,10 @@ public class HashExtensivel<T extends RegistroHashExtensivel> {
 			return Math.abs(chave) % (int) Math.pow(2, profundidadeGlobal);
 		}
 
+		protected int hash(String chave) {
+			return Math.abs(chave.hashCode()) % (int) Math.pow(2, profundidadeGlobal);
+		}
+
 		// Método auxiliar para atualizar endereço ao duplicar o diretório
 		protected int hash2(int chave, int pl) { // cálculo do hash para uma dada profundidade local
 			return Math.abs(chave) % (int) Math.pow(2, pl);
@@ -376,6 +393,29 @@ public class HashExtensivel<T extends RegistroHashExtensivel> {
 	}
 
 	public T read(int chave) throws Exception {
+
+		// Carrega o diretório
+		byte[] bd = new byte[(int) arqDiretorio.length()];
+		arqDiretorio.seek(0);
+		arqDiretorio.read(bd);
+		diretorio = new Diretorio();
+		diretorio.fromByteArray(bd);
+
+		// Identifica a hash do diretório,
+		int i = diretorio.hash(chave);
+
+		// Recupera o cesto
+		long enderecoCesto = diretorio.endereço(i);
+		Cesto c = new Cesto(construtor, quantidadeDadosPorCesto);
+		byte[] ba = new byte[c.size()];
+		arqCestos.seek(enderecoCesto);
+		arqCestos.read(ba);
+		c.fromByteArray(ba);
+
+		return c.read(chave);
+	}
+
+	public T read(String chave) throws Exception {
 
 		// Carrega o diretório
 		byte[] bd = new byte[(int) arqDiretorio.length()];

@@ -16,6 +16,21 @@ public class Lib {
 
 	private static Scanner scanner = new Scanner(System.in);
 
+	public static int ReadChoice(int choiceCount) {
+		int	 choice;
+		boolean invalid = false;
+	
+		do {
+			if (invalid) {
+				Lib.cprintf("BOLD RED", "Valor inválido, ");
+				System.out.print("tente novamente: ");
+			}
+			choice = Lib.readInt();
+		} while (invalid = choice < 0 || choiceCount < choice);
+	
+		return choice;
+	}
+
 	public static int readInt() throws InputMismatchException {
 		
 		int value = 0;

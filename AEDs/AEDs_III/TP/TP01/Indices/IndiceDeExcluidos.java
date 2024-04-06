@@ -31,12 +31,12 @@ public class IndiceDeExcluidos {
 	}
 
 	private void ImportData(String filePath) throws IOException {
-		file = new RandomAccessFile(filePath + "Excluidos.db", "rw");
 
+		file = new RandomAccessFile(filePath + "Excluidos.db", "rw");
 		// file.seek(0);
 
 		long fileLength = file.length();
-		Tuple<Short, Long> tuple = new Tuple<Short, Long>((short)1, (long)1);
+		Tuple<Short, Long> tuple = new Tuple<>((short)1, (long)1);
 
 		while (file.getFilePointer() < fileLength) {
 			byte[] array = new byte[REG_LENGTH];

@@ -7,24 +7,11 @@ import TP01.Livros.Livro;
 
 // clear && javac -d Classes -cp ../ Principal.java && java -cp Classes Principal.java
 
-// O que falta: Implementar o Update
+// O que falta: Implementar o Update,
+// Indice Indireto Por nome,
+// crud separado livro, autor, crud livro com isbn
 
 class Principal {
-
-	static int ReadChoice(int choiceCount) {
-		int	 choice;
-		boolean invalid = false;
-	
-		do {
-			if (invalid) {
-				Lib.cprintf("BOLD RED", "Valor inválido, ");
-				System.out.print("tente novamente: ");
-			}
-			choice = Lib.readInt();
-		} while (invalid = choice < 0 || choiceCount < choice);
-	
-		return choice;
-	}
 
 	static <T extends Registro> void Create(Arquivo<T> arquivo) throws Exception {
 
@@ -38,7 +25,7 @@ class Principal {
 		Lib.cprintf("RED", "2 - Cancelar cadastro.\n");
 		System.out.print("\nEscolha uma das opções acima: ");
 
-		int escolha = ReadChoice(2);
+		int escolha = Lib.ReadChoice(2);
 
 		Lib.clearScreen();
 
@@ -63,13 +50,11 @@ class Principal {
 			Lib.clearScreen();
 			Lib.printdiv(1, "Consultando na base de dados: %ss", arquivo.getNome());
 		}
-
-		System.out.printf("Insira o ID do %s: ", arquivo.getNomeLowerCase());
-		int ID = Lib.readInt();
-
+		
 		T object = null;
 
 		try {
+			int ID = arquivo.read();
 			object = arquivo.read(ID);
 			if (print) {
 				Lib.clearScreen();
@@ -86,6 +71,7 @@ class Principal {
 		return object;
 	}
 
+	// Quando cancelar a atualização esta mandando mensagem de livro não encontrado
 	static <T extends Registro> void Update(Arquivo<T> arquivo) throws Exception {
 		
 		Lib.clearScreen();
@@ -107,7 +93,7 @@ class Principal {
 		Lib.cprintf("RED", "2 - Cancelar atualização.\n");
 		System.out.print("\nEscolha uma das opções acima: ");
 		
-		int escolha = ReadChoice(2);
+		int escolha = Lib.ReadChoice(2);
 		
 		if (escolha == 1) {
 			System.out.println();
@@ -127,7 +113,7 @@ class Principal {
 		Lib.cprintf("RED", "2 - Cancelar atualização.\n");
 		System.out.print("\nEscolha uma das opções acima: ");
 
-		escolha = ReadChoice(2);
+		escolha = Lib.ReadChoice(2);
 
 		Lib.clearScreen();
 
@@ -135,7 +121,7 @@ class Principal {
 
 		else {
 			try {
-				arquivo.update(oldObject, newObject);
+				arquivo.update(oldObject.getID(), newObject);
 				Lib.cprintf("BOLD GREEN", "%s atualizado com sucesso!\n\n", arquivo.getNome());
 				System.out.println(newObject + "\n");
 			}
@@ -165,7 +151,7 @@ class Principal {
 		Lib.cprintf("RED", "2 - Cancelar exclusão.\n");
 		System.out.print("\nEscolha uma das opções acima: ");
 
-		int escolha = ReadChoice(2);
+		int escolha = Lib.ReadChoice(2);
 		
 		Lib.clearScreen();
 
@@ -218,7 +204,7 @@ class Principal {
 			System.out.println("\n0 - Voltar.");
 			System.out.print("\nEscolha uma das opções acima: ");
 
-			escolha = ReadChoice(5);
+			escolha = Lib.ReadChoice(5);
 
 			switch (escolha) {
 			case 1:
@@ -256,14 +242,14 @@ class Principal {
 			System.out.println("\n0 - Sair do programa.");
 			System.out.print("\nEscolha uma das bases de dados: ");
 			
-			choice = ReadChoice(2);
-			
+			choice = Lib.ReadChoice(2);
+
 			switch (choice) {
-			case 1:
-				arquivo = new ArquivoLivro<>("Livro", "dados/Livro/");
+				case 1:
+					arquivo = new ArquivoLivro<>("Livro", "dados/Livro/");
 				break;
-			case 2:
-				// arquivo = new ArquivoAutor<>("Autor", "dados/Autor/");
+				case 2:
+					// arquivo = new ArquivoAutor<>("Autor", "dados/Autor/");
 				break;
 			}
 
