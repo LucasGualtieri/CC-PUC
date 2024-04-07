@@ -18,14 +18,9 @@ public class ParTituloID implements RegistroHashExtensivel {
 	}
 
 	public ParTituloID(String titulo, int ID) throws IOException {
-
-		ByteArrayOutputStream ba_out = new ByteArrayOutputStream();
-		DataOutputStream dos = new DataOutputStream(new ByteArrayOutputStream());
-	
-		dos.writeUTF(this.titulo);
-
-		int length = ba_out.toByteArray().length < 38 ? titulo.length() : ba_out.toByteArray().length;
-		this.titulo = titulo.substring(0, length);
+		
+		byte[] bytes = titulo.getBytes();		
+		this.titulo = new String(bytes, 0, 38); // Limita a string a 38 bytes e elimina o resto
 		this.ID = ID;
 	}
 

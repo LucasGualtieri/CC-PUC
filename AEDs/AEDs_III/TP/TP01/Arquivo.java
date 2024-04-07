@@ -20,7 +20,6 @@ public class Arquivo<T extends Registro> {
 	RandomAccessFile file;
 	HashExtensivel<ParIDEndereco> indiceDireto;
 	String nome;
-	private final short registerMinLength = 20; // 2 + 4 + (2 + 3) + (2 + 3) + 4.
 	// private final short registerAvgLength = 40; // 2 + 4 + (2 + 14) + (2 + 12) + 4.
 
 	public IndiceDeExcluidos excluidos; // Preciso salvar puxar da memoria
@@ -48,10 +47,14 @@ public class Arquivo<T extends Registro> {
 	}
 
 	public int create(T object) throws Exception {
-		return create(true, object);
+		return create(true, 0, object);
 	}
 
-	private int create(boolean createNewID, T object) throws Exception {
+	protected int create(boolean createNewID, T object) throws Exception {
+		return create(createNewID, 0, object);
+	}
+
+	protected int create(boolean createNewID, int registerLength, T object) throws Exception {
 		int ID = object.getID();
 
 		if (createNewID) {
@@ -65,43 +68,49 @@ public class Arquivo<T extends Registro> {
 			file.writeInt(ID);
 		}
 
-		byte[] registro = object.toByteArray();
-		short length = (short)registro.length;
-
-		Tuple<Short, Long> tuple = excluidos.getBest(length);
-
-		long address = tuple.getValue() == -1 ? file.length() : tuple.getValue();
-
-		file.seek(address);
-		// file.seek(address == -1 ? file.length() : address);
-
-		short difference = (short)(tuple.getKey() - (length + 2));
-
-		// Quebrar registro excluido
-		if (difference >= registerMinLength) {
-			file.writeShort(length);
-			file.write(registro);
-			excluidos.create(new Tuple<>(difference, file.getFilePointer()));
-			file.writeShort(-difference);
-			// System.out.println("IF");
+		try {
+			byte[] registro = object.toByteArray();
+			short length = (short)registro.length;
+	
+			Tuple<Short, Long> tuple = excluidos.getBest(length);
+	
+			long address = tuple.getValue() == -1 ? file.length() : tuple.getValue();
+	
+			file.seek(address);
+			// file.seek(address == -1 ? file.length() : address);
+	
+			short difference = (short)(tuple.getKey() - (length + 2));
+	
+			// Quebrar registro excluido
+			if (difference >= registerLength) {
+				file.writeShort(length);
+				file.write(registro);
+				excluidos.create(new Tuple<>(difference, file.getFilePointer()));
+				file.writeShort(-difference);
+				// System.out.println("IF");
+			}
+			
+			// Inserir no fim
+			else if (tuple.getKey() == 0) {
+				excluidos.create(tuple); // Precisa ser recriado já que o getBest deleta
+				file.seek(file.length());
+				file.writeShort(length);
+				file.write(registro);
+			}
+			
+			// Manter o Lixo do registro excluído
+			else {
+				// System.out.println("Else");
+				file.writeShort(tuple.getKey());
+				file.write(registro);
+			}
+			
+			indiceDireto.create(new ParIDEndereco(ID, address));
+		} catch(Exception e) {
+			System.out.println("DEU RUIM");
+			e.printStackTrace();
+			System.exit(-1);
 		}
-		
-		// Inserir no fim
-		else if (tuple.getKey() == 0) {
-			excluidos.create(tuple); // Precisa ser recriado já que o getBest deleta
-			file.seek(file.length());
-			file.writeShort(length);
-			file.write(registro);
-		}
-		
-		// Manter o Lixo do registro excluído
-		else {
-			// System.out.println("Else");
-			file.writeShort(tuple.getKey());
-			file.write(registro);
-		}
-		
-		indiceDireto.create(new ParIDEndereco(ID, address));
 
 		return ID;
 	}
@@ -151,6 +160,8 @@ public class Arquivo<T extends Registro> {
 
 		indiceDireto.delete(ID);
 	}
+
+	public int SortList(List<T> list) { return -1; }
 
 	public List<T> Listar() throws IOException, Exception {
 
@@ -203,18 +214,18 @@ public class Arquivo<T extends Registro> {
 		return objeto;
 	}
 
-	public T Instanciador(long address, short tamanhoRegistro) throws Exception {
+	// public T Instanciador(long address, short tamanhoRegistro) throws Exception {
 
-		byte[] registro = new byte[tamanhoRegistro];
-		file.read(registro);
+	// 	byte[] registro = new byte[tamanhoRegistro];
+	// 	file.read(registro);
 
-		T objeto = this.construtor.newInstance();
-		objeto.fromByteArray(registro);
+	// 	T objeto = this.construtor.newInstance();
+	// 	objeto.fromByteArray(registro);
 
-		objeto.setAddress(address);
+	// 	objeto.setAddress(address);
 
-		return objeto;
-	}
+	// 	return objeto;
+	// }
 
 	public T readNewInstance() throws Exception {
 		T objeto = this.construtor.newInstance();
@@ -247,45 +258,4 @@ public class Arquivo<T extends Registro> {
 		file.close();
 	}
 
-	
-	// Talvez implementar uma interface para obrigar as classes filhas como ArquivoLivro a implementarem esse delete
-	// private void delete(int shift, short newLength) throws Exception {}
-
-	// public void delete(T object) throws IOException, Exception {
-	// 	file.seek(object.getAddress()); // Volta para o indicador de tamanho
-	// 	file.writeShort(-(object.toByteArray().length));
-	// }
-
-	// public boolean delete(int id) throws IOException, Exception {
-		
-	// 	boolean resultado = false;
-		
-	// 	arq.seek(HEADER_SIZE); // mover o ponteiro para o primeiro registro (após o cabeçalho)
-	// 	long len = arq.length();
-	// 	short tamanhoRegistro;
-		
-	// 	while(arq.getFilePointer() < len) {
-	// 		long endereco = arq.getFilePointer();
-	// 		tamanhoRegistro = arq.readShort();
-			
-	// 		if (tamanhoRegistro > 0) {
-				
-	// 			byte[] registro = new byte[tamanhoRegistro];
-	// 			arq.read(registro);
-				
-	// 			T obj = Instanciador(registro);
-				
-	// 			if (obj.getID() == id) {
-	// 				arq.seek(endereco); // Volta para o indicador de tamanho
-	// 				arq.writeShort(-tamanhoRegistro);
-	// 				resultado = true;
-	// 				arq.seek(len);
-	// 			}
-	// 		} else {
-	// 			arq.seek(arq.getFilePointer() + Math.abs(tamanhoRegistro));
-	// 		}
-	// 	}
-		
-	// 	return resultado;
-	// }
 }

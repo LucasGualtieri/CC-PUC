@@ -2,6 +2,7 @@ package TP01.Livros;
 
 // import java.io.IOException;
 import java.lang.reflect.Constructor;
+import java.util.List;
 
 import TP01.Arquivo;
 import TP01.Registro;
@@ -11,6 +12,9 @@ import TP01.Lib;
 import TP01.Indices.HashExtensivel;
 
 public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
+
+	// IndicadorDeTamanho + ID + ISBN + Titulo + Autor + Preço
+	private final short registerMinLength = 35; // 2 + 4 +  (2 + 13) (2 + 3) + (2 + 3) + 4.
 
 	// HashExtensivel<ParTituloID> indiceIndireto;
 
@@ -37,6 +41,15 @@ public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
 		// );
 	}
 
+	
+	public int create(T object) throws Exception {
+		return create(true, registerMinLength, object);
+	}
+
+	protected int create(boolean createNewID, T object) throws Exception {
+		return create(createNewID, registerMinLength, object);
+	}
+
 	public int read() throws Exception {
 
 		// System.out.printf("Insira o ID do %s: ", getNomeLowerCase());
@@ -52,8 +65,8 @@ public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
 
 		switch (choice) {
 		case 1:
-		System.out.printf("Insira o ID do livro: ");
-		ID = Lib.readInt();
+			System.out.printf("Insira o ID do livro: ");
+			ID = Lib.readInt();
 		break;
 		default:
 			// System.out.printf("Insira o título do livro: ");
@@ -63,6 +76,52 @@ public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
 
 		return ID;
 	}
+
+	public int SortList(List<T> list) {
+		System.out.println("Ordenar por:");
+		System.out.println("1 - ID");
+		System.out.println("2 - ISBN");
+		System.out.println("3 - Título");
+		System.out.println("4 - Autor");
+		System.out.println("5 - Preço.");
+		System.out.println("\n0 - Voltar.");
+		System.out.print("\nEscolha uma das opções acima: ");
+		
+		int choice = Lib.ReadChoice(5);
+		
+		switch (choice) {
+			case 1:
+				list.sort((l1, l2) -> Integer.compare(l1.getID(), l2.getID()));
+			break;
+			case 2:
+				list.sort((l1, l2) -> ((Livro)l1).getISBN().compareTo(((Livro)l2).getISBN()));
+			break;
+				case 3:
+				list.sort((l1, l2) -> ((Livro)l1).getTitulo().compareTo(((Livro)l2).getTitulo()));
+			break;
+				case 4:
+				list.sort((l1, l2) -> ((Livro)l1).getAutor().compareTo(((Livro)l2).getAutor()));
+			break;
+				case 5:
+				list.sort((l1, l2) -> Float.compare(((Livro)l1).getPreco(), ((Livro)l2).getPreco()));
+			break;
+		}
+
+		return choice;
+	}
+
+	// public int create(T object) throws Exception {
+	// 	int result = create(true, object);
+
+	// 	indiceTitulo.create(
+	// 		new ParTituloID(
+	// 			((Livro)object).getTitulo(),
+	// 			object.getID()
+	// 		)
+	// 	);
+
+	// 	return result;
+	// }
 
 	// Para poder testar fazer um metodo que liste os excluidos.
 

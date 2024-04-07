@@ -16,10 +16,11 @@ import TP01.Registro;
 public class Livro implements Registro {
 	
 	private int ID;
+	private String ISBN;
 	private String titulo;
 	private String autor;
 	private float preco;
-	private long address;
+	// private long address;
 
 	@SuppressWarnings("deprecation")
 	Locale localeBR = new Locale("pt", "BR");
@@ -37,13 +38,9 @@ public class Livro implements Registro {
 		this.titulo = titulo;
 		this.autor = autor;
 		this.preco = preco;
-		this.address = -1;
 	}
 
 	public Livro(byte[] array) throws Exception { fromByteArray(array); }
-
-	public int getID() { return this.ID; }
-	public void setID(int i) { this.ID = i; }
 
 	public byte[] toByteArray() throws Exception {
 
@@ -53,6 +50,7 @@ public class Livro implements Registro {
 		DataOutputStream dos = new DataOutputStream(ba_out);
 
 		dos.writeInt(this.ID);
+		dos.writeUTF(this.ISBN);
 		dos.writeUTF(this.titulo);
 		dos.writeUTF(this.autor);
 		dos.writeFloat(this.preco);
@@ -69,6 +67,7 @@ public class Livro implements Registro {
 			DataInputStream dis = new DataInputStream(ba_in);
 	
 			this.ID = dis.readInt();
+			this.ISBN = dis.readUTF();
 			this.titulo = dis.readUTF();
 			this.autor = dis.readUTF();
 			this.preco = dis.readFloat();
@@ -90,7 +89,67 @@ public class Livro implements Registro {
 
 	public void setTitulo(String titulo) { this.titulo = titulo; }
 
+	private String readISBN() {
+		
+		String value = "invalid";
+
+		boolean invalid = false;
+
+		do {
+			if (invalid) {
+				Lib.cprintf(Lib.BOLD + Lib.RED, "Valor inválido, ");
+				System.out.print("tente novamente: ");
+			}
+
+			value = Lib.readString();
+			if (value.length() != 10 && value.length() != 13
+				|| value.contains(" ")
+				|| value.contains("-")
+			) { invalid = true; }
+
+			else invalid = false;
+
+		} while (invalid);
+
+		return value;
+	}
+
+	private String mascaraISBN() {
+		StringBuilder builder = new StringBuilder();
+        
+        // Verifica o comprimento do ISBN
+        int length = ISBN.length();
+        
+		// Máscara para ISBN de 10 dígitos
+        if (length == 10) {
+            builder.append(ISBN.substring(0, 1))
+			.append("-")
+			.append(ISBN.substring(1, 4))
+			.append("-")
+			.append(ISBN.substring(4, 9))
+			.append("-")
+			.append(ISBN.substring(9));
+        }
+
+		// Máscara para ISBN de 13 dígitos
+		else if (length == 13) {
+            builder.append(ISBN.substring(0, 3))
+			.append("-")
+			.append(ISBN.substring(3, 4))
+			.append("-")
+			.append(ISBN.substring(4, 7))
+			.append("-")
+			.append(ISBN.substring(7, 12))
+			.append("-")
+			.append(ISBN.substring(12));
+		}
+        
+        return builder.toString();
+	}
+
 	public void setAll() {
+		System.out.print("Insira o ISBN do livro: ");
+		ISBN = readISBN();
 		System.out.print("Insira o título do livro: ");
 		titulo = Lib.readString();
 		System.out.print("Insira o nome do autor do livro: ");
@@ -99,25 +158,17 @@ public class Livro implements Registro {
 		preco = Lib.readFloat();
 	}
 
-	public void setAddress(long address) { this.address = address; }
-	public long getAddress() { return this.address; }
+	// public void setAddress(long address) { this.address = address; }
+	// public long getAddress() { return this.address; }
 
 	public void printHeader() {
-		System.out.println("ID, Título, Autor, Preço");
-	}
-
-	public void printHeaderCSV() {
-		System.out.println(
-			Lib.BOLD + Lib.GREEN + "ID, " +
-			Lib.RED + "Título, " +
-			Lib.BLUE + "Autor, " + 
-			Lib.YELLOW + "Preço" + Lib.RESET
-		);
+		System.out.println("ID, ISBN, Título, Autor, Preço");
 	}
 
 	public String toTable() {
 		String str;
 		str = this.ID + ", ";
+		str += this.ISBN  + ", ";
 		str += this.titulo  + ", ";
 		str += this.autor  + ", ";
 		str += NumberFormat.getCurrencyInstance(localeBR).format(this.preco);
@@ -125,16 +176,36 @@ public class Livro implements Registro {
 		return str + "\n";
 	}
 
+	public void printHeaderCSV() {
+		System.out.println(
+			Lib.BOLD + Lib.YELLOW + "ID, " +
+			Lib.CYAN + "ISBN, " +
+			Lib.RED + "Título, " +
+			Lib.BLUE + "Autor, " + 
+			Lib.GREEN + "Preço" + Lib.RESET
+		);
+	}
+
 	public String toCSV() {
 		String str;
-		str = Lib.BOLD + Lib.GREEN + this.ID + ", ";
+		str = Lib.BOLD + Lib.YELLOW + this.ID + ", ";
+		str += Lib.CYAN + mascaraISBN() + ", ";
 		str += Lib.RED + this.titulo  + ", ";
 		str += Lib.BLUE + this.autor  + ", ";
-		str += Lib.YELLOW + NumberFormat.getCurrencyInstance(localeBR).format(this.preco);
+		str += Lib.GREEN + NumberFormat.getCurrencyInstance(localeBR).format(this.preco);
 		str += Lib.RESET;
 
 		return str + "\n";
 	}
 
-	public String getTitulo() { return titulo; }
+	public void setID(int i) { this.ID = i; }
+	public int getID() { return this.ID; }
+	
+	public String getISBN() { return this.ISBN; }
+
+	public String getTitulo() { return this.titulo; }
+
+	public String getAutor() { return this.autor; }
+
+	public float getPreco() { return this.preco; }
 }

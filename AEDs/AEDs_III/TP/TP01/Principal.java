@@ -55,6 +55,12 @@ class Principal {
 
 		try {
 			int ID = arquivo.read();
+			
+			if (ID == 0) {
+				Lib.clearScreen();
+				return null;
+			}
+			
 			object = arquivo.read(ID);
 			if (print) {
 				Lib.clearScreen();
@@ -167,14 +173,23 @@ class Principal {
 	static <T extends Registro> void Listar(Arquivo<T> arquivo) throws Exception {
 		
 		Lib.clearScreen();
-		
+
 		List<T> list = arquivo.Listar();
-		
+
 		if (list == null) {
 			Lib.printdiv("Base de dados vazia: %ss", arquivo.getNome());
 			return;
 		}
 
+		Lib.printdiv(1, "Listando a base de dados: %ss", arquivo.getNome());
+
+		if (arquivo.SortList(list) == 0) {
+			Lib.clearScreen();
+			Lib.cprintf("RED", "Listagem cancelada.\n\n");
+			return;
+		}
+		
+		Lib.clearScreen();
 		Lib.printdiv(1, "Listando a base de dados: %ss", arquivo.getNome());
 
 		arquivo.printHeaderCSV();
