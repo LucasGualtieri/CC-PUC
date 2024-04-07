@@ -1,3 +1,5 @@
+package TP01.Indices;
+
 /*
 TABELA HASH EXTENSÍVEL
 
@@ -12,7 +14,6 @@ disciplina:
 Implementado pelo Prof. Marcos Kutova
 v1.1 - 2021
 */
-package TP01.Indices;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

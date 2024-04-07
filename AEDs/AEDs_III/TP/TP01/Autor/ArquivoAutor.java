@@ -1,6 +1,5 @@
-package TP01.Livros;
+package TP01.Autor;
 
-// import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.util.List;
 
@@ -8,8 +7,9 @@ import TP01.Arquivo;
 import TP01.Registro;
 import TP01.Lib;
 import TP01.Indices.HashExtensivel;
+import TP01.Livros.ParTituloID;
 
-public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
+public class ArquivoAutor<T extends Registro> extends Arquivo<T> {
 
 	// IndicadorDeTamanho + ID + ISBN + Titulo + Autor + Preço
 	private final short registerMinLength = 35; // 2 + 4 +  (2 + 13) (2 + 3) + (2 + 3) + 4.
@@ -27,9 +27,9 @@ public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
 	HashExtensivel<ParTituloID> indiceTitulo;
 
 	@SuppressWarnings("unchecked")
-	public ArquivoLivro(String nome, String filePath) throws NoSuchMethodException, SecurityException, Exception {
+	public ArquivoAutor(String nome, String filePath) throws NoSuchMethodException, SecurityException, Exception {
 		
-		super((Constructor<T>)Livro.getConstructor(), nome, filePath);
+		super((Constructor<T>)Autor.getConstructor(), nome, filePath);
 
 		// indiceTitulo = new HashExtensivel<>(
 		// 	ParTituloID.getConstructor(),
@@ -39,6 +39,7 @@ public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
 		// );
 	}
 
+	
 	public int create(T object) throws Exception {
 		return create(true, registerMinLength, object);
 	}
@@ -91,16 +92,16 @@ public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
 				list.sort((l1, l2) -> Integer.compare(l1.getID(), l2.getID()));
 			break;
 			case 2:
-				list.sort((l1, l2) -> ((Livro)l1).getISBN().compareTo(((Livro)l2).getISBN()));
+				list.sort((l1, l2) -> ((Autor)l1).getISBN().compareTo(((Autor)l2).getISBN()));
 			break;
 				case 3:
-				list.sort((l1, l2) -> ((Livro)l1).getTitulo().compareTo(((Livro)l2).getTitulo()));
+				list.sort((l1, l2) -> ((Autor)l1).getTitulo().compareTo(((Autor)l2).getTitulo()));
 			break;
 				case 4:
-				list.sort((l1, l2) -> ((Livro)l1).getAutor().compareTo(((Livro)l2).getAutor()));
+				list.sort((l1, l2) -> ((Autor)l1).getAutor().compareTo(((Autor)l2).getAutor()));
 			break;
 				case 5:
-				list.sort((l1, l2) -> Float.compare(((Livro)l1).getPreco(), ((Livro)l2).getPreco()));
+				list.sort((l1, l2) -> Float.compare(((Autor)l1).getPreco(), ((Autor)l2).getPreco()));
 			break;
 		}
 

@@ -1,12 +1,10 @@
-package TP01;
+package TP01.Indices;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-
-import TP01.Indices.RegistroHashExtensivel;
 
 // Quando eu for trabalhar com os Indices Indiretos precisarei, acredito eu setar uma tamanho máximo para as strings
 

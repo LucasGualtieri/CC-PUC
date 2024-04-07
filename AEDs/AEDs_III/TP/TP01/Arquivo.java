@@ -1,5 +1,4 @@
 package TP01;
-// package AEDs.AEDs_III.TP;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -10,8 +9,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 import TP01.Indices.HashExtensivel;
-import TP01.Indices.IndiceDeExcluidos;
 import TP01.Indices.ParIDEndereco;
+import TP01.Indices.Tuple;
+import TP01.Livros.IndiceDeExcluidos;
 
 public class Arquivo<T extends Registro> {
 

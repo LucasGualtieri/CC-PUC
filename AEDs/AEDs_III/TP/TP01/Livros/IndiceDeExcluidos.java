@@ -1,16 +1,11 @@
-package TP01.Indices;
+package TP01.Livros;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
-// import java.util.Comparator;
-// import java.util.Collections;
-// import java.util.Comparator;
-// import java.util.LinkedList;
-// import java.util.List;
 import java.util.Iterator;
 import java.util.TreeSet;
 
-import TP01.Tuple;
+import TP01.Indices.Tuple;
 
 // Se houverem dois registros excluídos imediatamente um ao lado do outros
 // Idealmente os dois deveriam ser fundidos.

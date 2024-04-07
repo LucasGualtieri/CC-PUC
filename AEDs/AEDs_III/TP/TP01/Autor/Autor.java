@@ -1,4 +1,5 @@
-package TP01.Livros;
+package TP01.Autor;
+// package AEDs.AEDs_III.TP;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -11,7 +12,8 @@ import java.util.Locale;
 import TP01.Lib;
 import TP01.Registro;
 
-public class Livro implements Registro {
+
+public class Autor implements Registro {
 	
 	private int ID;
 	private String ISBN;
@@ -23,22 +25,22 @@ public class Livro implements Registro {
 	// @SuppressWarnings("deprecation")
 	Locale localeBR = new Locale("pt", "BR");
 
-	public static Constructor<Livro> getConstructor() throws NoSuchMethodException, SecurityException {
-		return Livro.class.getConstructor();
+	public static Constructor<Autor> getConstructor() throws NoSuchMethodException, SecurityException {
+		return Autor.class.getConstructor();
 	}
 
-	public Livro() { this(-1, "null", "null", -0F); }
+	public Autor() { this(-1, "null", "null", -0F); }
 
-	public Livro(String titulo, String autor, float preco) { this(-1, titulo, autor, preco); }
+	public Autor(String titulo, String autor, float preco) { this(-1, titulo, autor, preco); }
 
-	public Livro(int ID, String titulo, String autor, float preco) {
+	public Autor(int ID, String titulo, String autor, float preco) {
 		this.ID = ID;
 		this.titulo = titulo;
 		this.autor = autor;
 		this.preco = preco;
 	}
 
-	public Livro(byte[] array) throws Exception { fromByteArray(array); }
+	public Autor(byte[] array) throws Exception { fromByteArray(array); }
 
 	public byte[] toByteArray() throws Exception {
 

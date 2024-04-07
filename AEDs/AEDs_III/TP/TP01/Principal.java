@@ -266,10 +266,10 @@ class Principal {
 
 			switch (choice) {
 				case 1:
-					arquivo = new ArquivoLivro<>("Livro", "dados/Livro/");
+					arquivo = new ArquivoLivro<>("Livro", "AEDs/AEDs_III/TP/TP01/Livros/Dados/");
 				break;
 				case 2:
-					// arquivo = new ArquivoAutor<>("Autor", "dados/Autor/");
+					// arquivo = new ArquivoAutor<>("Autor", "Autores/Dados");
 				break;
 			}
 

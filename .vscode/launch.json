@@ -1,4 +1,14 @@
-// {
+{
+	"configurations": [
+		{
+			"type": "java",
+			"name": "Principal",
+			"request": "launch",
+			"mainClass": "TP01.Principal",
+			"projectName": "CC-PUC_cc5a22eb"
+		}
+	]
+} // {
 // 	// Use IntelliSense to learn about possible attributes.
 // 	// Hover to view descriptions of existing attributes.
 // 	// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387

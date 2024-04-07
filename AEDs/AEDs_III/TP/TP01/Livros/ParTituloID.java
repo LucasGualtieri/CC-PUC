@@ -1,4 +1,4 @@
-package TP01.Indices;
+package TP01.Livros;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -6,6 +6,8 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
+
+import TP01.Indices.RegistroHashExtensivel;
 
 public class ParTituloID implements RegistroHashExtensivel {
 
