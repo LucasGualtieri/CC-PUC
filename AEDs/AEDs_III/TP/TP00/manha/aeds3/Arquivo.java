@@ -1,4 +1,4 @@
-package aeds3;
+package TP00.manha.aeds3;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
