@@ -15,7 +15,7 @@ class Principal {
 	static <T extends Registro> void Create(Arquivo<T> arquivo) throws Exception {
 
 		Lib.clearScreen();
-		Lib.printdiv(1, "Cadastrando na base de dados: %ss", arquivo.getNome());
+		Lib.printdiv(1, "Cadastrando na base de dados: %s", arquivo.getNomePlural());
 
 		T object = arquivo.readNewInstance();
 		System.out.println("\n" + object + "\n");
@@ -47,7 +47,7 @@ class Principal {
 
 		if (print) {
 			Lib.clearScreen();
-			Lib.printdiv(1, "Consultando na base de dados: %ss", arquivo.getNome());
+			Lib.printdiv(1, "Consultando na base de dados: %s", arquivo.getNomePlural());
 		}
 		
 		T object = null;
@@ -80,7 +80,7 @@ class Principal {
 	static <T extends Registro> void Update(Arquivo<T> arquivo) throws Exception {
 		
 		Lib.clearScreen();
-		Lib.printdiv(1, "Atualizando a base de dados: %ss", arquivo.getNome());
+		Lib.printdiv(1, "Atualizando a base de dados: %s", arquivo.getNomePlural());
 		
 		T oldObject, newObject;
 
@@ -146,11 +146,17 @@ class Principal {
 	static <T extends Registro> void Delete(Arquivo<T> arquivo) throws Exception {
 		
 		Lib.clearScreen();
-		Lib.printdiv(1, "Excluindo da base de dados: %ss", arquivo.getNome());
+		Lib.printdiv(1, "Excluindo da base de dados: %s", arquivo.getNomePlural());
 
 		T object;
 
-		try { object = Read(false, arquivo); }
+		try { 
+			object = Read(false, arquivo);
+			if (object == null) {
+				Lib.clearScreen();
+				return;
+			}
+		}
 		catch (Exception e) {
 			Lib.cprintf("BOLD RED", "\n%s não encontrado.\n\n", arquivo.getNome());
 			return;
@@ -182,11 +188,11 @@ class Principal {
 		List<T> list = arquivo.Listar();
 
 		if (list == null) {
-			Lib.printdiv("Base de dados vazia: %ss", arquivo.getNome());
+			Lib.printdiv("Base de dados vazia: %s", arquivo.getNomePlural());
 			return;
 		}
 
-		Lib.printdiv(1, "Listando a base de dados: %ss", arquivo.getNome());
+		Lib.printdiv(1, "Listando a base de dados: %s", arquivo.getNomePlural());
 
 		if (arquivo.SortList(list) == 0) {
 			Lib.clearScreen();
@@ -194,7 +200,7 @@ class Principal {
 		}
 		
 		Lib.clearScreen();
-		Lib.printdiv(1, "Listando a base de dados: %ss", arquivo.getNome());
+		Lib.printdiv(1, "Listando a base de dados: %s", arquivo.getNomePlural());
 
 		arquivo.printHeaderCSV();
 

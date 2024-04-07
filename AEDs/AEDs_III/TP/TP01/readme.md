@@ -1,7 +1,23 @@
 # Nome do Projeto
 
-## Descrição
-Breve descrição do projeto e seu propósito.
+## 📝 Descrição
+Neste projeto foi desenvolvido um CRUD de um Banco de Dados NoSQL. Atualmente o programa oferece uma interface em terminal que permite a manipulação de duas bases de dados, livros e autores. Adicionalmente foi implementado uma função que permite que o usuário liste todos os registros armazenados no arquivo de dados, e escolha de que forma os dados estarão ordenados.
+
+Como parte dos requisitos do projeto voi
+
+Como foi implementado a listagem dos registros:
+
+falar como foi feito e como foi ordenado e falar dos problemas e do que é pensado pras proximas versões
+
+Nesta versão do projeto a listagem mostra todos os registros o que pode ser tornar inviável tendo em vista o possível crescimento da base de dados.e da mesma forma ordenar uma grande base será necessário implementar a ordenação ordenação foi feita interamente em memória principal 
+
+Seu grupo deve implementar uma rotina que permita o reaproveitamento desses espaços vazios de registros excluídos. Esse reaproveitamento deverá ser avaliado toda vez que fizermos uma entre as seguintes operações:
+
+Inclusão de um novo registro
+Alteração de um registro com aumento de tamanho
+Obviamente, os espaços vazios devem ser controlados de alguma forma. Para isso, nas operações de exclusão e de alteração será importante ajustar o código para permitir esse controle.
+
+Também será importante considerar o que é um desperdício aceitável no reuso de espaços. Por exemplo, isso seria alguma porcentagem do espaço disponível? Seria uma quantidade máxima de desperdício (em número de bytes)? O espaço vazio teria um tamanho mínimo (e seria incorporado ao registro anterior se muito pequeno)?
 
 ## Requisitos
 - Liste os requisitos principais do projeto.

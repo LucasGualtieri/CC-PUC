@@ -16,7 +16,7 @@ public class ArquivoAutor<T extends Registro> extends Arquivo<T> {
 	@SuppressWarnings("unchecked")
 	public ArquivoAutor(String nome, String filePath) throws NoSuchMethodException, SecurityException, Exception {
 		
-		super((Constructor<T>)Autor.getConstructor(), nome + "e", filePath);
+		super((Constructor<T>)Autor.getConstructor(), nome, filePath);
 
 		// indiceTitulo = new HashExtensivel<>(
 		// 	ParTituloID.getConstructor(),
@@ -28,7 +28,7 @@ public class ArquivoAutor<T extends Registro> extends Arquivo<T> {
 
 	public String getNome() { return nome; }
 	public String getNomeLowerCase() { return nome.toLowerCase(); }
-	public String getNomePlural() { return nome  + "es"; }
+	public String getNomePlural() { return nome + "es"; }
 	public String getNomePluralLowerCase() { return nome.toLowerCase() + "es"; }
 	
 	public int create(T object) throws Exception {
@@ -44,8 +44,8 @@ public class ArquivoAutor<T extends Registro> extends Arquivo<T> {
 		// System.out.printf("Insira o ID do %s: ", getNomeLowerCase());
 		System.out.println("Buscar por:");
 		System.out.println("1 - ID.");
-		Lib.cprintf(Lib.RED, "2 - ISBN. Ainda não implementado.\n");
-		Lib.cprintf(Lib.RED, "3 - Título. Ainda não implementado.\n");
+		Lib.cprintf(Lib.RED, "2 - Nome. Ainda não implementado.\n");
+		Lib.cprintf(Lib.RED, "3 - Sobrenome. Ainda não implementado.\n");
 		System.out.println("\n0 - Voltar.");
 		System.out.print("\nEscolha uma das opções acima: ");
 
