@@ -1,12 +1,10 @@
 package TP01.Autor;
-// package AEDs.AEDs_III.TP;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.lang.reflect.Constructor;
-import java.text.NumberFormat;
 import java.util.Locale;
 
 import TP01.Lib;
@@ -16,28 +14,26 @@ import TP01.Registro;
 public class Autor implements Registro {
 	
 	private int ID;
-	private String ISBN;
-	private String titulo;
-	private String autor;
-	private float preco;
-	// private long address;
+	private String nome;
+	private String sobrenome;
+	private int idade;
 
-	// @SuppressWarnings("deprecation")
+	@SuppressWarnings("deprecation")
 	Locale localeBR = new Locale("pt", "BR");
 
 	public static Constructor<Autor> getConstructor() throws NoSuchMethodException, SecurityException {
 		return Autor.class.getConstructor();
 	}
 
-	public Autor() { this(-1, "null", "null", -0F); }
+	public Autor() { this(-1, "null", "null", -1); }
 
-	public Autor(String titulo, String autor, float preco) { this(-1, titulo, autor, preco); }
+	public Autor(String nome, String sobrenome, int idade) { this(-1, nome, sobrenome, idade); }
 
-	public Autor(int ID, String titulo, String autor, float preco) {
+	public Autor(int ID, String nome, String sobrenome, int idade) {
 		this.ID = ID;
-		this.titulo = titulo;
-		this.autor = autor;
-		this.preco = preco;
+		this.nome = nome;
+		this.sobrenome = sobrenome;
+		this.idade = idade;
 	}
 
 	public Autor(byte[] array) throws Exception { fromByteArray(array); }
@@ -50,10 +46,9 @@ public class Autor implements Registro {
 		DataOutputStream dos = new DataOutputStream(ba_out);
 
 		dos.writeInt(this.ID);
-		dos.writeUTF(this.ISBN);
-		dos.writeUTF(this.titulo);
-		dos.writeUTF(this.autor);
-		dos.writeFloat(this.preco);
+		dos.writeUTF(this.nome);
+		dos.writeUTF(this.sobrenome);
+		dos.writeInt(this.idade);
 
 		return ba_out.toByteArray();
 	}
@@ -67,10 +62,9 @@ public class Autor implements Registro {
 			DataInputStream dis = new DataInputStream(ba_in);
 	
 			this.ID = dis.readInt();
-			this.ISBN = dis.readUTF();
-			this.titulo = dis.readUTF();
-			this.autor = dis.readUTF();
-			this.preco = dis.readFloat();
+			this.nome = dis.readUTF();
+			this.sobrenome = dis.readUTF();
+			this.idade = dis.readInt();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -80,86 +74,23 @@ public class Autor implements Registro {
 
 		String str = "";
 		if (this.ID != -1) str += "ID: " + this.ID + "\n";
-		str += "Título: " + this.titulo;
-		str += "\nAutor: " + this.autor;
-		str += "\nPreço: " + NumberFormat.getCurrencyInstance(localeBR).format(this.preco);
+		str += "Nome: " + this.nome;
+		str += "\nAutor: " + this.sobrenome;
+		str += "\nIdade: " + this.idade;
 
 		return str;
 	}
 
-	public void setTitulo(String titulo) { this.titulo = titulo; }
-
-	private String readISBN() {
-		
-		String value = "invalid";
-
-		boolean invalid = false;
-
-		do {
-			if (invalid) {
-				Lib.cprintf(Lib.BOLD + Lib.RED, "Valor inválido, ");
-				System.out.print("tente novamente: ");
-			}
-
-			value = Lib.readString();
-			if (value.length() != 10 && value.length() != 13
-				|| value.contains(" ")
-				|| value.contains("-")
-			) { invalid = true; }
-
-			else invalid = false;
-
-		} while (invalid);
-
-		return value;
-	}
-
-	private String mascaraISBN() {
-		StringBuilder builder = new StringBuilder();
-        
-        // Verifica o comprimento do ISBN
-        int length = ISBN.length();
-        
-		// Máscara para ISBN de 10 dígitos
-        if (length == 10) {
-            builder.append(ISBN.substring(0, 1))
-			.append("-")
-			.append(ISBN.substring(1, 4))
-			.append("-")
-			.append(ISBN.substring(4, 9))
-			.append("-")
-			.append(ISBN.substring(9));
-        }
-
-		// Máscara para ISBN de 13 dígitos
-		else if (length == 13) {
-            builder.append(ISBN.substring(0, 3))
-			.append("-")
-			.append(ISBN.substring(3, 4))
-			.append("-")
-			.append(ISBN.substring(4, 7))
-			.append("-")
-			.append(ISBN.substring(7, 12))
-			.append("-")
-			.append(ISBN.substring(12));
-		}
-        
-        return builder.toString();
-	}
+	public void setTitulo(String nome) { this.nome = nome; }
 
 	public void setAll() {
-		System.out.print("Insira o ISBN do livro: ");
-		ISBN = readISBN();
-		System.out.print("Insira o título do livro: ");
-		titulo = Lib.readString();
-		System.out.print("Insira o nome do autor do livro: ");
-		autor = Lib.readString();
-		System.out.print("Insira o preço do livro: ");
-		preco = Lib.readFloat();
+		System.out.print("Insira o nome do autor: ");
+		this.nome = Lib.readString();
+		System.out.print("Insira o sobrenome do autor: ");
+		this.sobrenome = Lib.readString();
+		System.out.print("Insira a idade do autor: ");
+		this.idade = Lib.readInt();
 	}
-
-	// public void setAddress(long address) { this.address = address; }
-	// public long getAddress() { return this.address; }
 
 	public void printHeader() {
 		System.out.println("ID, ISBN, Título, Autor, Preço");
@@ -168,10 +99,9 @@ public class Autor implements Registro {
 	public String toTable() {
 		String str;
 		str = this.ID + ", ";
-		str += this.ISBN  + ", ";
-		str += this.titulo  + ", ";
-		str += this.autor  + ", ";
-		str += NumberFormat.getCurrencyInstance(localeBR).format(this.preco);
+		str += this.nome  + ", ";
+		str += this.sobrenome  + ", ";
+		str += this.idade;
 
 		return str + "\n";
 	}
@@ -179,20 +109,20 @@ public class Autor implements Registro {
 	public void printHeaderCSV() {
 		System.out.println(
 			Lib.BOLD + Lib.YELLOW + "ID, " +
-			Lib.CYAN + "ISBN, " +
-			Lib.RED + "Título, " +
-			Lib.BLUE + "Autor, " + 
-			Lib.GREEN + "Preço" + Lib.RESET
+			Lib.RED + "Nome, " +
+			Lib.BLUE + "Sobrenome, " +
+			Lib.GREEN + "Idade" + Lib.RESET
 		);
 	}
 
 	public String toCSV() {
+
 		String str;
+
 		str = Lib.BOLD + Lib.YELLOW + this.ID + ", ";
-		str += Lib.CYAN + mascaraISBN() + ", ";
-		str += Lib.RED + this.titulo  + ", ";
-		str += Lib.BLUE + this.autor  + ", ";
-		str += Lib.GREEN + NumberFormat.getCurrencyInstance(localeBR).format(this.preco);
+		str += Lib.RED + this.nome + ", ";
+		str += Lib.BLUE + this.sobrenome  + ", ";
+		str += Lib.GREEN + this.idade;
 		str += Lib.RESET;
 
 		return str + "\n";
@@ -201,11 +131,9 @@ public class Autor implements Registro {
 	public void setID(int i) { this.ID = i; }
 	public int getID() { return this.ID; }
 	
-	public String getISBN() { return this.ISBN; }
+	public String getNome() { return this.nome; }
 
-	public String getTitulo() { return this.titulo; }
+	public String getSobrenome() { return this.sobrenome; }
 
-	public String getAutor() { return this.autor; }
-
-	public float getPreco() { return this.preco; }
+	public int getIdade() { return this.idade; }
 }

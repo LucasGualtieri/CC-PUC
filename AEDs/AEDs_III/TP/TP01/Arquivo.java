@@ -19,7 +19,7 @@ public class Arquivo<T extends Registro> {
 	protected Constructor<T> construtor;
 	RandomAccessFile file;
 	HashExtensivel<ParIDEndereco> indiceDireto;
-	String nome;
+	protected String nome;
 	// private final short registerAvgLength = 40; // 2 + 4 + (2 + 14) + (2 + 12) + 4.
 
 	public IndiceDeExcluidos excluidos; // Preciso salvar puxar da memoria
@@ -236,6 +236,8 @@ public class Arquivo<T extends Registro> {
 
 	public String getNome() { return nome; }
 	public String getNomeLowerCase() { return nome.toLowerCase(); }
+	public String getNomePlural() { return nome + "s"; }
+	public String getNomePluralLowerCase() { return nome.toLowerCase() + "s"; }
 
 	public void printHeader() throws Exception {
 		T objeto = this.construtor.newInstance();

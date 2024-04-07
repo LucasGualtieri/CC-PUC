@@ -107,6 +107,11 @@ public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
 		return choice;
 	}
 
+	public String getNome() { return nome; }
+	public String getNomeLowerCase() { return nome.toLowerCase(); }
+	public String getNomePlural() { return nome + "s"; }
+	public String getNomePluralLowerCase() { return nome.toLowerCase() + "s"; }
+
 	// public int create(T object) throws Exception {
 	// 	int result = create(true, object);
 

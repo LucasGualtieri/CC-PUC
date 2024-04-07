@@ -20,7 +20,7 @@ public class Livro implements Registro {
 	private float preco;
 	// private long address;
 
-	// @SuppressWarnings("deprecation")
+	@SuppressWarnings("deprecation")
 	Locale localeBR = new Locale("pt", "BR");
 
 	public static Constructor<Livro> getConstructor() throws NoSuchMethodException, SecurityException {

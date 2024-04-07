@@ -2,14 +2,13 @@ package TP01;
 
 import java.util.List;
 
+import TP01.Autor.ArquivoAutor;
 import TP01.Livros.ArquivoLivro;
 import TP01.Livros.Livro;
 
 // clear && javac -d Classes -cp ../ Principal.java && java -cp Classes Principal.java
 
-// O que falta: Implementar o Update,
-// Indice Indireto Por nome,
-// crud separado livro, autor, crud livro com isbn
+// O que falta: Indice Indireto Por nome,
 
 class Principal {
 
@@ -214,13 +213,13 @@ class Principal {
 		int escolha;
 
 		do {
-			Lib.printdiv(1, "Base de dados: %ss", arquivo.getNome());
+			Lib.printdiv(1, "Base de dados: %s", arquivo.getNomePlural());
 
 			System.out.println("1 - Cadastrar.");
 			System.out.println("2 - Consultar.");
 			System.out.println("3 - Atualizar.");
 			System.out.println("4 - Deletar.");
-			System.out.printf("5 - Listar todos os %ss.\n", arquivo.getNomeLowerCase());
+			System.out.printf("5 - Listar todos os %s.\n", arquivo.getNomePluralLowerCase());
 			System.out.println("\n0 - Voltar.");
 			System.out.print("\nEscolha uma das opções acima: ");
 
@@ -269,7 +268,7 @@ class Principal {
 					arquivo = new ArquivoLivro<>("Livro", "AEDs/AEDs_III/TP/TP01/Livros/Dados/");
 				break;
 				case 2:
-					// arquivo = new ArquivoAutor<>("Autor", "Autores/Dados");
+					arquivo = new ArquivoAutor<>("Autor", "AEDs/AEDs_III/TP/TP01/Autor/Dados/");
 				break;
 			}
 
