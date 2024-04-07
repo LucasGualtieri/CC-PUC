@@ -68,49 +68,43 @@ public class Arquivo<T extends Registro> {
 			file.writeInt(ID);
 		}
 
-		try {
-			byte[] registro = object.toByteArray();
-			short length = (short)registro.length;
-	
-			Tuple<Short, Long> tuple = excluidos.getBest(length);
-	
-			long address = tuple.getValue() == -1 ? file.length() : tuple.getValue();
-	
-			file.seek(address);
-			// file.seek(address == -1 ? file.length() : address);
-	
-			short difference = (short)(tuple.getKey() - (length + 2));
-	
-			// Quebrar registro excluido
-			if (difference >= registerLength) {
-				file.writeShort(length);
-				file.write(registro);
-				excluidos.create(new Tuple<>(difference, file.getFilePointer()));
-				file.writeShort(-difference);
-				// System.out.println("IF");
-			}
-			
-			// Inserir no fim
-			else if (tuple.getKey() == 0) {
-				excluidos.create(tuple); // Precisa ser recriado já que o getBest deleta
-				file.seek(file.length());
-				file.writeShort(length);
-				file.write(registro);
-			}
-			
-			// Manter o Lixo do registro excluído
-			else {
-				// System.out.println("Else");
-				file.writeShort(tuple.getKey());
-				file.write(registro);
-			}
-			
-			indiceDireto.create(new ParIDEndereco(ID, address));
-		} catch(Exception e) {
-			System.out.println("DEU RUIM");
-			e.printStackTrace();
-			System.exit(-1);
+		byte[] registro = object.toByteArray();
+		short length = (short)registro.length;
+
+		Tuple<Short, Long> tuple = excluidos.getBest(length);
+
+		long address = tuple.getValue() == -1 ? file.length() : tuple.getValue();
+
+		file.seek(address);
+		// file.seek(address == -1 ? file.length() : address);
+
+		short difference = (short)(tuple.getKey() - (length + 2));
+
+		// Quebrar registro excluido
+		if (difference >= registerLength) {
+			file.writeShort(length);
+			file.write(registro);
+			excluidos.create(new Tuple<>(difference, file.getFilePointer()));
+			file.writeShort(-difference);
+			// System.out.println("IF");
 		}
+		
+		// Inserir no fim
+		else if (tuple.getKey() == 0) {
+			excluidos.create(tuple); // Precisa ser recriado já que o getBest deleta
+			file.seek(file.length());
+			file.writeShort(length);
+			file.write(registro);
+		}
+		
+		// Manter o Lixo do registro excluído
+		else {
+			// System.out.println("Else");
+			file.writeShort(tuple.getKey());
+			file.write(registro);
+		}
+		
+		indiceDireto.create(new ParIDEndereco(ID, address));
 
 		return ID;
 	}

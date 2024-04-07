@@ -85,7 +85,13 @@ class Principal {
 		
 		T oldObject, newObject;
 
-		try { oldObject = Read(false, arquivo); }
+		try {
+			oldObject = Read(false, arquivo);
+			if (oldObject == null) {
+				Lib.clearScreen();
+				return;
+			}
+		}
 		catch (Exception e) {
 			Lib.cprintf("BOLD RED", "\n%s não encontrado.\n\n", arquivo.getNome());
 			return;
@@ -185,7 +191,6 @@ class Principal {
 
 		if (arquivo.SortList(list) == 0) {
 			Lib.clearScreen();
-			Lib.cprintf("RED", "Listagem cancelada.\n\n");
 			return;
 		}
 		
