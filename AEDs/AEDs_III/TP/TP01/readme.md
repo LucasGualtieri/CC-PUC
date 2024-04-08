@@ -47,6 +47,8 @@ Para próximas versões e próximos trabalhos pretendemos implementar:
 	- Teriamos então indices para titulo, nome, sobrenome, ISBN, CPF ...
 - Uso da classe Tuple<Key, Value> para todos os índices, sendo assim modificando as classes da tabela hash e arvore b+
 	- Para melhor reaproveitamento / diminuição de redundancias
+- Esquema de paginação possivelmente usando Arvore B+ na hora da listagem para que não sejam mostrados todos registros mas sim sob demanda do usuário como em um site de marketplace
+- Inclusão do algoritmo de intercalação balanceada
 
 ## ✅ Checklist
 
