@@ -8,7 +8,9 @@ import TP01.Livros.Livro;
 
 // clear && javac -d Classes -cp ../ Principal.java && java -cp Classes Principal.java
 
-// O que falta: Indice Indireto Por nome,
+/*
+ * /usr/lib/jvm/java-19-openjdk-amd64/bin/java -XX:+ShowCodeDetailsInExceptionMessages -cp /home/lucas/.vscode-server/data/User/workspaceStorage/806c8f962603aef4653ee3ae9c715a28/redhat.java/jdt_ws/CC-PUC_cc5a22eb/bin TP01.Principal
+*/
 
 class Principal {
 
