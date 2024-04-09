@@ -40,6 +40,18 @@ Como mencionado anteriormente, optamos por descartar a sugestão de implementaç
 
 Nossa escolha foi uma árvore binária que armazena tuplas ```Tuple<Tamanho, Endereco>```. Essa abordagem demonstrou ser eficiente, pois mantém os registros ordenados a todo tempo, permitindo a recuperação eficaz dos registros a serem reaproveitados. Toda operação de exclusão no arquivo de dados implica em uma inserção ou remoção na árvore binária, assim como na atualização do arquivo de excluídos.
 
+------------------ Essa parte precisa ser revisa e corrigida -------------------------
+### O que foi considerado um desperdício aceitável no reuso de espaços?
+<ol>
+	<ol>
+		<li>Inicialmente foi testado um tamanho médio de um registros, para livros usamos x bytes para titulos e y bytes para autores, essa pesquisa foi feita atraves do bing ai...</li>
+		<li>Mais tarde foi implementado um tamanho minimo para um registro pois foi observado que a abordagem do tamanho medio deixaria registros sem serem</li>
+		<li>, futuramente seria interessante fazer um estude estatistco para pegar um desvio padrão</li>
+	</ol>
+	<li>O espaço vazio é usado é sempre o menor espaço vazio que seja maior que o novo registro a ser inserido</li>
+	<li>Quando o espaço vazio é encontrado faemos o reaproveitamento, quando a difernça entre o novo e o atngi é maior que o valor minimo nos quebramos esse "resto" em um novo registro exlcuido, e quando a diferença é menor nos incorporamos o resto como lixo do registro. Essas operações também acontecem na atualização quando o registro diminui de tamanho</li>
+</ol>
+--------------------------------------------------------------------------------------
 ### Como o arquivo de tuplas foi gerenciado?
 <ol>
 	<li>Durante a criação de um registro, percorremos o arquivo sequencialmente até encontrar a primeira lápide, visto que os registros possuem tamanho fixo, tornando qualquer lápide uma opção para reaproveitamento. Caso não haja outras lápides, a inserção ocorre no final do arquivo.</li>
