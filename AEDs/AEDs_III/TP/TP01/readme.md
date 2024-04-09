@@ -51,7 +51,7 @@ Nossa escolha foi uma árvore binária que armazena tuplas ```Tuple<Tamanho, End
 	<li>O espaço vazio é usado é sempre o menor espaço vazio que seja maior que o novo registro a ser inserido</li>
 	<li>Quando o espaço vazio é encontrado faemos o reaproveitamento, quando a difernça entre o novo e o atngi é maior que o valor minimo nos quebramos esse "resto" em um novo registro exlcuido, e quando a diferença é menor nos incorporamos o resto como lixo do registro. Essas operações também acontecem na atualização quando o registro diminui de tamanho</li>
 </ol>
---------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------<br>
 ### Como o arquivo de tuplas foi gerenciado?
 <ol>
 	<li>Durante a criação de um registro, percorremos o arquivo sequencialmente até encontrar a primeira lápide, visto que os registros possuem tamanho fixo, tornando qualquer lápide uma opção para reaproveitamento. Caso não haja outras lápides, a inserção ocorre no final do arquivo.</li>
