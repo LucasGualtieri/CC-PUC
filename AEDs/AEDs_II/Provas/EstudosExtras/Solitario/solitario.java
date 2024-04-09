@@ -1,3 +1,5 @@
+package AEDs.AEDs_II.Provas.EstudosExtras.Solitario;
+
 import java.util.Scanner;
 
 // clear && javac solitario.java && java solitario < pub.in > alun.out

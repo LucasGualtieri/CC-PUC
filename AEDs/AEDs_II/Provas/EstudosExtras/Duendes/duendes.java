@@ -1,3 +1,5 @@
+package AEDs.AEDs_II.Provas.EstudosExtras.Duendes;
+
 import java.util.Scanner;
 
 class Duende {

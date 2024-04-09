@@ -1,10 +1,10 @@
-package TP03.TP03Q05;
+package AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP03.TP03Q05;
 
 // clear && javac -cp ../.. TP03Q05.java && java -cp ../.. TP03Q05.java < pub.in > result.txt
 
-import TP03.Libs.LibsJava.ListaFlex;
-import TP03.Libs.LibsJava.Lib.BD;
-import TP03.Libs.LibsJava.Lib;
+import AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP03.Libs.LibsJava.ListaFlex;
+import AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP03.Libs.LibsJava.Lib.BD;
+import AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP03.Libs.LibsJava.Lib;
 
 class TP03Q05 {
 

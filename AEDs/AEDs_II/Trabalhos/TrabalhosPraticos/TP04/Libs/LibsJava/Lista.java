@@ -1,8 +1,8 @@
-package TP04.Libs.LibsJava;
+package AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP04.Libs.LibsJava;
 
-import TP04.Libs.LibsJava.Celulas.CelulaLista;
-import TP04.Libs.LibsJava.Lib.Jogador;
-import TP04.Libs.LibsJava.Lib.Log;
+import AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP04.Libs.LibsJava.Celulas.CelulaLista;
+import AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP04.Libs.LibsJava.Lib.Jogador;
+import AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP04.Libs.LibsJava.Lib.Log;
 
 public class Lista {
 	private int size;

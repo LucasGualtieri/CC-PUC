@@ -1,3 +1,5 @@
+package AEDs.AEDs_II.Provas.Prova1.Treino.Espelho;
+
 import java.util.*;
 
 // clear && javac Espelho.java && java Espelho.java < pub.in > result.txt

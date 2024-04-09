@@ -45,7 +45,7 @@ class Generic {
 
 	public static void main(String[] args) throws NoSuchMethodException, SecurityException {
 
-		Arquivo<Cliente> arquivoDeClientes = new Arquivo<>(Cliente.getConstructor());
-		Arquivo<Produto> arquivoDeProdutos = new Arquivo<>(Produto.class.getConstructor());
+		// Arquivo<Cliente> arquivoDeClientes = new Arquivo<>(Cliente.getConstructor());
+		// Arquivo<Produto> arquivoDeProdutos = new Arquivo<>(Produto.class.getConstructor());
 	}
 }

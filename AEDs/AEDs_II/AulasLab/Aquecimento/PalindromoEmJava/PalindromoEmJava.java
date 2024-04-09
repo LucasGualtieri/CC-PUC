@@ -1,3 +1,5 @@
+package AEDs.AEDs_II.AulasLab.Aquecimento.PalindromoEmJava;
+
 import java.util.*;
 
 // clear && javac palindromoEmJava.java && java palindromoEmJava < pub.in > alun.out

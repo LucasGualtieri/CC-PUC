@@ -1,4 +1,4 @@
-package TP00;
+package AEDs.AEDs_III.TP00;
 // package AEDs.AEDs_III.TP;clear && javac Gerenciador.java && java Gerenciador
 
 // clear && javac Gerenciador.java && java Gerenciador

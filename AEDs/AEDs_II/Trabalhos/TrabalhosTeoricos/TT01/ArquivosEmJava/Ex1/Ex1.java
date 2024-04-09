@@ -1,6 +1,6 @@
-package TT01.ArquivosEmJava.Ex1;
+package AEDs.AEDs_II.Trabalhos.TrabalhosTeoricos.TT01.ArquivosEmJava.Ex1;
 
-import TT01.ArquivosEmJava.Arq;
+import AEDs.AEDs_II.Trabalhos.TrabalhosTeoricos.TT01.ArquivosEmJava.Arq;
 
 class Ex1 {
 	public static void main(String[] args) {

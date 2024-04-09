@@ -1,4 +1,4 @@
-package TT01.IntroducaoOO;
+package AEDs.AEDs_II.Trabalhos.TrabalhosTeoricos.TT01.IntroducaoOO;
 
 class Ex2 {
 	static class Retangulo {

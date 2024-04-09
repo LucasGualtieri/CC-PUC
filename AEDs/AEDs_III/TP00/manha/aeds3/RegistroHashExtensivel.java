@@ -8,7 +8,7 @@ conter.
 Implementado pelo Prof. Marcos Kutova
 v1.1 - 2021
 */
-package TP00.manha.aeds3;
+package AEDs.AEDs_III.TP00.manha.aeds3;
 
 import java.io.IOException;
 

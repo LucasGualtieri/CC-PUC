@@ -1,4 +1,4 @@
-package TT01.IntroducaoAoJava.Matrizes;
+package AEDs.AEDs_II.Trabalhos.TrabalhosTeoricos.TT01.IntroducaoAoJava.Matrizes;
 
 import java.util.*;
 

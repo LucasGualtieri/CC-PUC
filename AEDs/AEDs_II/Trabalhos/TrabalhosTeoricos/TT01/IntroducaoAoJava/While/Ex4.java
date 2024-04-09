@@ -1,4 +1,4 @@
-package TT01.IntroducaoAoJava.While;
+package AEDs.AEDs_II.Trabalhos.TrabalhosTeoricos.TT01.IntroducaoAoJava.While;
 
 import java.util.*;
 

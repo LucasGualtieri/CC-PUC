@@ -1,4 +1,4 @@
-package Restos;
+package AEDs.AEDs_III.TP00.Restos;
 // Essa implementação deveria supostamente (junto com as outras ideias) deveria ser capaz de lidar com segmentos de tamanho variável,
 // e inclusive permite puxar do disco mais segmentos para a ram para dar continuação à intercalação.
 

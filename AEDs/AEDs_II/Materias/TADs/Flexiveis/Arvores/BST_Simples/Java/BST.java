@@ -1,3 +1,5 @@
+package AEDs.AEDs_II.Materias.TADs.Flexiveis.Arvores.BST_Simples.Java;
+
 public class BST {
 	private int size;
 	private Node root;

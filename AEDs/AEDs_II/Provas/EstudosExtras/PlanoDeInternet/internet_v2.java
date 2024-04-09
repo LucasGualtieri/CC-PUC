@@ -1,3 +1,5 @@
+package AEDs.AEDs_II.Provas.EstudosExtras.PlanoDeInternet;
+
 import java.util.Scanner;
 
 // clear && javac internet_v2.java && java internet_v2 < pub.in > out.txt

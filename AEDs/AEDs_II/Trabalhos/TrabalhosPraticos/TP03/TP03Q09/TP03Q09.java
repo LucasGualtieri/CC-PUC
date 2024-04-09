@@ -1,8 +1,8 @@
-package TP03.TP03Q09;
+package AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP03.TP03Q09;
 
-import TP03.Libs.LibsJava.Lib;
-import TP03.Libs.LibsJava.Celulas.CelulaMatriz;
-import TP03.Libs.LibsJava.MatrizFlex;
+import AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP03.Libs.LibsJava.Lib;
+import AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP03.Libs.LibsJava.Celulas.CelulaMatriz;
+import AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP03.Libs.LibsJava.MatrizFlex;
 
 // clear && javac -cp ../.. TP03Q09.java && java -cp ../.. TP03Q09.java < pub.in > result.txt
 

@@ -1,6 +1,6 @@
-package TP04.Libs.LibsJava;
+package AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP04.Libs.LibsJava;
 
-import TP04.Libs.LibsJava.Lib.Jogador;
+import AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP04.Libs.LibsJava.Lib.Jogador;
 
 public class Fila {
 	private int maxSize, size;

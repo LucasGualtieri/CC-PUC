@@ -1,8 +1,8 @@
-package TP03.TP03Q01;
+package AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP03.TP03Q01;
 
-import TP03.Libs.LibsJava.Lib;
-import TP03.Libs.LibsJava.Lib.BD;
-import TP03.Libs.LibsJava.Lista;
+import AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP03.Libs.LibsJava.Lib;
+import AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP03.Libs.LibsJava.Lib.BD;
+import AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP03.Libs.LibsJava.Lista;
 
 // clear && javac -cp ../.. TP03Q01.java && java -cp ../.. TP03Q01.java < pub.in > result.txt
 

@@ -1,4 +1,4 @@
-package TP00;
+package AEDs.AEDs_III.TP00;
 // package AEDs.AEDs_III.TP;
 
 import java.io.ByteArrayInputStream;

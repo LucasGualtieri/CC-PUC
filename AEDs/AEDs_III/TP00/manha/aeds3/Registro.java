@@ -1,4 +1,4 @@
-package TP00.manha.aeds3;
+package AEDs.AEDs_III.TP00.manha.aeds3;
 
 public interface Registro extends Comparable<Object>, Cloneable {
 

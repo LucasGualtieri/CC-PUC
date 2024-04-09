@@ -1,3 +1,5 @@
+package AEDs.AEDs_II.AulasLab.Aquecimento.PalindromoEmJava;
+
 import java.io.*;
 import java.nio.charset.*;
 

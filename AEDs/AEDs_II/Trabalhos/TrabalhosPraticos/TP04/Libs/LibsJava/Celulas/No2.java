@@ -1,6 +1,6 @@
-package TP04.Libs.LibsJava.Celulas;
+package AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP04.Libs.LibsJava.Celulas;
 
-import TP04.Libs.LibsJava.Lib.Jogador;
+import AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP04.Libs.LibsJava.Lib.Jogador;
 
 public class No2 {
 

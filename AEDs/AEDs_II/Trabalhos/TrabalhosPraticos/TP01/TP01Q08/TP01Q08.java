@@ -1,7 +1,9 @@
-package TP01.TP01Q08;
+package AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP01.TP01Q08;
 
-import TP01.Lib;
 import java.text.DecimalFormat;
+
+import AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP01.Lib;
+
 import java.io.*;
 
 // clear && javac -cp ../.. TP01Q08.java && java -cp ../.. TP01Q08.java < pub.in > result.txt

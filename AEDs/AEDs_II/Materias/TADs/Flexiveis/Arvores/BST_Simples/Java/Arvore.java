@@ -1,3 +1,5 @@
+package AEDs.AEDs_II.Materias.TADs.Flexiveis.Arvores.BST_Simples.Java;
+
 // clear && javac Arvore.java && java Arvore.java
 
 import java.util.Random;

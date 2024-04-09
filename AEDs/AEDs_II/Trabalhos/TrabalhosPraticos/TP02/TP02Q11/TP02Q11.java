@@ -1,10 +1,10 @@
-package TP02.TP02Q11;
+package AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP02.TP02Q11;
 
-import TP02.Libs.Lib;
-import TP02.Libs.Lib.Jogador;
-import TP02.Libs.Lib.Lista;
-import TP02.Libs.Lib.Log;
-import TP02.Libs.Lib.Timer;
+import AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP02.Libs.Lib;
+import AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP02.Libs.Lib.Jogador;
+import AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP02.Libs.Lib.Lista;
+import AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP02.Libs.Lib.Log;
+import AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP02.Libs.Lib.Timer;
 
 // clear && javac -cp ../.. TP02Q11.java && java -cp ../.. TP02Q11.java < pub.in > result.txt
 

@@ -1,4 +1,4 @@
-package TP04.TP04Q07;
+package AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP04.TP04Q07;
 
 // clear && javac -cp ../.. TP04Q07Verde.java && java -cp ../.. TP04Q07Verde.java < pub.in > result.txt
 

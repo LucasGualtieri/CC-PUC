@@ -1,3 +1,5 @@
+package AEDs.Monitoria.Monitoria_AEDs_I;
+
 class ListaLinear {
 	static class Lista {
 		private int[] array;

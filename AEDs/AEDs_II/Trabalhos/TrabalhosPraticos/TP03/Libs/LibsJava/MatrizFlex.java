@@ -1,6 +1,6 @@
-package TP03.Libs.LibsJava;
+package AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP03.Libs.LibsJava;
 
-import TP03.Libs.LibsJava.Celulas.CelulaMatriz;
+import AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP03.Libs.LibsJava.Celulas.CelulaMatriz;
 
 public class MatrizFlex {
 	private int nLinhas, nColunas;

@@ -1,4 +1,4 @@
-package TT01.ArquivosEmJava.Ex5;
+package AEDs.AEDs_II.Trabalhos.TrabalhosTeoricos.TT01.ArquivosEmJava.Ex5;
 
 /**
  * Celula (pilha, lista e fila dinamica)

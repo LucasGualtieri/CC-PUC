@@ -1,4 +1,4 @@
-package TP01;
+package AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP01;
 
 import java.io.*;
 import java.util.*;

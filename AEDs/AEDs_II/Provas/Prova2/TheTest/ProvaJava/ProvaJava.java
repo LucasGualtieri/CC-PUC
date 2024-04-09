@@ -1,3 +1,5 @@
+package AEDs.AEDs_II.Provas.Prova2.TheTest.ProvaJava;
+
 import java.util.*;
 
 class ProvaJava {

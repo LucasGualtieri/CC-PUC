@@ -1,4 +1,4 @@
-package TP00;
+package AEDs.AEDs_III.TP00;
 // package AEDs.AEDs_III.TP;
 
 import java.io.ByteArrayInputStream;
@@ -6,7 +6,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.lang.reflect.Constructor;
-import java.text.NumberFormat;
+// import java.text.NumberFormat;
 
 class Autor implements Registro {
 

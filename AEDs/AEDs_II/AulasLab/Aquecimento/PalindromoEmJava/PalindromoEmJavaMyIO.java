@@ -1,3 +1,5 @@
+package AEDs.AEDs_II.AulasLab.Aquecimento.PalindromoEmJava;
+
 // clear && javac palindromoEmJavaMyIO.java && java palindromoEmJavaMyIO < pub.in > alun.out
 
 class PalindromoEmJavaMyIO {

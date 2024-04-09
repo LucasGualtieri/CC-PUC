@@ -1,3 +1,5 @@
+package AEDs.AEDs_III.RandomAccessFile;
+
 // clear && javac Main.java && java Main
 
 import java.io.RandomAccessFile;

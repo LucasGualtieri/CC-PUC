@@ -1,4 +1,4 @@
-package TP00;
+package AEDs.AEDs_III.TP00;
 // package AEDs.AEDs_III.TP;
 
 import java.io.IOException;
@@ -27,7 +27,7 @@ class ArquivoLivro<T extends Registro> extends Arquivo<T> {
 				byte[] registro = new byte[tamanhoRegistro];
 				arq.read(registro);
 				
-				T obj = Instanciador(registro);
+				// T obj = Instanciador(registro);
 				
 				// if (obj.getID() == id) {
 				// 	objReturn = obj;

@@ -1,10 +1,10 @@
-package TP04.Libs.LibsJava;
+package AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP04.Libs.LibsJava;
 
-import TP04.Libs.LibsJava.Lib.BD;
-import TP04.Libs.LibsJava.Lib.Log;
-import TP04.Libs.LibsJava.Lib.Jogador;
-import TP04.Libs.LibsJava.Celulas.No1;
-import TP04.Libs.LibsJava.Celulas.No2;
+import AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP04.Libs.LibsJava.Lib.BD;
+import AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP04.Libs.LibsJava.Lib.Log;
+import AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP04.Libs.LibsJava.Lib.Jogador;
+import AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP04.Libs.LibsJava.Celulas.No1;
+import AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP04.Libs.LibsJava.Celulas.No2;
 
 public class ArvoreArvore {
 

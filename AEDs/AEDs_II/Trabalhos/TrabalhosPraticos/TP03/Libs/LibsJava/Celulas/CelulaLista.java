@@ -1,6 +1,6 @@
-package TP03.Libs.LibsJava.Celulas;
+package AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP03.Libs.LibsJava.Celulas;
 
-import TP03.Libs.LibsJava.Lib.Jogador;
+import AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP03.Libs.LibsJava.Lib.Jogador;
 
 public class CelulaLista {
 	public Jogador jogador;

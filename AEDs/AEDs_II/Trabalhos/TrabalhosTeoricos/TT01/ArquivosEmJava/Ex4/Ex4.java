@@ -1,6 +1,6 @@
-package TT01.ArquivosEmJava.Ex4;
+package AEDs.AEDs_II.Trabalhos.TrabalhosTeoricos.TT01.ArquivosEmJava.Ex4;
 
-import TT01.ArquivosEmJava.Arq;
+import AEDs.AEDs_II.Trabalhos.TrabalhosTeoricos.TT01.ArquivosEmJava.Arq;
 
 import java.util.*;
 

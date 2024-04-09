@@ -1,3 +1,5 @@
+package AEDs.AEDs_II.Provas.EstudosExtras.Assassinos;
+
 import java.util.Scanner;
 
 // clear && javac Assassinos.java && java Assassinos < pub.in > out.txt

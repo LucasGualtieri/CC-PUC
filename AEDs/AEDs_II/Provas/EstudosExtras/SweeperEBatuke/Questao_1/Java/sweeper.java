@@ -1,4 +1,4 @@
-package Java;
+package AEDs.AEDs_II.Provas.EstudosExtras.SweeperEBatuke.Questao_1.Java;
 
 import java.util.Scanner;
 

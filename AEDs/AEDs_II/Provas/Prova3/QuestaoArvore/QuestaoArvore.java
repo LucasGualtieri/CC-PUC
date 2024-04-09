@@ -1,3 +1,5 @@
+package AEDs.AEDs_II.Provas.Prova3.QuestaoArvore;
+
 import java.util.Scanner;
 
 class QuestaoArvore {
@@ -106,5 +108,7 @@ class QuestaoArvore {
 			arvore.MostrarEmLargura();
 			System.out.println();
 		}
+
+		sc.close();
 	}
 }

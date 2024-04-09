@@ -1,3 +1,5 @@
+package AEDs.AEDs_II.Provas.Prova1.TheTest.Arredonda;
+
 import java.util.*;
 
 // clear && javac Arredonda.java && java Arredonda < pub.in > result.txt

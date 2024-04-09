@@ -1,3 +1,5 @@
+package AEDs.AEDs_II.Provas.EstudosExtras.Biblioteca;
+
 import java.util.Scanner;
 
 // clear && javac biblioteca.java && java biblioteca < pub.in > alun.out

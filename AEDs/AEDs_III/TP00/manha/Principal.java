@@ -1,6 +1,10 @@
+package AEDs.AEDs_III.TP00.manha;
+
 import java.io.*;
 
-import aeds3.Arquivo;
+import AEDs.AEDs_III.TP00.manha.aeds3.Arquivo;
+
+// import aeds3.Arquivo;
 
 class Principal {
 

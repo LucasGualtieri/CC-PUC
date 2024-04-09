@@ -1,4 +1,4 @@
-package TT01.IntroducaoAoJava.Arrays;
+package AEDs.AEDs_II.Trabalhos.TrabalhosTeoricos.TT01.IntroducaoAoJava.Arrays;
 
 import java.util.*;
 

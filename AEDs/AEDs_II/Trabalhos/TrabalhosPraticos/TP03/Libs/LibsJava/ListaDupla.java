@@ -1,8 +1,8 @@
-package TP03.Libs.LibsJava;
+package AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP03.Libs.LibsJava;
 
-import TP03.Libs.LibsJava.Lib.Log;
-import TP03.Libs.LibsJava.Lib.Jogador;
-import TP03.Libs.LibsJava.Celulas.CelulaDupla;
+import AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP03.Libs.LibsJava.Lib.Log;
+import AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP03.Libs.LibsJava.Lib.Jogador;
+import AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP03.Libs.LibsJava.Celulas.CelulaDupla;
 
 public class ListaDupla {
 

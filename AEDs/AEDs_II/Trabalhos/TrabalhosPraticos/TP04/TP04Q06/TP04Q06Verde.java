@@ -1,4 +1,4 @@
-package TP04.TP04Q06;
+package AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP04.TP04Q06;
 
 import java.util.*;
 import java.time.Instant;

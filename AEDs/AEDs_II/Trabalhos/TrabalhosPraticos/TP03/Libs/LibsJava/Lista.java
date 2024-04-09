@@ -1,9 +1,9 @@
-package TP03.Libs.LibsJava;
+package AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP03.Libs.LibsJava;
 
 import java.io.File;
 import java.util.*;
 
-import TP03.Libs.LibsJava.Lib.Jogador;
+import AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP03.Libs.LibsJava.Lib.Jogador;
 
 public class Lista {
 	private int maxSize, size;

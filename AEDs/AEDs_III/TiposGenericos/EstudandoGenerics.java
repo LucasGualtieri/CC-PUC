@@ -2,7 +2,7 @@ package AEDs.AEDs_III.TiposGenericos;
 
 // clear && javac Main.java && java Main
 
-class Generic {
+class EstudandoGenerics {
 	static class Caixa<tipoGenerico> {
 		private tipoGenerico objeto;
 

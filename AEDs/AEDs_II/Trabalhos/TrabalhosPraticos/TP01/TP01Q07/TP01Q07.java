@@ -1,7 +1,9 @@
-package TP01.TP01Q07;
+package AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP01.TP01Q07;
 
-import TP01.Lib;
 import java.net.*;
+
+import AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP01.Lib;
+
 import java.io.*;
 
 // clear && javac -cp ../.. TP01Q07.java && java -cp ../.. TP01Q07.java < pub.in > result.txt

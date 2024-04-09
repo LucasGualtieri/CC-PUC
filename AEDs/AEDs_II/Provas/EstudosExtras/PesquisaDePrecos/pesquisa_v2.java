@@ -1,3 +1,5 @@
+package AEDs.AEDs_II.Provas.EstudosExtras.PesquisaDePrecos;
+
 import java.util.Scanner;
 
 // clear && javac pesquisa_v2.java && java pesquisa_v2 < pub.in > out.txt

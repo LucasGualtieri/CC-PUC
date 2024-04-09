@@ -1,6 +1,6 @@
-package TP04.Libs.LibsJava;
+package AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP04.Libs.LibsJava;
 
-import TP04.Libs.LibsJava.Celulas.NoTrie;
+import AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP04.Libs.LibsJava.Celulas.NoTrie;
 
 public class Trie {
 

@@ -1,12 +1,12 @@
-package TP04.TP04Q05;
+package AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP04.TP04Q05;
 
-import TP04.Libs.LibsJava.Celulas.No;
-import TP04.Libs.LibsJava.Arvore;
-import TP04.Libs.LibsJava.Fila;
-import TP04.Libs.LibsJava.Lib.BD;
-import TP04.Libs.LibsJava.Lib.Log;
-import TP04.Libs.LibsJava.Lib.Timer;
-import TP04.Libs.LibsJava.Lib;
+import AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP04.Libs.LibsJava.Celulas.No;
+import AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP04.Libs.LibsJava.Arvore;
+import AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP04.Libs.LibsJava.Fila;
+import AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP04.Libs.LibsJava.Lib.BD;
+import AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP04.Libs.LibsJava.Lib.Log;
+import AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP04.Libs.LibsJava.Lib.Timer;
+import AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP04.Libs.LibsJava.Lib;
 
 // clear && javac -cp ../.. TP04Q05.java && java -cp ../.. TP04Q05.java < pub.in > result.txt
 

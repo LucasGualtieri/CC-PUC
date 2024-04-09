@@ -1,3 +1,5 @@
+package AEDs.AEDs_II.Provas.Prova2.Teorica;
+
 class Questao3 {
 	int[] ordenaVetor(int[] vetA, int[] vetB) {
 		int M = vetA.length, N = vetB.length;

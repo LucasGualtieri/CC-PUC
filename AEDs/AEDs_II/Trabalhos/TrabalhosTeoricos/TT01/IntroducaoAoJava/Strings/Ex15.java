@@ -1,4 +1,4 @@
-package TT01.IntroducaoAoJava.Strings;
+package AEDs.AEDs_II.Trabalhos.TrabalhosTeoricos.TT01.IntroducaoAoJava.Strings;
 
 import java.util.*;
 

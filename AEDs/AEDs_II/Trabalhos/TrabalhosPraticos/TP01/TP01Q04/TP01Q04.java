@@ -1,7 +1,8 @@
-package TP01.TP01Q04;
+package AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP01.TP01Q04;
 
-import TP01.Lib;
 import java.util.Random;
+
+import AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP01.Lib;
 
 // clear && javac -cp ../.. TP01Q04.java && java -cp ../.. TP01Q04.java < pub.in > result.txt
 

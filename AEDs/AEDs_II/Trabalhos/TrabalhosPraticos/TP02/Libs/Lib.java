@@ -1,4 +1,4 @@
-package TP02.Libs;
+package AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP02.Libs;
 
 import java.util.*;
 import java.io.File;

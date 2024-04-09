@@ -1,6 +1,6 @@
-package TT01.ArquivosEmJava.Exemplo;
+package AEDs.AEDs_II.Trabalhos.TrabalhosTeoricos.TT01.ArquivosEmJava.Exemplo;
 
-import TT01.ArquivosEmJava.Arq;
+import AEDs.AEDs_II.Trabalhos.TrabalhosTeoricos.TT01.ArquivosEmJava.Arq;
 
 class ExemploArq01Escrita {
 	public static void main(String[] args) {

@@ -1,8 +1,8 @@
-package TP01.TP01Q10;
+package AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP01.TP01Q10;
+
+import AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP01.Lib;
 
 // clear && javac -cp ../.. TP01Q10.java && java -cp ../.. TP01Q10.java < pub.in > result.txt
-
-import TP01.Lib;
 
 class TP01Q10 {
 

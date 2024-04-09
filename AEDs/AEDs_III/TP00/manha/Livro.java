@@ -1,10 +1,14 @@
+package AEDs.AEDs_III.TP00.manha;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.text.NumberFormat;
 
-import Registro;
+import AEDs.AEDs_III.TP00.manha.aeds3.Registro;
+
+// import Registro;
 
 public class Livro implements Registro {
 

@@ -1,7 +1,7 @@
-package TP03.Libs.LibsJava;
+package AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP03.Libs.LibsJava;
 
-import TP03.Libs.LibsJava.Lib.Jogador;
-import TP03.Libs.LibsJava.Celulas.CelulaPilha;
+import AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP03.Libs.LibsJava.Lib.Jogador;
+import AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP03.Libs.LibsJava.Celulas.CelulaPilha;
 
 public class PilhaFlex {
 	private int size;

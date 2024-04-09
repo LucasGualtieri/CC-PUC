@@ -1,4 +1,4 @@
-package TT01.ArquivosEmJava;
+package AEDs.AEDs_II.Trabalhos.TrabalhosTeoricos.TT01.ArquivosEmJava;
 
 import java.util.Formatter;
 import java.util.Scanner;
