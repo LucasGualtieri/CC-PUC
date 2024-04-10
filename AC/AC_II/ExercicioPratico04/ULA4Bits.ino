@@ -14,7 +14,6 @@ int freeMemory() {
 
 // ---------------------------------------------------------------------------------------------
 
-
 // Função throwException(): Imprime uma mensagem de exceção via Serial e termina o programa.
 void throwException(String s) {
 	Serial.println(s);
