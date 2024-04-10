@@ -1,0 +1,70 @@
+Estrutura da Apresentação:
+    - Primeiro slide:
+        - Logo da PUC
+        - Diretriz
+    - Sumário
+-------------------------------------------- Arthur 10 minutos
+    - Introdução (Citar o paradigma)
+        - Que criou
+        - Porque criou
+        - Desafios da criação?
+        - Inspiração
+    - Linha do Tempo
+-------------------------------------------- Quaresma 10 minutos
+    - Características principais
+        - Paradigma
+        - Escalabilidade
+        - Tolerância a erros
+        - Transparência do referencial
+        - Entre outras a serem definidas...
+-------------------------------------------- Pedro 5 minutos
+    - Contexto Atual:
+        - Onde é utilizada, qual suas aplicações. Empresas que usam.
+        - Está em uso / desuso?
+        - Mercado de trabalho / salários.
+-------------------------------------------- Quaresma 2 + 8 minutos
+    - Pré Parte Prática 2 minutos
+        - O que baixar (Compilador, IDE, etc).
+        - Como compilar.
+    Parte Prática 8 minutos
+        - Falar sobre os básicos da linguagem:
+            - Declaração de variáveis
+                - Não tem ';'
+                - Atoms são constantes cujo o valor é o próprio nome
+            - Estruturas codicionais
+            - Declaração de Funções e módulos:
+                - valor padrão
+                - Parenteses são opcionais
+            - Estruturas de repetição
+                - Recursão
+-------------------------------------------- Gualtieri 20 minutos   
+                - Enum
+                    - .map
+                    - .each
+                    - . reduce
+        
+        - os maps (o dict do python) são assim %{:a => 1, :b => 2}
+        - Estruturas de dados:
+            - Produto cartesiano // Talvez não falar
+            - defstruct
+            - arrays são listas x = [1,2,3]
+        
+        - Funções anonimas (lambdas?) podem ser passadas pra outras funções ou associadas a variaveis
+        - lambdas reduziadas usando &(&1 + 10) pra fazer uma função anonima que retorna um numero passado + 10
+        
+        - Passando valores de função pra função usando |>
+    
+        - Mostrar um progama / algoritmo, passo a passo (Estilo Max).
+            - Nó de árvore
+            - Inserção em árvore binária estilo max
+        - Exemplo de processos concorrência
+
+-------------------------------------------- Arthur e resto 5 minutos
+    - Considerações Finais
+==============================================
+
+Pedro:
+    - Fazer o slide
+    - "Sintaxe das referências bibliográficas ABNT"
+Gualtieri:
+    - Fazer os slides max
