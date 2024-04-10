@@ -1,0 +1,5 @@
+iex --name alice --cookie "secret"
+defmodule Seminario do
+  def print, do: IO.puts("FIM")
+end
+Seminario.print()
