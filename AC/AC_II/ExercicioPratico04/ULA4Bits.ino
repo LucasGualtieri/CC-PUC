@@ -1,15 +1,21 @@
+// Pré-processamento: São definidas constantes que representam os pinos de saída: O0, O1, O2, O3.
+
 #define O3 13
 #define O2 12
 #define O1 11
 #define O0 10
 
+// Função freeMemory(): Retorna a quantidade de memória livre disponível.
 extern int __heap_start, *__brkval;
-
 int freeMemory() {
 	int v;
 	return (int) &v - (__brkval == 0 ? (int) &__heap_start : (int) __brkval);
 }
 
+// ---------------------------------------------------------------------------------------------
+
+
+// Função throwException(): Imprime uma mensagem de exceção via Serial e termina o programa.
 void throwException(String s) {
 	Serial.println(s);
 	Serial.println("The program has stopped.");
@@ -17,6 +23,13 @@ void throwException(String s) {
 	exit(0);
 }
 
+// ---------------------------------------------------------------------------------------------
+
+/*
+	Classe Bit: Representa um único bit.
+	Sobrecarrega operadores para manipulação de bits.
+	Possui métodos para conversão de valores e manipulação de bits.
+*/
 class Bit {
 
 	byte value;
@@ -93,6 +106,13 @@ class Bit {
 };
 void Bit::setValue(const Bit& value) { this->value = value.getValue(); }
 
+// ---------------------------------------------------------------------------------------------
+
+/*
+	Classe Nibble:
+	Representa um nibble, que é um grupo de 4 bits.
+	Implementa operações bit a bit e conversão de valores.
+*/
 class Nibble {
 
 	Bit bits[4];
@@ -321,6 +341,13 @@ int Nibble::toNumber(Nibble value) {
 
 bool Nibble::bigEndian = false;
 
+// ---------------------------------------------------------------------------------------------
+
+/*
+	Classe Instruction:
+	Representa uma instrução de processador, composta por três nibbles.
+	Permite acesso aos nibbles individuais e conversão para string.
+*/
 class Instruction {
 	Nibble array[3];
 
@@ -389,6 +416,14 @@ class Instruction {
 	friend String operator+(Instruction i, String str) { return i.str() + str; }
 };
 
+// ---------------------------------------------------------------------------------------------
+
+/*
+	Classe RegMem:
+	Representa a memória do processador e os registradores.
+	Responsável por executar as instruções e gerenciar a memória.
+	Contém métodos para acessar e manipular a memória e os registradores.
+*/
 class RegMem {
 
 	byte PC;
@@ -524,12 +559,15 @@ Instruction RegMem::next() {
 	return inst;
 }
 
-// ---------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------
+
+// Funções auxiliares:
 
 void setOutput(RegMem program);
 Nibble InstructionExecution(Instruction i);
 void WaitForInput() { while (!Serial.available()); }
 
+// readString(): Lê uma string da porta Serial.
 String readString(String msg = "") {
 	Serial.print(msg);
 	WaitForInput();
@@ -539,6 +577,7 @@ String readString(String msg = "") {
 	return s;
 }
 
+// setPinMode(): Configura os pinos do Arduino.
 void setPinMode(int count, ...) {
 	va_list args;
 	va_start(args, count);
@@ -550,6 +589,7 @@ void setPinMode(int count, ...) {
 	va_end(args);
 }
 
+// setDigitalOutput(): Define a saída do display de 7 segmentos.
 template<typename... Args>
 void setDigitalOutput(int state, Args... args) {
 
@@ -560,17 +600,6 @@ void setDigitalOutput(int state, Args... args) {
 	// Chama a lambda para todos os parametros
 	(processArg(args), ...);
 }
-
-// void setDigitalOutput(int state, int count, ...) {
-// 	va_list args;
-// 	va_start(args, count);
-
-// 	for (int i = 0; i < count; i++) {
-// 		digitalWrite(va_arg(args, int), state);
-// 	}
-
-// 	va_end(args);
-// }
 
 void setDisplay(byte value) {
 
@@ -594,6 +623,7 @@ void setDisplay(byte value) {
 	else if (value == 0xF) setDigitalOutput(HIGH, 8, 6, 4, 7);
 }
 
+// setOutput(): Configura a saída do processador.
 void setOutput(RegMem program) {
 	
 	Nibble output = program[1];
@@ -609,6 +639,7 @@ void setOutput(RegMem program) {
 	// Serial.flush();
 }
 
+// InstructionExecution(): Executa uma instrução.
 Nibble InstructionExecution(Instruction i) {
 	
 	Nibble output;
@@ -681,8 +712,13 @@ void loop() {
 	RegMem program = s;
 	setOutput(program);
 
-	while(readString("Deseja comecar?: ") != "SIM"); // Talvez tenham jeitos mais elegantes de fazer isso
+	// Digite "SIM" ou "sim" ou "S" ou "s" para iniciar o programa.
+	while([]() -> bool {
+		String reps = readString("Deseja comecar?: ");
+		return !(reps == "SIM" || reps == "sim" || reps == "S" || reps == "s");
+	}());
 
+	// O while rodará enquanto houverem instruções para serem executadas.
 	while (!program.hasFinished()) {
 
 		Instruction inst = program.next();
@@ -694,7 +730,7 @@ void loop() {
 
 		setOutput(program);
 
-		delay(1000);
+		delay(4000);
 	}
 
 	Serial.println("\n------ END OF EXECUTION ------\n");
