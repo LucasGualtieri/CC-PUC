@@ -40,18 +40,7 @@ Como mencionado anteriormente, optamos por descartar a sugestão de implementaç
 
 Nossa escolha foi uma árvore binária que armazena tuplas ```Tuple<Tamanho, Endereco>```. Essa abordagem demonstrou ser eficiente, pois mantém os registros ordenados a todo tempo, permitindo a recuperação eficaz dos registros a serem reaproveitados. Toda operação de exclusão no arquivo de dados implica em uma inserção ou remoção na árvore binária, assim como na atualização do arquivo de excluídos.
 
------------------- Essa parte precisa ser revisa e corrigida -------------------------
-### O que foi considerado um desperdício aceitável no reuso de espaços?
-<ol>
-	<ol>
-		<li>Inicialmente foi testado um tamanho médio de um registros, para livros usamos x bytes para titulos e y bytes para autores, essa pesquisa foi feita atraves do bing ai...</li>
-		<li>Mais tarde foi implementado um tamanho minimo para um registro pois foi observado que a abordagem do tamanho medio deixaria registros sem serem</li>
-		<li>, futuramente seria interessante fazer um estude estatistco para pegar um desvio padrão</li>
-	</ol>
-	<li>O espaço vazio é usado é sempre o menor espaço vazio que seja maior que o novo registro a ser inserido</li>
-	<li>Quando o espaço vazio é encontrado faemos o reaproveitamento, quando a difernça entre o novo e o atngi é maior que o valor minimo nos quebramos esse "resto" em um novo registro exlcuido, e quando a diferença é menor nos incorporamos o resto como lixo do registro. Essas operações também acontecem na atualização quando o registro diminui de tamanho</li>
-</ol>
---------------------------------------------------------------------------------------<br>
+O reaproveitamento de um espaço vazio ocorre quando um novo registro, seja ele criado por meio das operações **CREATE** ou **UPDATE**, pode caber "dentro" de algum registro marcado com lápide. Para determinar qual dos registros excluídos será utilizado, realizamos um caminhamento central na árvore até encontrar uma tupla com tamanho igual ou superior ao do novo registro.
 
 ### Como o arquivo de tuplas foi gerenciado?
 <ol>
@@ -59,6 +48,23 @@ Nossa escolha foi uma árvore binária que armazena tuplas ```Tuple<Tamanho, End
 	<li>A exclusão é realizada de forma lógica, marcando simplesmente a lápide.</li>
 	<li>Dado que o arquivo de excluídos é composto por tuplas de tamanho fixo, uma atualização nunca implica em reposicionar o registro no arquivo.</li>
 </ol>
+
+### O que foi considerado um desperdício aceitável no reuso de espaços?
+Foi estabelecido um tamanho fixo com base em uma estimativa do menor tamanho possível para um registro. Para versões futuras, planejamos usar abordagens mais sofisticadas, como análises estatísticas e cálculos de desvio padrão, a fim de determinar o tamanho mínimo ideal. Por enquanto, realizamos um cálculo simples, que será explicado a seguir.
+
+**Como avaliamos o que é um espaço suficiente para a inserção de um registro.**
+<ul> Para fazer essa avaliação foi estabelecido que cada classe determinará um tamanho mínimo para seus registros, que será utilizado no momento de calcular a diferença entre o tamanho de dois registros.
+	<li>
+		Para calcular o tamanho mínimo de um registro, inicialmente realizamos uma estimativa baseada em um tamanho médio. No entanto, mais tarde percebemos a necessidade de estabelecer um tamanho mínimo para evitar a subutilização dos espaços vazios.
+	</li>
+	<li>
+		O tamanho mínimo foi definido como:<br>
+		Tamanho Mínimo = (A soma do tamanho dos atributos de tamanho fixo) + 5 × (Quantidade de Strings)
+	</li>
+	<li>
+		Sendo assim após identificarmos o espaço vazio a ser reaproveitado, avaliamos se a diferença (em tamanho) entre o novo registro e o registro excluído é suficiente para a inserção de um possível terceiro registro. Se for o caso, dividimos o registro excluído em dois: na primeira parte, inserimos o novo registro e atualizamos o indicador de tamanho; na segunda parte, criamos um novo registro (excluído) com uma nova lápide e um novo indicador de tamanho, e o incluímos no índice de excluídos. No entanto, se essa diferença não for suficiente para acomodar um terceiro registro, mantemos o indicador de tamanho e incluímos o restante (a diferença) como lixo, como parte do novo registro.
+	</li>
+</ul>
 
 Em outras palavras, para alcançar o reaproveitamento de espaços vazios no arquivo de dados, mantemos duas estruturas auxiliares paralelas: uma árvore binária e um arquivo de dados. Durante a inicialização do programa, executamos uma rotina para inserir todos os registros (exceto os marcados com a lápide) do arquivo de tuplas na árvore e, a cada inserção ou remoção, atualizamos tanto a árvore quanto o arquivo. É importante destacar que essa implementação considera que a quantidade de registros no índice de excluídos sempre caberá na memória principal, assumindo que esse número será baixo tanto em termos de registros quanto de bytes, já que cada tupla ocupa apenas 10 bytes. Implementações mais sofisticadas, como a árvore B+, nos possibilitariam um crescimento muito maior dos registros excluídos e serão consideradas em versões futuras do projeto.
 
