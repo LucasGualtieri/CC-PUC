@@ -52,8 +52,9 @@ O reaproveitamento de um espaço vazio ocorre quando um novo registro, seja ele 
 ### O que foi considerado um desperdício aceitável no reuso de espaços?
 Foi estabelecido um tamanho fixo com base em uma estimativa do menor tamanho possível para um registro. Para versões futuras, planejamos usar abordagens mais sofisticadas, como análises estatísticas e cálculos de desvio padrão, a fim de determinar o tamanho mínimo ideal. Por enquanto, realizamos um cálculo simples, que será explicado a seguir.
 
-**Como avaliamos o que é um espaço suficiente para a inserção de um registro.**
-<ul> Para fazer essa avaliação foi estabelecido que cada classe determinará um tamanho mínimo para seus registros, que será utilizado no momento de calcular a diferença entre o tamanho de dois registros.
+**Como avaliamos o que é um espaço suficiente para a inserção de um registro.** <br>
+Para fazer essa avaliação foi estabelecido que cada classe determinará um tamanho mínimo para seus registros, que será utilizado no momento de calcular a diferença entre o tamanho de dois registros.
+<ul>
 	<li>
 		Para calcular o tamanho mínimo de um registro, inicialmente realizamos uma estimativa baseada em um tamanho médio. No entanto, mais tarde percebemos a necessidade de estabelecer um tamanho mínimo para evitar a subutilização dos espaços vazios.
 	</li>
