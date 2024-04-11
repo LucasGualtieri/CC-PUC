@@ -33,12 +33,14 @@ class Bit {
 
 	byte value;
 
+	//Função numbertobit(): Transforma numero/char para bit.
 	byte numbertobit(byte c) {
 		String error = "Error on Bit - setValue(" + String(c, DEC) + "): value() must be 1 or 0";
 		if (!(c == '0' || c == '1' || c == 0 || c == 1)) throwException(error);
 		return c - '0';
 	}
 
+	//Função setValue(): Para transformar em numero e utiliza a AND para pegar apenas o ultimo bit.
 	void setValue(byte value) { this->value = numbertobit(value) & 0b00000001; }
 	void setValue(const Bit& value);
 
@@ -49,8 +51,10 @@ class Bit {
 
 	byte getValue() const { return value; }
 
-	String str() { return value == 1 ? String("1") : String("0"); }
+	String str() { return value == 1 ? String("1") : String("0"); } //Função str(): basicamente um toString.
 
+	//Sobrecarga de operadores
+	 
 	template<typename T>
 	bool operator==(T rValue)   { return this->value == Bit(rValue).getValue(); }
 	template<typename T>
@@ -116,6 +120,7 @@ class Nibble {
 
 	Bit bits[4];
 
+	//Função chartobyte(): Transforma um caractere em um byte.
 	byte chartobyte(byte c) {
 		if (('A' <= c && c <= 'F')) c -= 55;
 		else if (('a' <= c && c <= 'f')) c -= 55 + 32;
@@ -124,7 +129,8 @@ class Nibble {
 	}
 
 	int toNumber(Nibble value);
-
+	
+	//Função setArray(): Monta um array colocando o numero decimal para binário respectivamente em cada posição do array.
 	void setArray(byte b) {
 
 		if (b > 15) {
@@ -137,6 +143,7 @@ class Nibble {
 
 	void setArray(Nibble nibble);
 
+	//Função endianess(): Decide como será arranjado a ordem no array.
 	byte endianess(byte pos) {
 		if (bigEndian) pos = length - pos - 1; 
 		return pos;
@@ -153,6 +160,7 @@ class Nibble {
 	template<typename Function>
 	void forEach(Function fn); // PossÃ­vel problema aqui, como ele sabe onde Ã© o fim? Talvez trocar para um for normal
 
+	//Função str(): Funciona basicamente como um toString.
 	String str() {
 		String s = "";
 		this->forEach([&s](Bit bit) { s = bit + s; });
@@ -172,6 +180,7 @@ class Nibble {
 		return result;
 	}
 
+	//Função toNumber(): Basicamente transforma o array em um numero na base 10.
 	byte toNumber() {
 		int result = 0;
 		for (int i = 0; i < length; i++) {
@@ -180,6 +189,7 @@ class Nibble {
 		return result;
 	}
 
+	//Sobrecarga de Operadores
 	template<typename T>
 	bool operator==(T rValue) {
 
@@ -350,6 +360,7 @@ bool Nibble::bigEndian = false;
 class Instruction {
 	Nibble array[3];
 
+	//Função setArray(): Monta um array, dada uma string, com cada informação da instrução em uma posição.
 	void setArray(String instruction) {
 		for (int i = 0; i < 3; i++) array[i] = instruction[i];
 	}
@@ -370,6 +381,8 @@ class Instruction {
 		setArray(instruction);
 	}
 
+
+	//Sobrecarga de Operadores
 	Nibble& operator[](byte pos) { return array[pos]; }
 
 	Nibble& operator[](String s) {
@@ -398,6 +411,7 @@ class Instruction {
 		return *this;
 	}
 
+	//Função str(): Basicamente um toString.
 	String str() {
 		String s;
 
@@ -432,7 +446,8 @@ class RegMem {
 
 	byte instructionCount;
 
-	String setStarPos(byte n) {
+	//Função setArrowPos(): Serve para montar a String que irá apontar para qual função está sendo executada.
+	String setArrowPos(byte n) {
 
 		String temp;
 
@@ -447,7 +462,7 @@ class RegMem {
 
 		return temp;
 	}
-
+	
 	byte countInstructions(String s) {
 		byte count = 0;
 		for (int i = 0; i < s.length(); i++) if (s[i] == ' ') count++;
@@ -498,7 +513,7 @@ String RegMem::str() {
 
 	if (PC < 4 || instructionCount <= 5) { // Linha que pode ser alterada: valor original: PC < 3
 		
-		Serial.print(setStarPos(starPos));
+		Serial.print(setArrowPos(starPos));
 		if (0 < PC && PC < 4 || PC == 4 && instructionCount == 5) starPos += 6; // Linha que pode ser alterada: valor original: não tem o IF
 		
 		setInstructionLine(0, itemsCount + 1, *memory, output);
@@ -508,7 +523,7 @@ String RegMem::str() {
 
 	else if (PC < (instructionCount - 3) + 1) { // Linha que pode ser alterada: valor original: PC < instructionCount - 3
 
-		Serial.print(setStarPos(starPos));
+		Serial.print(setArrowPos(starPos));
 		
 		int shift = (PC - 3) * 4, n = 0;
 
@@ -525,7 +540,7 @@ String RegMem::str() {
 
 	else {
 
-		Serial.print(setStarPos(starPos));
+		Serial.print(setArrowPos(starPos));
 		starPos += 6;
 
 		int shift = (instructionCount - 5) * 4, n = 0;
