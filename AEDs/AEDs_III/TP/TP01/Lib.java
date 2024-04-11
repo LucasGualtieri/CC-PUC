@@ -5,6 +5,8 @@ import java.util.Scanner;
 
 public class Lib {
 
+	// Variáveis usadas para printar mensagens com cores
+
 	public static final String BOLD = "\u001B[1m";
 	public static final String RED = "\u001B[31m";
 	public static final String GREEN = "\u001B[32m";
@@ -16,6 +18,8 @@ public class Lib {
 
 	private static Scanner scanner = new Scanner(System.in);
 
+
+	// Função usada em diversos momentos quando o usuário precisa decidir qual opção do menu escolher
 	public static int ReadChoice(int choiceCount) {
 		int	 choice;
 		boolean invalid = false;
@@ -31,6 +35,7 @@ public class Lib {
 		return choice;
 	}
 
+	// Função para ler um inteiro do teclado
 	public static int readInt() throws InputMismatchException {
 		
 		int value = 0;
@@ -58,6 +63,7 @@ public class Lib {
 		return value;
 	}
 
+	// Função para ler um float do teclado
 	public static float readFloat() throws InputMismatchException {
 		
 		float value = 0;
@@ -85,6 +91,7 @@ public class Lib {
 		return value;
 	}
 
+	// Função para ler uma string do teclado
 	public static String readString() {
 		
 		String value;
@@ -94,11 +101,13 @@ public class Lib {
 		return value;
 	}
 
+	// Função para limpar a tela
 	public static void clearScreen() {
         System.out.print("\033[H\033[2J");  
         System.out.flush();  
     }
 
+	// Função para printar mensagens com cores
 	public static void cprintf(String color, String format, Object...args) {
 
 		if (color == "BOLD") color = BOLD;
@@ -118,6 +127,7 @@ public class Lib {
 		System.out.printf(color + format + RESET, args);
 	}
 
+	// Função para printar as linhas que formam os cabeçalhos dos menus
 	public static void printdiv(int prepend, int append, String text, Object...args) {
 		for (int i = 0; i < prepend; i++) System.out.println();
 		printdiv(text, args);

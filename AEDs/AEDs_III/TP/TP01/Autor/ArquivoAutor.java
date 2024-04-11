@@ -3,13 +3,14 @@ package TP01.Autor;
 import java.lang.reflect.Constructor;
 import java.util.List;
 
-import TP01.Arquivo;
 import TP01.Registro;
+import TP01.Indices.Arquivo;
 import TP01.Lib;
 
 public class ArquivoAutor<T extends Registro> extends Arquivo<T> {
 
-	private final short registerMinLength = 35; // 2 + 4 +  (2 + 13) (2 + 3) + (2 + 3) + 4.
+	// IndicadorDeTamanho + ID + Nome + Sobrenome + Idade
+	private final short registerMinLength = 20; // 2 + 4 + (2 + 3) (2 + 3) + 4.
 
 	// HashExtensivel<ParNomeID> indiceNome;
 
@@ -39,6 +40,8 @@ public class ArquivoAutor<T extends Registro> extends Arquivo<T> {
 		return create(createNewID, registerMinLength, object);
 	}
 
+	// Essa é uma função auxiliar à função read que permite que cada classe implemente seus métodos de busca
+	// baseado nos atributos específicos daquela classe
 	public int read() throws Exception {
 
 		// System.out.printf("Insira o ID do %s: ", getNomeLowerCase());
@@ -66,6 +69,7 @@ public class ArquivoAutor<T extends Registro> extends Arquivo<T> {
 		return ID;
 	}
 
+	// Essa função permite que o usuário escolha de que forma gostaria de apresentar os dados na listagem
 	public int SortList(List<T> list) {
 		System.out.println("Ordenar por:");
 		System.out.println("1 - ID");

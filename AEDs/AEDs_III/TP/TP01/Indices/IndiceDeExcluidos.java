@@ -1,11 +1,9 @@
-package TP01.Livros;
+package TP01.Indices;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.Iterator;
 import java.util.TreeSet;
-
-import TP01.Indices.Tuple;
 
 // Se houverem dois registros excluídos imediatamente um ao lado do outros
 // Idealmente os dois deveriam ser fundidos.
@@ -17,6 +15,7 @@ public class IndiceDeExcluidos {
 	private final short REG_LENGTH = 2 + 8;
 
 	public IndiceDeExcluidos(String filePath) throws IOException {
+		// Instancia a arvore e passa por parametro o comparator
 		list = new TreeSet<>((var1, var2) -> var1.getKey().compareTo(var2.getKey()));
 		ImportData(filePath);
 	}
@@ -25,6 +24,7 @@ public class IndiceDeExcluidos {
 		file.close();
 	}
 
+	// Monta a arvore a partir dos dados (tuplas) do arquivo
 	private void ImportData(String filePath) throws IOException {
 
 		file = new RandomAccessFile(filePath + "Excluidos.db", "rw");
@@ -41,6 +41,8 @@ public class IndiceDeExcluidos {
 		}
 	}
 
+	// Retorna a tupla de menor tamanho da arvore que seja maior que o tamanho do novo registro
+	// retorna uma tupla com valores padrão caso não haja como reaproveitar algum espaço vazio
 	public Tuple<Short, Long> getBest(short length) throws IOException {
 		
 		Tuple<Short, Long> result = list.higher(
@@ -53,6 +55,8 @@ public class IndiceDeExcluidos {
 		return result;
 	}
 
+	// Insere uma tupla na árvore e cria um registro no arquivo
+	// Percorre o arquivo sequencialmente para ver se é possível reaproveitar alguma tupla "lapidada"
 	public void create(Tuple<Short, Long> tuple) throws IOException {
 
 		list.add(tuple);
@@ -77,6 +81,7 @@ public class IndiceDeExcluidos {
 		file.write(tuple.toByteArray());
 	}
 
+	// Remove uma tupla da árvore e marca o respectivo registro com a lápide
 	public void delete(Tuple<Short, Long> tuple) throws IOException {
 		
 		list.remove(tuple);
@@ -101,6 +106,7 @@ public class IndiceDeExcluidos {
 		}
 	}
 
+	// Itera sobre a arvore e printa todas as tuplas
 	public void listAll() {
 		Iterator<Tuple<Short, Long>> iterator = list.iterator();
 		while (iterator.hasNext()) {

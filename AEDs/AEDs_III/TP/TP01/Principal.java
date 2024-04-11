@@ -3,6 +3,7 @@ package TP01;
 import java.util.List;
 
 import TP01.Autor.ArquivoAutor;
+import TP01.Indices.Arquivo;
 import TP01.Livros.ArquivoLivro;
 import TP01.Livros.Livro;
 
@@ -213,7 +214,8 @@ class Principal {
 
 		System.out.println();
 	}
-
+	
+	// A função CRUD permite o usuário escolher qual operação CRUD deseja executar.
 	static <T extends Registro> void CRUD(Arquivo<T> arquivo) throws Exception {
 
 		Lib.clearScreen();
@@ -254,6 +256,7 @@ class Principal {
 		} while (escolha != 0);
 	}
 
+	// A função main permite que o usuário escolha a base de dados que deseja trabalhar.
 	public static void main(String[] args) throws Exception {
 		
 		int choice;

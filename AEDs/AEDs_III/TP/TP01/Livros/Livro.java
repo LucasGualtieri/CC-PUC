@@ -87,6 +87,7 @@ public class Livro implements Registro {
 
 	public void setTitulo(String titulo) { this.titulo = titulo; }
 
+	// Função para ler o ISBN e testar se é um ISBN valído (em termos do comprimento da string)
 	private String readISBN() {
 		
 		String value = "invalid";
@@ -112,6 +113,7 @@ public class Livro implements Registro {
 		return value;
 	}
 
+	// Função para printar o ISBN com a máscara
 	private String mascaraISBN() {
 		StringBuilder builder = new StringBuilder();
         
@@ -145,6 +147,7 @@ public class Livro implements Registro {
         return builder.toString();
 	}
 
+	// Método que faz uma interface com o usário e o permite que insira os dados do livro
 	public void setAll() {
 		System.out.print("Insira o ISBN do livro: ");
 		ISBN = readISBN();
@@ -159,10 +162,12 @@ public class Livro implements Registro {
 	// public void setAddress(long address) { this.address = address; }
 	// public long getAddress() { return this.address; }
 
+	// Função que printa o cabeçalho com os dados dos livros em formato CSV
 	public void printHeader() {
 		System.out.println("ID, ISBN, Título, Autor, Preço");
 	}
-
+	
+	// Função que printa um livro em formato CSV
 	public String toTable() {
 		String str;
 		str = this.ID + ", ";
@@ -170,10 +175,11 @@ public class Livro implements Registro {
 		str += this.titulo  + ", ";
 		str += this.autor  + ", ";
 		str += NumberFormat.getCurrencyInstance(localeBR).format(this.preco);
-
+		
 		return str + "\n";
 	}
-
+	
+	// Função que printa o cabeçalho com os dados dos livros em formato CSV com cores
 	public void printHeaderCSV() {
 		System.out.println(
 			Lib.BOLD + Lib.YELLOW + "ID, " +
@@ -181,9 +187,10 @@ public class Livro implements Registro {
 			Lib.RED + "Título, " +
 			Lib.BLUE + "Autor, " + 
 			Lib.GREEN + "Preço" + Lib.RESET
-		);
-	}
-
+			);
+		}
+		
+	// Função que printa um livro em formato CSV com cores
 	public String toCSV() {
 		String str;
 		str = Lib.BOLD + Lib.YELLOW + this.ID + ", ";

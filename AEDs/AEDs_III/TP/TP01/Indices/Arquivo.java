@@ -1,4 +1,4 @@
-package TP01;
+package TP01.Indices;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -8,10 +8,7 @@ import java.lang.reflect.Constructor;
 import java.util.LinkedList;
 import java.util.List;
 
-import TP01.Indices.HashExtensivel;
-import TP01.Indices.ParIDEndereco;
-import TP01.Indices.Tuple;
-import TP01.Livros.IndiceDeExcluidos;
+import TP01.Registro;
 
 public class Arquivo<T extends Registro> {
 
@@ -91,7 +88,8 @@ public class Arquivo<T extends Registro> {
 		
 		// Inserir no fim
 		else if (tuple.getKey() == 0) {
-			excluidos.create(tuple); // Precisa ser recriado já que o getBest deleta
+			// Essa linha foi comentada em cima da data de entrega e não houveram testes extensivos depois da modificação
+			// excluidos.create(tuple); // Precisa ser recriado já que o getBest deleta // Nesse caso acredito que NUNCA será deletado
 			file.seek(file.length());
 			file.writeShort(length);
 			file.write(registro);
@@ -155,8 +153,10 @@ public class Arquivo<T extends Registro> {
 		indiceDireto.delete(ID);
 	}
 
+	// Metodo que será sobrescrito pelas classes filhas
 	public int SortList(List<T> list) { return -1; }
 
+	// Métod que percorre o arquivo sequencialmente e adiciona ao final de uma lista encadeada todos os registros não "lapidados"
 	public List<T> Listar() throws IOException, Exception {
 
 		List<T> list = new LinkedList<>();
@@ -221,6 +221,8 @@ public class Arquivo<T extends Registro> {
 	// 	return objeto;
 	// }
 
+	// Essa função permite que o usuário leia os dados de uma entidade qualquer
+	// O método setAll() faz uma interface com o usário e requisita os dados de uma entidade como nome, cpf, ISBN, etc...
 	public T readNewInstance() throws Exception {
 		T objeto = this.construtor.newInstance();
 		objeto.setAll();
