@@ -27,7 +27,7 @@
 ### Houve alguma operação mais difícil?
 \- Lucas Gualtieri: "Não houve necessariamente uma operação mais difícil, mas a construção do índice de excluídos foi umas das partes mais complexas."
 #### Vocês enfrentaram algum desafio na implementação?
-\- Lucas Gualtieri: "Um projeto dessa complexidade é muito difícil de testar. Ou seja, é complicado garantir que não haja nenhum caso em que algo fora do esperado possa acontecer."
+\- Lucas Gualtieri: "Um projeto dessa complexidade é muito difícil de testar. Ou seja, é complicado garantir que não haja nenhum caso em que algo fora do esperado possa acontecer. Seria muito interessante conhecer estratégias que permitam a realização de testes de forma automatizada."
 #### Os resultados foram alcançados?
 \- Gabriel Quaresma: "Foram sim! Apesar de que gostaríamos de ter implementado mais coisas, o programa está funcional e compriu todos os requisitos."
 
@@ -50,9 +50,9 @@ O reaproveitamento de um espaço vazio ocorre quando um novo registro, seja ele 
 </ol>
 
 ### O que foi considerado um desperdício aceitável no reuso de espaços?
-Foi estabelecido um tamanho fixo com base em uma estimativa do menor tamanho possível para um registro. Para versões futuras, planejamos usar abordagens mais sofisticadas, como análises estatísticas e cálculos de desvio padrão, a fim de determinar o tamanho mínimo ideal. Por enquanto, realizamos um cálculo simples, que será explicado a seguir.
+Foi estabelecido um tamanho fixo com base em uma estimativa do menor tamanho possível para um registro. Portanto, consideramos um desperdício aceitável qualquer excesso que esteja abaixo do tamanho mínimo de um registro, já que seria impossível inserir um registro naquele espaço. Para versões futuras, planejamos usar abordagens mais sofisticadas, como análises estatísticas e cálculos de desvio padrão, a fim de determinar o tamanho mínimo ideal de forma mais adequada. Por enquanto, realizamos um cálculo simples, que será explicado a seguir.
 
-**Como avaliamos o que é um espaço suficiente para a inserção de um registro.** <br>
+**Como avaliamos o que é um espaço suficiente para a inserção de um registro?** <br>
 Para fazer essa avaliação foi estabelecido que cada classe determinará um tamanho mínimo para seus registros, que será utilizado no momento de calcular a diferença entre o tamanho de dois registros.
 <ul>
 	<li>
