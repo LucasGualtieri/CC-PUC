@@ -1,0 +1,5 @@
+não foi tratado o /n do fgets
+o strtok não lidando com os spaços vazios estava fudendo tudo
+a data que estava 12-6-1970 {
+	precisei modificar o split para receber um "regex" e precisei mudar o setDateOfBirth assim como a linha que printava o DateOfBirth
+}
