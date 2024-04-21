@@ -21,9 +21,9 @@ public class ParTituloID implements RegistroHashExtensivel<ParTituloID> {
 
 	public ParTituloID(String titulo, int ID) throws IOException {
 		
-		this.titulo = titulo;
-		// byte[] bytes = titulo.getBytes();		
-		// this.titulo = new String(bytes, 0, 38); // Limita a string a 38 bytes e elimina o resto
+		byte[] bytes = titulo.getBytes();
+		int len = bytes.length < 38 ? bytes.length : 38;
+		this.titulo = new String(bytes, 0, len); // Limita a string a 38 bytes e elimina o resto
 		this.ID = ID;
 	}
 
@@ -31,7 +31,7 @@ public class ParTituloID implements RegistroHashExtensivel<ParTituloID> {
 
 	public int getId() { return ID; }
 
-	public int hashCode() { return this.titulo.hashCode(); }
+	public int hashCode() { return Math.abs(this.titulo.hashCode()); }
 
 	public short size() { return TAMANHO; }
 

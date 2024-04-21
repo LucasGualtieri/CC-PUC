@@ -24,12 +24,19 @@ public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
 	*/
 	// private final short registerAvgLength = 12; // 4 + (2 + 14) + (2 + 12) + 4.
 
-	HashExtensivel<ParTituloID> indiceTitulo;
+	HashExtensivel<ParISBNId> indiceISBN;
+	// HashExtensivel<ParTituloID> indiceTitulo;
 
 	@SuppressWarnings("unchecked")
 	public ArquivoLivro(String nome, String filePath) throws NoSuchMethodException, SecurityException, Exception {
 		
 		super((Constructor<T>)Livro.getConstructor(), nome, filePath);
+
+		indiceISBN = new HashExtensivel<>(
+			ParISBNId.class.getConstructor(), 4,
+			filePath + nome + ".hashISBN_d.db",
+			filePath + nome + ".hashISBN_c.db"
+		);
 
 		// indiceTitulo = new HashExtensivel<>(
 		// 	ParTituloID.getConstructor(), 3,
@@ -42,41 +49,18 @@ public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
 
 		// try catch apenas para debugar
 
-		int ID = -1;
-		try {
-			ID = create(true, registerMinLength, object);
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.exit(-1);
-		}
+		int ID = create(true, registerMinLength, object);
 
-		try {
-			indiceTitulo.create(new ParTituloID(((Livro)object).getTitulo(), ID));
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.exit(-1);
-		}
+		indiceISBN.create(new ParISBNId(((Livro)object).getISBN(), object.getID()));
 
 		return ID;
 	}
 
 	protected int create(boolean createNewID, T object) throws Exception {
 
-		int ID = 0;
+		int ID = create(createNewID, registerMinLength, object);
 
-		try {
-			ID = create(createNewID, registerMinLength, object);
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.exit(-1);
-		}
-
-		try {
-			indiceTitulo.create(new ParTituloID(((Livro)object).getTitulo(), ID));
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.exit(-1);
-		}
+		indiceISBN.create(new ParISBNId(((Livro)object).getISBN(), object.getID()));
 
 		return ID;
 	}
@@ -88,25 +72,35 @@ public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
 		// System.out.printf("Insira o ID do %s: ", getNomeLowerCase());
 		System.out.println("Buscar por:");
 		System.out.println("1 - ID.");
-		// System.out.println("2 - Título.");
-		Lib.cprintf(Lib.RED, "2 - Título. Ainda não implementado.\n");
-		Lib.cprintf(Lib.RED, "3 - ISBN. Ainda não implementado.\n");
+		System.out.println("3 - ISBN.");
+		Lib.cprintf(Lib.RED, "3 - Título. Ainda não implementado.\n");
+		// Lib.cprintf(Lib.RED, "3 - ISBN. Ainda não implementado.\n");
 		System.out.println("\n0 - Voltar.");
 		System.out.print("\nEscolha uma das opções acima: ");
 
 		int choice = Lib.ReadChoice(2);
-		int ID = 0;
+		int ID = -1;
 
 		switch (choice) {
 		case 1:
 			System.out.printf("Insira o ID do livro: ");
 			ID = Lib.readInt();
 		break;
+		case 2:
+			System.out.printf("Insira o ISBN do livro: ");
+			String ISBN = Lib.readString();
+			ParISBNId PTI = indiceISBN.read(ParISBNId.hashISBN(ISBN));
+			if (PTI != null) ID = PTI.getId();
+			
+		break;
 		// case 2:
 		// 	System.out.printf("Insira o título do livro: ");
 		// 	String titulo = Lib.readString();
 		// 	try {
-		// 		ID = indiceTitulo.read(titulo.hashCode()).getId();
+		// 		ParTituloID PTI = indiceTitulo.read(titulo.hashCode());
+		// 		if (PTI != null) {
+		// 			ID = PTI.getId();
+		// 		} else {}
 		// 	} catch(Exception e) {
 		// 		e.printStackTrace();
 		// 		System.exit(-1);
