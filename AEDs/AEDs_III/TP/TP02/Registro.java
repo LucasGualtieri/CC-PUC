@@ -1,4 +1,4 @@
-package TP01;
+package TP02;
 
 public interface Registro {
 	public int getID();

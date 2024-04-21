@@ -1,4 +1,4 @@
-package TP01.Indices;
+package TP02.Indices;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;

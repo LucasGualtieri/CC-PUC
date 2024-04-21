@@ -1,4 +1,4 @@
-package TP01.Livros;
+package TP02.Entidades.Livros;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -8,8 +8,8 @@ import java.lang.reflect.Constructor;
 import java.text.NumberFormat;
 import java.util.Locale;
 
-import TP01.Lib;
-import TP01.Registro;
+import TP02.Lib;
+import TP02.Registro;
 
 public class Livro implements Registro {
 	

@@ -1,4 +1,4 @@
-package TP01.Indices;
+package TP02;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -8,7 +8,10 @@ import java.lang.reflect.Constructor;
 import java.util.LinkedList;
 import java.util.List;
 
-import TP01.Registro;
+import TP02.Indices.HashExtensivel;
+import TP02.Indices.IndiceDeExcluidos;
+import TP02.Indices.ParIDEndereco;
+import TP02.Indices.Tuple;
 
 public class Arquivo<T extends Registro> {
 
@@ -36,8 +39,7 @@ public class Arquivo<T extends Registro> {
 		this.nome = nome;
 
 		indiceDireto = new HashExtensivel<>(
-			ParIDEndereco.getConstructor(),
-			3,
+			ParIDEndereco.getConstructor(), 3,
 			filePath + nome + ".hash_d.db",
 			filePath + nome + ".hash_c.db"
 		);

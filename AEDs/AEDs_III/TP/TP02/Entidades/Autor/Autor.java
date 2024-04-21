@@ -1,4 +1,4 @@
-package TP01.Autor;
+package TP02.Entidades.Autor;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -7,8 +7,8 @@ import java.io.DataOutputStream;
 import java.lang.reflect.Constructor;
 import java.util.Locale;
 
-import TP01.Lib;
-import TP01.Registro;
+import TP02.Lib;
+import TP02.Registro;
 
 
 public class Autor implements Registro {

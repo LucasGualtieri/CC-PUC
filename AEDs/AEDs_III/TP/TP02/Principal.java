@@ -1,16 +1,15 @@
-package TP01;
+package TP02;
 
 import java.util.List;
 
-import TP01.Autor.ArquivoAutor;
-import TP01.Indices.Arquivo;
-import TP01.Livros.ArquivoLivro;
-import TP01.Livros.Livro;
+import TP02.Entidades.Autor.ArquivoAutor;
+import TP02.Entidades.Livros.ArquivoLivro;
+import TP02.Entidades.Livros.Livro;
 
 // clear && javac -d Classes -cp ../ Principal.java && java -cp Classes Principal.java
 
 /*
- * /usr/lib/jvm/java-19-openjdk-amd64/bin/java -XX:+ShowCodeDetailsInExceptionMessages -cp /home/lucas/.vscode-server/data/User/workspaceStorage/806c8f962603aef4653ee3ae9c715a28/redhat.java/jdt_ws/CC-PUC_cc5a22eb/bin TP01.Principal
+ * /usr/lib/jvm/java-19-openjdk-amd64/bin/java -XX:+ShowCodeDetailsInExceptionMessages -cp /home/lucas/.vscode-server/data/User/workspaceStorage/806c8f962603aef4653ee3ae9c715a28/redhat.java/jdt_ws/CC-PUC_cc5a22eb/bin TP02.Principal
 */
 
 class Principal {
@@ -263,6 +262,8 @@ class Principal {
 		
 		Arquivo<Livro> arquivo = null;
 
+		String path = "AEDs/AEDs_III/TP/TP02/Entidades/";
+
 		do {
 			Lib.clearScreen();
 			Lib.printdiv(1, "SGBD");
@@ -276,10 +277,10 @@ class Principal {
 
 			switch (choice) {
 				case 1:
-					arquivo = new ArquivoLivro<>("Livro", "AEDs/AEDs_III/TP/TP01/Livros/Dados/");
+					arquivo = new ArquivoLivro<>("Livro", path + "Livros/Dados/");
 				break;
 				case 2:
-					arquivo = new ArquivoAutor<>("Autor", "AEDs/AEDs_III/TP/TP01/Autor/Dados/");
+					arquivo = new ArquivoAutor<>("Autor", path + "Autor/Dados/");
 				break;
 			}
 

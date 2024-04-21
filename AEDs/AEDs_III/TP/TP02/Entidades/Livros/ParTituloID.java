@@ -1,4 +1,4 @@
-package TP01.Livros;
+package TP02.Entidades.Livros;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -7,13 +7,13 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 
-import TP01.Indices.RegistroHashExtensivel;
+import TP02.Indices.RegistroHashExtensivel;
 
-public class ParTituloID implements RegistroHashExtensivel {
+public class ParTituloID implements RegistroHashExtensivel<ParTituloID> {
 
 	private String titulo;
 	private int ID;
-	final private int TAMANHO = 4 + 40;
+	final private int TAMANHO = 38;
 
 	public ParTituloID() throws IOException {
 		this("", -1);
@@ -21,8 +21,9 @@ public class ParTituloID implements RegistroHashExtensivel {
 
 	public ParTituloID(String titulo, int ID) throws IOException {
 		
-		byte[] bytes = titulo.getBytes();		
-		this.titulo = new String(bytes, 0, 38); // Limita a string a 38 bytes e elimina o resto
+		this.titulo = titulo;
+		// byte[] bytes = titulo.getBytes();		
+		// this.titulo = new String(bytes, 0, 38); // Limita a string a 38 bytes e elimina o resto
 		this.ID = ID;
 	}
 

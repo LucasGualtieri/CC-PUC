@@ -2,6 +2,13 @@
 	"configurations": [
 		{
 			"type": "java",
+			"name": "Principal",
+			"request": "launch",
+			"mainClass": "TP02.Principal",
+			"projectName": "CC-PUC_cc5a22eb"
+		},
+		{
+			"type": "java",
 			"name": "CC-PUC",
 			"request": "launch",
 			"mainClass": "CC-PUC",

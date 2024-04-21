@@ -1,11 +1,11 @@
-package TP01.Autor;
+package TP02.Entidades.Autor;
 
 import java.lang.reflect.Constructor;
 import java.util.List;
 
-import TP01.Registro;
-import TP01.Indices.Arquivo;
-import TP01.Lib;
+import TP02.Registro;
+import TP02.Arquivo;
+import TP02.Lib;
 
 public class ArquivoAutor<T extends Registro> extends Arquivo<T> {
 

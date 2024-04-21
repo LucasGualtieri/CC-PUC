@@ -1,13 +1,13 @@
-package TP01.Livros;
+package TP02.Entidades.Livros;
 
 // import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.util.List;
 
-import TP01.Registro;
-import TP01.Lib;
-import TP01.Indices.Arquivo;
-import TP01.Indices.HashExtensivel;
+import TP02.Registro;
+import TP02.Arquivo;
+import TP02.Lib;
+import TP02.Indices.HashExtensivel;
 
 public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
 
@@ -32,19 +32,53 @@ public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
 		super((Constructor<T>)Livro.getConstructor(), nome, filePath);
 
 		// indiceTitulo = new HashExtensivel<>(
-		// 	ParTituloID.getConstructor(),
-		// 	3,
+		// 	ParTituloID.getConstructor(), 3,
 		// 	filePath + nome + ".hashTitulo_d.db",
 		// 	filePath + nome + ".hashTitulo_c.db"
 		// );
 	}
 
 	public int create(T object) throws Exception {
-		return create(true, registerMinLength, object);
+
+		// try catch apenas para debugar
+
+		int ID = -1;
+		try {
+			ID = create(true, registerMinLength, object);
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.exit(-1);
+		}
+
+		try {
+			indiceTitulo.create(new ParTituloID(((Livro)object).getTitulo(), ID));
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.exit(-1);
+		}
+
+		return ID;
 	}
 
 	protected int create(boolean createNewID, T object) throws Exception {
-		return create(createNewID, registerMinLength, object);
+
+		int ID = 0;
+
+		try {
+			ID = create(createNewID, registerMinLength, object);
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.exit(-1);
+		}
+
+		try {
+			indiceTitulo.create(new ParTituloID(((Livro)object).getTitulo(), ID));
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.exit(-1);
+		}
+
+		return ID;
 	}
 
 	// Essa é uma função auxiliar à função read que permite que cada classe implemente seus métodos de busca
@@ -54,12 +88,13 @@ public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
 		// System.out.printf("Insira o ID do %s: ", getNomeLowerCase());
 		System.out.println("Buscar por:");
 		System.out.println("1 - ID.");
-		Lib.cprintf(Lib.RED, "2 - ISBN. Ainda não implementado.\n");
-		Lib.cprintf(Lib.RED, "3 - Título. Ainda não implementado.\n");
+		// System.out.println("2 - Título.");
+		Lib.cprintf(Lib.RED, "2 - Título. Ainda não implementado.\n");
+		Lib.cprintf(Lib.RED, "3 - ISBN. Ainda não implementado.\n");
 		System.out.println("\n0 - Voltar.");
 		System.out.print("\nEscolha uma das opções acima: ");
 
-		int choice = Lib.ReadChoice(1);
+		int choice = Lib.ReadChoice(2);
 		int ID = 0;
 
 		switch (choice) {
@@ -67,6 +102,16 @@ public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
 			System.out.printf("Insira o ID do livro: ");
 			ID = Lib.readInt();
 		break;
+		// case 2:
+		// 	System.out.printf("Insira o título do livro: ");
+		// 	String titulo = Lib.readString();
+		// 	try {
+		// 		ID = indiceTitulo.read(titulo.hashCode()).getId();
+		// 	} catch(Exception e) {
+		// 		e.printStackTrace();
+		// 		System.exit(-1);
+		// 	}
+		// break;
 		default:
 			// System.out.printf("Insira o título do livro: ");
 			// ID = indiceTitulo.read(Lib.readString()).getId();
