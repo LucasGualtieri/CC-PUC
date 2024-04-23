@@ -1,23 +1,24 @@
-package TP02.Entidades.Autor;
+package TP02.Entidades.Autores;
 
 import java.lang.reflect.Constructor;
 import java.util.List;
 
-import TP02.Registro;
-import TP02.Arquivo;
 import TP02.Lib;
+import TP02.Arquivo;
+import TP02.Registro;
 
 public class ArquivoAutor<T extends Registro> extends Arquivo<T> {
 
 	// IndicadorDeTamanho + ID + Nome + Sobrenome + Idade
 	private final short registerMinLength = 20; // 2 + 4 + (2 + 3) (2 + 3) + 4.
+	private final String nome = "Autor";
 
 	// HashExtensivel<ParNomeID> indiceNome;
 
 	@SuppressWarnings("unchecked")
-	public ArquivoAutor(String nome, String filePath) throws NoSuchMethodException, SecurityException, Exception {
+	public ArquivoAutor(String filePath) throws NoSuchMethodException, SecurityException, Exception {
 		
-		super((Constructor<T>)Autor.getConstructor(), nome, filePath);
+		super((Constructor<T>)Autor.getConstructor(), "Autor", filePath);
 
 		// indiceTitulo = new HashExtensivel<>(
 		// 	ParTituloID.getConstructor(),

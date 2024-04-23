@@ -1,4 +1,4 @@
-package TP02.Entidades.Autor;
+package TP02.Entidades.Autores;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

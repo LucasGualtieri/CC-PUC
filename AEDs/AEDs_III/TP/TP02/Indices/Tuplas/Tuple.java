@@ -1,4 +1,4 @@
-package TP02.Indices;
+package TP02.Indices.Tuplas;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -6,9 +6,11 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
+import TP02.Indices.RegistroHashExtensivel;
+
 // Quando eu for trabalhar com os Indices Indiretos precisarei, acredito eu setar uma tamanho máximo para as strings
 
-public class Tuple<Key, Value> implements RegistroHashExtensivel<Tuple<Key, Value>> {
+public class Tuple<Key, Value> implements RegistroHashExtensivel {
 // public class Tuple<K extends Comparable<K>, V> implements Comparable<Tuple<K, V>> {
 	private Key key;
 	private Value value;

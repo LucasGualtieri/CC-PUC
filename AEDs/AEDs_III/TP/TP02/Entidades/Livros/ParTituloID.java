@@ -9,11 +9,11 @@ import java.lang.reflect.Constructor;
 
 import TP02.Indices.RegistroHashExtensivel;
 
-public class ParTituloID implements RegistroHashExtensivel<ParTituloID> {
+public class ParTituloID implements RegistroHashExtensivel {
 
 	private String titulo;
 	private int ID;
-	final private int TAMANHO = 38;
+	final private int TAMANHO = 4 + 40;
 
 	public ParTituloID() throws IOException {
 		this("", -1);
@@ -21,9 +21,8 @@ public class ParTituloID implements RegistroHashExtensivel<ParTituloID> {
 
 	public ParTituloID(String titulo, int ID) throws IOException {
 		
-		byte[] bytes = titulo.getBytes();
-		int len = bytes.length < 38 ? bytes.length : 38;
-		this.titulo = new String(bytes, 0, len); // Limita a string a 38 bytes e elimina o resto
+		byte[] bytes = titulo.getBytes();		
+		this.titulo = new String(bytes, 0, 38); // Limita a string a 38 bytes e elimina o resto
 		this.ID = ID;
 	}
 
@@ -31,7 +30,7 @@ public class ParTituloID implements RegistroHashExtensivel<ParTituloID> {
 
 	public int getId() { return ID; }
 
-	public int hashCode() { return Math.abs(this.titulo.hashCode()); }
+	public int hashCode() { return this.titulo.hashCode(); }
 
 	public short size() { return TAMANHO; }
 

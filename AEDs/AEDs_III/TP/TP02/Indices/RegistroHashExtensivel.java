@@ -12,7 +12,7 @@ package TP02.Indices;
 
 import java.io.IOException;
 
-public interface RegistroHashExtensivel<T> {
+public interface RegistroHashExtensivel {
 
   public int hashCode(); // chave numérica para ser usada no diretório
 

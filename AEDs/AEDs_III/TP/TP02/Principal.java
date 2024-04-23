@@ -2,7 +2,7 @@ package TP02;
 
 import java.util.List;
 
-import TP02.Entidades.Autor.ArquivoAutor;
+import TP02.Entidades.Autores.ArquivoAutor;
 import TP02.Entidades.Livros.ArquivoLivro;
 import TP02.Entidades.Livros.Livro;
 
@@ -257,12 +257,12 @@ class Principal {
 
 	// A função main permite que o usuário escolha a base de dados que deseja trabalhar.
 	public static void main(String[] args) throws Exception {
-		
-		int choice;
-		
-		Arquivo<Livro> arquivo = null;
 
 		String path = "AEDs/AEDs_III/TP/TP02/Entidades/";
+
+		int choice;
+
+		Arquivo<Livro> arquivo = null;
 
 		do {
 			Lib.clearScreen();
@@ -277,10 +277,10 @@ class Principal {
 
 			switch (choice) {
 				case 1:
-					arquivo = new ArquivoLivro<>("Livro", path + "Livros/Dados/");
+					arquivo = new ArquivoLivro<>(path + "Livros/Dados/");
 				break;
 				case 2:
-					arquivo = new ArquivoAutor<>("Autor", path + "Autor/Dados/");
+					arquivo = new ArquivoAutor<>(path + "Autores/Dados/");
 				break;
 			}
 
@@ -294,12 +294,3 @@ class Principal {
 		Lib.printdiv(1, 1, "FIM DO PROGRAMA");
 	}
 }
-
-// Quando o Update diminuir demais o registro aproveitar o espaço. Se diminuir a ponto de no lixo caber um registro novo
-// Fazer o mesmo quando na criação, quando o registro é pequeno???
-
-// Juntar dois registros excluídos que estejam adjacentes
-
-// Penso em fazer um esquema de paginação, ou seja, no parametro da função
-// defino qual página será retornada, e ai o usuário teria a opção de ir para a
-// próxima ou voltar.
