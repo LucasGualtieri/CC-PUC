@@ -1,4 +1,4 @@
-package aeds3;
+package AEDs.AEDs_III.CodigoProfessor.aeds3;
 
 public interface Registro extends Cloneable, Comparable<Object> {
   public void setID(int id);

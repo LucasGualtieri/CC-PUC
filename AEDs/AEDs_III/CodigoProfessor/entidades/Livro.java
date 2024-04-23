@@ -1,4 +1,4 @@
-package entidades;
+package AEDs.AEDs_III.CodigoProfessor.entidades;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -6,7 +6,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.text.NumberFormat;
 
-import aeds3.Registro;
+import AEDs.AEDs_III.TP00.manha.aeds3.Registro;
 
 public class Livro implements Registro {
 

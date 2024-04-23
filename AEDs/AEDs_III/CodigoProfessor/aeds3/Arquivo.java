@@ -1,4 +1,4 @@
-package aeds3;
+package AEDs.AEDs_III.CodigoProfessor.aeds3;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

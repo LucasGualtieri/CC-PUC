@@ -10,7 +10,7 @@ Implementado pelo Prof. Marcos Kutova
 v1.0 - 2021
 */
 
-package aeds3;
+package AEDs.AEDs_III.CodigoProfessor.aeds3;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
