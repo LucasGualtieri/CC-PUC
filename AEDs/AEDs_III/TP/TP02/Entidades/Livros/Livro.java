@@ -74,21 +74,10 @@ public class Livro implements Registro {
 		}
 	}
 
-	public String toString() {
-
-		String str = "";
-		if (this.ID != -1) str += "ID: " + this.ID + "\n";
-		str += "Título: " + this.titulo;
-		str += "\nAutor: " + this.autor;
-		str += "\nPreço: " + NumberFormat.getCurrencyInstance(localeBR).format(this.preco);
-
-		return str;
-	}
-
 	public void setTitulo(String titulo) { this.titulo = titulo; }
 
 	// Função para ler o ISBN e testar se é um ISBN valído (em termos do comprimento da string)
-	private String readISBN() {
+	public static String readISBN() {
 		
 		String value = "invalid";
 
@@ -201,6 +190,21 @@ public class Livro implements Registro {
 		str += Lib.RESET;
 
 		return str + "\n";
+	}
+
+	
+	public String toString() {
+
+		String str = "";
+		if (this.ID != -1) {
+			str += Lib.YELLOW + Lib.BOLD + "ID: " + Lib.RESET + this.ID + "\n";
+		}
+		str += Lib.CYAN + Lib.BOLD + "ISBN: " + Lib.RESET + this.ISBN;
+		str += Lib.RED + Lib.BOLD + "\nTítulo: " + Lib.RESET + this.titulo;
+		str += Lib.BLUE + Lib.BOLD + "\nAutor: " + Lib.RESET + this.titulo;
+		str += Lib.GREEN + Lib.BOLD + "\nPreço: " + Lib.RESET + NumberFormat.getCurrencyInstance(localeBR).format(this.preco);
+
+		return str;
 	}
 
 	public void setID(int i) { this.ID = i; }

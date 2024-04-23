@@ -8,11 +8,11 @@ conter.
 Implementado pelo Prof. Marcos Kutova
 v1.1 - 2021
 */
-package TP02.Indices;
+package TP02.EstruturasDeDados;
 
 import java.io.IOException;
 
-public interface RegistroHashExtensivel {
+public interface RegistroHashExtensivel<T> {
 
   public int hashCode(); // chave numérica para ser usada no diretório
 

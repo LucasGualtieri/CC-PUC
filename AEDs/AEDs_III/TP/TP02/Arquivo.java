@@ -1,14 +1,15 @@
 package TP02;
 
 import java.util.List;
+
+import TP02.EstruturasDeDados.*;
+import TP02.EstruturasDeDados.Tuplas.*;
+
 import java.io.IOException;
 import java.util.LinkedList;
 import java.io.RandomAccessFile;
 import java.io.FileNotFoundException;
 import java.lang.reflect.Constructor;
-
-import TP02.Indices.*;
-import TP02.Indices.Tuplas.*;
 
 public class Arquivo<T extends Registro> {
 

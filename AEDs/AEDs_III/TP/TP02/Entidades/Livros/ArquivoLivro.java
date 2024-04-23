@@ -6,8 +6,10 @@ import java.util.List;
 
 import TP02.Lib;
 import TP02.Registro;
+import TP02.EstruturasDeDados.HashExtensivel;
+import TP02.Entidades.Livros.Indices.ParIsbnId;
+// import TP02.Entidades.Livros.Indices.ParTituloID;
 import TP02.Arquivo;
-import TP02.Indices.HashExtensivel;
 
 public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
 
@@ -16,37 +18,36 @@ public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
 
 	private final String nome = "Livro";
 
-	// HashExtensivel<ParTituloID> indiceIndireto;
-
-	/*
-	 * ID + Titulo + Autor + Preco respectivamente
-	 * Foi feito uma estimativa do comprimento médio dos:
-	 * Títulos e Nomes de autores de livros ao redor do mundo
-	 * Fonte: Microsoft Copilot
-	*/
-	// private final short registerAvgLength = 12; // 4 + (2 + 14) + (2 + 12) + 4.
-
-	HashExtensivel<ParTituloID> indiceTitulo;
+	HashExtensivel<ParIsbnId> indiceIndiretoISBN;
 
 	@SuppressWarnings("unchecked")
 	public ArquivoLivro(String filePath) throws NoSuchMethodException, SecurityException, Exception {
 		
 		super((Constructor<T>)Livro.getConstructor(), "Livro", filePath);
 
+		indiceIndiretoISBN = new HashExtensivel<>(
+			ParIsbnId.getConstructor(), 4,
+			filePath + nome + ".hashTitulo_d.db",
+			filePath + nome + ".hashTitulo_c.db"
+		);
+
 		// indiceTitulo = new HashExtensivel<>(
-		// 	ParTituloID.getConstructor(),
-		// 	3,
+		// 	ParTituloID.getConstructor(), 3,
 		// 	filePath + nome + ".hashTitulo_d.db",
 		// 	filePath + nome + ".hashTitulo_c.db"
 		// );
 	}
 
 	public int create(T object) throws Exception {
-		return create(true, registerMinLength, object);
+		super.create(true, registerMinLength, object);
+	    indiceIndiretoISBN.create(new ParIsbnId(((Livro)object).getISBN(), object.getID()));
+		return object.getID();
 	}
 
 	protected int create(boolean createNewID, T object) throws Exception {
-		return create(createNewID, registerMinLength, object);
+		super.create(createNewID, registerMinLength, object);
+		indiceIndiretoISBN.create(new ParIsbnId(((Livro)object).getISBN(), object.getID()));
+		return object.getID();
 	}
 
 	// Essa é uma função auxiliar à função read que permite que cada classe implemente seus métodos de busca
@@ -56,18 +57,24 @@ public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
 		// System.out.printf("Insira o ID do %s: ", getNomeLowerCase());
 		System.out.println("Buscar por:");
 		System.out.println("1 - ID.");
-		Lib.cprintf(Lib.RED, "2 - ISBN. Ainda não implementado.\n");
-		Lib.cprintf(Lib.RED, "3 - Título. Ainda não implementado.\n");
+		System.out.println("2 - ISBN.");
+		// Lib.cprintf(Lib.RED, "2 - ISBN. Ainda não implementado.\n");
 		System.out.println("\n0 - Voltar.");
 		System.out.print("\nEscolha uma das opções acima: ");
 
-		int choice = Lib.ReadChoice(1);
+		int choice = Lib.ReadChoice(2);
 		int ID = 0;
 
 		switch (choice) {
 		case 1:
 			System.out.printf("Insira o ID do livro: ");
 			ID = Lib.readInt();
+		break;
+		case 2:
+			System.out.printf("Insira o ISBN do livro: ");
+			String ISBN = Livro.readISBN();
+			ParIsbnId pii = indiceIndiretoISBN.read(ParIsbnId.hashIsbn(ISBN));
+			if (pii != null) ID = pii.getId();
 		break;
 		default:
 			// System.out.printf("Insira o título do livro: ");

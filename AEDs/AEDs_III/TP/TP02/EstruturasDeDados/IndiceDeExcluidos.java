@@ -1,11 +1,11 @@
-package TP02.Indices;
+package TP02.EstruturasDeDados;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.Iterator;
 import java.util.TreeSet;
 
-import TP02.Indices.Tuplas.Tuple;
+import TP02.EstruturasDeDados.Tuplas.Tuple;
 
 // Se houverem dois registros excluídos imediatamente um ao lado do outros
 // Idealmente os dois deveriam ser fundidos.

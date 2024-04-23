@@ -1,5 +1,3 @@
-package TP02.Indices;
-
 /*
 TABELA HASH EXTENSÍVEL
 
@@ -14,6 +12,7 @@ disciplina:
 Implementado pelo Prof. Marcos Kutova
 v1.1 - 2021
 */
+package TP02.EstruturasDeDados;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -24,7 +23,7 @@ import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.lang.reflect.Constructor;
 
-public class HashExtensivel<T extends RegistroHashExtensivel> {
+public class HashExtensivel<T extends RegistroHashExtensivel<T>> {
 
 	String nomeArquivoDiretorio;
 	String nomeArquivoCestos;
@@ -101,14 +100,13 @@ public class HashExtensivel<T extends RegistroHashExtensivel> {
 
 		// Inserir elementos no cesto
 		public boolean create(T elem) {
-			if (full()) return false;
-
+			if (full())
+				return false;
 			int i = quantidade - 1; // posição do último elemento no cesto
-			while (i >= 0 && elem.hashCode() < elementos.get(i).hashCode()) i--;
-
+			while (i >= 0 && elem.hashCode() < elementos.get(i).hashCode())
+				i--;
 			elementos.add(i + 1, elem);
 			quantidade++;
-
 			return true;
 		}
 
@@ -120,19 +118,6 @@ public class HashExtensivel<T extends RegistroHashExtensivel> {
 			while (i < quantidade && chave > elementos.get(i).hashCode())
 				i++;
 			if (i < quantidade && chave == elementos.get(i).hashCode())
-				return elementos.get(i);
-			else
-				return null;
-		}
-
-		// Buscar um elemento no cesto
-		public T read(String chave) {
-			if (empty())
-				return null;
-			int i = 0;
-			while (i < quantidade && chave.hashCode() > elementos.get(i).hashCode())
-				i++;
-			if (i < quantidade && chave.hashCode() == elementos.get(i).hashCode())
 				return elementos.get(i);
 			else
 				return null;
@@ -166,21 +151,6 @@ public class HashExtensivel<T extends RegistroHashExtensivel> {
 			} else
 				return false;
 		}
-
-		// // pagar um elemento do cesto
-		// public boolean delete(String chave) {
-		// 	if (empty())
-		// 		return false;
-		// 	int i = 0;
-		// 	while (i < quantidade && chave.hashCode() > elementos.get(i).hashCode())
-		// 		i++;
-		// 	if (chave.hashCode() == elementos.get(i).hashCode()) {
-		// 		elementos.remove(i);
-		// 		quantidade--;
-		// 		return true;
-		// 	} else
-		// 		return false;
-		// }
 
 		public boolean empty() {
 			return quantidade == 0;
@@ -310,8 +280,8 @@ public class HashExtensivel<T extends RegistroHashExtensivel> {
 		nomeArquivoDiretorio = nd;
 		nomeArquivoCestos = nc;
 
-		arqDiretorio = new RandomAccessFile(nomeArquivoDiretorio, "rw");
-		arqCestos = new RandomAccessFile(nomeArquivoCestos, "rw");
+		arqDiretorio = new RandomAccessFile(nomeArquivoDiretorio, "rwd");
+		arqCestos = new RandomAccessFile(nomeArquivoCestos, "rwd");
 
 		// Se o diretório ou os cestos estiverem vazios, cria um novo diretório e lista
 		// de cestos
@@ -332,7 +302,7 @@ public class HashExtensivel<T extends RegistroHashExtensivel> {
 
 	public boolean create(T elem) throws Exception {
 
-		// Carrega todo o diretório para a memória
+		// Carrega TODO o diretório para a memória
 		byte[] bd = new byte[(int) arqDiretorio.length()];
 		arqDiretorio.seek(0);
 		arqDiretorio.read(bd);
@@ -428,29 +398,6 @@ public class HashExtensivel<T extends RegistroHashExtensivel> {
 		return c.read(chave);
 	}
 
-	// public T read(String chave) throws Exception {
-
-	// 	// Carrega o diretório
-	// 	byte[] bd = new byte[(int) arqDiretorio.length()];
-	// 	arqDiretorio.seek(0);
-	// 	arqDiretorio.read(bd);
-	// 	diretorio = new Diretorio();
-	// 	diretorio.fromByteArray(bd);
-
-	// 	// Identifica a hash do diretório,
-	// 	int i = diretorio.hash(chave.hashCode());
-
-	// 	// Recupera o cesto
-	// 	long enderecoCesto = diretorio.endereço(i);
-	// 	Cesto c = new Cesto(construtor, quantidadeDadosPorCesto);
-	// 	byte[] ba = new byte[c.size()];
-	// 	arqCestos.seek(enderecoCesto);
-	// 	arqCestos.read(ba);
-	// 	c.fromByteArray(ba);
-
-	// 	return c.read(chave);
-	// }
-
 	public boolean update(T elem) throws Exception {
 
 		// Carrega o diretório
@@ -537,7 +484,7 @@ public class HashExtensivel<T extends RegistroHashExtensivel> {
 		}
 	}
 
-	public void close() throws Exception {
+	public void close() throws IOException {
 		arqDiretorio.close();
 		arqCestos.close();
 	}

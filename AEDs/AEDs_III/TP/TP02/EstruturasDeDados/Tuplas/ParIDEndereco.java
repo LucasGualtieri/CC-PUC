@@ -1,4 +1,4 @@
-package TP02.Indices.Tuplas;
+package TP02.EstruturasDeDados.Tuplas;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -7,9 +7,9 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 
-import TP02.Indices.RegistroHashExtensivel;
+import TP02.EstruturasDeDados.RegistroHashExtensivel;
 
-public class ParIDEndereco implements RegistroHashExtensivel {
+public class ParIDEndereco implements RegistroHashExtensivel<ParIDEndereco> {
 
 	private int id;
 	private long endereco;
