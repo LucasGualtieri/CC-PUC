@@ -29,16 +29,16 @@ public class Arquivo<T extends Registro> {
 	}
 
 	public Arquivo(Constructor<T> construtor, String nome, String filePath) throws FileNotFoundException, IOException, Exception {
-		this.construtor = construtor;
-		AbrirArquivo(filePath + nome);
-
-		excluidos = new IndiceDeExcluidos(filePath + nome);
-
+		
 		this.nome = nome;
+		
+		this.construtor = construtor;
+		AbrirArquivo(filePath + getNomePlural());
+
+		excluidos = new IndiceDeExcluidos(filePath + getNomePlural());
 
 		indiceDireto = new HashExtensivel<>(
-			ParIDEndereco.getConstructor(),
-			3,
+			ParIDEndereco.getConstructor(), 3,
 			filePath + nome + ".hash_d.db",
 			filePath + nome + ".hash_c.db"
 		);
@@ -189,7 +189,7 @@ public class Arquivo<T extends Registro> {
 	// ----------------------------------------------------------------------------------
 
 	private void AbrirArquivo(String filePath) throws FileNotFoundException, IOException {
-		file = new RandomAccessFile(filePath + "s.db", "rw");
+		file = new RandomAccessFile(filePath + ".db", "rw");
 
 		if (file.length() < HEADER_SIZE) {
 			file.seek(0);

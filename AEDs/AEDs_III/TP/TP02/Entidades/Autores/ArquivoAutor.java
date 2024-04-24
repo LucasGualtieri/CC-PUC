@@ -13,7 +13,7 @@ public class ArquivoAutor<T extends Registro> extends Arquivo<T> {
 
 	// IndicadorDeTamanho + ID + CPF + Nome + Sobrenome + Idade
 	private final short registerMinLength = 33; // 2 + 4 + (2 + 11) + (2 + 3) (2 + 3) + 4.
-	private final String nome = "Autor";
+	// private final String nome = "Autor";
 
 	HashExtensivel<ParCPFId> indiceIndiretoCPF;
 	// HashExtensivel<ParNomeID> indiceNome;

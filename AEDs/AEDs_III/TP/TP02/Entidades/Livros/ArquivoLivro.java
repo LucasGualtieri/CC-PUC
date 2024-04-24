@@ -18,13 +18,13 @@ public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
 	// IndicadorDeTamanho + ID + ISBN + Titulo + Autor + Preço
 	private final short registerMinLength = 35; // 2 + 4 +  (2 + 13) (2 + 3) + (2 + 3) + 4.
 
-	private final String nome = "Livro";
+	// private final String nome = "Livro";
 
 	HashExtensivel<ParIsbnId> indiceIndiretoISBN;
 
 	@SuppressWarnings("unchecked")
 	public ArquivoLivro(String filePath) throws NoSuchMethodException, SecurityException, Exception {
-		
+
 		super((Constructor<T>)Livro.getConstructor(), "Livro", filePath);
 
 		indiceIndiretoISBN = new HashExtensivel<>(
