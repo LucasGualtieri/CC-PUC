@@ -38,7 +38,7 @@ public class Lib {
 	// Função para ler um inteiro do teclado
 	public static int readInt() throws InputMismatchException {
 		
-		int value = 0;
+		int value = -1;
 
 		boolean invalid = false;
 
@@ -49,16 +49,14 @@ public class Lib {
 			}
 
 			try {
-				value = scanner.nextInt();
+				String aux = scanner.nextLine();
+				if (aux.length() > 0) value = Integer.parseInt(aux);
 				invalid = false;
-			} catch (InputMismatchException e) {
+			} catch (NumberFormatException e) {
 				invalid = true;
-				scanner.nextLine();
 			}
 
 		} while (invalid);
-
-		scanner.nextLine();
 
 		return value;
 	}
@@ -66,7 +64,7 @@ public class Lib {
 	// Função para ler um float do teclado
 	public static float readFloat() throws InputMismatchException {
 		
-		float value = 0;
+		float value = -1;
 
 		boolean invalid = false;
 
@@ -77,16 +75,14 @@ public class Lib {
 			}
 
 			try {
-				value = scanner.nextFloat();
+				String aux = scanner.nextLine();
+				if (aux.length() > 0) value = Float.parseFloat(aux);
 				invalid = false;
-			} catch (InputMismatchException e) {
+			} catch (NumberFormatException e) {
 				invalid = true;
-				scanner.nextLine();
 			}
 
 		} while (invalid);
-
-		scanner.nextLine();
 
 		return value;
 	}

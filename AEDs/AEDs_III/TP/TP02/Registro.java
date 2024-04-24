@@ -5,7 +5,7 @@ public interface Registro {
 	public void setID(int id);
 	public byte[] toByteArray() throws Exception;
 	public void fromByteArray(byte[] array);
-	public void setAll();
+	public void setAll(boolean update);
 	public String toTable();
 	public String toCSV();
 	public void printHeader();

@@ -14,10 +14,10 @@ import java.lang.reflect.Constructor;
 public class Arquivo<T extends Registro> {
 
 	final short HEADER_SIZE = 4;
-	protected Constructor<T> construtor;
 	RandomAccessFile file;
-	HashExtensivel<ParIDEndereco> indiceDireto;
 	protected String nome;
+	protected Constructor<T> construtor;
+	protected HashExtensivel<ParIDEndereco> indiceDireto;
 	// private final short registerAvgLength = 40; // 2 + 4 + (2 + 14) + (2 + 12) + 4.
 
 	public IndiceDeExcluidos excluidos; // Preciso salvar puxar da memoria
@@ -226,14 +226,13 @@ public class Arquivo<T extends Registro> {
 	// O método setAll() faz uma interface com o usário e requisita os dados de uma entidade como nome, cpf, ISBN, etc...
 	public T readNewInstance() throws Exception {
 		T objeto = this.construtor.newInstance();
-		objeto.setAll();
+		objeto.setAll(false);
 		return objeto;
 	}
 
-	public T readNewInstance(int ID) throws Exception {
-		T objeto = this.construtor.newInstance();
-		objeto.setID(ID);
-		objeto.setAll();
+	public T readNewInstance(T object) throws Exception {
+		T objeto = object;
+		objeto.setAll(true);
 		return objeto;
 	}
 

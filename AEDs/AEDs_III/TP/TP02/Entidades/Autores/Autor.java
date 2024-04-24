@@ -14,6 +14,7 @@ import TP02.Registro;
 public class Autor implements Registro {
 	
 	private int ID;
+	private String CPF;
 	private String nome;
 	private String sobrenome;
 	private int idade;
@@ -46,6 +47,7 @@ public class Autor implements Registro {
 		DataOutputStream dos = new DataOutputStream(ba_out);
 
 		dos.writeInt(this.ID);
+		dos.writeUTF(this.CPF);
 		dos.writeUTF(this.nome);
 		dos.writeUTF(this.sobrenome);
 		dos.writeInt(this.idade);
@@ -58,10 +60,11 @@ public class Autor implements Registro {
 		ByteArrayInputStream ba_in;
 		
 		try {
-			ba_in= new ByteArrayInputStream(ba);
+			ba_in = new ByteArrayInputStream(ba);
 			DataInputStream dis = new DataInputStream(ba_in);
 	
 			this.ID = dis.readInt();
+			this.CPF = dis.readUTF();
 			this.nome = dis.readUTF();
 			this.sobrenome = dis.readUTF();
 			this.idade = dis.readInt();
@@ -70,35 +73,64 @@ public class Autor implements Registro {
 		}
 	}
 
-	public String toString() {
+	public void setNome(String nome) { this.nome = nome; }
 
-		String str = "";
-		if (this.ID != -1) str += "ID: " + this.ID + "\n";
-		str += "Nome: " + this.nome;
-		str += "\nAutor: " + this.sobrenome;
-		str += "\nIdade: " + this.idade;
+	// Função para ler o CPF e testar se é um CPF valído (em termos do comprimento da string)
+	public static String readCPF(boolean update) {
+		
+		String value = null;
 
-		return str;
+		boolean invalid = false;
+
+		do {
+			if (invalid) {
+				Lib.cprintf(Lib.BOLD + Lib.RED, "Valor inválido, ");
+				System.out.print("tente novamente: ");
+			}
+
+			value = Lib.readString();
+
+			if (value.length() != 11 && value.length() != 0
+				|| (value.length() == 0 && !update)
+				|| value.contains(" ")
+				|| value.contains("-")
+			) { invalid = true; }
+
+			else invalid = false;
+
+		} while (invalid);
+
+		return value;
 	}
 
-	public void setTitulo(String nome) { this.nome = nome; }
+	public void setAll(boolean update) {
 
-	public void setAll() {
+		System.out.print("Insira o CPF do autor: ");
+		String aux = readCPF(update);
+		if (aux.length() > 0) this.CPF = aux;
+
 		System.out.print("Insira o nome do autor: ");
-		this.nome = Lib.readString();
+		aux = Lib.readString();
+		if (aux.length() > 0) this.nome = aux;
+		
 		System.out.print("Insira o sobrenome do autor: ");
-		this.sobrenome = Lib.readString();
+		aux = Lib.readString();
+		if (aux.length() > 0) this.sobrenome = aux;
+
 		System.out.print("Insira a idade do autor: ");
-		this.idade = Lib.readInt();
+		int auxInt = Lib.readInt();
+		if (auxInt > 0) this.idade = auxInt;
+
 	}
 
 	public void printHeader() {
-		System.out.println("ID, ISBN, Título, Autor, Preço");
+		System.out.println("ID, CPF, Nome, Sobrenome, Idade");
 	}
 
 	public String toTable() {
 		String str;
 		str = this.ID + ", ";
+		str += this.CPF  + ", ";
 		str += this.nome  + ", ";
 		str += this.sobrenome  + ", ";
 		str += this.idade;
@@ -109,6 +141,7 @@ public class Autor implements Registro {
 	public void printHeaderCSV() {
 		System.out.println(
 			Lib.BOLD + Lib.YELLOW + "ID, " +
+			Lib.CYAN + "CPF, " +
 			Lib.RED + "Nome, " +
 			Lib.BLUE + "Sobrenome, " +
 			Lib.GREEN + "Idade" + Lib.RESET
@@ -120,6 +153,7 @@ public class Autor implements Registro {
 		String str;
 
 		str = Lib.BOLD + Lib.YELLOW + this.ID + ", ";
+		str += Lib.CYAN + this.CPF + ", ";
 		str += Lib.RED + this.nome + ", ";
 		str += Lib.BLUE + this.sobrenome  + ", ";
 		str += Lib.GREEN + this.idade;
@@ -128,8 +162,25 @@ public class Autor implements Registro {
 		return str + "\n";
 	}
 
+	public String toString() {
+
+		String str = "";
+		if (this.ID != -1) {
+			str += Lib.YELLOW + Lib.BOLD + "ID: " + Lib.RESET + this.ID + "\n";
+		}
+		str += Lib.CYAN + Lib.BOLD + "CPF: " + Lib.RESET + this.CPF;
+		str += Lib.RED + Lib.BOLD + "\nNome: " + Lib.RESET + this.nome;
+		str += Lib.BLUE + Lib.BOLD + "\nSobrenome: " + Lib.RESET + this.sobrenome;
+		str += Lib.GREEN + Lib.BOLD + "\nIdade: " + Lib.RESET + this.idade;
+
+		return str;
+	}
+
+
 	public void setID(int i) { this.ID = i; }
 	public int getID() { return this.ID; }
+
+	public String getCPF() { return this.CPF; }
 	
 	public String getNome() { return this.nome; }
 

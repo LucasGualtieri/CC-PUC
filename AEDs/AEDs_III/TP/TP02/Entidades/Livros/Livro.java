@@ -77,9 +77,9 @@ public class Livro implements Registro {
 	public void setTitulo(String titulo) { this.titulo = titulo; }
 
 	// Função para ler o ISBN e testar se é um ISBN valído (em termos do comprimento da string)
-	public static String readISBN() {
+	public static String readISBN(boolean update) {
 		
-		String value = "invalid";
+		String value = null;
 
 		boolean invalid = false;
 
@@ -90,7 +90,9 @@ public class Livro implements Registro {
 			}
 
 			value = Lib.readString();
-			if (value.length() != 10 && value.length() != 13
+
+			if (value.length() != 13 && value.length() != 0
+				|| (value.length() == 0 && !update)
 				|| value.contains(" ")
 				|| value.contains("-")
 			) { invalid = true; }
@@ -106,46 +108,37 @@ public class Livro implements Registro {
 	private String mascaraISBN() {
 		StringBuilder builder = new StringBuilder();
         
-        // Verifica o comprimento do ISBN
-        int length = ISBN.length();
-        
-		// Máscara para ISBN de 10 dígitos
-        if (length == 10) {
-            builder.append(ISBN.substring(0, 1))
-			.append("-")
-			.append(ISBN.substring(1, 4))
-			.append("-")
-			.append(ISBN.substring(4, 9))
-			.append("-")
-			.append(ISBN.substring(9));
-        }
-
-		// Máscara para ISBN de 13 dígitos
-		else if (length == 13) {
-            builder.append(ISBN.substring(0, 3))
-			.append("-")
-			.append(ISBN.substring(3, 4))
-			.append("-")
-			.append(ISBN.substring(4, 7))
-			.append("-")
-			.append(ISBN.substring(7, 12))
-			.append("-")
-			.append(ISBN.substring(12));
-		}
+		builder.append(ISBN.substring(0, 3))
+		.append("-")
+		.append(ISBN.substring(3, 4))
+		.append("-")
+		.append(ISBN.substring(4, 7))
+		.append("-")
+		.append(ISBN.substring(7, 12))
+		.append("-")
+		.append(ISBN.substring(12));
         
         return builder.toString();
 	}
 
 	// Método que faz uma interface com o usário e o permite que insira os dados do livro
-	public void setAll() {
+	public void setAll(boolean update) {
+		
 		System.out.print("Insira o ISBN do livro: ");
-		ISBN = readISBN();
+		String aux = readISBN(update);
+		if (aux.length() > 0) this.ISBN = aux;
+		
 		System.out.print("Insira o título do livro: ");
-		titulo = Lib.readString();
+		aux = Lib.readString();
+		if (aux.length() > 0) this.titulo = aux;
+
 		System.out.print("Insira o nome do autor do livro: ");
-		autor = Lib.readString();
+		aux = Lib.readString();
+		if (aux.length() > 0) this.autor = aux;
+
 		System.out.print("Insira o preço do livro: ");
-		preco = Lib.readFloat();
+		float auxF = Lib.readFloat();
+		if (auxF != -1) preco = auxF;
 	}
 
 	// public void setAddress(long address) { this.address = address; }
@@ -176,12 +169,13 @@ public class Livro implements Registro {
 			Lib.RED + "Título, " +
 			Lib.BLUE + "Autor, " + 
 			Lib.GREEN + "Preço" + Lib.RESET
-			);
-		}
-		
+		);
+	}
+
 	// Função que printa um livro em formato CSV com cores
 	public String toCSV() {
 		String str;
+
 		str = Lib.BOLD + Lib.YELLOW + this.ID + ", ";
 		str += Lib.CYAN + mascaraISBN() + ", ";
 		str += Lib.RED + this.titulo  + ", ";
@@ -191,7 +185,6 @@ public class Livro implements Registro {
 
 		return str + "\n";
 	}
-
 	
 	public String toString() {
 
@@ -201,7 +194,7 @@ public class Livro implements Registro {
 		}
 		str += Lib.CYAN + Lib.BOLD + "ISBN: " + Lib.RESET + this.ISBN;
 		str += Lib.RED + Lib.BOLD + "\nTítulo: " + Lib.RESET + this.titulo;
-		str += Lib.BLUE + Lib.BOLD + "\nAutor: " + Lib.RESET + this.titulo;
+		str += Lib.BLUE + Lib.BOLD + "\nAutor: " + Lib.RESET + this.autor;
 		str += Lib.GREEN + Lib.BOLD + "\nPreço: " + Lib.RESET + NumberFormat.getCurrencyInstance(localeBR).format(this.preco);
 
 		return str;

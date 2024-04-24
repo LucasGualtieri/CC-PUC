@@ -30,7 +30,7 @@ class Principal {
 
 		Lib.clearScreen();
 
-		if (escolha != 1) Lib.cprintf("RED", "Cadastro cancelado.\n\n");
+		if (escolha != 1) Lib.cprintf("BOLD RED", "Cadastro cancelado.\n\n");
 
 		else {
 			try {
@@ -49,7 +49,7 @@ class Principal {
 
 		if (print) {
 			Lib.clearScreen();
-			Lib.printdiv(1, "Consultando na base de dados: %s", arquivo.getNomePlural());
+			Lib.printdiv(1, "Pesquisando na base de dados: %s", arquivo.getNomePlural());
 		}
 		
 		T object = null;
@@ -57,11 +57,12 @@ class Principal {
 		try {
 			int ID = arquivo.read();
 			
-			if (ID == 0) {
-				Lib.clearScreen();
-				return null;
-			}
-			
+			// Não me lembro da utilidade desse bloco
+			// if (ID == 0) {
+			// 	Lib.clearScreen();
+			// 	return null;
+			// }
+
 			object = arquivo.read(ID);
 			if (print) {
 				Lib.clearScreen();
@@ -72,7 +73,7 @@ class Principal {
 
 		catch (Exception e) {
 			if (print) Lib.cprintf("BOLD RED", "\n%s não encontrado.\n\n", arquivo.getNome());
-			else throw new Exception("Registro não encontrado.");	
+			else throw new Exception("Registro não encontrado.");
 		}
 
 		return object;
@@ -110,7 +111,7 @@ class Principal {
 		
 		if (escolha == 1) {
 			System.out.println();
-			newObject = arquivo.readNewInstance(oldObject.getID());
+			newObject = arquivo.readNewInstance(oldObject);
 			System.out.println("\n" + newObject + "\n");
 		}
 		
@@ -139,7 +140,8 @@ class Principal {
 				System.out.println(newObject + "\n");
 			}
 			catch (Exception e) {
-				Lib.cprintf("BOLD RED", "Falha ao atualizar %s.\n\n", arquivo.getNomeLowerCase());
+				Lib.cprintf("BOLD RED", "Falha ao atualizar %s.\n", arquivo.getNomeLowerCase());
+				Lib.cprintf("BOLD RED", "Motivo: %s.\n\n", e.getMessage());
 				// Lib.cprintf("BOLD RED", "Falha ao cadastrar %s: %s\n\n", arquivo.getNomeLowerCase(), e.getMessage());
 			}
 		}
@@ -225,7 +227,7 @@ class Principal {
 			Lib.printdiv(1, "Base de dados: %s", arquivo.getNomePlural());
 
 			System.out.println("1 - Cadastrar.");
-			System.out.println("2 - Consultar.");
+			System.out.println("2 - Pesquisar.");
 			System.out.println("3 - Atualizar.");
 			System.out.println("4 - Deletar.");
 			System.out.printf("5 - Listar todos os %s.\n", arquivo.getNomePluralLowerCase());

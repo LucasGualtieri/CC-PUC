@@ -1,12 +1,14 @@
 package TP02.Entidades.Livros;
 
 // import java.io.IOException;
+// import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.util.List;
 
 import TP02.Lib;
 import TP02.Registro;
 import TP02.EstruturasDeDados.HashExtensivel;
+// import TP02.EstruturasDeDados.Tuplas.ParIDEndereco;
 import TP02.Entidades.Livros.Indices.ParIsbnId;
 // import TP02.Entidades.Livros.Indices.ParTituloID;
 import TP02.Arquivo;
@@ -27,8 +29,8 @@ public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
 
 		indiceIndiretoISBN = new HashExtensivel<>(
 			ParIsbnId.getConstructor(), 4,
-			filePath + nome + ".hashTitulo_d.db",
-			filePath + nome + ".hashTitulo_c.db"
+			filePath + nome + ".hashISBN_d.db",
+			filePath + nome + ".hashISBN_c.db"
 		);
 
 		// indiceTitulo = new HashExtensivel<>(
@@ -58,7 +60,7 @@ public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
 		System.out.println("Buscar por:");
 		System.out.println("1 - ID.");
 		System.out.println("2 - ISBN.");
-		// Lib.cprintf(Lib.RED, "2 - ISBN. Ainda não implementado.\n");
+		Lib.cprintf(Lib.RED, "3 - Título. Ainda não implementado.\n");
 		System.out.println("\n0 - Voltar.");
 		System.out.print("\nEscolha uma das opções acima: ");
 
@@ -66,23 +68,40 @@ public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
 		int ID = 0;
 
 		switch (choice) {
-		case 1:
-			System.out.printf("Insira o ID do livro: ");
-			ID = Lib.readInt();
-		break;
-		case 2:
-			System.out.printf("Insira o ISBN do livro: ");
-			String ISBN = Livro.readISBN();
-			ParIsbnId pii = indiceIndiretoISBN.read(ParIsbnId.hashIsbn(ISBN));
-			if (pii != null) ID = pii.getId();
-		break;
-		default:
-			// System.out.printf("Insira o título do livro: ");
-			// ID = indiceTitulo.read(Lib.readString()).getId();
+			case 1:
+				System.out.printf("Insira o ID do livro: ");
+				ID = Lib.readInt();
+			break;
+			case 2:
+				System.out.printf("Insira o ISBN do livro: ");
+				String ISBN = Livro.readISBN(false);
+				ParIsbnId pii = indiceIndiretoISBN.read(ParIsbnId.hashIsbn(ISBN));
+				if (pii != null) ID = pii.getId();
+			break;
+			default:
+				// System.out.printf("Insira o título do livro: ");
+				// ID = indiceTitulo.read(Lib.readString()).getId();
 			break;
 		}
 
 		return ID;
+	}
+
+	// public void update(int ID, T newObj) throws IOException, Exception {
+	// 	ParIDEndereco pie = indiceDireto.read(ID);
+	// 	delete(pie.getId());
+	// 	create(false, newObj);
+	// }
+
+	public void delete(int ID) throws Exception {
+		
+		Livro l = (Livro)super.read(ID);
+		
+		super.delete(ID);
+
+		String ISBN = l.getISBN();
+
+		indiceIndiretoISBN.delete(ParIsbnId.hashIsbn(ISBN));
 	}
 
 	// Essa função permite que o usuário escolha de que forma gostaria de apresentar os dados na listagem
