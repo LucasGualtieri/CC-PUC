@@ -22,7 +22,7 @@ public class Grafo {
 
 	public static void main(String[] args) {
 
-		Graph<Pessoa> g = new Graph<>(true);
+		Graph<Pessoa> g = new Graph<>();
 
 		Pessoa lucas = new Pessoa("Lucas", "Gualtieri");
 		Pessoa gabriel = new Pessoa("Gabriel", "Quaresma");
@@ -49,7 +49,8 @@ public class Grafo {
 		Graph<Integer> g2 = new Graph<>(true);
 
 		g2.addEdge(1, 2);
-		g2.addEdge(2, 3);
+		g2.addEdge(2, 1);
+		g2.addEdge(2, 3, 3);
 		// g.addEdge(3, 1);
 
 		System.out.println(g2.edgeExists(1, 2));
