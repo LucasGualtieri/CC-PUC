@@ -17,21 +17,28 @@ class Graph<T> implements Graphable {
 	int index;
 	boolean diGraph;
 
-	Graph(int nodes, boolean diGraph) {
-
+	Graph(boolean diGraph) {
 		index = 0;
-
 		this.diGraph = diGraph;
+		matrizAdjacencia = new ArrayList<>();
+	}
 
-		matrizAdjacencia = new ArrayList<>(nodes);
+	// Expands the matrix
+	private int addNode(T x) {
 
-		for (int i = 0; i < nodes; i++) {
-			List<Integer> l = new ArrayList<>(nodes);
-			for (int j = 0; j < nodes; j++) {
-				l.add(0);
-			}
-			matrizAdjacencia.add(l);
+		int matrixIndex = index++; 
+		hashIda.put(x, matrixIndex);
+		hashVolta.put(matrixIndex, x);
+
+		matrizAdjacencia.add(new ArrayList<>());
+		int size = matrizAdjacencia.size();
+
+		for (int i = 0; i < size; i++) {
+			if (i < size - 1) matrizAdjacencia.get(i).add(0);
+			matrizAdjacencia.get(size - 1).add(0);
 		}
+
+		return matrixIndex;
 	}
 
 	public void addEdge(T a, T b) {
@@ -40,16 +47,10 @@ class Graph<T> implements Graphable {
 		Integer hashB = hashIda.get(b);
 
 		// Criando o nó A
-		if (hashA == null) {
-			hashIda.put(a, hashA = index++);
-			hashVolta.put(hashA, a);
-		}
-		
+		if (hashA == null) hashA = addNode(a);
+
 		// Criando o nó B
-		if (hashB == null) {
-			hashIda.put(b, hashB = index++);
-			hashVolta.put(hashB, b);
-		}
+		if (hashB == null) hashB = addNode(b);
 
 		matrizAdjacencia.get(hashA).set(hashB, 1);
 		if (diGraph) {
@@ -73,17 +74,17 @@ class Graph<T> implements Graphable {
 
 	void printMatrix() {
 
-		System.out.print("   ");
+		System.out.print("  ");
 	
 		for (int i = 0; i < matrizAdjacencia.size(); i++) {
-			System.out.print(i + " ");
+			System.out.print("\u001B[33m" + "\u001B[1m" + i + " \u001B[0m");
 		}
 
 		System.out.println();
 
 		for (int i = 0; i < matrizAdjacencia.size(); i++) {
-			System.out.print(i + "| ");
-			for (int j = 0; j < matrizAdjacencia.size(); j++) {
+			System.out.print("\u001B[32m" + "\u001B[1m" + i + " \u001B[0m");
+			for (int j = 0; j < matrizAdjacencia.get(i).size(); j++) {
 				System.out.print(matrizAdjacencia.get(i).get(j) + " ");
 			}
 			System.out.println();
@@ -96,7 +97,7 @@ class Graph<T> implements Graphable {
 		for (int i = 0; i < matrizAdjacencia.size(); ++i) {
 			T a = hashVolta.get(i);
 			s.append(a + " -> {");
-			for (int j = 0; j < matrizAdjacencia.size(); j++) {
+			for (int j = 0; j < matrizAdjacencia.get(i).size(); j++) {
 				T b = hashVolta.get(j);
 				if (matrizAdjacencia.get(i).get(j) != 0) {
 					s.append("(" + a + ", " + b + "), ");
