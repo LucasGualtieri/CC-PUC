@@ -10,6 +10,15 @@ import java.util.Locale;
 import TP02.Lib;
 import TP02.Registro;
 
+// Para fazer um relacionamento 1->N com Autores de Livros precisarei:
+//		Criar uma chave estrangeira em Livro: IDAutor
+// 		Modificar os métodos de criação de livros:
+//			- O usuário pesquisa o nome do autor / CPF, se existe salva o ID, caso contrário vai para a rotina de criação de Autor
+// 		Modificar os métodos de Listagem de livros:
+//			- Ao mostrar livro, fazemos uma pesquisa no indice direto de autores para poder mostrar seus dados (somente o nome mesmo)
+// 		No momento de salvar o IDAutor também precisamos inserir o id do livro na arvore b+, (IDAutor, IDLivro)
+// 			- Dessa forma podemos alterar a rotina de listagem de autores, mostrando a quantidade de livros escritos
+// 			- E na hora de mostrar um Autor em específico mostramos seus livros
 
 public class Autor implements Registro {
 	
@@ -103,6 +112,21 @@ public class Autor implements Registro {
 		return value;
 	}
 
+	// Função para printar o CPF com a máscara
+	private String mascaraCPF() {
+		StringBuilder builder = new StringBuilder();
+		
+		builder.append(CPF.substring(0, 3))
+		.append(".")
+		.append(CPF.substring(3, 6))
+		.append(".")
+		.append(CPF.substring(6, 9))
+		.append("-")
+		.append(CPF.substring(9));
+		
+		return builder.toString();
+	}
+
 	public void setAll(boolean update) {
 
 		System.out.print("Insira o CPF do autor: ");
@@ -153,7 +177,7 @@ public class Autor implements Registro {
 		String str;
 
 		str = Lib.BOLD + Lib.YELLOW + this.ID + ", ";
-		str += Lib.CYAN + this.CPF + ", ";
+		str += Lib.CYAN + mascaraCPF() + ", ";
 		str += Lib.RED + this.nome + ", ";
 		str += Lib.BLUE + this.sobrenome  + ", ";
 		str += Lib.GREEN + this.idade;
@@ -168,7 +192,7 @@ public class Autor implements Registro {
 		if (this.ID != -1) {
 			str += Lib.YELLOW + Lib.BOLD + "ID: " + Lib.RESET + this.ID + "\n";
 		}
-		str += Lib.CYAN + Lib.BOLD + "CPF: " + Lib.RESET + this.CPF;
+		str += Lib.CYAN + Lib.BOLD + "CPF: " + Lib.RESET + mascaraCPF();
 		str += Lib.RED + Lib.BOLD + "\nNome: " + Lib.RESET + this.nome;
 		str += Lib.BLUE + Lib.BOLD + "\nSobrenome: " + Lib.RESET + this.sobrenome;
 		str += Lib.GREEN + Lib.BOLD + "\nIdade: " + Lib.RESET + this.idade;

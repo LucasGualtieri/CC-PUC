@@ -2,6 +2,13 @@
 	"configurations": [
 		{
 			"type": "java",
+			"name": "Grafo",
+			"request": "launch",
+			"mainClass": "Grafos.MatrizAdjacencia.Java.Grafo",
+			"projectName": "CC-PUC_cc5a22eb"
+		},
+		{
+			"type": "java",
 			"name": "Principal",
 			"request": "launch",
 			"mainClass": "TP02.Principal",
