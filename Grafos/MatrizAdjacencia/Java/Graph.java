@@ -12,10 +12,13 @@ class Graph<T> implements Graphable {
 
 	List<List<Integer>> matrizAdjacencia;
 	HashMap<T, Integer> hashIda = new HashMap<>();
-	HashMap<Integer, T> hashVolta = new HashMap<>();
+	List<T> hashVolta = new ArrayList<>();
+	// HashMap<Integer, T> hashVolta = new HashMap<>();
 
 	int index;
 	boolean diGraph;
+
+	Graph() { this(false); }
 
 	Graph(boolean diGraph) {
 		index = 0;
@@ -28,7 +31,8 @@ class Graph<T> implements Graphable {
 
 		int matrixIndex = index++; 
 		hashIda.put(x, matrixIndex);
-		hashVolta.put(matrixIndex, x);
+		hashVolta.add(x);
+		// hashVolta.put(matrixIndex, x);
 
 		matrizAdjacencia.add(new ArrayList<>());
 		int size = matrizAdjacencia.size();
@@ -42,6 +46,10 @@ class Graph<T> implements Graphable {
 	}
 
 	public void addEdge(T a, T b) {
+		addEdge(a, b, 1);
+	}
+
+	public void addEdge(T a, T b, int weight) {
 
 		Integer hashA = hashIda.get(a);
 		Integer hashB = hashIda.get(b);
@@ -52,9 +60,9 @@ class Graph<T> implements Graphable {
 		// Criando o nó B
 		if (hashB == null) hashB = addNode(b);
 
-		matrizAdjacencia.get(hashA).set(hashB, 1);
-		if (diGraph) {
-			matrizAdjacencia.get(hashB).set(hashA, 1);
+		matrizAdjacencia.get(hashA).set(hashB, weight);
+		if (!diGraph) {
+			matrizAdjacencia.get(hashB).set(hashA, weight);
 		}
 	}
 
@@ -74,20 +82,29 @@ class Graph<T> implements Graphable {
 
 	void printMatrix() {
 
+		final String BOLD = "\u001B[1m";
+		final String GRAY = "\u001B[30m";
+		// final String RED = "\u001B[31m";
+		final String GREEN = "\u001B[32m";
+		final String YELLOW = "\u001B[33m";
+		final String RESET = "\u001B[0m";
+
 		System.out.print("  ");
 	
 		for (int i = 0; i < matrizAdjacencia.size(); i++) {
-			System.out.print("\u001B[33m" + "\u001B[1m" + i + " \u001B[0m");
+			System.out.print(YELLOW + BOLD + i + " \u001B[0m");
 		}
 
 		System.out.println();
 
+
 		for (int i = 0; i < matrizAdjacencia.size(); i++) {
-			System.out.print("\u001B[32m" + "\u001B[1m" + i + " \u001B[0m");
+			System.out.print(GREEN + BOLD + i + " " + RESET);
 			for (int j = 0; j < matrizAdjacencia.get(i).size(); j++) {
-				System.out.print(matrizAdjacencia.get(i).get(j) + " ");
+				if (i == j) System.out.print(GRAY + matrizAdjacencia.get(i).get(j) + " " + RESET);
+				else System.out.print(matrizAdjacencia.get(i).get(j) + " ");
 			}
-			System.out.println();
+			System.out.println("\u001B[0m");
 		}
 	}
 
@@ -103,7 +120,9 @@ class Graph<T> implements Graphable {
 					s.append("(" + a + ", " + b + "), ");
 				}
 			}
-			s.delete(s.length() - 2, s.length());
+			if (s.charAt(s.length() - 1) != '{') {
+				s.delete(s.length() - 2, s.length());
+			}
 			s.append("}\n");
 		}
 
