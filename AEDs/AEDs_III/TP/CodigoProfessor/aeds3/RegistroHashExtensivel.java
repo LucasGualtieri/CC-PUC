@@ -8,7 +8,7 @@ conter.
 Implementado pelo Prof. Marcos Kutova
 v1.1 - 2021
 */
-package AEDs.AEDs_III.CodigoProfessor.aeds3;
+package aeds3;
 
 import java.io.IOException;
 

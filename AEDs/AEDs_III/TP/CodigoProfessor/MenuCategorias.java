@@ -1,3 +1,5 @@
+package CodigoProfessor;
+
 // -------------------------------------------------------
 // A classe MenuCategorias é responsável pela interação com
 // o usuário. É a partir dela, que o usuário inclui, 
@@ -12,12 +14,19 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import aeds3.ArvoreBMais;
-import aeds3.ParIntInt;
-import arquivos.ArquivoCategorias;
-import arquivos.ArquivoLivros;
-import entidades.Categoria;
-import entidades.Livro;
+import CodigoProfessor.aeds3.ArvoreBMais;
+import CodigoProfessor.arquivos.ArquivoLivros;
+import CodigoProfessor.aeds3.ParIntInt;
+import CodigoProfessor.arquivos.ArquivoCategorias;
+import CodigoProfessor.entidades.Categoria;
+import CodigoProfessor.entidades.Livro;
+
+// import aeds3.ArvoreBMais;
+// import aeds3.ParIntInt;
+// import arquivos.ArquivoCategorias;
+// import arquivos.ArquivoLivros;
+// import entidades.Categoria;
+// import entidades.Livro;
 
 public class MenuCategorias {
 

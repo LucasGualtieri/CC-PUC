@@ -1,10 +1,13 @@
-package arquivos;
+package CodigoProfessor.arquivos;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
-import aeds3.Arquivo;
-import entidades.Categoria;
+import CodigoProfessor.entidades.Categoria;
+import CodigoProfessor.aeds3.Arquivo;
+
+// import aeds3.Arquivo;
+// import entidades.Categoria;
 
 public class ArquivoCategorias extends Arquivo<Categoria> {
 

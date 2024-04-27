@@ -1,3 +1,5 @@
+package CodigoProfessor;
+
 // -------------------------------------------------------
 // A classe MenuAutores é responsável pela interação com
 // o usuário. É a partir dela, que o usuário inclui, 
@@ -11,8 +13,11 @@
 
 import java.util.Scanner;
 
-import arquivos.ArquivoAutores;
-import entidades.Autor;
+import CodigoProfessor.arquivos.ArquivoAutores;
+import CodigoProfessor.entidades.Autor;
+
+// import arquivos.ArquivoAutores;
+// import entidades.Autor;
 
 public class MenuAutores {
 

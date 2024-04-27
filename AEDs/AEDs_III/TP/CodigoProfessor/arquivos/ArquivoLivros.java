@@ -1,10 +1,16 @@
-package arquivos;
+package CodigoProfessor.arquivos;
 
-import aeds3.Arquivo;
-import aeds3.ArvoreBMais;
-import aeds3.HashExtensivel;
-import aeds3.ParIntInt;
-import entidades.Livro;
+import CodigoProfessor.aeds3.ArvoreBMais;
+import CodigoProfessor.aeds3.HashExtensivel;
+import CodigoProfessor.aeds3.ParIntInt;
+import CodigoProfessor.entidades.Livro;
+import CodigoProfessor.aeds3.Arquivo;
+
+// import aeds3.Arquivo;
+// import aeds3.ArvoreBMais;
+// import aeds3.HashExtensivel;
+// import aeds3.ParIntInt;
+// import entidades.Livro;
 
 public class ArquivoLivros extends Arquivo<Livro> {
 

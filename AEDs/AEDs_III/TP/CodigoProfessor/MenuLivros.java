@@ -1,3 +1,5 @@
+package CodigoProfessor;
+
 // -------------------------------------------------------
 // A classe MenuLivro é responsável pela interação com
 // o usuário. É a partir dela, que o usuário inclui, 
@@ -12,10 +14,15 @@
 import java.text.NumberFormat;
 import java.util.Scanner;
 
-import arquivos.ArquivoCategorias;
-import arquivos.ArquivoLivros;
-import entidades.Categoria;
-import entidades.Livro;
+import CodigoProfessor.arquivos.ArquivoLivros;
+import CodigoProfessor.arquivos.ArquivoCategorias;
+import CodigoProfessor.entidades.Categoria;
+import CodigoProfessor.entidades.Livro;
+
+// import arquivos.ArquivoCategorias;
+// import arquivos.ArquivoLivros;
+// import entidades.Categoria;
+// import entidades.Livro;
 
 public class MenuLivros {
 

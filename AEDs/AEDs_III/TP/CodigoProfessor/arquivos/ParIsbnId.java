@@ -1,4 +1,4 @@
-package arquivos;
+package CodigoProfessor.arquivos;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -6,7 +6,9 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-public class ParIsbnId implements aeds3.RegistroHashExtensivel<ParIsbnId> {
+import CodigoProfessor.aeds3.RegistroHashExtensivel;
+
+public class ParIsbnId implements RegistroHashExtensivel<ParIsbnId> {
 
   private String isbn;
   private int id;

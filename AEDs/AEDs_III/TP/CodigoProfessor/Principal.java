@@ -1,13 +1,21 @@
+package CodigoProfessor;
 
 import java.io.File;
 import java.util.Scanner;
 
-import arquivos.ArquivoAutores;
-import arquivos.ArquivoCategorias;
-import arquivos.ArquivoLivros;
-import entidades.Autor;
-import entidades.Categoria;
-import entidades.Livro;
+import CodigoProfessor.arquivos.ArquivoAutores;
+import CodigoProfessor.arquivos.ArquivoLivros;
+import CodigoProfessor.entidades.Autor;
+import CodigoProfessor.arquivos.ArquivoCategorias;
+import CodigoProfessor.entidades.Categoria;
+import CodigoProfessor.entidades.Livro;
+
+// import arquivos.ArquivoAutores;
+// import arquivos.ArquivoCategorias;
+// import arquivos.ArquivoLivros;
+// import entidades.Autor;
+// import entidades.Categoria;
+// import entidades.Livro;
 
 public class Principal {
 

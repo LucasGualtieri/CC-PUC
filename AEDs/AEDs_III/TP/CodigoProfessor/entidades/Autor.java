@@ -1,11 +1,13 @@
-package entidades;
+package CodigoProfessor.entidades;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 
-import aeds3.Registro;
+import CodigoProfessor.aeds3.Registro;
+
+// import aeds3.Registro;
 
 public class Autor implements Registro {
 
