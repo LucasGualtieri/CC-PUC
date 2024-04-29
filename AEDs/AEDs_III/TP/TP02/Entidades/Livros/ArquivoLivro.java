@@ -15,8 +15,8 @@ import TP02.Arquivo;
 
 public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
 
-	// IndicadorDeTamanho + ID + ISBN + Titulo + Autor + Preço
-	private final short registerMinLength = 35; // 2 + 4 +  (2 + 13) (2 + 3) + (2 + 3) + 4.
+	// IndicadorDeTamanho + ID + ISBN + Titulo + Autor + Preço + IDAutor
+	private final short registerMinLength = 39; // 2 + 4 +  (2 + 13) (2 + 3) + (2 + 3) + 4 + 4.
 
 	// private final String nome = "Livro";
 
@@ -140,7 +140,7 @@ public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
 				list.sort((l1, l2) -> ((Livro)l1).getTitulo().compareTo(((Livro)l2).getTitulo()));
 			break;
 				case 4:
-				list.sort((l1, l2) -> ((Livro)l1).getAutor().compareTo(((Livro)l2).getAutor()));
+				list.sort((l1, l2) -> ((Livro)l1).getAutor().compareTo(((Livro)l2).getAutorName()));
 			break;
 				case 5:
 				list.sort((l1, l2) -> Float.compare(((Livro)l1).getPreco(), ((Livro)l2).getPreco()));

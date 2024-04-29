@@ -1,5 +1,6 @@
 package TP02.Entidades.Autores;
 
+import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.util.List;
 
@@ -7,6 +8,7 @@ import TP02.Lib;
 import TP02.Arquivo;
 import TP02.Registro;
 import TP02.EstruturasDeDados.HashExtensivel;
+import TP02.EstruturasDeDados.Tuplas.ParIDEndereco;
 import TP02.Entidades.Autores.Indices.ParCPFId;
 
 public class ArquivoAutor<T extends Registro> extends Arquivo<T> {
@@ -17,6 +19,31 @@ public class ArquivoAutor<T extends Registro> extends Arquivo<T> {
 
 	HashExtensivel<ParCPFId> indiceIndiretoCPF;
 	// HashExtensivel<ParNomeID> indiceNome;
+
+	public Autor getFromIndex(int ID) throws IOException, Exception {
+		
+		Autor a = new Autor();
+
+		ParIDEndereco pie = indiceDireto.read(ID);
+		long address = pie != null ? pie.getEndereco() : -1;
+
+		if (address != -1) {
+
+			file.seek(address);
+
+			short tamanhoRegistro = file.readShort();
+			byte[] registro = new byte[tamanhoRegistro];
+
+			file.read(registro);
+
+			a.fromByteArray(registro);
+		}
+
+		else throw new Exception();
+
+		return a;
+	}
+
 
 	@SuppressWarnings("unchecked")
 	public ArquivoAutor(String filePath) throws NoSuchMethodException, SecurityException, Exception {

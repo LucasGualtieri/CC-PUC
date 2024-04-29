@@ -14,7 +14,7 @@ class Generic {
 	class Cliente implements Entidade {
 		protected int idCliente;
 		
-		public static Constructor<Cliente> getConstructor() throws NoSuchMethodException, SecurityException {
+		public Constructor<Cliente> getConstructor() throws NoSuchMethodException, SecurityException {
 			return Cliente.class.getConstructor();
 		}
 

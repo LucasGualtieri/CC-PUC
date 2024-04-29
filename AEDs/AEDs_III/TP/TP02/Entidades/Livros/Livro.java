@@ -10,14 +10,17 @@ import java.util.Locale;
 
 import TP02.Lib;
 import TP02.Registro;
+import TP02.Entidades.Autores.Autor;
+import TP02.Entidades.Autores.ArquivoAutor;
+import TP02.Entidades.Autores.Indices.ParCPFId;
 
 public class Livro implements Registro {
 	
 	private int ID;
 	private String ISBN;
 	private String titulo;
-	private String autor;
 	private float preco;
+	private int IDAutor;
 	// private long address;
 
 	@SuppressWarnings("deprecation")
@@ -27,15 +30,15 @@ public class Livro implements Registro {
 		return Livro.class.getConstructor();
 	}
 
-	public Livro() { this(-1, "null", "null", -0F); }
+	public Livro() { this(-1, "null", -0F, -1); }
 
-	public Livro(String titulo, String autor, float preco) { this(-1, titulo, autor, preco); }
+	public Livro(String titulo, float preco, int IDAutor) { this(-1, titulo, preco, IDAutor); }
 
-	public Livro(int ID, String titulo, String autor, float preco) {
+	public Livro(int ID, String titulo, float preco, int IDAutor) {
 		this.ID = ID;
 		this.titulo = titulo;
-		this.autor = autor;
 		this.preco = preco;
+		this.IDAutor = IDAutor;
 	}
 
 	public Livro(byte[] array) throws Exception { fromByteArray(array); }
@@ -50,8 +53,8 @@ public class Livro implements Registro {
 		dos.writeInt(this.ID);
 		dos.writeUTF(this.ISBN);
 		dos.writeUTF(this.titulo);
-		dos.writeUTF(this.autor);
 		dos.writeFloat(this.preco);
+		dos.writeInt(this.IDAutor);
 
 		return ba_out.toByteArray();
 	}
@@ -67,8 +70,8 @@ public class Livro implements Registro {
 			this.ID = dis.readInt();
 			this.ISBN = dis.readUTF();
 			this.titulo = dis.readUTF();
-			this.autor = dis.readUTF();
 			this.preco = dis.readFloat();
+			this.IDAutor = dis.readInt();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -132,13 +135,28 @@ public class Livro implements Registro {
 		aux = Lib.readString();
 		if (aux.length() > 0) this.titulo = aux;
 
-		System.out.print("Insira o nome do autor do livro: ");
-		aux = Lib.readString();
-		if (aux.length() > 0) this.autor = aux;
-
+		
 		System.out.print("Insira o preço do livro: ");
 		float auxF = Lib.readFloat();
 		if (auxF != -1) preco = auxF;
+
+		System.out.print("Insira o CPF do autor do livro: ");
+		// System.out.print("Insira o NOME do autor do livro: "); // Deve mostrar uma lista
+		aux = Autor.readCPF(update);
+
+		if (aux.length() > 0) {
+			try {
+				ParCPFId pii = ArquivoAutor.indiceIndiretoCPF.read(ParCPFId.hashCPF(aux));
+				if (pii != null) this.IDAutor = pii.getId();
+				else {
+					// Cadastrar Autor
+					System.out.println("Não foi encontardo o autor por esse CPF");
+					System.exit(-1);
+				}
+			}
+
+			catch (Exception e) {}
+		}
 	}
 
 	// public void setAddress(long address) { this.address = address; }
@@ -155,7 +173,7 @@ public class Livro implements Registro {
 		str = this.ID + ", ";
 		str += this.ISBN  + ", ";
 		str += this.titulo  + ", ";
-		str += this.autor  + ", ";
+		str += getAutorName() + ", ";
 		str += NumberFormat.getCurrencyInstance(localeBR).format(this.preco);
 		
 		return str + "\n";
@@ -179,7 +197,7 @@ public class Livro implements Registro {
 		str = Lib.BOLD + Lib.YELLOW + this.ID + ", ";
 		str += Lib.CYAN + mascaraISBN() + ", ";
 		str += Lib.RED + this.titulo  + ", ";
-		str += Lib.BLUE + this.autor  + ", ";
+		str += Lib.BLUE + getAutorName()  + ", ";
 		str += Lib.GREEN + NumberFormat.getCurrencyInstance(localeBR).format(this.preco);
 		str += Lib.RESET;
 
@@ -194,8 +212,9 @@ public class Livro implements Registro {
 		}
 		str += Lib.CYAN + Lib.BOLD + "ISBN: " + Lib.RESET + this.ISBN;
 		str += Lib.RED + Lib.BOLD + "\nTítulo: " + Lib.RESET + this.titulo;
-		str += Lib.BLUE + Lib.BOLD + "\nAutor: " + Lib.RESET + this.autor;
 		str += Lib.GREEN + Lib.BOLD + "\nPreço: " + Lib.RESET + NumberFormat.getCurrencyInstance(localeBR).format(this.preco);
+		str += Lib.BLUE + Lib.BOLD + "\nAutor: " + Lib.RESET + getAutorName();
+		// str += Lib.BLUE + Lib.BOLD + "\nAutor: " + Lib.RESET + getAutor();
 
 		return str;
 	}
@@ -207,7 +226,36 @@ public class Livro implements Registro {
 
 	public String getTitulo() { return this.titulo; }
 
-	public String getAutor() { return this.autor; }
+	public String getAutorName() {
+		String autorName = "null";
+
+		try {
+			Autor autor = ArquivoAutor.getFromIndex(this.IDAutor);
+			autorName = autor.getNome();
+		}
+
+		catch (Exception e) {
+			System.out.println("IDAutor: " + IDAutor);
+			System.out.println("Não foi possivel encontrar o autor");
+			System.out.println(e.getMessage());
+			System.exit(-1);
+		}
+	
+		return autorName;
+	}
+
+	public Autor getAutor() {
+		Autor autor = new Autor();
+
+		try {
+			Autor tmp = ArquivoAutor.getFromIndex(this.IDAutor);
+			if (tmp != null) autor = tmp;
+		}
+
+		catch (Exception e) {}
+	
+		return autor;
+	}
 
 	public float getPreco() { return this.preco; }
 }

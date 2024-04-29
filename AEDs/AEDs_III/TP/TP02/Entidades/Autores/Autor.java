@@ -35,12 +35,13 @@ public class Autor implements Registro {
 		return Autor.class.getConstructor();
 	}
 
-	public Autor() { this(-1, "null", "null", -1); }
+	public Autor() { this(-1, "null", "null", "null", -1); }
 
-	public Autor(String nome, String sobrenome, int idade) { this(-1, nome, sobrenome, idade); }
+	public Autor(String CPF, String nome, String sobrenome, int idade) { this(-1, CPF, nome, sobrenome, idade); }
 
-	public Autor(int ID, String nome, String sobrenome, int idade) {
+	public Autor(int ID, String CPF, String nome, String sobrenome, int idade) {
 		this.ID = ID;
+		this.CPF = CPF;
 		this.nome = nome;
 		this.sobrenome = sobrenome;
 		this.idade = idade;

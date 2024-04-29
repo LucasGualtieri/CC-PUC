@@ -14,10 +14,10 @@ import java.lang.reflect.Constructor;
 public class Arquivo<T extends Registro> {
 
 	final short HEADER_SIZE = 4;
-	RandomAccessFile file;
+	protected static RandomAccessFile file;
 	protected String nome;
 	protected Constructor<T> construtor;
-	protected HashExtensivel<ParIDEndereco> indiceDireto;
+	protected static HashExtensivel<ParIDEndereco> indiceDireto;
 	// private final short registerAvgLength = 40; // 2 + 4 + (2 + 14) + (2 + 12) + 4.
 
 	public IndiceDeExcluidos excluidos; // Preciso salvar puxar da memoria
