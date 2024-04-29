@@ -99,7 +99,7 @@ class TP04Q07Verde {
 
 	}
 
-	class Lib {
+	static class Lib {
 
 		// --------------------------- FUNÇÕES AUXILIARES ---------------------------
 	
