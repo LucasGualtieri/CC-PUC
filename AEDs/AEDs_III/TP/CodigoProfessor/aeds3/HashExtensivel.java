@@ -12,7 +12,7 @@ disciplina:
 Implementado pelo Prof. Marcos Kutova
 v1.1 - 2021
 */
-package aeds3;
+package CodigoProfessor.aeds3;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
