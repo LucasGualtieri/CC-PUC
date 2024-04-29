@@ -4,16 +4,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-interface Graphable {
-	int hashCode();
-}
+class Graph<T> {
 
-class Graph<T> implements Graphable {
+	public interface Reduce {
+		int reduce(int x, int y);
+	}
+	public interface Map {
+		int map(int x);
+	}
 
-	List<List<Integer>> matrizAdjacencia;
-	HashMap<T, Integer> hashIda = new HashMap<>();
-	List<T> hashVolta = new ArrayList<>();
-	// HashMap<Integer, T> hashVolta = new HashMap<>();
+	private List<List<Integer>> matrizAdjacencia;
+	private HashMap<T, Integer> hashIda = new HashMap<>();
+	private List<T> hashVolta = new ArrayList<>();
+	private // HashMap<Integer, T> hashVolta = new HashMap<>();
 
 	int index;
 	boolean diGraph;
@@ -66,6 +69,30 @@ class Graph<T> implements Graphable {
 		}
 	}
 
+	public int ReduceOnBFS(Reduce r) {
+
+		int result = 0;
+
+		for (int i = 0; i < matrizAdjacencia.size(); i++) {
+			for (int j = 0; j < matrizAdjacencia.get(i).size(); j++) {
+				int x = matrizAdjacencia.get(i).get(j);
+				result = r.reduce(result, x);
+			}
+		}
+
+		return result;
+	}
+
+	public void MapOnBFS(Map m) {
+
+		for (int i = 0; i < matrizAdjacencia.size(); i++) {
+			for (int j = 0; j < matrizAdjacencia.get(i).size(); j++) {
+				int x = matrizAdjacencia.get(i).get(j);
+				matrizAdjacencia.get(i).set(j, m.map(x));
+			}
+		}
+	}
+
 	public boolean edgeExists(T a, T b) {
 
 		Integer hashA = hashIda.get(a);
@@ -82,29 +109,28 @@ class Graph<T> implements Graphable {
 
 	void printMatrix() {
 
-		final String BOLD = "\u001B[1m";
-		final String GRAY = "\u001B[30m";
-		// final String RED = "\u001B[31m";
-		final String GREEN = "\u001B[32m";
-		final String YELLOW = "\u001B[33m";
-		final String RESET = "\u001B[0m";
+		// Calculates the maximum number of digits
+		int maxIndexDigits = String.valueOf(matrizAdjacencia.size() - 1).length();
 
-		System.out.print("  ");
-	
+		for (int i = 0; i < maxIndexDigits + 1; i++) System.out.print(" ");
+
+		// Print column indices with proper alignment
 		for (int i = 0; i < matrizAdjacencia.size(); i++) {
-			System.out.print(YELLOW + BOLD + i + " \u001B[0m");
-		}
+			cprintf("BOLD YELLOW", "%" + (maxIndexDigits) + "d", i);
+			System.out.print(" ");
+		}  
 
 		System.out.println();
 
-
 		for (int i = 0; i < matrizAdjacencia.size(); i++) {
-			System.out.print(GREEN + BOLD + i + " " + RESET);
+			cprintf("BOLD GREEN", "%" + (maxIndexDigits) + "d", i);
 			for (int j = 0; j < matrizAdjacencia.get(i).size(); j++) {
-				if (i == j) System.out.print(GRAY + matrizAdjacencia.get(i).get(j) + " " + RESET);
-				else System.out.print(matrizAdjacencia.get(i).get(j) + " ");
+				cprintf(
+					(i == j ? "GRAY" : ""), "%" + (maxIndexDigits + 1) + "d", 
+					matrizAdjacencia.get(i).get(j)
+				);
 			}
-			System.out.println("\u001B[0m");
+			System.out.println();
 		}
 	}
 
@@ -130,4 +156,42 @@ class Graph<T> implements Graphable {
 
 		return s.toString();
 	}
+
+	public static void cprintf(String color, String format, Object...args) {
+
+		final String BOLD = "\u001B[1m";
+		final String GRAY = "\u001B[30m";
+		final String RED = "\u001B[31m";
+		final String GREEN = "\u001B[32m";
+		final String YELLOW = "\u001B[33m";
+		final String BLUE = "\u001B[34m";
+		final String MAGENTA = "\u001B[35m";
+		final String CYAN = "\u001B[36m";
+		final String RESET = "\u001B[0m";
+
+		if (color == "BOLD") color = BOLD;
+		else if (color == "GRAY") color = GRAY;
+		else if (color == "BOLD GRAY") color = BOLD + GRAY;
+		else if (color == "RED") color = RED;
+		else if (color == "BOLD RED") color = BOLD + RED;
+		else if (color == "GREEN") color = GREEN;
+		else if (color == "BOLD GREEN") color = BOLD + GREEN;
+		else if (color == "YELLOW") color = YELLOW;
+		else if (color == "BOLD YELLOW") color = BOLD + YELLOW;
+		else if (color == "BLUE") color = BLUE;
+		else if (color == "BOLD BLUE") color = BOLD + BLUE;
+		else if (color == "MAGENTA") color = MAGENTA;
+		else if (color == "BOLD MAGENTA") color = BOLD + MAGENTA;
+		else if (color == "CYAN") color = CYAN;
+		else if (color == "BOLD CYAN") color = BOLD + CYAN;
+
+		System.out.printf(color + format + RESET, args);
+	}
+	
+	// Função para limpar a tela
+	public static void clearScreen() {
+		System.out.print("\033[H\033[2J");  
+		System.out.flush();  
+	}
+
 }

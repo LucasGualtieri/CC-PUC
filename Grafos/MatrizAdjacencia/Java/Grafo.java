@@ -2,7 +2,7 @@ package Grafos.MatrizAdjacencia.Java;
 
 public class Grafo {
 
-	static class Pessoa implements Graphable {
+	static class Pessoa {
 		private String nome;
 		String sobrenome;
 
@@ -15,12 +15,20 @@ public class Grafo {
 			this.nome = nome;
 		}
 
-		public int hashCode() { return nome.hashCode(); }
+		// public int hashCode() { return nome.hashCode(); }
 		public String toString() { return nome; }
 		// public String toString() { return nome + " " + sobrenome; }
 	}
 
+	// Função para limpar a tela
+	static void clearScreen() {
+		System.out.print("\033[H\033[2J");  
+		System.out.flush();  
+	}
+
 	public static void main(String[] args) {
+
+		Graph.clearScreen();
 
 		Graph<Pessoa> g = new Graph<>();
 
@@ -51,7 +59,7 @@ public class Grafo {
 		g2.addEdge(1, 2);
 		g2.addEdge(2, 1);
 		g2.addEdge(2, 3, 3);
-		// g.addEdge(3, 1);
+		// g2.addEdge(3, 1);
 
 		System.out.println(g2.edgeExists(1, 2));
 		System.out.println(g2.edgeExists(2, 3));
