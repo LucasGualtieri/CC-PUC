@@ -104,7 +104,7 @@ class TP04Q08Verde {
 
 	}
 
-	class Lib {
+	static class Lib {
 
 		// --------------------------- FUNÇÕES AUXILIARES ---------------------------
 	

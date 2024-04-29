@@ -9,7 +9,7 @@ void CountingSort(int place, Log* log, Lista* lista) {
 	int N = lista->size;
 	Jogador* array = lista->array;
 
-	int* countArray = calloc(10,  sizeof(int));
+	int* countArray = calloc(10, sizeof(int));
 
 	for (int i = 0; i < N; i++) {
 		countArray[(vint(array[i].atributo) / place) % 10]++;
