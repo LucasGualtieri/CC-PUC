@@ -19,14 +19,30 @@ string Viegenere(string msg, const string& key) {
 	return msg;
 }
 
+string Decypher(string msg, const string& key) {
+
+	int len = key.length();
+
+	auto fn = [](char c, char key) {
+		return (((c - key + 26) % 26) + 'A');
+	};
+
+	for (int i = 0; i < msg.length(); i++) {
+		msg[i] = fn(msg[i], key[i % len]);
+	}
+
+	return msg;
+}
+
 int main() {
 
 	string msg = "FIMDESEMANA";
 	string key = "CARO";
 
 	string cifra = Viegenere(msg, key);
-
 	cout << cifra << endl;
+	
+	cout << Decypher(cifra, key) << endl;
 
 	return 0;
 }
