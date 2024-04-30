@@ -94,6 +94,21 @@ public class Lib {
 
 		public Jogador() {}
 
+		public interface Comparable {
+			int compareTo(Jogador x, Jogador y, Lib.Log log);		
+		}
+
+		public static Comparable sortByName = (x, y, log) -> {
+			log.incrementarComparacoes();
+			return x.getNome().compareTo(y.getNome());
+		};
+
+		public static Comparable sortByAge = (x, y, log) -> {
+			log.incrementarComparacoes();
+			int r = Integer.compare(x.getAnoNascimento(), y.getAnoNascimento());
+			return r != 0 ? r : x.getNome().compareTo(y.getNome());
+		};
+
 		// Usado no MergeSort
 		public Jogador(String sentinela) {
 			this.atributoStr = sentinela;

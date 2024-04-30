@@ -2,6 +2,13 @@
 	"configurations": [
 		{
 			"type": "java",
+			"name": "TP02Q05",
+			"request": "launch",
+			"mainClass": "AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP02.TP02Q05.TP02Q05",
+			"projectName": "CC-PUC_cc5a22eb"
+		},
+		{
+			"type": "java",
 			"name": "Operacoes",
 			"request": "launch",
 			"mainClass": "Grafos.MatrizAdjacencia.Java.Operacoes",

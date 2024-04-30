@@ -10,17 +10,13 @@ import AEDs.AEDs_II.Trabalhos.TrabalhosPraticos.TP02.Libs.Lib.Jogador;
 
 class TP02Q05 {
 
-	interface Comparable {
-		int compareTo(Jogador x, Jogador y);		
-	}
-
-	static void SelectionSort(Log log, Lista lista, Comparable c) {
+	static void SelectionSort(Log log, Lista lista, Jogador.Comparable c) {
 
 		int i, j, menor;
 		for (i = 0; i < lista.getSize() - 1; i++) {
 			menor = i;
 			for (j = i + 1; j < lista.getSize(); j++) {
-				int compare = c.compareTo(lista.Get(menor), lista.Get(j));
+				int compare = c.compareTo(lista.Get(menor), lista.Get(j), log);
 				if (compare > 0) menor = j;
 			}
 			lista.swap(i, menor, log);
@@ -47,14 +43,8 @@ class TP02Q05 {
 			lista.Inserir(BD.Get(id));
 		}
 
-		Comparable c = (x, y) -> {
-			log.incrementarComparacoes();
-			int r = Integer.compare(x.getAnoNascimento(), y.getAnoNascimento());
-			return r != 0 ? r : x.getNome().compareTo(y.getNome());
-		};
-
 		timer.Start();
-		SelectionSort(log, lista, c);
+		SelectionSort(log, lista, Jogador.sortByName);
 		timer.Stop();
 
 		lista.Mostrar();
