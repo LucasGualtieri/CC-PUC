@@ -201,6 +201,13 @@ public class Autor implements Registro {
 		return str;
 	}
 
+	public static int compare(Autor x, Autor y) {
+		return x.compareTo(y);
+	}
+
+	public int compareTo(Autor y) {
+		return this.nome.compareTo(y.getNome());
+	}
 
 	public void setID(int i) { this.ID = i; }
 	public int getID() { return this.ID; }

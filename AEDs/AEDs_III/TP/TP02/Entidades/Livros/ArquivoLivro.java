@@ -8,6 +8,8 @@ import java.util.List;
 import TP02.Lib;
 import TP02.Registro;
 import TP02.EstruturasDeDados.HashExtensivel;
+import TP02.Entidades.Autores.ArquivoAutor;
+import TP02.Entidades.Autores.Autor;
 // import TP02.EstruturasDeDados.Tuplas.ParIDEndereco;
 import TP02.Entidades.Livros.Indices.ParIsbnId;
 // import TP02.Entidades.Livros.Indices.ParTituloID;
@@ -21,17 +23,20 @@ public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
 	// private final String nome = "Livro";
 
 	HashExtensivel<ParIsbnId> indiceIndiretoISBN;
+	ArquivoAutor<Autor> arquivoAutor;
 
 	@SuppressWarnings("unchecked")
-	public ArquivoLivro(String filePath) throws NoSuchMethodException, SecurityException, Exception {
+	public ArquivoLivro(String filePath, String pathLivro, String pathAutor) throws NoSuchMethodException, SecurityException, Exception {
 
-		super((Constructor<T>)Livro.getConstructor(), "Livro", filePath);
+		super((Constructor<T>)Livro.getConstructor(), "Livro", filePath + pathLivro);
 
 		indiceIndiretoISBN = new HashExtensivel<>(
 			ParIsbnId.getConstructor(), 4,
-			filePath + nome + ".hashISBN_d.db",
-			filePath + nome + ".hashISBN_c.db"
+			filePath + pathLivro + nome + ".hashISBN_d.db",
+			filePath + pathLivro + nome + ".hashISBN_c.db"
 		);
+
+		// arquivoAutor = new ArquivoAutor<>(filePath + pathAutor);
 
 		// indiceTitulo = new HashExtensivel<>(
 		// 	ParTituloID.getConstructor(), 3,
@@ -140,7 +145,7 @@ public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
 				list.sort((l1, l2) -> ((Livro)l1).getTitulo().compareTo(((Livro)l2).getTitulo()));
 			break;
 				case 4:
-				list.sort((l1, l2) -> ((Livro)l1).getAutor().compareTo(((Livro)l2).getAutorName()));
+				list.sort((l1, l2) -> Autor.compare(((Livro)l1).getAutor(arquivoAutor), ((Livro)l2).getAutor(arquivoAutor)));
 			break;
 				case 5:
 				list.sort((l1, l2) -> Float.compare(((Livro)l1).getPreco(), ((Livro)l2).getPreco()));

@@ -279,7 +279,11 @@ class Principal {
 
 			switch (choice) {
 				case 1:
-					arquivo = new ArquivoLivro<>(path + "Livros/Dados/");
+					arquivo = new ArquivoLivro<>(
+						path,
+						"Livros/Dados/",
+						"Autores/Dados/"
+					);
 				break;
 				case 2:
 					arquivo = new ArquivoAutor<>(path + "Autores/Dados/");

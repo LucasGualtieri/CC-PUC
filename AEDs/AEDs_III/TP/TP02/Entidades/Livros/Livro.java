@@ -10,9 +10,11 @@ import java.util.Locale;
 
 import TP02.Lib;
 import TP02.Registro;
-import TP02.Entidades.Autores.Autor;
+// import TP02.Entidades.Autores.Autor;
+// import TP02.Entidades.Autores.ArquivoAutor;
+// import TP02.Entidades.Autores.Indices.ParCPFId;
 import TP02.Entidades.Autores.ArquivoAutor;
-import TP02.Entidades.Autores.Indices.ParCPFId;
+import TP02.Entidades.Autores.Autor;
 
 public class Livro implements Registro {
 	
@@ -120,8 +122,8 @@ public class Livro implements Registro {
 		.append(ISBN.substring(7, 12))
 		.append("-")
 		.append(ISBN.substring(12));
-        
-        return builder.toString();
+
+		return builder.toString();
 	}
 
 	// Método que faz uma interface com o usário e o permite que insira os dados do livro
@@ -140,23 +142,23 @@ public class Livro implements Registro {
 		float auxF = Lib.readFloat();
 		if (auxF != -1) preco = auxF;
 
-		System.out.print("Insira o CPF do autor do livro: ");
-		// System.out.print("Insira o NOME do autor do livro: "); // Deve mostrar uma lista
-		aux = Autor.readCPF(update);
+		// System.out.print("Insira o CPF do autor do livro: ");
+		// // System.out.print("Insira o NOME do autor do livro: "); // Deve mostrar uma lista
+		// aux = Autor.readCPF(update);
 
-		if (aux.length() > 0) {
-			try {
-				ParCPFId pii = ArquivoAutor.indiceIndiretoCPF.read(ParCPFId.hashCPF(aux));
-				if (pii != null) this.IDAutor = pii.getId();
-				else {
-					// Cadastrar Autor
-					System.out.println("Não foi encontardo o autor por esse CPF");
-					System.exit(-1);
-				}
-			}
+		// if (aux.length() > 0) {
+		// 	try {
+		// 		ParCPFId pii = ArquivoAutor.indiceIndiretoCPF.read(ParCPFId.hashCPF(aux));
+		// 		if (pii != null) this.IDAutor = pii.getId();
+		// 		else {
+		// 			// Cadastrar Autor
+		// 			System.out.println("Não foi encontardo o autor por esse CPF");
+		// 			System.exit(-1);
+		// 		}
+		// 	}
 
-			catch (Exception e) {}
-		}
+		// 	catch (Exception e) {}
+		// }
 	}
 
 	// public void setAddress(long address) { this.address = address; }
@@ -173,7 +175,7 @@ public class Livro implements Registro {
 		str = this.ID + ", ";
 		str += this.ISBN  + ", ";
 		str += this.titulo  + ", ";
-		str += getAutorName() + ", ";
+		// str += getAutorName() + ", ";
 		str += NumberFormat.getCurrencyInstance(localeBR).format(this.preco);
 		
 		return str + "\n";
@@ -197,13 +199,13 @@ public class Livro implements Registro {
 		str = Lib.BOLD + Lib.YELLOW + this.ID + ", ";
 		str += Lib.CYAN + mascaraISBN() + ", ";
 		str += Lib.RED + this.titulo  + ", ";
-		str += Lib.BLUE + getAutorName()  + ", ";
+		// str += Lib.BLUE + getAutorName()  + ", ";
 		str += Lib.GREEN + NumberFormat.getCurrencyInstance(localeBR).format(this.preco);
 		str += Lib.RESET;
 
 		return str + "\n";
 	}
-	
+
 	public String toString() {
 
 		String str = "";
@@ -213,7 +215,7 @@ public class Livro implements Registro {
 		str += Lib.CYAN + Lib.BOLD + "ISBN: " + Lib.RESET + this.ISBN;
 		str += Lib.RED + Lib.BOLD + "\nTítulo: " + Lib.RESET + this.titulo;
 		str += Lib.GREEN + Lib.BOLD + "\nPreço: " + Lib.RESET + NumberFormat.getCurrencyInstance(localeBR).format(this.preco);
-		str += Lib.BLUE + Lib.BOLD + "\nAutor: " + Lib.RESET + getAutorName();
+		// str += Lib.BLUE + Lib.BOLD + "\nAutor: " + Lib.RESET + getAutorName();
 		// str += Lib.BLUE + Lib.BOLD + "\nAutor: " + Lib.RESET + getAutor();
 
 		return str;
@@ -226,29 +228,29 @@ public class Livro implements Registro {
 
 	public String getTitulo() { return this.titulo; }
 
-	public String getAutorName() {
-		String autorName = "null";
+	// public String getAutorName() {
+	// 	String autorName = "null";
 
-		try {
-			Autor autor = ArquivoAutor.getFromIndex(this.IDAutor);
-			autorName = autor.getNome();
-		}
+	// 	try {
+	// 		Autor autor = ArquivoAutor.getFromIndex(this.IDAutor);
+	// 		autorName = autor.getNome();
+	// 	}
 
-		catch (Exception e) {
-			System.out.println("IDAutor: " + IDAutor);
-			System.out.println("Não foi possivel encontrar o autor");
-			System.out.println(e.getMessage());
-			System.exit(-1);
-		}
+	// 	catch (Exception e) {
+	// 		System.out.println("IDAutor: " + IDAutor);
+	// 		System.out.println("Não foi possivel encontrar o autor");
+	// 		System.out.println(e.getMessage());
+	// 		System.exit(-1);
+	// 	}
 	
-		return autorName;
-	}
+	// 	return autorName;
+	// }
 
-	public Autor getAutor() {
+	public Autor getAutor(ArquivoAutor<Autor> arquivoAutor) {
 		Autor autor = new Autor();
 
 		try {
-			Autor tmp = ArquivoAutor.getFromIndex(this.IDAutor);
+			Autor tmp = arquivoAutor.getFromIndex(this.IDAutor);
 			if (tmp != null) autor = tmp;
 		}
 
