@@ -1,0 +1,345 @@
+Atores:
+Registros = 10.000
+Espaço dos registros = 176 bytes
+Blocagem = 2048 / 176 = 11.63 = 11
+Blocos = 10000 / 11 = 909.09 = 910
+Espaco = 910 * 2KB = 1820KB = 1.77 MB
+
+Código(16B):
+
+Índice Multinível Estático
+Blocagem = 2 * 1024B / (16B+16B) = 2048B / 32B = 64
+Blocos = 910/64 = 14.21 = 15
+Espaço = (15+1) * 2KB = 32KB
+Ac = log64(910) = 1.63 = 2 + 1 = 3
+
+Funcionarios:
+Número de registros = 3500
+Espaço para armazenar = CPF(11 bytes) + Nome(160 bytes) + CPF_Supervisor(11 bytes) = 182 bytes
+Blocagem = 2048/182 = 11.25 = 11
+Blocos = 3.500/11 = 318.18 = 319
+Espaço = 319 * 2KB = 638KB
+
+Índice Multinível Estático
+
+CPF(11B):Blocagem = 2 * 1024/11B+16B = 2048B/27B = 75.85 = 75
+Blocos = 319/75 = 4.25 = 5
+Espaco = (5+1) * 2KB = 12KB
+ Ac = log75(319) = 1.33 = 2 + 1 = 3
+
+Índice Multinível Dinâmico  
+CPF_Supervisor(11B):
+Nó indice:
+Tamanho do elemento = 11B
+Nó ocupa 1 bloco = 2KB > = ((m-1)x(11B+12B))+12B
+Elementos por nó = (m-1) = 2048B-12B/11B+12B = 2036B/23B = 88.52 = 88
+Ordem dá arvore = m = 88 + 1 = 89
+Altura da arvore = h = log89(3500) = 1.81 = 2
+  Blocagem = 89*0.69 = 61.41 = 62
+Blocos = 3500/62 = 56.45 = 57
+Espaço = 57 * 2KB = 114KB
+Ab = h = 2 - 1 = 1
+
+Nó registro:
+Tamanho do elemento = 16B+11B
+Nó ocupa 1 bloco = 2KB > = ((m-1)x(27))+12
+Elementos por nó = (m-1) = 2048B-12B/27B = 2036B/27B = 75.40 = 75
+Ordem dá arvore = m = 75 + 1 = 76
+Altura da arvore = h = log75(3500) = 1.89 = 2
+Blocagem = 76*0.69 = 52.44 = 53
+Blocos = 3500/53 = 66.03 = 67
+Nós = Blocos = 67/(88*0.69)+3 = 67/64 = 1.04 = 2
+Espaço = (67 + 2) * 2KB = 138
+Ab = h = 2 + 1 = 3
+
+Clientes:
+  Número de registros = 100.000
+  Espaço para armazenar = Código(11 bytes) + Nome(160 bytes) + Endereco(200 bytes) + Telefone (16 bytes) + DataNascimento(12 bytes) + Sexo(1 byte) = 400 bytes
+  Blocagem = 2048/400 = 5.12 = 5
+  Blocos = 100000/5 = 20000 
+  Espaço = 20000 * 2KB = 40000 KB = 39.06 Mb
+
+  Índice Multinível Estático
+
+  CPF(11B):
+
+Blocagem = 2 * 1024/11B+16B = 2048B/27B = 75.85 = 75
+Blocos = 20000/75 = 266.66 = 267
+Espaco = (267+1) * 2KB = 536KB
+Ac = log75(20000) = 2.29 = 3 + 1 = 4
+
+Aluguel: 
+
+Número de registros = 20000000
+Espaço para armazenar = CPF_Cliente(11 bytes) + ID_Midia(24 bytes) + DataLocacao(12 bytes) + DataDevolucao(10 bytes) + ValorPaga(24 bytes) + CPF_Funcionario(11 bytes)= 92 bytes
+Blocagem = 2048/92 = 22.26 = 22
+Blocos = 20000000/22 = 909090.9 = 909091
+Espaço = 909091 * 2KB = 1818182KB = 1775.56 Mb = 1.73 Gb
+
+Índice Multinível Estático
+
+CPF_Cliente(11B):
+
+Blocagem = 2 * 1024/11B+16B = 2048B/27B = 75.85 = 75
+Blocos = 909091/75 = 12121.21 = 12122
+Espaco = (12122+1) * 2KB = 24246
+
+Ac = log75(909091) = 3.17 = 4 + 1 = 5
+ID_Media(24B):
+Blocagem = 2 * 1024/24B+16B = 2048B/40B = 51.2 = 51
+Blocos = 909091/51 = 17825.31 = 17826
+Espaco = (17826+1) * 2KB = 35654
+
+Ac = log51(909091) = 3.48 = 4 + 1 = 5
+DataLocacao(12B):
+Blocagem = 2 * 1024/12B+16B = 2048B/28B = 73.14 = 73
+Blocos = 909091/73 = 12453.30 = 12454
+Espaco = (12454+1) * 2KB = 24910
+
+Ac = log73(909091) = 3.19 = 4 + 1 = 5
+
+Índice Multinível Dinâmico
+CPF_Cliente(11B):
+Nó indice =
+
+Tamanho do elemento = 11B
+Nó ocupa 1 bloco = 2KB > = ((m-1)x(11B+12B))+12B
+Elementos por nó = (m-1) = 2048B-12B/11B+12B = 2036B/23B = 88.52 = 88
+Ordem dá arvore = m = 88 + 1 = 89
+Altura da arvore = h = log89(20000000) = 3.74 = 4
+Blocagem = 89*0.69 = 61.41 = 62
+Blocos = 20000000/62 = 322580.64 = 322581
+Espaço = 322581 * 2KB = 645162KB
+Ab = h = 4 - 1 = 3
+Nó registro =
+Tamanho do elemento = 16B+11B
+Nó ocupa 1 bloco = 2KB > = ((m-1)x(27))+12
+Elementos por nó = (m-1) = 2048B-12B/27B = 2036B/27B = 75.40 = 75
+Ordem dá arvore = m = 75 + 1 = 76
+Altura da arvore = h = log75(20000000) = 3.89 = 4
+Blocagem = 76*0.69 = 52.44 = 53
+Blocos = 20000000/53 = 377358.49 = 377359
+Nós = Blocos = 377359/(88*0.69)+3 = 377359/64 = 5896.23 = 5897
+Espaço = (377359 + 5897) * 2KB = 766512
+Ab = h = 4 + 1 = 5
+
+ID_Midia(24B):
+
+Nó indice:
+
+Tamanho do elemento = 24B
+Nó ocupa 1 bloco = 2KB > = ((m-1)x(24B+12B))+12B
+Elementos por nó = (m-1) = 2048B-12B/24B+12B = 2036B/36B = 56.55 = 56
+Ordem dá arvore = m = 56 + 1 = 57
+Altura da arvore = h = log57(20000000) = 4.15 = 5
+Blocagem = 57*0.69 = 39.33 = 40
+Blocos = 20000000/40 = 500000
+Espaço = 500000 * 2KB = 1000000KB
+Ab = h = 5 - 1 = 4
+Nó registro:
+Tamanho do elemento = 24B+16B = 40B
+Nó ocupa 1 bloco = 2KB > = ((m-1)x(40))+12
+Elementos por nó = (m-1) = 2048B-12B/40B = 2036B/40B = 50.9 = 50
+Ordem dá arvore = m = 50 + 1 = 51
+Altura da arvore = h = log51(20000000) = 4.27 = 5
+Blocagem = 51*0.69 = 35.19 = 36
+Blocos = 20000000/36 = 555555.55 = 555556
+Nós = Blocos = 555556/(72*0.69)+3 = 555556/53 = 10482.18 = 10483
+Espaço = (555556 + 10483) * 2KB = 1132078
+Ab = h = 5 + 1 = 6
+CPF_Funcionario(11B):
+Nó indice =
+Tamanho do elemento = 11B
+Nó ocupa 1 bloco = 2KB > = ((m-1)x(11B+12B))+12B
+Elementos por nó = (m-1) = 2048B-12B/11B+12B = 2036B/23B = 88.52 = 88
+Ordem dá arvore = m = 88 + 1 = 89
+Altura da arvore = h = log89(20000000) = 3.74 = 4
+Blocagem = 89*0.69 = 61.41 = 62
+Blocos = 20000000/62 = 322580.64 = 322581
+Espaço = 322581 * 2KB = 645162KB
+Ab = h = 4 - 1 = 3
+Nó registro =
+Tamanho do elemento = 16B+11B
+Nó ocupa 1 bloco = 2KB > = ((m-1)x(27))+12
+Elementos por nó = (m-1) = 2048B-12B/27B = 2036B/27B = 75.40 = 75
+Ordem dá arvore = m = 75 + 1 = 76
+Altura da arvore = h = log75(20000000) = 3.89 = 4
+Blocagem = 76*0.69 = 52.44 = 53
+Blocos = 20000000/53 = 377358.49 = 377359
+Nós = Blocos = 377359/(88*0.69)+3 = 377359/64 = 5896.23 = 5897
+Espaço = (377359 + 5897) * 2KB = 766512
+Ab = h = 4 + 1 = 5
+Midias:
+
+Número de registros =    10000000
+Espaço para armazenar = Identificador(24 bytes) + Tipo(8 bytes) + PrecoDiario(24 bytes) + CodFilme(16 bytes) = 72 bytes
+Blocagem = 2024/72 = 28.44 = 28
+Blocos = 10000000/28 = 357142.85 = 357143
+Espaço = 357143 * 2KB = 714286KB = 697.54 Mb
+
+
+Índice Multinível Estático
+
+Identificador(24B) =
+Blocagem = 2 * 1024/24B+16B = 2048B/40B = 51.2 = 51
+Blocos = 357143/51 = 7002.80 = 7003
+Espaco = (7003+1) * 2KB = 14008
+Ac = log51(357143) = 3.25 = 4 + 1 = 5
+
+  Índice Multinível Dinâmico
+CodFilme(16B) =
+
+Nó indice =
+
+Tamanho do elemento = 16B
+Nó ocupa 1 bloco = 2KB > = ((m-1)x(16B+12B))+12B
+Elementos por nó = (m-1) = 2048B-12B/16B+12B = 2036B/28B = 72.71 = 72
+Ordem dá arvore = m = 72 + 1 = 73
+Altura da arvore = h = log73(10000000) = 3.75 = 4
+Blocagem = 73*0.69 = 50.37 = 51
+Blocos = 10000000/51 = 196078.43 = 196079
+Espaço = 196079 * 2KB = 392158KB
+Ab = h = 4 - 1 = 3
+Nó registro =
+Tamanho do elemento = 16B+16B
+Nó ocupa 1 bloco = 2KB > = ((m-1)x(32))+12
+Elementos por nó = (m-1) = 2048B-12B/32B = 2036B/32B = 63.6 = 63
+Ordem dá arvore = m = 63 + 1 = 64
+Altura da arvore = h = log64(10000000) = 3.87 = 4
+Blocagem = 64*0.69 = 44.16 = 45
+Blocos = 10000000/45 = 222222.22 = 222223
+Nós = Blocos = 222223/(72*0.69)+3 = 222223/53 = 4192.88 = 4193
+Espaço = (222223 + 4193) * 2KB = 452832
+Ab = h = 4 + 1 = 5
+Filmes:
+
+Número de registros = 2.000.000
+Espaço para armazenar = Código(16 bytes) + Nome(160 bytes) + Genero(80 bytes) = 256 bytes
+Blocagem = 2024/256 = 8
+Blocos = 2000000/8 = 250000
+Espaço = 250000 * 2KB = 500000 KB = 488.28 Mb
+
+  Índice Multinível Estático
+
+Código(16B) =
+Blocagem = 2 * 1024B/16B+16B = 2048B/32B = 64
+Blocos = 250000/64 = 3906.25 = 3907
+Espaco = (3907+1) * 2KB = 7816KB
+Ac = log64(250000) = 2.98 = 3 + 1 = 4
+
+Pagamentos:
+
+Número de registros =    50.000.000
+Espaço para armazenar = Código(48 bytes) + CPF_Cliente(11 bytes) + ID_Media(24 bytes) + DataLocacao(12bytes ) + Data(12 bytes) + Valor(24 bytes) = 131 bytes
+Blocagem = 15.63 = 15
+Blocos = 50000000/15 = 3333333.3 = 3333334
+Espaço = 3333334 * 2KB = 6666668KB = 6510.41 Mb = 6.35 Gb
+
+  Índice Multinível Estático
+Código(48B) =
+Blocagem = 2 * 1024B/16B+48B = 2048B/64B = 32
+Blocos = 50000000/32 = 1562500
+Espaco = (1562500+1) * 2KB = 3125002KB
+Ac = log32(3125002) = 4.31 = 5 + 1 = 6
+
+  Índice Multinível Dinâmico
+
+ID_Midia(24B) =
+
+Nó indice =
+
+Tamanho do elemento = 24B
+Nó ocupa 1 bloco = 2KB > = ((m-1)x(24B+12B))+12B
+Elementos por nó = (m-1) = 2048B-12B/24B+12B = 2036B/36B = 56.55 = 56
+Ordem dá arvore = m = 56 + 1 = 57
+Altura da arvore = h = log57(50000000) = 4.38 = 5
+Blocagem = 57*0.69 = 39.33 = 40
+Blocos = 50000000/40 = 1250000
+Espaço = 1250000 * 2KB = 2500000KB
+Ab = h = 5 - 1 = 4
+Nó registro =
+Tamanho do elemento = 24B+16B = 40B
+Nó ocupa 1 bloco = 2KB > = ((m-1)x(40))+12
+Elementos por nó = (m-1) = 2048B-12B/40B = 2036B/40B = 50.9 = 50
+Ordem dá arvore = m = 50 + 1 = 51
+Altura da arvore = h = log51(50000000) = 4.50 = 5
+Blocagem = 51*0.69 = 35.19 = 36
+Blocos = 50000000/36 = 1388888.88 = 1388889
+Nós = Blocos = 1388889/(72*0.69)+3 = 16950/53 = 319.81 = 320
+Espaço = (16950 + 320) * 2KB = 34540
+Ab = h = 5 + 1 = 6
+
+AtoresEmFilmes 
+
+Número de registros = 1000000
+Espaço para armazenar = CodFilme(16 bytes) + CodAtor(16 bytes) = 32 bytes
+Blocagem = 64
+Blocos = 1000000/64 = 15625 
+Espaço = 15625 * 2KB = 31250KB = 30.51 Mb
+CodFilme(16B):
+
+Índice Multinível Estático
+Blocagem = 2 * 1024B/16B+16B = 2048B/32B = 64
+Blocos = 15625/64 = 244.14 = 245
+Espaco = (245+1) * 2KB = 492KB
+Ac = log64(15625) = 2.32 = 3 + 1 = 4
+
+Índice Multinível Dinâmico
+
+Nó indice =
+
+Tamanho do elemento = 16B
+Nó ocupa 1 bloco = 2KB > = ((m-1)x(16B+12B))+12B
+Elementos por nó = (m-1) = 2048B-12B/16B+12B = 2036B/28B = 72.71 = 72
+Ordem dá arvore = m = 72 + 1 = 73
+Altura da arvore = h = log73(10000) = 3.22 = 4
+Blocagem = 73*0.69 = 50.37 = 51
+Blocos = 1000000/51 = 19607.84 = 19608
+Espaço = 19608 * 2KB = 39216KB
+Ab = h = 4 - 1 = 3
+Nó registro =
+Tamanho do elemento = 16B+16B
+Nó ocupa 1 bloco = 2KB > = ((m-1)x(32))+12
+Elementos por nó = (m-1) = 2048B-12B/32B = 2036B/32B = 63.6 = 63
+Ordem dá arvore = m = 63 + 1 = 64
+Altura da arvore = h = log64(1000000) = 3.32 = 4
+Blocagem = 64*0.69 = 44.16 = 45
+Blocos = 1000000/45 = 22222.22 = 22223
+Nós = Blocos = 22223/(72*0.69)+3 = 22223/53 = 419.30 = 420
+Espaço = (22223 + 420) * 2KB = 45286
+Ab = h = 4 + 1 = 5
+CodAtor(16B):
+
+Índice Multinível Estático
+Blocagem = 2 * 1024B/16B+16B = 2048B/32B = 64
+Blocos = 15625/64 = 244.14 = 245
+Espaco = (245+1) * 2KB = 492KB
+ Ac = log64(15625) = 2.32 = 3 + 1 = 4
+
+    Índice Multinível Dinâmico
+
+Nó indice =
+
+Tamanho do elemento = 16B
+Nó ocupa 1 bloco = 2KB > = ((m-1)x(16B+12B))+12B
+Elementos por nó = (m-1) = 2048B-12B/16B+12B = 2036B/28B = 72.71 = 72
+Ordem dá arvore = m = 72 + 1 = 73
+Altura da arvore = h = log73(10000) = 3.22 = 4
+Blocagem = 73*0.69 = 50.37 = 51
+Blocos = 1000000/51 = 19607.84 = 19608
+Espaço = 19608 * 2KB = 39216KB
+
+Ab = h = 4 - 1 = 3
+
+Nó registro =
+
+Tamanho do elemento = 16B+16B
+Nó ocupa 1 bloco = 2KB > = ((m-1)x(32))+12
+Elementos por nó = (m-1) = 2048B-12B/32B = 2036B/32B = 63.6 = 63
+Ordem dá arvore = m = 63 + 1 = 64
+ Altura da arvore = h = log64(1000000) = 3.32 = 4
+    Blocagem = 64*0.69 = 44.16 = 45
+Blocos = 1000000/45 = 22222.22 = 22223
+Nós = Blocos = 22223/(72*0.69)+3 = 22223/53 = 419.30 = 420
+Espaço = (22223 + 420) * 2KB = 45286
+Ab = h = 4 + 1 = 5
