@@ -1,59 +1,67 @@
 package TP02.Entidades.Livros;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 // import java.io.IOException;
 // import java.io.IOException;
 import java.lang.reflect.Constructor;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 
-import TP02.Lib;
-import TP02.Registro;
-import TP02.EstruturasDeDados.HashExtensivel;
-import TP02.Entidades.Autores.ArquivoAutor;
-import TP02.Entidades.Autores.Autor;
-// import TP02.EstruturasDeDados.Tuplas.ParIDEndereco;
-import TP02.Entidades.Livros.Indices.ParIsbnId;
-// import TP02.Entidades.Livros.Indices.ParTituloID;
-import TP02.Arquivo;
+import TP02.*;
+// import TP02.Entidades.*;
+import TP02.EstruturasDeDados.*;
+import TP02.Entidades.Livros.Indices.*;
 
 public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
 
-	// IndicadorDeTamanho + ID + ISBN + Titulo + Autor + Preço + IDAutor
-	private final short registerMinLength = 39; // 2 + 4 +  (2 + 13) (2 + 3) + (2 + 3) + 4 + 4.
+	// IndicadorDeTamanho + ID + ISBN + Titulo + Autor + Preço
+	private final short registerMinLength = 35; // 2 + 4 + (2 + 13) (2 + 3) + (2 + 3) + 4.
 
 	// private final String nome = "Livro";
 
 	HashExtensivel<ParIsbnId> indiceIndiretoISBN;
-	ArquivoAutor<Autor> arquivoAutor;
+	ListaInvertida listaInvertidaTitulos;
+
+	HashSet<String> stopWords;
+	HashMap<Character, Character> caracteresEspeciais;
 
 	@SuppressWarnings("unchecked")
-	public ArquivoLivro(String filePath, String pathLivro, String pathAutor) throws NoSuchMethodException, SecurityException, Exception {
+	public ArquivoLivro(String filePath) throws NoSuchMethodException, SecurityException, Exception {
 
-		super((Constructor<T>)Livro.getConstructor(), "Livro", filePath + pathLivro);
+		super((Constructor<T>)Livro.getConstructor(), "Livro", filePath);
 
 		indiceIndiretoISBN = new HashExtensivel<>(
 			ParIsbnId.getConstructor(), 4,
-			filePath + pathLivro + nome + ".hashISBN_d.db",
-			filePath + pathLivro + nome + ".hashISBN_c.db"
+			filePath + nome + ".hashISBN_d.db",
+			filePath + nome + ".hashISBN_c.db"
 		);
 
-		// arquivoAutor = new ArquivoAutor<>(filePath + pathAutor);
+		listaInvertidaTitulos = new ListaInvertida(
+			4,
+			filePath + nome + "dicionario.listainvTitulo.db",
+			filePath + nome + "blocos.listainvTitulo.db"
+		);
 
-		// indiceTitulo = new HashExtensivel<>(
-		// 	ParTituloID.getConstructor(), 3,
-		// 	filePath + nome + ".hashTitulo_d.db",
-		// 	filePath + nome + ".hashTitulo_c.db"
-		// );
+		CriarStopWordsList();
+		CriarCaracteresEspeciaisList();
 	}
 
 	public int create(T object) throws Exception {
 		super.create(true, registerMinLength, object);
 	    indiceIndiretoISBN.create(new ParIsbnId(((Livro)object).getISBN(), object.getID()));
+		createInvertida(((Livro)object).getTitulo(), object.getID());
 		return object.getID();
 	}
-
+	
 	protected int create(boolean createNewID, T object) throws Exception {
 		super.create(createNewID, registerMinLength, object);
 		indiceIndiretoISBN.create(new ParIsbnId(((Livro)object).getISBN(), object.getID()));
+		createInvertida(((Livro)object).getTitulo(), object.getID());
 		return object.getID();
 	}
 
@@ -65,11 +73,11 @@ public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
 		System.out.println("Buscar por:");
 		System.out.println("1 - ID.");
 		System.out.println("2 - ISBN.");
-		Lib.cprintf(Lib.RED, "3 - Título. Ainda não implementado.\n");
+		System.out.println("3 - Título.");
 		System.out.println("\n0 - Voltar.");
 		System.out.print("\nEscolha uma das opções acima: ");
 
-		int choice = Lib.ReadChoice(2);
+		int choice = Lib.ReadChoice(3);
 		int ID = 0;
 
 		switch (choice) {
@@ -82,6 +90,8 @@ public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
 				String ISBN = Livro.readISBN(false);
 				ParIsbnId pii = indiceIndiretoISBN.read(ParIsbnId.hashIsbn(ISBN));
 				if (pii != null) ID = pii.getId();
+			case 3:
+				ID = -1; // Condição que define que a pesquisa será feita por meio da lista invertida.
 			break;
 			default:
 				// System.out.printf("Insira o título do livro: ");
@@ -92,25 +102,156 @@ public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
 		return ID;
 	}
 
-	// public void update(int ID, T newObj) throws IOException, Exception {
-	// 	ParIDEndereco pie = indiceDireto.read(ID);
-	// 	delete(pie.getId());
-	// 	create(false, newObj);
-	// }
+	// ------------ Lista Invertida --------------------------
+
+	private void CriarStopWordsList() {
+
+		stopWords = new HashSet<>();
+		
+		String filePath = "AEDs/AEDs_III/TP/TP02/EstruturasDeDados/StopWords.txt";
+		String fileLine;
+
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            while ((fileLine = br.readLine()) != null) {
+				stopWords.add(fileLine);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
+	
+	private void CriarCaracteresEspeciaisList() {
+		caracteresEspeciais = new HashMap<>();
+
+		caracteresEspeciais.put('á', 'a');
+		caracteresEspeciais.put('à', 'a');
+		caracteresEspeciais.put('â', 'a');
+		caracteresEspeciais.put('ã', 'a');
+
+		caracteresEspeciais.put('é', 'e');
+		caracteresEspeciais.put('è', 'e');
+		caracteresEspeciais.put('ê', 'e');
+
+		caracteresEspeciais.put('í', 'i');
+		caracteresEspeciais.put('ì', 'i');
+		caracteresEspeciais.put('î', 'i');
+
+		caracteresEspeciais.put('ó', 'o');
+		caracteresEspeciais.put('ò', 'o');
+		caracteresEspeciais.put('ô', 'o');
+		caracteresEspeciais.put('õ', 'o');
+
+		caracteresEspeciais.put('ú', 'u');
+		caracteresEspeciais.put('ù', 'u');
+		caracteresEspeciais.put('û', 'u');
+
+		caracteresEspeciais.put('ç', 'c');
+	}
+
+	private List<String> removerStopWords(String string) {
+
+		List<String> arrayLimpo = new ArrayList<>();
+
+		for (String str : string.split(" ")) {
+			if (!stopWords.contains(str)) {
+				arrayLimpo.add(str);
+			}
+		}
+
+		return arrayLimpo;
+	}
+
+	private String removerAcentos(String str) {
+
+		StringBuilder s = new StringBuilder();
+
+		for (char c : str.toCharArray()) {
+
+			Character character = caracteresEspeciais.get(c);
+
+			s.append(character == null ? c : character);
+
+		}
+
+		return s.toString();
+	}
+
+	private List<String> LimparString(String str) {
+		str = removerAcentos(str.toLowerCase());
+		return removerStopWords(str);
+	}
+
+	private void createInvertida(String titulo, int ID) throws Exception {
+
+		List<String> lista = LimparString(titulo);
+
+		for (String str : lista) {
+			// System.out.println("Resultado: " + str);
+			listaInvertidaTitulos.create(str, ID);
+		}
+	}
+
+	private void deleteInvertida(String titulo, int ID) throws Exception {
+
+		List<String> lista = LimparString(titulo);
+
+		for (String str : lista) {
+			listaInvertidaTitulos.delete(str, ID);
+		}
+	}
+
+	private void IntersecDeConjutos(HashSet<Integer> conjunto1, int[] conjunto2) {
+		for (int i : conjunto2) {
+			if (!conjunto1.contains(i)) conjunto1.remove(i);
+		}
+	}
+
+	public List<T> readInvertida() throws Exception {
+
+		System.out.printf("Insira o título do livro: ");
+		String titulo = Lib.readString();
+
+		List<String> palavras = LimparString(titulo);
+
+		HashSet<Integer> conjutoIDs = new HashSet<>();
+		
+		int[] dados = listaInvertidaTitulos.read(palavras.get(0));
+		
+		for (int i : dados) conjutoIDs.add(i);
+
+		for (int i = 1; i < palavras.size(); i++) {
+			dados = listaInvertidaTitulos.read(palavras.get(i));
+			IntersecDeConjutos(conjutoIDs, dados);
+			if (conjutoIDs.isEmpty()) break;
+		}
+
+		List<T> objects = new LinkedList<>();
+
+		for (int ID : dados) {
+			try { objects.add(read(ID)); }
+			catch (Exception e) {}
+		}
+
+		return objects;
+	}
+
+	// ---------------------------------------------------------------
 
 	public void delete(int ID) throws Exception {
 		
 		Livro l = (Livro)super.read(ID);
 		
 		super.delete(ID);
-
+		
 		String ISBN = l.getISBN();
-
+		
 		indiceIndiretoISBN.delete(ParIsbnId.hashIsbn(ISBN));
+		deleteInvertida(((Livro)l).getTitulo(), l.getID());
 	}
 
 	// Essa função permite que o usuário escolha de que forma gostaria de apresentar os dados na listagem
 	public int SortList(List<T> list) {
+
 		System.out.println("Ordenar por:");
 		System.out.println("1 - ID");
 		System.out.println("2 - ISBN");
@@ -145,7 +286,7 @@ public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
 				list.sort((l1, l2) -> ((Livro)l1).getTitulo().compareTo(((Livro)l2).getTitulo()));
 			break;
 				case 4:
-				list.sort((l1, l2) -> Autor.compare(((Livro)l1).getAutor(arquivoAutor), ((Livro)l2).getAutor(arquivoAutor)));
+				list.sort((l1, l2) -> ((Livro)l1).getAutor().compareTo(((Livro)l2).getAutor()));
 			break;
 				case 5:
 				list.sort((l1, l2) -> Float.compare(((Livro)l1).getPreco(), ((Livro)l2).getPreco()));
@@ -153,6 +294,21 @@ public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
 		}
 
 		return choice;
+	}
+
+	public int CRUDMenu() {
+
+		Lib.printdiv(1, "Base de dados: Livros");
+
+		System.out.println("1 - Cadastrar.");
+		System.out.println("2 - Pesquisar.");
+		System.out.println("3 - Atualizar.");
+		System.out.println("4 - Deletar.");
+		System.out.println("5 - Listar todos os livros\n");
+		System.out.println("0 - Voltar.\n");
+		System.out.print("Escolha uma das opções acima: ");
+
+		return Lib.ReadChoice(5);
 	}
 
 	public String getNome() { return nome; }

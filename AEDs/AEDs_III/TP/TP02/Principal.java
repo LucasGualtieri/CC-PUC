@@ -2,17 +2,12 @@ package TP02;
 
 import java.util.List;
 
-import TP02.Entidades.Autores.ArquivoAutor;
-import TP02.Entidades.Livros.ArquivoLivro;
-import TP02.Entidades.Livros.Livro;
-
-// clear && javac -d Classes -cp ../ Principal.java && java -cp Classes Principal.java
-
-/*
- * /usr/lib/jvm/java-19-openjdk-amd64/bin/java -XX:+ShowCodeDetailsInExceptionMessages -cp /home/lucas/.vscode-server/data/User/workspaceStorage/806c8f962603aef4653ee3ae9c715a28/redhat.java/jdt_ws/CC-PUC_cc5a22eb/bin TP02.Principal
-*/
+import TP02.Entidades.Livros.*;
+import TP02.Entidades.Autores.*;
 
 class Principal {
+
+	static final String path = "AEDs/AEDs_III/TP/TP02/Entidades/";
 
 	static <T extends Registro> void Create(Arquivo<T> arquivo) throws Exception {
 
@@ -51,23 +46,45 @@ class Principal {
 			Lib.clearScreen();
 			Lib.printdiv(1, "Pesquisando na base de dados: %s", arquivo.getNomePlural());
 		}
-		
+
 		T object = null;
 
 		try {
 			int ID = arquivo.read();
-			
-			// Não me lembro da utilidade desse bloco
-			// if (ID == 0) {
-			// 	Lib.clearScreen();
-			// 	return null;
-			// }
 
-			object = arquivo.read(ID);
-			if (print) {
+			// Esse boco permite que o programa se comporte corretamente quando o usuário decide voltar para o menu anterior
+			if (ID == 0) {
 				Lib.clearScreen();
-				Lib.cprintf("BOLD GREEN", "%s encontrado com sucesso!\n\n", arquivo.getNome());
-				System.out.println(object + "\n");
+				return null;
+			}
+
+			if (ID != -1) {
+				object = arquivo.read(ID);
+				if (print) {
+					Lib.clearScreen();
+					Lib.cprintf("BOLD GREEN", "%s encontrado com sucesso!\n\n", arquivo.getNome());
+					System.out.println(object + "\n");
+				}
+			}
+
+			else {
+
+				List<T> lista = arquivo.readInvertida();
+
+				Lib.clearScreen();
+
+				if (lista != null) {
+					Lib.cprintf("BOLD GREEN", "Os seguintes %s foram encontrados:\n\n", arquivo.getNomePluralLowerCase());
+					int[] i = {1};
+					lista.forEach((obj) -> {
+						System.out.printf("%d- %s", i[0]++, obj.toCSV());
+					});
+					System.out.println();
+				}
+
+				else {
+					Lib.cprintf("BOLD RED", "Nenhum %s encontrado!\n\n", arquivo.getNomeLowerCase());
+				}
 			}
 		}
 
@@ -81,10 +98,10 @@ class Principal {
 
 	// Quando cancelar a atualização esta mandando mensagem de livro não encontrado
 	static <T extends Registro> void Update(Arquivo<T> arquivo) throws Exception {
-		
+
 		Lib.clearScreen();
 		Lib.printdiv(1, "Atualizando a base de dados: %s", arquivo.getNomePlural());
-		
+
 		T oldObject, newObject;
 
 		try {
@@ -106,15 +123,15 @@ class Principal {
 		Lib.cprintf("GREEN", "1 - Atualizar os dados.\n");
 		Lib.cprintf("RED", "2 - Cancelar atualização.\n");
 		System.out.print("\nEscolha uma das opções acima: ");
-		
+
 		int escolha = Lib.ReadChoice(2);
-		
+
 		if (escolha == 1) {
 			System.out.println();
 			newObject = arquivo.readNewInstance(oldObject);
 			System.out.println("\n" + newObject + "\n");
 		}
-		
+
 		else {
 			Lib.clearScreen();
 			Lib.cprintf("BOLD RED", "\nAtualização cancelada.\n\n");
@@ -131,7 +148,7 @@ class Principal {
 
 		Lib.clearScreen();
 
-		if (escolha != 1)Lib.cprintf("BOLD RED", "Atualização cancelada.\n\n");
+		if (escolha != 1) Lib.cprintf("BOLD RED", "Atualização cancelada.\n\n");
 
 		else {
 			try {
@@ -148,7 +165,7 @@ class Principal {
 	}
 
 	static <T extends Registro> void Delete(Arquivo<T> arquivo) throws Exception {
-		
+
 		Lib.clearScreen();
 		Lib.printdiv(1, "Excluindo da base de dados: %s", arquivo.getNomePlural());
 
@@ -173,7 +190,7 @@ class Principal {
 		System.out.print("\nEscolha uma das opções acima: ");
 
 		int escolha = Lib.ReadChoice(2);
-		
+
 		Lib.clearScreen();
 
 		if (escolha == 1) {
@@ -186,7 +203,7 @@ class Principal {
 	}
 
 	static <T extends Registro> void Listar(Arquivo<T> arquivo) throws Exception {
-		
+
 		Lib.clearScreen();
 
 		List<T> list = arquivo.Listar();
@@ -202,7 +219,7 @@ class Principal {
 			Lib.clearScreen();
 			return;
 		}
-		
+
 		Lib.clearScreen();
 		Lib.printdiv(1, "Listando a base de dados: %s", arquivo.getNomePlural());
 
@@ -221,22 +238,12 @@ class Principal {
 
 		Lib.clearScreen();
 
-		int escolha;
+		int choice;
 
 		do {
-			Lib.printdiv(1, "Base de dados: %s", arquivo.getNomePlural());
+			choice = arquivo.CRUDMenu();
 
-			System.out.println("1 - Cadastrar.");
-			System.out.println("2 - Pesquisar.");
-			System.out.println("3 - Atualizar.");
-			System.out.println("4 - Deletar.");
-			System.out.printf("5 - Listar todos os %s.\n", arquivo.getNomePluralLowerCase());
-			System.out.println("\n0 - Voltar.");
-			System.out.print("\nEscolha uma das opções acima: ");
-
-			escolha = Lib.ReadChoice(5);
-
-			switch (escolha) {
+			switch (choice) {
 			case 1:
 				Create(arquivo);
 				break;
@@ -254,13 +261,11 @@ class Principal {
 				break;
 			}
 
-		} while (escolha != 0);
+		} while (choice != 0);
 	}
 
 	// A função main permite que o usuário escolha a base de dados que deseja trabalhar.
 	public static void main(String[] args) throws Exception {
-
-		String path = "AEDs/AEDs_III/TP/TP02/Entidades/";
 
 		int choice;
 
@@ -271,19 +276,15 @@ class Principal {
 			Lib.printdiv(1, "SGBD");
 
 			System.out.println("1 - Livros.");
-			System.out.println("2 - Autores.");
-			System.out.println("\n0 - Sair do programa.");
-			System.out.print("\nEscolha uma das bases de dados: ");
-			
+			System.out.println("2 - Autores.\n");
+			System.out.println("0 - Sair do programa.\n");
+			System.out.print("Escolha uma das bases de dados: ");
+
 			choice = Lib.ReadChoice(2);
 
 			switch (choice) {
 				case 1:
-					arquivo = new ArquivoLivro<>(
-						path,
-						"Livros/Dados/",
-						"Autores/Dados/"
-					);
+					arquivo = new ArquivoLivro<>(path + "Livros/Dados/");
 				break;
 				case 2:
 					arquivo = new ArquivoAutor<>(path + "Autores/Dados/");

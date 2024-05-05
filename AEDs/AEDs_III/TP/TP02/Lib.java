@@ -1,7 +1,7 @@
 package TP02;
 
-import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.InputMismatchException;
 
 public class Lib {
 
@@ -17,7 +17,6 @@ public class Lib {
 	public static final String RESET = "\u001B[0m";
 
 	private static Scanner scanner = new Scanner(System.in);
-
 
 	// Função usada em diversos momentos quando o usuário precisa decidir qual opção do menu escolher
 	public static int ReadChoice(int choiceCount) {

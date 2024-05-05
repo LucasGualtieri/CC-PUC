@@ -1,14 +1,10 @@
 package TP02.Entidades.Autores;
 
-import java.io.IOException;
-import java.lang.reflect.Constructor;
 import java.util.List;
+import java.lang.reflect.Constructor;
 
-import TP02.Lib;
-import TP02.Arquivo;
-import TP02.Registro;
-import TP02.EstruturasDeDados.HashExtensivel;
-import TP02.EstruturasDeDados.Tuplas.ParIDEndereco;
+import TP02.*;
+import TP02.EstruturasDeDados.*;
 import TP02.Entidades.Autores.Indices.ParCPFId;
 
 public class ArquivoAutor<T extends Registro> extends Arquivo<T> {
@@ -19,31 +15,6 @@ public class ArquivoAutor<T extends Registro> extends Arquivo<T> {
 
 	HashExtensivel<ParCPFId> indiceIndiretoCPF;
 	// HashExtensivel<ParNomeID> indiceNome;
-
-	public Autor getFromIndex(int ID) throws IOException, Exception {
-		
-		Autor a = new Autor();
-
-		ParIDEndereco pie = indiceDireto.read(ID);
-		long address = pie != null ? pie.getEndereco() : -1;
-
-		if (address != -1) {
-
-			file.seek(address);
-
-			short tamanhoRegistro = file.readShort();
-			byte[] registro = new byte[tamanhoRegistro];
-
-			file.read(registro);
-
-			a.fromByteArray(registro);
-		}
-
-		else throw new Exception();
-
-		return a;
-	}
-
 
 	@SuppressWarnings("unchecked")
 	public ArquivoAutor(String filePath) throws NoSuchMethodException, SecurityException, Exception {
@@ -149,6 +120,21 @@ public class ArquivoAutor<T extends Registro> extends Arquivo<T> {
 		}
 
 		return choice;
+	}
+
+	public int CRUDMenu() {
+
+		Lib.printdiv(1, "Base de dados: Autores");
+
+		System.out.println("1 - Cadastrar.");
+		System.out.println("2 - Pesquisar.");
+		System.out.println("3 - Atualizar.");
+		System.out.println("4 - Deletar.");
+		System.out.println("5 - Listar todos os autores\n");
+		System.out.println("0 - Voltar.\n");
+		System.out.print("Escolha uma das opções acima: ");
+
+		return Lib.ReadChoice(5);
 	}
 
 	public String getNome() { return nome; }

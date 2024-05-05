@@ -251,6 +251,10 @@ public class Arquivo<T extends Registro> {
 		objeto.printHeaderCSV();
 	}
 
+	public int CRUDMenu() { return -1; }
+
+	public List<T> readInvertida() throws Exception { return null; }
+
 	public void close() throws Exception {
 		excluidos.close();
 		file.close();
