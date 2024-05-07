@@ -73,7 +73,7 @@ class Principal {
 
 				Lib.clearScreen();
 
-				if (lista != null) {
+				if (!lista.isEmpty()) {
 					Lib.cprintf("BOLD GREEN", "Os seguintes %s foram encontrados:\n\n", arquivo.getNomePluralLowerCase());
 					int[] i = {1};
 					lista.forEach((obj) -> {

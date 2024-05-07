@@ -27,9 +27,7 @@ public class Lib {
 		
 		public void Start() { this.startTime = Instant.now(); }
 
-		public void Stop() {
-			this.endTime = Instant.now();
-		}
+		public void Stop() { this.endTime = Instant.now(); }
 		
 		public double Time() {
 			return Duration.between(startTime, endTime).getNano() / 1000000000.0;

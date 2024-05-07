@@ -161,6 +161,10 @@ public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
 		return arrayLimpo;
 	}
 
+	private boolean isAlpha(char c) {
+		return 'a' <= c && c <= 'z' || 'A' <= c && c <= 'Z' || c == ' ';
+	}
+
 	private String removerAcentos(String str) {
 
 		StringBuilder s = new StringBuilder();
@@ -169,8 +173,11 @@ public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
 
 			Character character = caracteresEspeciais.get(c);
 
-			s.append(character == null ? c : character);
+			if (character == null) {
+				if (isAlpha(c)) s.append(c);
+			}
 
+			else s.append(character);
 		}
 
 		return s.toString();
@@ -227,7 +234,7 @@ public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
 
 		List<T> objects = new LinkedList<>();
 
-		for (int ID : dados) {
+		for (int ID : conjutoIDs) {
 			try { objects.add(read(ID)); }
 			catch (Exception e) {}
 		}
