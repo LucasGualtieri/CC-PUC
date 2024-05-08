@@ -3,14 +3,13 @@ package TP02.Entidades.Livros;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-// import java.io.IOException;
-// import java.io.IOException;
 import java.lang.reflect.Constructor;
+import java.text.Normalizer;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import TP02.*;
 // import TP02.Entidades.*;
@@ -28,7 +27,6 @@ public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
 	ListaInvertida listaInvertidaTitulos;
 
 	HashSet<String> stopWords;
-	HashMap<Character, Character> caracteresEspeciais;
 
 	@SuppressWarnings("unchecked")
 	public ArquivoLivro(String filePath) throws NoSuchMethodException, SecurityException, Exception {
@@ -48,7 +46,6 @@ public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
 		);
 
 		CriarStopWordsList();
-		CriarCaracteresEspeciaisList();
 	}
 
 	public int create(T object) throws Exception {
@@ -120,34 +117,6 @@ public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
         }
 	}
 	
-	private void CriarCaracteresEspeciaisList() {
-		caracteresEspeciais = new HashMap<>();
-
-		caracteresEspeciais.put('á', 'a');
-		caracteresEspeciais.put('à', 'a');
-		caracteresEspeciais.put('â', 'a');
-		caracteresEspeciais.put('ã', 'a');
-
-		caracteresEspeciais.put('é', 'e');
-		caracteresEspeciais.put('è', 'e');
-		caracteresEspeciais.put('ê', 'e');
-
-		caracteresEspeciais.put('í', 'i');
-		caracteresEspeciais.put('ì', 'i');
-		caracteresEspeciais.put('î', 'i');
-
-		caracteresEspeciais.put('ó', 'o');
-		caracteresEspeciais.put('ò', 'o');
-		caracteresEspeciais.put('ô', 'o');
-		caracteresEspeciais.put('õ', 'o');
-
-		caracteresEspeciais.put('ú', 'u');
-		caracteresEspeciais.put('ù', 'u');
-		caracteresEspeciais.put('û', 'u');
-
-		caracteresEspeciais.put('ç', 'c');
-	}
-
 	private List<String> removerStopWords(String string) {
 
 		List<String> arrayLimpo = new ArrayList<>();
@@ -161,26 +130,10 @@ public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
 		return arrayLimpo;
 	}
 
-	private boolean isAlpha(char c) {
-		return 'a' <= c && c <= 'z' || 'A' <= c && c <= 'Z' || c == ' ';
-	}
-
 	private String removerAcentos(String str) {
-
-		StringBuilder s = new StringBuilder();
-
-		for (char c : str.toCharArray()) {
-
-			Character character = caracteresEspeciais.get(c);
-
-			if (character == null) {
-				if (isAlpha(c)) s.append(c);
-			}
-
-			else s.append(character);
-		}
-
-		return s.toString();
+		String nfdNormalizedString = Normalizer.normalize(str, Normalizer.Form.NFD);
+		Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
+		return pattern.matcher(nfdNormalizedString).replaceAll("");
 	}
 
 	private List<String> LimparString(String str) {
