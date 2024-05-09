@@ -34,7 +34,7 @@ public:
 		if (running) {
 			stop();
 		}
-		duration<double, milli> duration = end - beginning;
+		duration<double, std::milli> duration = end - beginning;
 		return duration.count();
 	}
 };
