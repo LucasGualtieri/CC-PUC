@@ -1,0 +1,21 @@
+public static void TreeSort(Fila fila) throws Exception {
+
+	Arvore arvore = new Arvore();
+
+	int N = fila.getSize();
+
+	for (int i = 0; i < N; i++) {
+		arvore.Inserir(fila.Remover());
+	}
+
+	TreeSort(arvore.getRaiz());
+}
+
+private static void TreeSort(No raiz, Fila fila) throws Exception {
+
+	if (raiz != null) {
+		TreeSort(raiz.esq);
+		fila.Inserir(raiz.jogador);
+		TreeSort(raiz.dir);
+	}
+}

@@ -1,0 +1,40 @@
+Celula* encontrarRepetidos(No* raiz, CelulaMatriz* inicio) {
+	Celula* primeiro;
+	caminharMatriz(primeiro, raiz, inicio); // O(n * lg(n))
+	return primeiro;
+}
+
+void caminharMatriz(Celula* primeiro, No* raiz, CelulaMatriz* inicio) { // O(i * j)
+	for (CelulaMatriz* i = inicio; i != NULL; i = i->inf) {
+		for (CelulaMatriz* j = i; j != NULL; i = j->prox) {
+			if (containsArvore(no->numero, raiz)) { // O(lg(n))
+				inserirComeco(no->numero, primeiro); // O(1)
+			}
+		}
+	}
+}
+
+bool containsArvore(int numero, No* no) {
+
+	bool contains;
+
+	if (no == NULL) contains = false;
+
+	else if (numero < no->numero) {
+		contains = containsArvore(numero, no->esq);
+	}
+
+	else if (numero > no->numero) {
+		contains = containsArvore(numero, no->dir);
+	}
+
+	else contains = true;
+
+	return contains;
+}
+
+void inserirComeco(int numero, Celula* primeiro) {
+	Celula* nova = (Celula*)malloc(sizeof(Celula*));
+	nova->prox = primeiro->prox;
+	primeiro->prox = nova;
+}
