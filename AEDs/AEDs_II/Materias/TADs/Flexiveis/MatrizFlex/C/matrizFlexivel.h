@@ -93,14 +93,14 @@ void AlocarCelulas(MatrizFlex* matrix) {
 	matrix->start = tmp = auxLeft = auxTop = newMatrixCell(contador++, NULL, NULL);
 
 	for (int i = 0; i < matrix->nCols - 1; i++) {
-		tmp = tmp->right = newMatrixCell(contador++, NULL, NULL);
+		tmp = tmp->right = newMatrixCell(contador++, tmp, NULL);
 	}
 
 	for (int i = 0; i < matrix->nRows - 1; i++) {
 		auxTop->bottom = tmp = auxLeft = auxLeft->bottom = newMatrixCell(contador++, NULL, auxTop);
 		for (int j = 0; j < matrix->nCols - 1; j++) {
 			auxTop = auxTop->right;
-			auxTop->bottom = tmp = tmp->right = newMatrixCell(contador++, NULL, auxTop);
+			auxTop->bottom = tmp = tmp->right = newMatrixCell(contador++, tmp, auxTop);
 		}
 		auxTop = auxLeft;
 	}
