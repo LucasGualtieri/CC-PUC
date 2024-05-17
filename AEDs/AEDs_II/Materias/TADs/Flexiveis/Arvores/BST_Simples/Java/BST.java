@@ -24,14 +24,16 @@ public class BST {
 
 	private int getHeight(int height, Node root) {
 		
-		if (root != null) {
-			height++;
-			int leftHeight = getHeight(height, root.left);
-			int rightHeight = getHeight(height, root.right);
-			height = leftHeight > rightHeight ? leftHeight : rightHeight;
-		}
+		return root == null ? height - 1 : Math.max(getHeight(height + 1, root.left), getHeight(height + 1, root.right));
 
-		return height;
+		// if (root != null) {
+		// 	height++;
+		// 	int leftHeight = getHeight(height, root.left);
+		// 	int rightHeight = getHeight(height, root.right);
+		// 	height = leftHeight > rightHeight ? leftHeight : rightHeight;
+		// }
+
+		// return height;
 	}
 
 	public void Insert(int value) throws Exception {
