@@ -2,6 +2,13 @@
 	"configurations": [
 		{
 			"type": "java",
+			"name": "Arvore",
+			"request": "launch",
+			"mainClass": "AEDs.AEDs_II.Materias.TADs.Flexiveis.Arvores.BST_Simples.Java.Arvore",
+			"projectName": "CC-PUC_cc5a22eb"
+		},
+		{
+			"type": "java",
 			"name": "TesteListaInvertida",
 			"request": "launch",
 			"mainClass": "CodigoProfessor.TesteListaInvertida",

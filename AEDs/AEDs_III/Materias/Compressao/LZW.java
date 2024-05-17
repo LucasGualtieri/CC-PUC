@@ -1,3 +1,5 @@
+package AEDs.AEDs_III.Materias.Compressao;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
