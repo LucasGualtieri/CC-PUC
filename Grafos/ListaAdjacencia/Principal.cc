@@ -10,24 +10,24 @@ using namespace std;
 template <typename T>
 class Graph {
   private:
-	typedef unordered_map<T, int> hashNeighbors;
+	typedef unordered_map<T, int> hashIndex;
 
 	int size;
 	bool diGraph;
 
 	unordered_map<T, vector<tuple<int, int>>> adjacencyList;
-	hashNeighbors hashIda;
+	hashIndex hashIda; // Retorna o indice de qualquer T
 	vector<T> hashVolta;
 
 	int addNode(T node) {
 
-		int matrixIndex = size++;
-		hashIda[node] = matrixIndex;
+		int index = size++;
+		hashIda[node] = index;
 		hashVolta.push_back(node);
 
 		adjacencyList[node] = vector<tuple<int, int>>();
 
-		return matrixIndex;
+		return index;
 	}
 
   public:
@@ -131,3 +131,7 @@ int main() {
 	g.printList();
 
 }
+// Mostrar o código. Qual o melhor jeito para se fazer um grafo generico
+// Entender o lance da bijetora e como não usar a hash
+// Quais casos faz sentido usar matriz e quais casos faz sentido usar lista
+// Estrutura "mais eficiente"
