@@ -253,7 +253,10 @@ class Principal {
 
 		Lib.clearScreen();
 
-		if (escolha != 1) Lib.cprintf("BOLD RED", "Backup cancelado.\n\n");
+		if (escolha != 1) {
+			Lib.cprintf("BOLD RED", "Backup cancelado.\n\n");
+			return;
+		}
 
 		Path folderPath = Paths.get(path + arquivo.getNomePlural() + "/Dados");
 
