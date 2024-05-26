@@ -13,24 +13,23 @@ public class LZW {
 	public static void main(String[] args) {
 
 		try {
-			// String msg = "A ARANHA ARRANHA A JARRA";
-			String msg = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam eget tortor eu libero molestie lobortis. Maecenas condimentum non nisl venenatis interdum. Praesent vitae aliquet velit. Integer rhoncus sem in ante mattis, nec fringilla orci viverra. Quisque a aliquet urna. Sed luctus condimentum dignissim. Duis feugiat non ante vitae viverra. Duis auctor purus augue, quis hendrerit sem imperdiet id. Sed in sem urna.\r\n"
-					+ //
-					"\r\n" + //
-					"Ut vitae dui a nisl varius interdum. Praesent congue eros ut nibh finibus, non elementum massa commodo. Suspendisse sodales aliquet justo nec laoreet. Cras tempus ornare leo sit amet pharetra. In dictum condimentum ultricies. Praesent blandit vel eros non bibendum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; In facilisis lorem feugiat turpis auctor, at euismod ipsum condimentum. Integer a eros eros. Suspendisse eget aliquet erat, cursus blandit purus. Quisque volutpat mattis mi quis eleifend.\r\n"
-					+ //
-					"\r\n" + //
-					"Proin vitae ipsum non turpis pulvinar condimentum. Sed tortor nisi, dictum id lorem condimentum, mattis aliquet neque. Duis rhoncus tempor felis, a mattis augue feugiat quis. Curabitur ultricies libero quis ex suscipit luctus. Aenean congue, magna ut consectetur ornare, massa lectus condimentum arcu, ac posuere lectus eros id enim. Maecenas eu enim varius, bibendum leo at, finibus quam. Duis eget lobortis lacus. Curabitur quis lacus sit amet justo consequat ultrices a id erat. Quisque congue diam a erat fermentum, nec vulputate mi auctor. Etiam hendrerit massa sit amet dui tempus, non dignissim sem dignissim. Aliquam tristique enim laoreet augue bibendum mollis. Ut pulvinar lectus purus, non consequat massa fermentum at. Nulla a enim non nisi lacinia consequat ultricies vel nunc. Fusce interdum orci eget neque pellentesque lacinia. Vestibulum id lobortis lectus. Praesent viverra eros ut finibus commodo.\r\n"
-					+ //
-					"\r\n" + //
-					"In hac habitasse platea dictumst. Phasellus interdum elit ut lacinia blandit. Mauris luctus tempor ante ut ultrices. Phasellus vitae magna blandit, ultrices mauris in, ultrices eros. Aliquam erat volutpat. Etiam bibendum pretium elementum. Ut eget elit porttitor, sagittis mi a, suscipit enim. Duis in enim dolor. Nunc vel varius enim.\r\n"
-					+ //
-					"\r\n" + //
-					"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ornare varius malesuada. Mauris eu ornare arcu. Cras ultrices efficitur urna, ac porta purus rutrum sit amet. Praesent nisi dui, placerat quis ipsum sodales, tristique gravida est. Donec ex nulla, vestibulum sed eros et, interdum vestibulum lorem. Aenean id laoreet est. Donec sed aliquam neque. Fusce posuere enim porttitor mauris facilisis finibus. Aliquam neque ex, imperdiet et diam sit amet, aliquam posuere ante.";
+			String msg = "A ARANHA ARRANHA A JARRA";
+			// String msg = """
+			// 	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam eget tortor eu libero molestie lobortis. Maecenas condimentum non nisl venenatis interdum. Praesent vitae aliquet velit. Integer rhoncus sem in ante mattis, nec fringilla orci viverra. Quisque a aliquet urna. Sed luctus condimentum dignissim. Duis feugiat non ante vitae viverra. Duis auctor purus augue, quis hendrerit sem imperdiet id. Sed in sem urna."
+			// 	Ut vitae dui a nisl varius interdum. Praesent congue eros ut nibh finibus, non elementum massa commodo. Suspendisse sodales aliquet justo nec laoreet. Cras tempus ornare leo sit amet pharetra. In dictum condimentum ultricies. Praesent blandit vel eros non bibendum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; In facilisis lorem feugiat turpis auctor, at euismod ipsum condimentum.
+			// 	Integer a eros eros. Suspendisse eget aliquet erat, cursus blandit purus. Quisque volutpat mattis mi quis eleifend."
+			// 	Proin vitae ipsum non turpis pulvinar condimentum. Sed tortor nisi, dictum id lorem condimentum, mattis aliquet neque. Duis rhoncus tempor felis, a mattis augue feugiat quis. Curabitur ultricies libero quis ex suscipit luctus. Aenean congue, magna ut consectetur ornare, massa lectus condimentum arcu, ac posuere lectus eros id enim. Maecenas eu enim varius, bibendum leo at, finibus quam. Duis eget lobortis lacus.
+			// 	Curabitur quis lacus sit amet justo consequat ultrices a id erat. Quisque congue diam a erat fermentum, nec vulputate mi auctor. Etiam hendrerit massa sit amet dui tempus, non dignissim sem dignissim. Aliquam tristique enim laoreet augue bibendum mollis. Ut pulvinar lectus purus, non consequat massa fermentum at. Nulla a enim non nisi lacinia consequat ultricies vel nunc. Fusce interdum orci eget neque pellentesque lacinia.
+			// 	Vestibulum id lobortis lectus. Praesent viverra eros ut finibus commodo."
+			// 	In hac habitasse platea dictumst. Phasellus interdum elit ut lacinia blandit. Mauris luctus tempor ante ut ultrices. Phasellus vitae magna blandit, ultrices mauris in, ultrices eros. Aliquam erat volutpat. Etiam bibendum pretium elementum. Ut eget elit porttitor, sagittis mi a, suscipit enim. Duis in enim dolor. Nunc vel varius enim."
+			// 	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ornare varius malesuada. Mauris eu ornare arcu. Cras ultrices efficitur urna, ac porta purus rutrum sit amet. Praesent nisi dui, placerat quis ipsum sodales, tristique gravida est. Donec ex nulla, vestibulum sed eros et, interdum vestibulum lorem. Aenean id laoreet est. Donec sed aliquam neque. Fusce posuere enim porttitor mauris facilisis finibus.
+			// 	Aliquam neque ex, imperdiet et diam sit amet, aliquam posuere ante.
+			// """;
+
 			byte[] msgBytes = msg.getBytes();
 			byte[] msgCodificada = codifica(msgBytes);
 
-			System.out.println(msg);
+			// System.out.println(msg);
 			System.out.println("mensagem original tem " + msgBytes.length + " bytes");
 			System.out.println("codificado em " + msgCodificada.length + " bytes");
 

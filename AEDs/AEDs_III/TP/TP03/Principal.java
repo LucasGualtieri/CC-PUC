@@ -257,7 +257,7 @@ class Principal {
 
 		Path folderPath = Paths.get(path + arquivo.getNomePlural() + "/Dados");
 
-		LZW compress = new LZW("filePath");
+		LZW compress = new LZW(arquivo.getNomePlural(), path + "../Backups/");
 
 		try (DirectoryStream<Path> stream = Files.newDirectoryStream(folderPath)) {
 			for (Path filePath : stream) {
