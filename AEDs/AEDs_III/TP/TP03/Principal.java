@@ -289,19 +289,6 @@ class Principal {
 		Lib.clearScreen();
 		Lib.printdiv(1, "Recuparando backup na base de dados: %s", arquivo.getNomePlural());
 
-		Lib.cprintf("GREEN", "1 - Confirmar recuperação.\n");
-		Lib.cprintf("RED", "2 - Cancelar recuperação.\n");
-		System.out.print("\nEscolha uma das opções acima: ");
-
-		int escolha = Lib.ReadChoice(2);
-
-		Lib.clearScreen();
-
-		if (escolha != 1) {
-			Lib.cprintf("BOLD RED", "Recuperação cancelada.\n\n");
-			return;
-		}
-
 		Path folderPath = Paths.get(path + "../Backups/");
 
 		List<Path> files = new LinkedList<>();
@@ -328,9 +315,22 @@ class Principal {
 
 		System.out.print("\nEscolha uma das opções acima: ");
 
-		escolha = Lib.ReadChoice(i);
+		int escolha = Lib.ReadChoice(i);
 
 		Path backup = files.get(escolha - 1);
+
+		Lib.cprintf("GREEN", "\n1 - Confirmar recuperação.\n");
+		Lib.cprintf("RED", "2 - Cancelar recuperação.\n");
+		System.out.print("\nEscolha uma das opções acima: ");
+
+		escolha = Lib.ReadChoice(2);
+
+		Lib.clearScreen();
+
+		if (escolha != 1) {
+			Lib.cprintf("BOLD RED", "Recuperação cancelada.\n\n");
+			return;
+		}
 
 		// System.out.println("File name: " + backup.getFileName());
 

@@ -23,7 +23,7 @@ public class BitSequence {
 				bs.clear(ultimoBit++);
 			else
 				bs.set(ultimoBit++);
-			n = n >> 1;
+			n >>= 1;
 			i--;
 		}
 	}

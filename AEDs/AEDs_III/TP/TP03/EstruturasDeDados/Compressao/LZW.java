@@ -108,6 +108,7 @@ public class LZW {
 		totalComprimido += compressedFile.length;
 
 		file.writeInt(compressedFile.length);
+		file.writeByte(BITS_POR_INDICE);
 		file.write(compressedFile);
 	}
 
@@ -142,16 +143,16 @@ public class LZW {
 
 			file.seek(tuple.getValue());
 			int fileSize = file.readInt();
+			BITS_POR_INDICE = file.readByte();
 
-			// System.out.println("File Size: " + fileSize);
 			byte[] compressedBytes = new byte[fileSize];
 
 			file.read(compressedBytes);
 
 			backup.write(descomprimir(compressedBytes));
-			// backup.writeUTF("Ola mundo");
 			backup.close();
 		}
+
 
 		// for (int i = 0; i < N; i++) {
 		// 	System.out.printf("%d- %s\n", i + 1, list.get(i));
@@ -224,52 +225,44 @@ public class LZW {
 	}
 
 	public byte[] comprimir(byte[] msgBytes) throws Exception {
-		ArrayList<ArrayList<Byte>> dicionario = new ArrayList<>(); // dicionario
-		ArrayList<Byte> vetorBytes; // auxiliar para cada elemento do dicionario
+		HashMap<ArrayList<Byte>, Integer> dicionario = new HashMap<>(256); // dicionario
+		ArrayList<Byte> vetorBytes;  // auxiliar para cada elemento do dicionario
 		ArrayList<Integer> saida = new ArrayList<>();
 
-		// inicializa o dicionário
-		byte b;
-		for (int j = -128; j < 128; j++) {
-			b = (byte) j;
+		//Inicializando o dicionário
+		for(int j = 0; j < 256; j++) {
 			vetorBytes = new ArrayList<>();
-			vetorBytes.add(b);
-			dicionario.add(vetorBytes);
+			vetorBytes.add((byte)j);
+			dicionario.put(vetorBytes, j);
 		}
 
 		int i = 0;
-		int indice = -1;
-		int ultimoIndice;
-
-		while (indice == -1 && i < msgBytes.length) { // testa se o último vetor de bytes não parou no meio caminho
-													  // por falta de bytes
+		int indice = 257;
+		int ultimoIndice = 0;
+		while(i < msgBytes.length){
 			vetorBytes = new ArrayList<>();
-			b = msgBytes[i];
-			vetorBytes.add(b);
-			indice = dicionario.indexOf(vetorBytes);
-			ultimoIndice = indice;
+			vetorBytes.add(msgBytes[i++]); 
+			ultimoIndice = dicionario.get(vetorBytes);
 
-			while (indice != -1 && i < msgBytes.length - 1) {
-				i++;
-				b = msgBytes[i];
-				vetorBytes.add(b);
-				ultimoIndice = indice;
-				indice = dicionario.indexOf(vetorBytes);
-
+			while (i < msgBytes.length && dicionario.containsKey(vetorBytes)) {
+				ultimoIndice = dicionario.get(vetorBytes);
+				vetorBytes.add(msgBytes[i++]);
 			}
+			dicionario.put(vetorBytes, indice++);
 
-			// acrescenta o último índice à saída
-			saida.add(ultimoIndice);
-
-			// acrescenta o novo vetor de bytes ao dicionário
-			if (dicionario.size() < (Math.pow(2, BITS_POR_INDICE))) {
-				dicionario.add(vetorBytes);
-			}
-
+			if(vetorBytes.size() > 1) i--;
+			
+			saida.add(ultimoIndice); //O código da instrução inicial é inserida na lista
 		}
 
+		BITS_POR_INDICE = (int) Math.ceil(log2((double) dicionario.size())); 
+
+		// System.out.println("Indices");
+		// System.out.println(saida);
+		// System.out.println("Dicionário tem " + dicionario.size() + " elementos");
+
 		BitSequence bs = new BitSequence(BITS_POR_INDICE);
-		for (i = 0; i < saida.size(); i++) {
+		for(i=0; i<saida.size(); i++) {
 			bs.add(saida.get(i));
 		}
 
@@ -282,12 +275,14 @@ public class LZW {
 	}
 
 	public byte[] descomprimir(byte[] msgCodificada) throws Exception {
+
 		ByteArrayInputStream bais = new ByteArrayInputStream(msgCodificada);
 		DataInputStream dis = new DataInputStream(bais);
 		int n = dis.readInt();
-		byte[] bytes = new byte[msgCodificada.length - 4];
+		byte[] bytes = new byte[msgCodificada.length-4];
 		dis.read(bytes);
 		BitSequence bs = new BitSequence(BITS_POR_INDICE);
+		System.err.println(BITS_POR_INDICE);
 		bs.setBytes(n, bytes);
 
 		// Recupera os números do bitset
@@ -298,147 +293,49 @@ public class LZW {
 			entrada.add(j);
 		}
 
+		//MODIFICADO A PARTIR DAQUI
+
 		// inicializa o dicionário
-		ArrayList<ArrayList<Byte>> dicionario = new ArrayList<>(); // dicionario
-		ArrayList<Byte> vetorBytes; // auxiliar para cada elemento do dicionario
-		byte b;
-		for (j = -128; j < 128; j++) {
-			b = (byte) j;
+		HashMap<Integer, ArrayList<Byte>> dicionario = new HashMap<>(256); // dicionario
+		ArrayList<Byte> vetorBytes;  // auxiliar para cada elemento do dicionario
+		for(j = 0; j < 256; j++) {
 			vetorBytes = new ArrayList<>();
-			vetorBytes.add(b);
-			dicionario.add(vetorBytes);
+			vetorBytes.add((byte)j);
+			dicionario.put(j, vetorBytes);
 		}
 
 		// Decodifica os números
 		ArrayList<Byte> proximoVetorBytes;
 		ArrayList<Byte> msgDecodificada = new ArrayList<>();
 		i = 0;
-		while (i < entrada.size()) {
+		int indice = 257;
 
-			// decodifica o número
-			vetorBytes = (ArrayList<Byte>) (dicionario.get(entrada.get(i)).clone());
-			msgDecodificada.addAll(vetorBytes);
-
-			// decodifica o prÃ³ximo número
-			i++;
+		while(i < entrada.size()) {
+			vetorBytes = dicionario.get(entrada.get(i++));
+			msgDecodificada.addAll(vetorBytes); //Adicionando o byte na 'saida'
+			
+			//Adiciono o vetor antigo + a 1 posição do vetor de bytes
 			if (i < entrada.size()) {
-				proximoVetorBytes = dicionario.get(entrada.get(i));
-				vetorBytes.add(proximoVetorBytes.get(0));
+				dicionario.put(indice, vetorBytes);
 
-				// adiciona o vetor de bytes (+1 byte do prÃ³ximo vetor) ao fim do dicionário
-				if (dicionario.size() < Math.pow(2, BITS_POR_INDICE))
-					dicionario.add(vetorBytes);
+				proximoVetorBytes = new ArrayList<>(vetorBytes);
+				byte proximoByte = dicionario.get(entrada.get(i)).get(0);
+				proximoVetorBytes.add(proximoByte);
+				
+				dicionario.replace(indice++, proximoVetorBytes);
+
+				// System.out.println("i: " + i);
+				// System.out.println("entrada.get(i): " + entrada.get(i));
+				// System.out.println("dicionario.get(257): " + dicionario.get(257));
 			}
-
 		}
 
 		byte[] msgDecodificadaBytes = new byte[msgDecodificada.size()];
-		for (i = 0; i < msgDecodificada.size(); i++)
-			msgDecodificadaBytes[i] = msgDecodificada.get(i);
+		i = 0;
+		for(byte ba : msgDecodificada)
+			msgDecodificadaBytes[i++] = ba;
+
 		return msgDecodificadaBytes;
 	}
-
-	// public byte[] comprimir(byte[] msgBytes) throws Exception {
-	// 	HashMap<ArrayList<Byte>, Integer> dicionario = new HashMap<>(256); // dicionario
-	// 	ArrayList<Byte> vetorBytes;  // auxiliar para cada elemento do dicionario
-	// 	ArrayList<Integer> saida = new ArrayList<>();
-
-	// 	//Inicializando o dicionário
-	// 	for(int j = 0; j < 256; j++) {
-	// 		vetorBytes = new ArrayList<>();
-	// 		vetorBytes.add((byte)j);
-	// 		dicionario.put(vetorBytes, j);
-	// 	}
-
-	// 	int i = 0;
-	// 	int indice = 257;
-	// 	int ultimoIndice = 0;
-	// 	while(i < msgBytes.length){
-	// 		vetorBytes = new ArrayList<>();
-	// 		vetorBytes.add(msgBytes[i++]); 
-	// 		ultimoIndice = dicionario.get(vetorBytes);
-
-	// 		while (i < msgBytes.length && dicionario.containsKey(vetorBytes)) {
-	// 			ultimoIndice = dicionario.get(vetorBytes);
-	// 			vetorBytes.add(msgBytes[i++]);
-	// 		}
-	// 		dicionario.put(vetorBytes, indice++);
-
-	// 		if(vetorBytes.size() > 1) i--;
-			
-	// 		saida.add(ultimoIndice); //O código da instrução inicial é inserida na lista
-	// 	}
-
-	// 	BITS_POR_INDICE = (int) Math.ceil(log2((double) dicionario.size())); 
-
-	// 	BitSequence bs = new BitSequence(BITS_POR_INDICE);
-	// 	for(i=0; i<saida.size(); i++) {
-	// 		bs.add(saida.get(i));
-	// 	}
-
-	// 	ByteArrayOutputStream baos = new ByteArrayOutputStream();
-	// 	DataOutputStream dos = new DataOutputStream(baos);
-	// 	dos.writeInt(bs.size());
-	// 	dos.write(bs.getBytes());
-
-	// 	return baos.toByteArray();
-	// }
-
-	// public byte[] descomprimir(byte[] msgCodificada) throws Exception {
-
-	// 	ByteArrayInputStream bais = new ByteArrayInputStream(msgCodificada);
-	// 	DataInputStream dis = new DataInputStream(bais);
-	// 	int n = dis.readInt();
-	// 	byte[] bytes = new byte[msgCodificada.length-4];
-	// 	dis.read(bytes);
-	// 	BitSequence bs = new BitSequence(BITS_POR_INDICE);
-	// 	System.err.println(BITS_POR_INDICE);
-	// 	bs.setBytes(n, bytes);
-
-	// 	// Recupera os números do bitset
-	// 	ArrayList<Integer> entrada = new ArrayList<>();
-	// 	int i, j;
-	// 	for (i = 0; i < bs.size(); i++) {
-	// 		j = bs.get(i);
-	// 		entrada.add(j);
-	// 	}
-
-	// 	//MODIFICADO A PARTIR DAQUI
-
-	// 	// inicializa o dicionário
-	// 	HashMap<Integer, ArrayList<Byte>> dicionario = new HashMap<>(256); // dicionario
-	// 	ArrayList<Byte> vetorBytes;  // auxiliar para cada elemento do dicionario
-	// 	for(j = 0; j < 256; j++) {
-	// 		vetorBytes = new ArrayList<>();
-	// 		vetorBytes.add((byte)j);
-	// 		dicionario.put(j, vetorBytes);
-	// 	}
-
-	// 	// Decodifica os números
-	// 	ArrayList<Byte> proximoVetorBytes;
-	// 	ArrayList<Byte> msgDecodificada = new ArrayList<>();
-	// 	i = 0;
-	// 	int indice = 257;
-	// 	while(i < entrada.size()) {
-	// 		vetorBytes = dicionario.get(entrada.get(i++));
-	// 		msgDecodificada.addAll(vetorBytes); //Adicionando o byte na 'saida'
-			
-	// 		//Adiciono o vetor antigo + a 1 posição do vetor de bytes
-	// 		if(i < entrada.size()){
-	// 			proximoVetorBytes = new ArrayList<>(vetorBytes);
-	// 			byte proximoByte = dicionario.get(entrada.get(i)).get(0);
-	// 			proximoVetorBytes.add(proximoByte);
-				
-	// 			dicionario.put(indice++, proximoVetorBytes);
-	// 		}
-	// 	}
-
-	// 	byte[] msgDecodificadaBytes = new byte[msgDecodificada.size()];
-	// 	i = 0;
-	// 	for(byte ba : msgDecodificada)
-	// 		msgDecodificadaBytes[i++] = ba;
-
-	// 	return msgDecodificadaBytes;
-	// }
 
 }
