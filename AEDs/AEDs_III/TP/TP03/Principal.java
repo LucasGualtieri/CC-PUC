@@ -4,6 +4,7 @@ import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.LinkedList;
 import java.util.List;
 
 import TP03.Entidades.Livros.*;
@@ -260,20 +261,19 @@ class Principal {
 
 		Path folderPath = Paths.get(path + arquivo.getNomePlural() + "/Dados");
 
-		LZW compress = new LZW(arquivo.getNomePlural(), path + "../Backups/");
+		LZW compress = new LZW(arquivo.getNomePlural(), path + "../Backups/", true);
 
 		try (DirectoryStream<Path> stream = Files.newDirectoryStream(folderPath)) {
 			for (Path filePath : stream) {
-				if (Files.isRegularFile(filePath)) {
-					String fileName = filePath.getFileName().toString();
-					// System.out.println("Processing file: " + fileName);
-					byte[] fileBytes = Files.readAllBytes(filePath);
-					compress.add(fileName, fileBytes);
-				}
+				String fileName = filePath.getFileName().toString();
+				byte[] fileBytes = Files.readAllBytes(filePath);
+				compress.add(fileName, fileBytes);
 			}
-		} catch (Exception e) {
-			// e.printStackTrace();
-			Lib.cprintf("BOLD RED", "Falha ao fazer o bakcup.\n\n");
+		}
+		
+		catch (Exception e) {
+			e.printStackTrace();
+			Lib.cprintf("BOLD RED", "Falha ao fazer o backup.\n\n");
 			return;
 		}
 
@@ -282,6 +282,64 @@ class Principal {
 		compress.close();
 
 		System.out.println(compress);
+	}
+
+	static <T extends Registro> void RecoverBackup(Arquivo<T> arquivo) throws Exception  {
+
+		Lib.clearScreen();
+		Lib.printdiv(1, "Recuparando backup na base de dados: %s", arquivo.getNomePlural());
+
+		Lib.cprintf("GREEN", "1 - Confirmar recuperação.\n");
+		Lib.cprintf("RED", "2 - Cancelar recuperação.\n");
+		System.out.print("\nEscolha uma das opções acima: ");
+
+		int escolha = Lib.ReadChoice(2);
+
+		Lib.clearScreen();
+
+		if (escolha != 1) {
+			Lib.cprintf("BOLD RED", "Recuperação cancelada.\n\n");
+			return;
+		}
+
+		Path folderPath = Paths.get(path + "../Backups/");
+
+		List<Path> files = new LinkedList<>();
+
+		try (DirectoryStream<Path> stream = Files.newDirectoryStream(folderPath)) {
+			for (Path file : stream) {
+				if (Files.isRegularFile(file)) files.add(file);
+			}
+		}
+
+		catch (Exception e) {
+			// e.printStackTrace();
+			Lib.cprintf("BOLD RED", "Falha ao fazer a recuperação.\n\n");
+			return;
+		}
+
+		System.out.println("Backups encontrados:\n");
+
+		int i = 0;
+		for (Path file : files) {
+			String fileName = file.getFileName().toString();
+			System.out.printf("%d- %s\n", ++i, fileName);
+		}
+
+		System.out.print("\nEscolha uma das opções acima: ");
+
+		escolha = Lib.ReadChoice(i);
+
+		Path backup = files.get(escolha - 1);
+
+		// System.out.println("File name: " + backup.getFileName());
+
+		LZW decompress = new LZW(arquivo.getNomePlural(), path + "../Backups/", false);
+
+		decompress.recover(backup);
+
+		Lib.clearScreen();
+		Lib.cprintf("BOLD GREEN", "Dados dos %s recuperados e descomprimidos com sucesso!\n\n", arquivo.getNomePluralLowerCase());
 	}
 
 	// A função CRUD permite o usuário escolher qual operação CRUD deseja executar.
@@ -312,6 +370,9 @@ class Principal {
 				break;
 			case 6:
 				Backup(arquivo);
+				break;
+			case 7:
+				RecoverBackup(arquivo);
 				break;
 			}
 
