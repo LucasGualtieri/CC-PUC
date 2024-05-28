@@ -2,6 +2,13 @@
 	"configurations": [
 		{
 			"type": "java",
+			"name": "Principal",
+			"request": "launch",
+			"mainClass": "AEDs.AEDs_III.Materias.FilaDePrioridades.Principal",
+			"projectName": "CC-PUC_cc5a22eb"
+		},
+		{
+			"type": "java",
 			"name": "CustomPatternExample",
 			"request": "launch",
 			"mainClass": "AEDs.AEDs_III.Materias.CustomPatternExample",
