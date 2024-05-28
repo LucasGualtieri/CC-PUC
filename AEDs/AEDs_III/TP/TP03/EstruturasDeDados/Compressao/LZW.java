@@ -25,7 +25,7 @@ public class LZW {
 
 	// Tenho que fazer um menu que permite que o usuário restaure apenas um dos arquivos a partir do header.
 
-	private int BITS_POR_INDICE = 12;
+	private int BITS_POR_INDICE;
 	private RandomAccessFile file;
 
 	// Estrutura dos registros
