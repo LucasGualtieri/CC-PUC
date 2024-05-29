@@ -1,11 +1,11 @@
 package TP03;
 
-import java.nio.file.DirectoryStream;
-import java.nio.file.Files;
+import java.util.List;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.Files;
 import java.util.LinkedList;
-import java.util.List;
+import java.nio.file.DirectoryStream;
 
 import TP03.Entidades.Livros.*;
 import TP03.Entidades.Autores.*;
@@ -287,7 +287,7 @@ class Principal {
 	static <T extends Registro> void RecoverBackup(Arquivo<T> arquivo) throws Exception  {
 
 		Lib.clearScreen();
-		Lib.printdiv(1, "Recuparando backup na base de dados: %s", arquivo.getNomePlural());
+		Lib.printdiv(1, "Recuparendo backup na base de dados: %s", arquivo.getNomePlural());
 
 		Path folderPath = Paths.get(path + "../Backups/");
 
@@ -310,12 +310,20 @@ class Principal {
 		int i = 0;
 		for (Path file : files) {
 			String fileName = file.getFileName().toString();
-			System.out.printf("%d- %s\n", ++i, fileName);
+			System.out.printf("%d - %s\n", ++i, fileName);
 		}
+
+		System.out.println("\n0 - Voltar.");
 
 		System.out.print("\nEscolha uma das opções acima: ");
 
 		int escolha = Lib.ReadChoice(i);
+
+		if (escolha == 0) {
+			Lib.clearScreen();
+			Lib.cprintf("BOLD RED", "Recuperação cancelada.\n\n");
+			return;
+		}
 
 		Path backup = files.get(escolha - 1);
 
