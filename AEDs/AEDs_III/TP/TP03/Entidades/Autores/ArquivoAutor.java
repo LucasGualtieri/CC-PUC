@@ -131,7 +131,7 @@ public class ArquivoAutor<T extends Registro> extends Arquivo<T> {
 		System.out.println("3 - Atualizar.");
 		System.out.println("4 - Deletar.");
 		System.out.println("5 - Listar todos os autores.");
-		System.out.println("6 - Fazer backup compactado.\n");
+		System.out.println("6 - Fazer backup compactado.");
 		System.out.println("7 - Recuperar backup compactado.\n");
 		System.out.println("0 - Voltar.\n");
 		System.out.print("Escolha uma das opções acima: ");

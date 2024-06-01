@@ -295,7 +295,8 @@ class Principal {
 
 		try (DirectoryStream<Path> stream = Files.newDirectoryStream(folderPath)) {
 			for (Path file : stream) {
-				if (Files.isRegularFile(file)) files.add(file);
+				String str = file.getFileName().toString().substring(0, arquivo.getNomePlural().length());
+				if (Files.isRegularFile(file) && str.equals(arquivo.getNomePlural())) files.add(file);
 			}
 		}
 
