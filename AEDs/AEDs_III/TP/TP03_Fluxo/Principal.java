@@ -1,4 +1,4 @@
-package TP03;
+package TP03_Fluxo;
 
 import java.util.List;
 import java.nio.file.Path;
@@ -7,13 +7,13 @@ import java.nio.file.Files;
 import java.util.LinkedList;
 import java.nio.file.DirectoryStream;
 
-import TP03.Entidades.Livros.*;
-import TP03.Entidades.Autores.*;
-import TP03.EstruturasDeDados.Compressao.*;
+import TP03_Fluxo.Entidades.Livros.*;
+import TP03_Fluxo.Entidades.Autores.*;
+import TP03_Fluxo.EstruturasDeDados.Compressao.*;
 
 class Principal {
 
-	static final String path = "AEDs/AEDs_III/TP/TP03/Entidades/";
+	static final String path = "AEDs/AEDs_III/TP/TP03_Fluxo/Entidades/";
 
 	static <T extends Registro> void Create(Arquivo<T> arquivo) throws Exception {
 

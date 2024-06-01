@@ -1,4 +1,4 @@
-package TP03.Entidades.Autores;
+package TP03_Fluxo.Entidades.Autores;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -7,8 +7,8 @@ import java.io.DataOutputStream;
 import java.lang.reflect.Constructor;
 import java.util.Locale;
 
-import TP03.Lib;
-import TP03.Registro;
+import TP03_Fluxo.Lib;
+import TP03_Fluxo.Registro;
 
 // Para fazer um relacionamento 1->N com Autores de Livros precisarei:
 //		Criar uma chave estrangeira em Livro: IDAutor

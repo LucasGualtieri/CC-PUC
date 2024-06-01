@@ -1,4 +1,4 @@
-package TP03.Entidades.Livros;
+package TP03_Fluxo.Entidades.Livros;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -11,10 +11,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import TP03.*;
-// import TP03.Entidades.*;
-import TP03.EstruturasDeDados.*;
-import TP03.Entidades.Livros.Indices.*;
+import TP03_Fluxo.*;
+// import TP03_Fluxo.Entidades.*;
+import TP03_Fluxo.EstruturasDeDados.*;
+import TP03_Fluxo.Entidades.Livros.Indices.*;
 
 public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
 
@@ -105,7 +105,7 @@ public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
 
 		stopWords = new HashSet<>();
 		
-		String filePath = "AEDs/AEDs_III/TP/TP03/EstruturasDeDados/StopWords.txt";
+		String filePath = "AEDs/AEDs_III/TP/TP03_Fluxo/EstruturasDeDados/StopWords.txt";
 		String fileLine;
 
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {

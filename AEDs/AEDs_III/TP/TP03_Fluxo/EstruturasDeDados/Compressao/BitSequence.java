@@ -1,4 +1,4 @@
-package TP03.EstruturasDeDados.Compressao;
+package TP03_Fluxo.EstruturasDeDados.Compressao;
 
 import java.util.BitSet;
 

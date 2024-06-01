@@ -1,11 +1,11 @@
-package TP03.Entidades.Autores;
+package TP03_Fluxo.Entidades.Autores;
 
 import java.util.List;
 import java.lang.reflect.Constructor;
 
-import TP03.*;
-import TP03.EstruturasDeDados.*;
-import TP03.Entidades.Autores.Indices.ParCPFId;
+import TP03_Fluxo.*;
+import TP03_Fluxo.EstruturasDeDados.*;
+import TP03_Fluxo.Entidades.Autores.Indices.ParCPFId;
 
 public class ArquivoAutor<T extends Registro> extends Arquivo<T> {
 

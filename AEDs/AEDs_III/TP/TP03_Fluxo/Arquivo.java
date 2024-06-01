@@ -1,9 +1,9 @@
-package TP03;
+package TP03_Fluxo;
 
 import java.util.List;
 
-import TP03.EstruturasDeDados.*;
-import TP03.EstruturasDeDados.Tuplas.*;
+import TP03_Fluxo.EstruturasDeDados.*;
+import TP03_Fluxo.EstruturasDeDados.Tuplas.*;
 
 import java.io.IOException;
 import java.util.LinkedList;

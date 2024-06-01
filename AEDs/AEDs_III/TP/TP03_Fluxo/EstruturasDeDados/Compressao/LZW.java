@@ -1,5 +1,4 @@
-package TP03.EstruturasDeDados.Compressao;
-
+package TP03_Fluxo.EstruturasDeDados.Compressao;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
@@ -22,7 +21,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import TP02.Lib;
-import TP03.EstruturasDeDados.Tuplas.Tuple;
+import TP03_Fluxo.EstruturasDeDados.Tuplas.Tuple;
 
 public class LZW {
 
@@ -196,8 +195,8 @@ public class LZW {
 
 		BITS_POR_INDICE = (int) Math.ceil(log2((double) dicionario.size()));
 
-		long teste = file.getFilePointer();
-		long tam = file.length();
+		// long teste = file.getFilePointer();
+		// long tam = file.length();
 
 		file.writeByte(BITS_POR_INDICE);
 			
@@ -212,8 +211,8 @@ public class LZW {
 
 		file.write(baos.toByteArray());
 
-		teste = file.getFilePointer();
-		tam = file.length();
+		// teste = file.getFilePointer();
+		// tam = file.length();
 
 		return baos.size();
     }
@@ -223,7 +222,7 @@ public class LZW {
 		ByteArrayInputStream bais = new ByteArrayInputStream(chunk);
 		DataInputStream dis = new DataInputStream(bais);
 
-		int n = dis.readInt();
+		// int n = dis.readInt();
 
 		byte[] bytes = new byte[length - 4];
 		dis.read(bytes);

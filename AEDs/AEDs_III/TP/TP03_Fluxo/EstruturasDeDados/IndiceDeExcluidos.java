@@ -1,11 +1,11 @@
-package TP03.EstruturasDeDados;
+package TP03_Fluxo.EstruturasDeDados;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.Iterator;
 import java.util.TreeSet;
 
-import TP03.EstruturasDeDados.Tuplas.Tuple;
+import TP03_Fluxo.EstruturasDeDados.Tuplas.Tuple;
 
 // Se houverem dois registros excluídos imediatamente um ao lado do outros
 // Idealmente os dois deveriam ser fundidos.

@@ -1,4 +1,4 @@
-package TP03;
+package TP03_Fluxo;
 
 import java.util.Scanner;
 import java.util.InputMismatchException;

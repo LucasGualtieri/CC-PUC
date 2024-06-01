@@ -12,7 +12,7 @@
  * Implementado pelo Prof. Marcos Kutova
  * v1.0 - 2020
  */
-package TP03.EstruturasDeDados;
+package TP03_Fluxo.EstruturasDeDados;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

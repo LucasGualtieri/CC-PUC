@@ -1,4 +1,4 @@
-package TP03;
+package TP03_Fluxo;
 
 public interface Registro {
 	public int getID();

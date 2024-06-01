@@ -12,7 +12,7 @@ disciplina:
 Implementado pelo Prof. Marcos Kutova
 v1.1 - 2021
 */
-package TP03.EstruturasDeDados;
+package TP03_Fluxo.EstruturasDeDados;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

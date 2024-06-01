@@ -1,4 +1,4 @@
-package TP03.Entidades.Livros;
+package TP03_Fluxo.Entidades.Livros;
 
 import java.util.Locale;
 import java.text.NumberFormat;
@@ -8,7 +8,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.lang.reflect.Constructor;
 
-import TP03.*;
+import TP03_Fluxo.*;
 
 public class Livro implements Registro {
 	
