@@ -25,19 +25,14 @@ public class LZW {
 
 	// Tenho que fazer um menu que permite que o usuário restaure apenas um dos arquivos a partir do header.
 
+	private int N; // Number of files
 	private int BITS_POR_INDICE;
 	private RandomAccessFile file;
 
 	// Estrutura dos registros
 	// tamanho + nome + array de bytes
 
-	private long headerAddress;
-	private final int HEADER_SIZE = 8;
-
 	private long totalBytes, totalComprimido;
-
-	//                 Name  , Address
-	private List<Tuple<String, Long>> list;
 
 	//         Name  ,       Size   , Size
 	List<Tuple<String, Tuple<Integer, Integer>>> taxasDeCompressao;
@@ -49,10 +44,7 @@ public class LZW {
 
 	public LZW(String entidade, String filePath, boolean flag) throws FileNotFoundException, IOException {
 
-		list = new LinkedList<>();
 		taxasDeCompressao = new LinkedList<>();
-
-		headerAddress = -1;
 
 		totalBytes = totalComprimido = 0;
 
@@ -61,6 +53,8 @@ public class LZW {
 
 		this.filePath = filePath;
 		this.entidade = entidade;
+
+		this.N = 0;
 
 		if (flag) AbrirArquivoComprimir();
 	}
@@ -73,31 +67,22 @@ public class LZW {
 	// Como fazer para realizar esse backup, vou precisar de uma classe? Posso usar a propria do LZW
 
 	private void AbrirArquivoComprimir() throws FileNotFoundException, IOException {
-	
 		// System.out.println("Formatted current date and time: " + formattedDateTime);
-
 		file = new RandomAccessFile(filePath + entidade + currentDateTime.format(formatter) + ".db", "rw");
 
-		if (file.length() < HEADER_SIZE) {
-			file.seek(0);
-			file.writeLong(-1); // Endereço do cabeçalho com os nomes e posições dos arquivos.
-		}
+		file.seek(0);
+		file.writeInt(0); // Número de arquivos comprimidos
 	}
 
 	private void AbrirArquivoDescomprimir(Path file) throws FileNotFoundException, IOException {
 	
 		// System.out.println("Formatted current date and time: " + formattedDateTime);
-
 		// System.out.println("file.toString(): " + file.toString());
 
 		this.file = new RandomAccessFile(file.toString(), "r");
 	}
 
 	public void add(String fileName, byte[] fileBytes) throws Exception {
-
-		// System.out.println("Address: " + file.getFilePointer());
-
-		list.add(new Tuple<>(fileName, file.getFilePointer()));
 
 		byte[] compressedFile = comprimir(fileBytes);
 
@@ -107,41 +92,33 @@ public class LZW {
 		totalBytes += fileBytes.length;
 		totalComprimido += compressedFile.length;
 
+		this.N++;
+
+		file.writeUTF(fileName);
 		file.writeInt(compressedFile.length);
 		file.writeByte(BITS_POR_INDICE);
 		file.write(compressedFile);
 	}
 
 	public void recover(Path path) throws Exception {
-		String fileName = path.getFileName().toString().substring(0, path.getFileName().toString().length() - 3);
-		File folder = new File(filePath + "../Backups/" + fileName);
+		String folderName = path.getFileName().toString().substring(0, path.getFileName().toString().length() - 3);
+		File folder = new File(filePath + "../Backups/" + folderName);
 		folder.mkdir();
 
 		AbrirArquivoDescomprimir(path);
 
-		long header = file.readLong();
-		file.seek(header);
+		this.N = file.readInt();
 
-		int N = file.readInt();
+		for (int i = 0 ; i < N; i++) {
 
-		List<Tuple<String, Long>> list = new ArrayList<>(N);
+			String fileName = file.readUTF();
 
-		for (int i = 0; i < N; i++) {
-			String fName = file.readUTF();
-			long fileAddress = file.readLong();
+			System.out.println("file: " + filePath + folderName + "/" + fileName);
 
-			Tuple<String, Long> tuple = new Tuple<>(fName, fileAddress);
-
-			list.add(tuple);
-		}
-
-		for (Tuple<String, Long> tuple : list) {
-
-			RandomAccessFile backup = new RandomAccessFile(filePath + fileName + "/" + tuple.getKey(), "rw");
+			RandomAccessFile backup = new RandomAccessFile(filePath + folderName + "/" + fileName, "rw");
 
 			// System.out.println("Address: " + tuple.getValue());
 
-			file.seek(tuple.getValue());
 			int fileSize = file.readInt();
 			BITS_POR_INDICE = file.readByte();
 
@@ -152,38 +129,11 @@ public class LZW {
 			backup.write(descomprimir(compressedBytes));
 			backup.close();
 		}
-
-
-		// for (int i = 0; i < N; i++) {
-		// 	System.out.printf("%d- %s\n", i + 1, list.get(i));
-		// }
-
-		// System.exit(-1);
-
-		// byte[] fileBytes = Files.readAllBytes(file);
 	}
 
-	// public Tuple<String, byte[]> next() {
-	// 	// Vai retonar uma tupla com o nome do arquivo e o arquivo descomprimido.
-
-	// 	// a ideia é que la no metodo do crud eu decida o que fazer, se crio / substituo um arquivo etc etc.
-	// 	return null;
-	// }
-
 	public void close() throws IOException {
-
-		headerAddress = file.length();
-
 		file.seek(0);
-		file.writeLong(headerAddress);
-
-		file.seek(headerAddress);
-
-		file.writeInt(list.size());
-
-		for (Tuple<String, Long> tuple : list) {
-			file.write(tuple.toByteArray());
-		}
+		file.writeInt(this.N);
 	}
 
 	public String toString() {
