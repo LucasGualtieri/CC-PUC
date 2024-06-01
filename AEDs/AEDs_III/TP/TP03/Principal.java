@@ -287,7 +287,7 @@ class Principal {
 	static <T extends Registro> void RecoverBackup(Arquivo<T> arquivo) throws Exception  {
 
 		Lib.clearScreen();
-		Lib.printdiv(1, "Recuparendo backup na base de dados: %s", arquivo.getNomePlural());
+		Lib.printdiv(1, "Recuperando backup na base de dados: %s", arquivo.getNomePlural());
 
 		Path folderPath = Paths.get(path + "../Backups/");
 

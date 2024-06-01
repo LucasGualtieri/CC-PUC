@@ -146,7 +146,7 @@ public class LZW {
 
 		String taxaDeCompressaoTotal = String.format("%.2f%%", 100 - (totalComprimido * 100f) / totalBytes);
 
-		sb.append(String.format("Um total de %d bytes foram comprimidos para %d bytes, resultando numa taxa compressão de total de %s.\n\n", totalBytes, totalComprimido, taxaDeCompressaoTotal));
+		sb.append(String.format("Um total de %d bytes foram comprimidos para %d bytes, resultando numa taxa compressão total de %s.\n\n", totalBytes, totalComprimido, taxaDeCompressaoTotal));
 
 		sb.append(Lib.RED + Lib.BOLD + "Índice, ");
 		sb.append(Lib.GREEN + "Arquivo, ");
@@ -175,12 +175,13 @@ public class LZW {
 	}
 
 	public byte[] comprimir(byte[] msgBytes) throws Exception {
+
 		HashMap<ArrayList<Byte>, Integer> dicionario = new HashMap<>(256); // dicionario
 		ArrayList<Byte> vetorBytes;  // auxiliar para cada elemento do dicionario
 		ArrayList<Integer> saida = new ArrayList<>();
 
 		//Inicializando o dicionário
-		for(int j = 0; j < 256; j++) {
+		for (int j = 0; j < 256; j++) {
 			vetorBytes = new ArrayList<>();
 			vetorBytes.add((byte)j);
 			dicionario.put(vetorBytes, j);
@@ -189,7 +190,9 @@ public class LZW {
 		int i = 0;
 		int indice = 257;
 		int ultimoIndice = 0;
-		while(i < msgBytes.length){
+
+		while (i < msgBytes.length) {
+
 			vetorBytes = new ArrayList<>();
 			vetorBytes.add(msgBytes[i++]); 
 			ultimoIndice = dicionario.get(vetorBytes);
@@ -198,23 +201,19 @@ public class LZW {
 				ultimoIndice = dicionario.get(vetorBytes);
 				vetorBytes.add(msgBytes[i++]);
 			}
+
 			dicionario.put(vetorBytes, indice++);
 
 			if(vetorBytes.size() > 1) i--;
-			
+
 			saida.add(ultimoIndice); //O código da instrução inicial é inserida na lista
 		}
 
 		BITS_POR_INDICE = (int) Math.ceil(log2((double) dicionario.size())); 
 
-		// System.out.println("Indices");
-		// System.out.println(saida);
-		// System.out.println("Dicionário tem " + dicionario.size() + " elementos");
-
 		BitSequence bs = new BitSequence(BITS_POR_INDICE);
-		for(i=0; i<saida.size(); i++) {
-			bs.add(saida.get(i));
-		}
+
+		for (i = 0; i < saida.size(); i++) bs.add(saida.get(i));
 
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		DataOutputStream dos = new DataOutputStream(baos);
@@ -248,7 +247,7 @@ public class LZW {
 		// inicializa o dicionário
 		HashMap<Integer, ArrayList<Byte>> dicionario = new HashMap<>(256); // dicionario
 		ArrayList<Byte> vetorBytes;  // auxiliar para cada elemento do dicionario
-		for(j = 0; j < 256; j++) {
+		for (j = 0; j < 256; j++) {
 			vetorBytes = new ArrayList<>();
 			vetorBytes.add((byte)j);
 			dicionario.put(j, vetorBytes);
@@ -260,7 +259,7 @@ public class LZW {
 		i = 0;
 		int indice = 257;
 
-		while(i < entrada.size()) {
+		while (i < entrada.size()) {
 			vetorBytes = dicionario.get(entrada.get(i++));
 			msgDecodificada.addAll(vetorBytes); //Adicionando o byte na 'saida'
 			
@@ -273,19 +272,15 @@ public class LZW {
 				proximoVetorBytes.add(proximoByte);
 				
 				dicionario.replace(indice++, proximoVetorBytes);
-
-				// System.out.println("i: " + i);
-				// System.out.println("entrada.get(i): " + entrada.get(i));
-				// System.out.println("dicionario.get(257): " + dicionario.get(257));
 			}
 		}
 
 		byte[] msgDecodificadaBytes = new byte[msgDecodificada.size()];
-		i = 0;
-		for(byte ba : msgDecodificada)
-			msgDecodificadaBytes[i++] = ba;
+
+		for (i = 0; i < msgDecodificada.size(); i++) {
+			msgDecodificadaBytes[i] = msgDecodificada.get(i);
+		}
 
 		return msgDecodificadaBytes;
 	}
-
 }
