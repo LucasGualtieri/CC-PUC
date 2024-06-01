@@ -1,91 +1,61 @@
-# ✍️ TP02 - AEDs III
+# ✍️ TP03 - AEDs III
 
 ## 📝 Descrição
 <ol>
-	<li>Nesta segunda iteração do projeto algumas funcionalidades adicionais foram implementadas:
+	<li>Nesta terceira iteração do projeto algumas funcionalidades adicionais foram implementadas:
 		<ol>
-			<li>Um indice indireto de ISBN para a classe livro.</li>
-			<li>Um indice indireto de CPF para a classe autor.</li>
-			<li>Um novo método que permite que o usuário pesquise por um livro a partir de seu título</li>
+			<li>O usuário agora pode fazer um backup compactado dos dados das entidades "Livros" e "Autores".</li>
+			<li>Adicionalmente, o usuário pode escolher entre os backups disponíveis e descompactá-los.</li>
 		</ol>
 </ol>
 
 ## 🔍 Experiência do Grupo
-- Todos os requisitos foram implementados de forma tranquila e rápida, sem grandes problemas. Todos os resultados esperados foram alcançados.
+- Todos os requisitos foram implementados, apesar de termos enfrentado dificuldades em alguns momentos com o algoritmo de compressão LZW. Como nosso objetivo era modificar o código mostrado em sala para que usasse um HashMap e, assim, melhorar a performance, tivemos também que descobrir como corrigir o erro do código original. .Todos os resultados esperados foram alcançados.
+
+Não conseguimos implementar a compressão em fluxo, ou seja, de pequenos chunks de dados em pequenos chunks de dados
 
 ## ⚙️ Descrição dos métodos implementados
 
 ```java
-// Este método é chamado na função CREATE da classe ArquivoLivro e é responsável por inserir as palavras chaves
-// juntamente ao ID da entidade à classe ListaInvertida
-private void createInvertida(String titulo, int ID) throws Exception {
+// Esta é uma versão simplificada do código real (por questões de simplicidade) do novo método CRUD.
+// ...
+static <T extends Registro> void Backup(Arquivo<T> arquivo) throws Exception  {
 
-	List<String> lista = LimparETokenizarString(titulo);
+	Path folderPath = Paths.get(path + arquivo.getNomePlural() + "/Dados");
 
-	for (String str : lista) {
-		listaInvertidaTitulos.create(str, ID);
+	LZW compress = new LZW(arquivo.getNomePlural(), path + "../Backups/", true);
+
+	DirectoryStream<Path> stream = Files.newDirectoryStream(folderPath);
+
+	for (Path filePath : stream) {
+		String fileName = filePath.getFileName().toString();
+		byte[] fileBytes = Files.readAllBytes(filePath);
+		compress.add(fileName, fileBytes);
 	}
-}
 
-// Este método é chamado na função DELETE da classe ArquivoLivro e é responsável por desassociar o ID da entidade
-// das suas respectivas palavras chaves.
-private void deleteInvertida(String titulo, int ID) throws Exception {
-
-	List<String> lista = LimparETokenizarString(titulo);
-
-	for (String str : lista) {
-		listaInvertidaTitulos.delete(str, ID);
-	}
+	compress.close();
 }
 ```
 
 ```java
 // Este método é reponsável por retornar uma lista de Strings que então
 // serão usadas nos processos de inclusão e exclusão da classe ListaInvertida
-private List<String> LimparETokenizarString(String str) {
-	str = removerAcentos(str.toLowerCase());
-	return removerStopWords(str);
-}
+public void add(String fileName, byte[] fileBytes) throws Exception {
 
-// Este método remove todos os caracteres acentuadas de uma determinada string
-private String removerAcentos(String str) {
-	String nfdNormalizedString = Normalizer.normalize(str, Normalizer.Form.NFD);
-	Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
-	return pattern.matcher(nfdNormalizedString).replaceAll("");
-}
+	byte[] compressedFile = comprimir(fileBytes);
 
-// Esse método quebra a string em um array de strings, quebrando a string nos espaços.
-// Ele itera no array de strings e pesquisa cada uma das strings numa hash de stop-words
-// e insere a palavra numa lista de strings caso a palavra não seja uma stop-word.
-private List<String> removerStopWords(String string) {
+	Tuple<Integer, Integer> tamanhos = new Tuple<>(fileBytes.length, compressedFile.length);
+	taxasDeCompressao.add(new Tuple<>(fileName, tamanhos));
 
-	List<String> arrayLimpo = new ArrayList<>();
+	totalBytes += fileBytes.length;
+	totalComprimido += compressedFile.length;
 
-	for (String str : string.split(" ")) {
-		if (!stopWords.contains(str)) {
-			arrayLimpo.add(str);
-		}
-	}
+	this.N++;
 
-	return arrayLimpo;
-}
-
-// Esse metodo cria uma tabela hash de stop-words a partir de um arquivo.txt que encontramos
-// na internet que contém centenas de stop words em portuges
-private void CriarStopWordsList() {
-
-	stopWords = new HashSet<>();
-	
-	String filePath = "AEDs/AEDs_III/TP/TP02/EstruturasDeDados/StopWords.txt";
-	String fileLine;
-
-	try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-		while ((fileLine = br.readLine()) != null) {
-			stopWords.add(fileLine);
-		}
-	} catch (IOException e) {
-		e.printStackTrace();
-	}
+	file.writeUTF(fileName);
+	file.writeInt(compressedFile.length);
+	file.writeByte(BITS_POR_INDICE);
+	file.write(compressedFile);
 }
 ```
 
@@ -96,60 +66,86 @@ private void CriarStopWordsList() {
 // - 'Limpar' e 'Tokenizar' a String lida.
 // - Fazer a interseção entre os conjuntos retornados pelas N palavras chave da pesquisa.
 // - Fazer M (sendo M o número de ID do conjunto final) pesquisas no índice direto para montar uma LinkedList de Livros.
-public List<T> readInvertida() throws Exception {
+static <T extends Registro> void RecoverBackup(Arquivo<T> arquivo) throws Exception  {
 
-	System.out.printf("Insira o título do livro: ");
-	String titulo = Lib.readString();
+	Path folderPath = Paths.get(path + "../Backups/");
 
-	List<String> palavras = LimparETokenizarString(titulo);
+	List<Path> files = new LinkedList<>();
 
-	HashSet<Integer> conjutoIDs = new HashSet<>();
-	
-	int[] dados = listaInvertidaTitulos.read(palavras.get(0));
-	
-	for (int i : dados) conjutoIDs.add(i);
-
-	for (int i = 1; i < palavras.size(); i++) {
-		dados = listaInvertidaTitulos.read(palavras.get(i));
-		IntersecDeConjutos(conjutoIDs, dados);
-		if (conjutoIDs.isEmpty()) break;
+	DirectoryStream<Path> stream = Files.newDirectoryStream(folderPath)
+	for (Path file : stream) {
+		String str = file.getFileName().toString().substring(0, arquivo.getNomePlural().length());
+		if (Files.isRegularFile(file) && str.equals(arquivo.getNomePlural())) files.add(file);
 	}
 
-	List<T> objects = new LinkedList<>();
+	System.out.println("Backups encontrados:\n");
 
-	for (int ID : conjutoIDs) {
-		try { objects.add(read(ID)); }
-		catch (Exception e) {}
+	int i = 0;
+	for (Path file : files) {
+		String fileName = file.getFileName().toString();
+		System.out.printf("%d - %s\n", ++i, fileName);
 	}
 
-	return objects;
+	System.out.print("\nEscolha uma das opções acima: ");
+
+	int escolha = Lib.ReadChoice(i);
+
+	Path backup = files.get(escolha - 1);
+
+	LZW decompress = new LZW(arquivo.getNomePlural(), path + "../Backups/", false);
+	decompress.recover(backup);
 }
+```
 
-// Esse método faz a interceção entre dois conjuntos, usamos uma hash para armazenar
-// o conjunto resultante pois assim conseguimos reduzir o custo que seria O(n × m) para O(n).
-private void IntersecDeConjutos(HashSet<Integer> conjunto1, int[] conjunto2) {
-	for (int i : conjunto2) {
-		if (!conjunto1.contains(i)) conjunto1.remove(i);
+```java
+// A descrição desse código está incompleta...
+public void recover(Path path) throws Exception {
+	String folderName = path.getFileName().toString().substring(0, path.getFileName().toString().length() - 3);
+	File folder = new File(filePath + "../Backups/" + folderName);
+	folder.mkdir();
+
+	AbrirArquivoDescomprimir(path);
+
+	this.N = file.readInt();
+
+	for (int i = 0 ; i < N; i++) {
+
+		String fileName = file.readUTF();
+
+		System.out.println("file: " + filePath + folderName + "/" + fileName);
+
+		RandomAccessFile backup = new RandomAccessFile(filePath + folderName + "/" + fileName, "rw");
+
+		int fileSize = file.readInt();
+		BITS_POR_INDICE = file.readByte();
+
+		byte[] compressedBytes = new byte[fileSize];
+
+		file.read(compressedBytes);
+
+		backup.write(descomprimir(compressedBytes));
+		backup.close();
 	}
 }
 ```
-#### O método readInvertida foi incluido no método read da classe arquivo e uma nova opção de pesquisa foi adicionada no menu. 
-![image](https://github.com/LucasGualtieri/CC-PUC/assets/42350002/8300b263-fe47-4c81-b46f-98e2ec4ff4c7)
+
+#### Breve demonstração das novas funcionalidades.
+![image](https://github.com/LucasGualtieri/CC-PUC/assets/42350002/26121f22-9b2d-473e-998a-f5c77d792af3)
+![image](https://github.com/LucasGualtieri/CC-PUC/assets/42350002/1788f147-6022-4387-89c5-31e907aabe82)
+![image](https://github.com/LucasGualtieri/CC-PUC/assets/42350002/ed9aef49-b4bd-49a3-8803-a9c4ef5432ca)
+![image](https://github.com/LucasGualtieri/CC-PUC/assets/42350002/6fac2f29-7a72-408f-ba84-42a41dea6520)
+![image](https://github.com/LucasGualtieri/CC-PUC/assets/42350002/eaa48837-3a50-49f5-8772-f8b395e790fb)
+![image](https://github.com/LucasGualtieri/CC-PUC/assets/42350002/788e2901-62cc-41c5-a09b-e1e4453b9252)
 
 ## ✅ Checklist
 
 1. **Modificação das funções CRUD:**
-	- [X] A inclusão de um livro acrescenta os termos do seu título à lista invertida?
-	- [X] A alteração de um livro modifica a lista invertida removendo ou acrescentando termos do título?
-	- [X] A remoção de um livro gera a remoção dos termos do seu título na lista invertida?
+	- [X] Há uma rotina de compactação usando o algoritmo LZW para fazer backup dos arquivos?
+	- [X] Há uma rotina de descompactação usando o algoritmo LZW para recuperação dos arquivos?
+	- [X] O usuário pode escolher a versão a recuperar?
 
-2. **Pesquisa por registros:**
-	- [X] Há uma busca por palavras que retorna os livros que possuam essas palavras?
-	- [X] Essa busca pode ser feita com mais de uma palavra?
-
-3. **Stop Words e funcionalidades extras:**
-	- [X] As stop words foram removidas de todo o processo?
-	- [X] Que modificação, se alguma, você fez para além dos requisitos mínimos desta tarefa?
+3. **Qual foi a taxa de compressão alcançada por esse backup?**
+	- A taxa de compressão alcançada com a compressão LZW, usando *BITS_POR_INDICE* variável, foi em média de 40%.
 
 6. **Funcionamento e Originalidade:**
 	- [X] O trabalho está funcionando corretamente.
