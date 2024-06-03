@@ -160,10 +160,13 @@ public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
 		}
 	}
 
-	private void IntersecDeConjutos(HashSet<Integer> conjunto1, int[] conjunto2) {
-		for (int i : conjunto2) {
-			if (!conjunto1.contains(i)) conjunto1.remove(i);
-		}
+	private void IntersecDeConjuntos(HashSet<Integer> conjunto1, int[] conjunto2) {
+
+		HashSet<Integer> conjunto2Set = new HashSet<>();
+
+		for (int i : conjunto2) conjunto2Set.add(i);
+
+		conjunto1.retainAll(conjunto2Set);
 	}
 
 	public List<T> readInvertida() throws Exception {
@@ -181,7 +184,7 @@ public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
 
 		for (int i = 1; i < palavras.size(); i++) {
 			dados = listaInvertidaTitulos.read(palavras.get(i));
-			IntersecDeConjutos(conjutoIDs, dados);
+			IntersecDeConjuntos(conjutoIDs, dados);
 			if (conjutoIDs.isEmpty()) break;
 		}
 
