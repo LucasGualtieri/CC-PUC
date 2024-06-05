@@ -10,15 +10,23 @@
 </ol>
 
 ## 🔍 Experiência do Grupo
-- Todos os requisitos foram implementados, apesar de termos enfrentado dificuldades em alguns momentos com o algoritmo de compressão LZW. Como nosso objetivo era modificar o código mostrado em sala para que usasse um HashMap e, assim, melhorar a performance, tivemos também que descobrir como corrigir o erro do código original. .Todos os resultados esperados foram alcançados.
-
-Não conseguimos implementar a compressão em fluxo, ou seja, de pequenos chunks de dados em pequenos chunks de dados
+- Implementamos todos os requisitos, apesar de termos enfrentado dificuldades em alguns momentos com o algoritmo de compressão LZW. Nosso objetivo era modificar o código apresentado em sala para utilizar um HashMap e BITS_POR_INDICE variável e, assim, melhorar a ordem de complexidade do código e a melhorar a taxa de compressão. Isso também exigiu que encontrássemos e corrigíssemos um erro no código original. Alcançamos todos os resultados esperados, exceto pela implementação da compressão em fluxo, ou seja, estamos considerando que todos os arquivos caberão na memória RAM.
 
 ## ⚙️ Descrição dos métodos implementados
 
 ```java
-// Esta é uma versão simplificada do código real (por questões de simplicidade) do novo método CRUD.
-// ...
+/*
+	Esta é uma versão simplificada do código real (por uma questão de facilitar
+	a legibilidade abstraindo partes menos importantes) do novo método CRUD.
+
+	Este método faz o backup de arquivos em uma pasta específica. Ele realiza as seguintes etapas:
+	
+	- Define o caminho do diretório que contém os arquivos a serem copiados.
+	- Cria uma instância do compressor LZW para comprimir os arquivos e armazená-los em um diretório de backups.
+	- Itera sobre todos os arquivos no diretório especificado.
+	- Para cada arquivo, lê seu conteúdo em bytes e adiciona ao compressor.
+	- Fecha o compressor após processar todos os arquivos e imprime na tela as taxas de compressão.
+*/
 static <T extends Registro> void Backup(Arquivo<T> arquivo) throws Exception  {
 
 	Path folderPath = Paths.get(path + arquivo.getNomePlural() + "/Dados");
@@ -38,8 +46,15 @@ static <T extends Registro> void Backup(Arquivo<T> arquivo) throws Exception  {
 ```
 
 ```java
-// Este método é reponsável por retornar uma lista de Strings que então
-// serão usadas nos processos de inclusão e exclusão da classe ListaInvertida
+/*
+	Este método adiciona um arquivo comprimido ao sistema, realizando as seguintes ações:
+
+	- Comprime o conteúdo do arquivo.
+	- Registra a taxa de compressão (tamanhos antes e depois da compressão) para o arquivo.
+	- Atualiza o total de bytes antes e depois da compressão.
+	- Incrementa o contador de arquivos processados.
+	- Escreve o nome do arquivo, o tamanho do arquivo comprimido e o conteúdo comprimido em um arquivo de destino.
+*/
 public void add(String fileName, byte[] fileBytes) throws Exception {
 
 	byte[] compressedFile = comprimir(fileBytes);
@@ -61,11 +76,14 @@ public void add(String fileName, byte[] fileBytes) throws Exception {
 
 ```java
 
-// Este método é responsável por:
-// - Ler o título digitado pelo usuário.
-// - 'Limpar' e 'Tokenizar' a String lida.
-// - Fazer a interseção entre os conjuntos retornados pelas N palavras chave da pesquisa.
-// - Fazer M (sendo M o número de ID do conjunto final) pesquisas no índice direto para montar uma LinkedList de Livros.
+/*
+	Este método recupera um backup de arquivos, executando as seguintes operações:
+	
+	- Define o caminho do diretório de backups.
+	- Cria uma lista de arquivos de backup correspondentes ao tipo de registro especificado.
+	- Exibe os arquivos de backup encontrados e permite que o usuário selecione um.
+	- Recupera o backup selecionado utilizando o descompressor LZW.
+*/
 static <T extends Registro> void RecoverBackup(Arquivo<T> arquivo) throws Exception  {
 
 	Path folderPath = Paths.get(path + "../Backups/");
@@ -98,7 +116,15 @@ static <T extends Registro> void RecoverBackup(Arquivo<T> arquivo) throws Except
 ```
 
 ```java
-// A descrição desse código está incompleta...
+/*
+	Este método recupera arquivos de um backup descomprimido:
+
+	- Determina o nome da pasta a partir do caminho do arquivo de backup e cria essa pasta.
+	- Abre e descomprime o arquivo de backup.
+	- Lê o número total de arquivos no backup.
+	- Para cada arquivo, lê o nome do arquivo, o tamanho, os bytes comprimidos, descomprime-os
+	e os escreve em um novo arquivo dentro da pasta de backup.
+*/
 public void recover(Path path) throws Exception {
 	String folderName = path.getFileName().toString().substring(0, path.getFileName().toString().length() - 3);
 	File folder = new File(filePath + "../Backups/" + folderName);
