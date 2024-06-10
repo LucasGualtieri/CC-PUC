@@ -2,6 +2,13 @@
 	"configurations": [
 		{
 			"type": "java",
+			"name": "BoyerMoore",
+			"request": "launch",
+			"mainClass": "AEDs.AEDs_III.Materias.PatternMatching.BoyerMoore",
+			"projectName": "CC-PUC_cc5a22eb"
+		},
+		{
+			"type": "java",
 			"name": "LZW",
 			"request": "launch",
 			"mainClass": "AEDs.AEDs_III.Materias.Compressao.LZW",

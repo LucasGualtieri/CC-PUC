@@ -1,0 +1,5 @@
+for (int i = pattern.length - 2; i >= 0; i--) {
+	if (dictionary[pattern[i]] == -1) {
+		dictionary[pattern[i]] = i;
+	}
+}
