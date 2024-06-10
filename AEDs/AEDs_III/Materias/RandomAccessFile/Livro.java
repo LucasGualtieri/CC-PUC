@@ -1,4 +1,4 @@
-package AEDs.AEDs_III.FluxosEntradaSaida_Construtor;
+package AEDs.AEDs_III.Materias.RandomAccessFile;
 
 import java.text.DecimalFormat;
 import java.io.ByteArrayOutputStream;
