@@ -1,5 +1,8 @@
 package AEDs.AEDs_III.Materias.PatternMatching;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -124,16 +127,63 @@ class BoyerMoore {
 
 	public static void main(String[] args) throws IllegalArgumentException {
 
-		String pattern = "ARARA";
-		String text = "A ARARA VIU OUTRA ARARA EM ARARAQUARA";
-		//             01234567890123456789012345678901234567
+		String filePath = "AEDs/AEDs_III/Materias/PatternMatching/sampleText.txt";
+
+		String pattern = "ra";
+		String text = readFromFile(filePath);
+		// String text = "A ARARA VIU OUTRA ARARA EM ARARAQUARA";
 
 		BoyerMooreMatcher p = new BoyerMooreMatcher(pattern);
 
 		// p.printLastOccurrenceTable();
 
 		List<Integer> list = p.match(text);
+		// System.out.println(list);
 
-		System.out.println(list);
+		printHighlighted(pattern, text, list);
+	}
+
+	static String readFromFile(String filePath) {
+
+        // StringBuilder to store the content of the file
+        StringBuilder content = new StringBuilder();
+
+        // Try-with-resources to automatically close the resources
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            // Read lines from the file until there are no more lines
+            while ((line = reader.readLine()) != null) {
+                // Append each line to the StringBuilder
+                content.append(line).append("\n"); // You can remove '\n' if you don't want to preserve newlines
+            }
+        } catch (IOException e) {
+            // Handle IOException
+            e.printStackTrace();
+        }
+
+        // Convert StringBuilder to String
+        return content.toString();
+	}
+
+	static void printHighlighted(String pattern, String text, List<Integer> list) {
+
+		final String BOLD = "\u001B[1m";
+		final String GREEN = "\u001B[32m";
+		final String RESET = "\u001B[0m";
+
+		int len = text.length();
+		StringBuilder builder = new StringBuilder();
+
+		for (int i = 0; i < len; i++) {
+			if (list.size() > 0 && i == list.get(0)) {
+				builder.append(BOLD + GREEN + pattern + RESET);
+				i += pattern.length() - 1;
+				list.remove(0);
+			}
+			else builder.append(text.charAt(i));
+		}
+
+		System.out.println(builder.toString());
+
 	}
 }
