@@ -145,23 +145,17 @@ class BoyerMoore {
 
 	static String readFromFile(String filePath) {
 
-        // StringBuilder to store the content of the file
         StringBuilder content = new StringBuilder();
 
-        // Try-with-resources to automatically close the resources
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
-            // Read lines from the file until there are no more lines
             while ((line = reader.readLine()) != null) {
-                // Append each line to the StringBuilder
-                content.append(line).append("\n"); // You can remove '\n' if you don't want to preserve newlines
+                content.append(line).append("\n");
             }
-        } catch (IOException e) {
-            // Handle IOException
-            e.printStackTrace();
         }
+		
+		catch (IOException e) { e.printStackTrace(); }
 
-        // Convert StringBuilder to String
         return content.toString();
 	}
 
