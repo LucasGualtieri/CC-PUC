@@ -1,8 +1,5 @@
 package AEDs.AEDs_III.Materias.PatternMatching;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -11,103 +8,129 @@ import java.util.List;
 
 class BoyerMoore {
 
-	static class Pattern {
+	/**
+	 * BoyerMooreMatcher class implements the Boyer-Moore pattern search algorithm.
+	 */
+	static class BoyerMooreMatcher {
 
-		private int[] suffixes, dictionary;
+		private int[] lastOccurrences, goodSuffixes;
 
 		private byte[] pattern;
 		
-		public Pattern(String pattern) throws Exception, IOException {
+		/**
+         * Constructor to create a BoyerMooreMatcher with a pattern byte array.
+         *
+         * @param pattern The pattern byte array to be matched.
+         * @throws IllegalArgumentException If the pattern is empty.
+         */
+		public BoyerMooreMatcher(String pattern) throws IllegalArgumentException {
+			this(pattern.getBytes());
+		}
 
-			if (pattern.length() == 0) {
-				throw new Exception("Error: Empty pattern.");
+		/**
+         * Constructor to create a BoyerMooreMatcher with a pattern byte array.
+         *
+         * @param pattern The pattern byte array to be matched.
+         * @throws IllegalArgumentException If the pattern is empty.
+         */
+		public BoyerMooreMatcher(byte[] pattern) {
+
+			if (pattern.length == 0) {
+				throw new IllegalArgumentException("Error: Empty pattern string.");
 			}
 
-			this.pattern = toByteArray(pattern);
-
-			// buildSuffixesArray();
-			buildDictionary();
+			this.pattern = pattern;
+				
+			buildSuffixesArray();
+			buildLastOccurrencesTable();
 		}
 
-		public Pattern(byte[] pattern) { }
-		
-		private byte[] toByteArray(String str) throws IOException {
-
-			ByteArrayOutputStream ba_out = new ByteArrayOutputStream();
-			DataOutputStream dos = new DataOutputStream(ba_out);
-
-			dos.writeBytes(str);
-
-			return ba_out.toByteArray();
+		/**
+         * Builds the good suffix shift table.
+         * This method is currently not implemented.
+         */
+		private void buildSuffixesArray() {
+			goodSuffixes = new int[this.pattern.length];
+			// Code still to be implemented
 		}
 
-		private void buildDictionary() {
+		/**
+         * Builds the last occurrence table for the pattern.
+         * The table stores the last occurrence index of each byte in the pattern.
+         */
+		private void buildLastOccurrencesTable() {
 
-			dictionary = new int[256];
+			lastOccurrences = new int[256];
 
-			Arrays.fill(dictionary, -1);
+			Arrays.fill(lastOccurrences, -1);
 
 			for (int i = 0; i < pattern.length - 1; i++) {
-				dictionary[pattern[i]] = i;
+				lastOccurrences[pattern[i]] = i;
 			}
 		}
 
-		public void printDictionary() {
-			for (int i = 0; i < dictionary.length; i++) {
-				if (dictionary[i] != -1) {
-					System.out.printf("%c - %d\n", (char)i, dictionary[i]);
+		/**
+         * Prints the last occurrence table for debugging purposes.
+         */
+		public void printLastOccurrenceTable() {
+			for (int i = 0; i < lastOccurrences.length; i++) {
+				if (lastOccurrences[i] != -1) {
+					System.out.printf("%c - %d\n", (char)i, lastOccurrences[i]);
 				}
 			}
 		}
 
-		private int dictSearch(int j, byte b) {
-			return Math.max(j - dictionary[b], 1);
+		/**
+         * Matches the pattern against the given search text.
+         *
+         * @param searchText The text in which to search for the pattern.
+         * @return A list of starting indices where the pattern is found in the text.
+         */
+		public List<Integer> match(String searchText) {
+			return match(searchText.getBytes());
 		}
 
-		public List<Integer> match(String text) throws IOException {
+		/**
+         * Matches the pattern against the given byte array.
+         *
+         * @param searchSequence The byte array in which to search for the pattern.
+         * @return A list of starting indices where the pattern is found in the byte array.
+         */
+		public List<Integer> match(byte[] searchSequence) {
 
 			List<Integer> indices = new LinkedList<>();
 
-			byte[] sequence = toByteArray(text);
+			int lastOccurrenceShift, goodSuffixShift;
+			int maxIndex = searchSequence.length - pattern.length;
 
-			int lastOccurrence, goodSuffix;
-			int shift = 1, len = (sequence.length - pattern.length) + 1;
+			for (int i = 0, j = pattern.length - 1; i <= maxIndex; j--) {
 
-			int i = 0, j = pattern.length - 1;
-
-			while (i < len) {
-
-				if (sequence[i + j] != pattern[j]) {
-					lastOccurrence = dictSearch(j, sequence[i + j]);
-					goodSuffix = 0;
-					shift = Math.max(lastOccurrence, goodSuffix);
-					j = pattern.length - 1;
-					i += shift;
+				if (searchSequence[i + j] != pattern[j]) {
+					lastOccurrenceShift = Math.max(j - searchSequence[i + j], 1);
+					goodSuffixShift = goodSuffixes[j];
+					i += Math.max(lastOccurrenceShift, goodSuffixShift);
+					j = pattern.length;
 				}
-				
-				else if (sequence[i + j] == pattern[j]) {
-					if (--j < 0) {
-						indices.add(i);
-						i++;
-						j = pattern.length - 1;
-					}
+
+				else if (j == 0) {
+					indices.add(i++);
+					j = pattern.length;
 				}
 			}
 
 			return indices;
 		}
-
-		public List<Integer> match(byte[] sequence) { return null; }
 	}
 
-	public static void main(String[] args) throws Exception, IOException {
+	public static void main(String[] args) throws IllegalArgumentException {
 
 		String pattern = "ARARA";
 		String text = "A ARARA VIU OUTRA ARARA EM ARARAQUARA";
+		//             01234567890123456789012345678901234567
 
-		Pattern p = new Pattern(pattern);
+		BoyerMooreMatcher p = new BoyerMooreMatcher(pattern);
 
-		// p.printDictionary();
+		// p.printLastOccurrenceTable();
 
 		List<Integer> list = p.match(text);
 
