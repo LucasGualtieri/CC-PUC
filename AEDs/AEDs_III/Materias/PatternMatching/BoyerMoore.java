@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Scanner;
 
 // clear && javac BoyerMoore.java && java BoyerMoore.java
 
@@ -124,41 +125,71 @@ class BoyerMoore {
 			return indices;
 		}
 	}
+	
+	static Scanner scanner = new Scanner(System.in);
+
+	static final String filePath = "AEDs/AEDs_III/Materias/PatternMatching";
 
 	public static void main(String[] args) throws IllegalArgumentException {
 
-		String filePath = "AEDs/AEDs_III/Materias/PatternMatching/sampleText.txt";
+		clearScreen();
 
-		String pattern = "ra";
-		String text = readFromFile(filePath);
-		// String text = "A ARARA VIU OUTRA ARARA EM ARARAQUARA";
+		String text = readFromFile(filePath + "/sampleText.txt");
+		System.out.println(text);
 
-		BoyerMooreMatcher p = new BoyerMooreMatcher(pattern);
+		String pattern = "";
 
-		// p.printLastOccurrenceTable();
+		do {
+			System.out.print("Digite o pattern: ");
 
-		List<Integer> list = p.match(text);
-		// System.out.println(list);
+			pattern = scanner.nextLine();
 
-		printHighlighted(pattern, text, list);
+			BoyerMooreMatcher p = new BoyerMooreMatcher(pattern);
+			List<Integer> list = p.match(text);
+
+			clearScreen();
+			printHighlighted(pattern, text, list);
+
+		} while (!pattern.toUpperCase().equals("FIM"));
 	}
 
+	/**
+     * Clears the console screen by printing the ANSI escape code for clearing the screen.
+     */
+	public static void clearScreen() {
+		System.out.print("\033[H\033[2J");
+		System.out.flush();
+	}
+
+	/**
+     * Reads the content of a file from the given file path.
+     *
+     * @param filePath The path to the file to be read.
+     * @return The content of the file as a string.
+     */
 	static String readFromFile(String filePath) {
 
-        StringBuilder content = new StringBuilder();
+		StringBuilder content = new StringBuilder();
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                content.append(line).append("\n");
-            }
-        }
+		try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+			String line;
+			while ((line = reader.readLine()) != null) {
+				content.append(line).append("\n");
+			}
+		}
 		
 		catch (IOException e) { e.printStackTrace(); }
 
-        return content.toString();
+		return content.toString();
 	}
 
+	/**
+     * Prints the text with occurrences of the pattern highlighted in bold and green.
+     *
+     * @param pattern The pattern to highlight in the text.
+     * @param text The text in which to highlight the pattern.
+     * @param list The list of starting indices where the pattern is found.
+     */
 	static void printHighlighted(String pattern, String text, List<Integer> list) {
 
 		final String BOLD = "\u001B[1m";
