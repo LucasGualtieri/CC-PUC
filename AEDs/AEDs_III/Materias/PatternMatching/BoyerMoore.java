@@ -222,7 +222,7 @@ class BoyerMoore {
 
 		for (int i = 0; i < textBytes.length; i++) {
 
-			if (indices.size() > 0 && i == indices.get(0)) {
+			if (!indices.isEmpty() && i == indices.get(0)) {
 				indices.remove(0);
 				if (counter == 0) append(GREEN, sequence);
 				counter = patternLength;
@@ -230,8 +230,9 @@ class BoyerMoore {
 
 			sequence.add(textBytes[i]);
 
-			if (counter > 0 && --counter == 0) append(RESET, sequence);
-
+			if (counter > 0 && --counter == 0) {
+				append(RESET, sequence);
+			}
 		}
 
 		byte[] highlightedSequence = new byte[sequence.size()];
