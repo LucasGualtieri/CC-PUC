@@ -55,7 +55,7 @@ class BoyerMoore {
 		 */
 		private void buildSuffixesArray() {
 			goodSuffixes = new int[this.pattern.length];
-			// Code still to be implemented
+			// Code still to be implemented...
 		}
 
 		/**
@@ -68,8 +68,10 @@ class BoyerMoore {
 
 			Arrays.fill(lastOccurrences, -1);
 
+			// Adding 128 to pattern[i] ensures that the byte value is treated as unsigned, 
+			// preventing negative array indices when accessing the lastOccurrences table.
 			for (int i = 0; i < pattern.length - 1; i++) {
-				lastOccurrences[pattern[i]] = i;
+				lastOccurrences[pattern[i] + 128] = i;
 			}
 		}
 
@@ -94,6 +96,10 @@ class BoyerMoore {
 			return match(searchText.getBytes());
 		}
 
+		int calcLastOccShift(int i, int j, byte[] sequence) {
+			return Math.max(j - lastOccurrences[sequence[i + j] + 128], 1);
+		}
+
 		/**
 		 * Matches the pattern against the given byte array.
 		 *
@@ -110,7 +116,7 @@ class BoyerMoore {
 			for (int i = 0, j = pattern.length - 1; i <= maxIndex; j--) {
 
 				if (searchSequence[i + j] != pattern[j]) {
-					lastOccurrenceShift = Math.max(j - searchSequence[i + j], 1);
+					lastOccurrenceShift = calcLastOccShift(i, j, searchSequence);
 					goodSuffixShift = goodSuffixes[j];
 					i += Math.max(lastOccurrenceShift, goodSuffixShift);
 					j = pattern.length;
@@ -128,16 +134,16 @@ class BoyerMoore {
 	
 	static Scanner scanner = new Scanner(System.in);
 
-	static final String filePath = "AEDs/AEDs_III/Materias/PatternMatching";
+	static final String filePath = "AEDs/AEDs_III/Materias/PatternMatching/";
 
 	public static void main(String[] args) throws IllegalArgumentException {
 
 		clearScreen();
 
-		String text = readFromFile(filePath + "/sampleText.txt");
+		String text = readFromFile(filePath + "sampleText.txt");
 		System.out.println(text);
 
-		String pattern = "";
+		String pattern;
 
 		do {
 			System.out.print("Digite o pattern: ");
@@ -154,19 +160,19 @@ class BoyerMoore {
 	}
 
 	/**
-     * Clears the console screen by printing the ANSI escape code for clearing the screen.
-     */
+	 * Clears the console screen by printing the ANSI escape code for clearing the screen.
+	 */
 	public static void clearScreen() {
 		System.out.print("\033[H\033[2J");
 		System.out.flush();
 	}
 
 	/**
-     * Reads the content of a file from the given file path.
-     *
-     * @param filePath The path to the file to be read.
-     * @return The content of the file as a string.
-     */
+	 * Reads the content of a file from the given file path.
+	 *
+	 * @param filePath The path to the file to be read.
+	 * @return The content of the file as a string.
+	 */
 	static String readFromFile(String filePath) {
 
 		StringBuilder content = new StringBuilder();
@@ -177,38 +183,58 @@ class BoyerMoore {
 				content.append(line).append("\n");
 			}
 		}
-		
-		catch (IOException e) { e.printStackTrace(); }
+
+		catch (IOException e) {
+			// e.printStackTrace();
+			System.out.println("Error: File not found.");
+			System.exit(-1);
+		}
 
 		return content.toString();
 	}
 
 	/**
-     * Prints the text with occurrences of the pattern highlighted in bold and green.
-     *
-     * @param pattern The pattern to highlight in the text.
-     * @param text The text in which to highlight the pattern.
-     * @param list The list of starting indices where the pattern is found.
-     */
-	static void printHighlighted(String pattern, String text, List<Integer> list) {
+	 * Prints the text with occurrences of the pattern highlighted in bold and green.
+	 *
+	 * @param pattern The pattern to highlight in the text.
+	 * @param text The text in which to highlight the pattern.
+	 * @param indices The list of starting indices where the pattern is found.
+	 */
+	static void printHighlighted(String pattern, String text, List<Integer> indices) {
 
-		final String BOLD = "\u001B[1m";
-		final String GREEN = "\u001B[32m";
-		final String RESET = "\u001B[0m";
+		final byte[] textBytes = text.getBytes();
+		final int patternLength = pattern.getBytes().length;
+		final String GREEN = "\u001B[42m", RESET = "\u001B[0m";
 
-		int len = text.length();
-		StringBuilder builder = new StringBuilder();
+		List<Byte> sequence = new LinkedList<>();
 
-		for (int i = 0; i < len; i++) {
-			if (list.size() > 0 && i == list.get(0)) {
-				builder.append(BOLD + GREEN + pattern + RESET);
-				i += pattern.length() - 1;
-				list.remove(0);
+		int counter = 0;
+
+		for (int i = 0; i < textBytes.length; i++) {
+
+			if (indices.size() > 0 && i == indices.get(0)) {
+				indices.remove(0);
+				if (counter == 0) append(GREEN, sequence);
+				counter = patternLength;
 			}
-			else builder.append(text.charAt(i));
+
+			sequence.add(textBytes[i]);
+
+			if (counter > 0 && --counter == 0) append(RESET, sequence);
+
 		}
 
-		System.out.println(builder.toString());
+		byte[] highlightedSequence = new byte[sequence.size()];
+
+		for (int i = 0; i < sequence.size(); i++) {
+			highlightedSequence[i] = sequence.get(i);
+		}
+
+		System.out.println(new String(highlightedSequence));
 
 	}
+
+	static void append(String ANSI, List<Byte> sequence) {
+        for (byte b : ANSI.getBytes()) sequence.add(b);
+    }
 }
