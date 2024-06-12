@@ -75,6 +75,19 @@ class BoyerMoore {
 			}
 		}
 
+		
+		/**
+		 * Calculates the shift based on the Last Occurrences Table.
+		 *
+		 * @param i The current index in the search sequence.
+		 * @param j The current index in the pattern.
+		 * @param sequence The byte array of the search sequence.
+		 * @return The calculated shift value.
+		 */
+		int calcLastOccShift(int i, int j, byte[] sequence) {
+			return Math.max(j - lastOccurrences[sequence[i + j] + 128], 1);
+		}
+
 		/**
 		 * Prints the last occurrence table for debugging purposes.
 		 */
@@ -96,10 +109,6 @@ class BoyerMoore {
 			return match(searchText.getBytes());
 		}
 
-		int calcLastOccShift(int i, int j, byte[] sequence) {
-			return Math.max(j - lastOccurrences[sequence[i + j] + 128], 1);
-		}
-
 		/**
 		 * Matches the pattern against the given byte array.
 		 *
@@ -110,20 +119,21 @@ class BoyerMoore {
 
 			List<Integer> indices = new LinkedList<>();
 
-			int lastOccurrenceShift, goodSuffixShift;
+			int lastOccurrenceShift;
 			int maxIndex = searchSequence.length - pattern.length;
 
 			for (int i = 0, j = pattern.length - 1; i <= maxIndex; j--) {
 
-				if (searchSequence[i + j] != pattern[j]) {
-					lastOccurrenceShift = calcLastOccShift(i, j, searchSequence);
-					goodSuffixShift = goodSuffixes[j];
-					i += Math.max(lastOccurrenceShift, goodSuffixShift);
-					j = pattern.length;
+				if (searchSequence[i + j] == pattern[j]) {
+					if (j == 0) {
+						indices.add(i++);
+						j = pattern.length;
+					}
 				}
 
-				else if (j == 0) {
-					indices.add(i++);
+				else {
+					lastOccurrenceShift = calcLastOccShift(i, j, searchSequence);
+					i += Math.max(lastOccurrenceShift, goodSuffixes[j]);
 					j = pattern.length;
 				}
 			}
