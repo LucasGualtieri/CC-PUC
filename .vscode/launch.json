@@ -2,6 +2,13 @@
 	"configurations": [
 		{
 			"type": "java",
+			"name": "Concat",
+			"request": "launch",
+			"mainClass": "AEDs.AEDs_III.Materias.PatternMatching.Concat",
+			"projectName": "CC-PUC_cc5a22eb"
+		},
+		{
+			"type": "java",
 			"name": "BoyerMoore",
 			"request": "launch",
 			"mainClass": "AEDs.AEDs_III.Materias.PatternMatching.BoyerMoore",

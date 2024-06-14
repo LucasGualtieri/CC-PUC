@@ -195,7 +195,7 @@ class BoyerMoore {
 			int lastOccurrenceShift;
 			int maxIndex = searchSequence.length - pattern.length;
 
-			for (int i = 0, j = pattern.length - 1; i <= maxIndex; j--) {
+			for (int j = pattern.length - 1, i = 0; i <= maxIndex; j--) {
 
 				if (searchSequence[i + j] == pattern[j]) {
 					if (j == 0) {
@@ -229,15 +229,13 @@ class BoyerMoore {
 		String pattern;
 
 		do {
+
 			System.out.print("Digite o pattern: ");
 
 			pattern = scanner.nextLine();
 
 			BoyerMooreMatcher p = new BoyerMooreMatcher(pattern);
 			List<Integer> list = p.match(text);
-
-			// p.printGoodSuffixesArray();
-			// p.printLastOccurrenceTable();
 
 			clearScreen();
 			printHighlighted(pattern, text, list);
