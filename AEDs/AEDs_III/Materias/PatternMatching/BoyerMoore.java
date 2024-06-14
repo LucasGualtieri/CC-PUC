@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 // clear && javac BoyerMoore.java && java BoyerMoore.java
 
@@ -50,12 +51,92 @@ class BoyerMoore {
 		}
 
 		/**
-		 * Builds the good suffix shift table.
-		 * This method is currently not implemented.
+		 * Builds the Good Suffixes Array for the pattern.
+		 * The array stores the number of positions to shift
+		 * when a mismatch occurs at each position in the pattern.
 		 */
 		private void buildSuffixesArray() {
-			goodSuffixes = new int[this.pattern.length];
-			// Code still to be implemented...
+
+			int suffixShift, patternLen = this.pattern.length;
+
+			goodSuffixes = new int[patternLen];
+			goodSuffixes[patternLen - 1] = 1;
+
+			String patternStr = new String(this.pattern);
+
+			for (int i = patternLen - 2; i >= 0; i--) {
+
+				String suffix = patternStr.substring(i + 1, patternStr.length());
+
+				suffixShift = calculateSuffixShift(i, suffix, patternStr);
+
+				if (suffixShift != -1) goodSuffixes[i] = suffixShift;
+
+				else goodSuffixes[i] = calculatePrefixShift(suffix, patternStr);
+			}
+		}
+
+		/**
+		 * Calculates the suffix shift for a given suffix in the pattern.
+		 * This method finds the occurrence of the suffix elsewhere in the pattern,
+		 * ensuring it is not preceded by the same character.
+		 *
+		 * @param i The current index in the pattern.
+		 * @param suffix The suffix to be checked.
+		 * @param pattern The pattern string.
+		 * @return The shift value for the suffix if found, otherwise -1.
+		 */
+		int calculateSuffixShift(int i, String suffix, String pattern) {
+			
+			char c = pattern.charAt(i);
+			
+			int shift = -1, len = suffix.length();
+
+			for (int j = i; shift == -1 && j > 0; j--) {
+
+				if (c != pattern.charAt(j - 1)) {
+					String str = pattern.substring(j, j + len);
+					if (str.equals(suffix)) shift = i - j + 1;
+				}
+			}
+
+			return shift;
+		}
+
+		/**
+		 * Calculates the prefix shift for a given suffix in the pattern.
+		 * This method determines the shift based on the longest prefix match
+		 * when the suffix is not found elsewhere in the pattern.
+		 *
+		 * @param suffix The suffix to be checked.
+		 * @param pattern The pattern string.
+		 * @return The shift value for the prefix if found, otherwise the length of the pattern plus one.
+		 */
+		int calculatePrefixShift(String suffix, String pattern) {
+
+			boolean wasFound = false;
+
+			while (!wasFound && !suffix.isEmpty()) {
+
+				if (pattern.startsWith(suffix)) wasFound = true;
+
+				else suffix = suffix.substring(1, suffix.length());
+			}
+
+			return !wasFound ? pattern.length() + 1 : pattern.length() - suffix.length();
+		}
+
+		/**
+		 * Prints the Good Suffixes Array for debugging purposes.
+		 */
+		public void printGoodSuffixesArray() {
+			
+			List<Integer> goodSuffixesList = Arrays.
+			stream(goodSuffixes).
+			boxed().
+			collect(Collectors.toList());
+
+			System.out.println(goodSuffixesList);
 		}
 
 		/**
@@ -75,7 +156,6 @@ class BoyerMoore {
 			}
 		}
 
-		
 		/**
 		 * Calculates the shift based on the Last Occurrences Table.
 		 *
@@ -85,16 +165,16 @@ class BoyerMoore {
 		 * @return The calculated shift value.
 		 */
 		int calcLastOccShift(int i, int j, byte[] sequence) {
-			return Math.max(j - lastOccurrences[sequence[i + j] + 128], 1);
+			return j - lastOccurrences[sequence[i + j] + 128];
 		}
 
 		/**
-		 * Prints the last occurrence table for debugging purposes.
+		 * Prints the Last Occurrence Table for debugging purposes.
 		 */
 		public void printLastOccurrenceTable() {
 			for (int i = 0; i < lastOccurrences.length; i++) {
 				if (lastOccurrences[i] != -1) {
-					System.out.printf("%c - %d\n", (char)i, lastOccurrences[i]);
+					System.out.printf("%c - %d\n", (char)i - 128, lastOccurrences[i]);
 				}
 			}
 		}
@@ -162,6 +242,9 @@ class BoyerMoore {
 
 			BoyerMooreMatcher p = new BoyerMooreMatcher(pattern);
 			List<Integer> list = p.match(text);
+
+			// p.printGoodSuffixesArray();
+			// p.printLastOccurrenceTable();
 
 			clearScreen();
 			printHighlighted(pattern, text, list);

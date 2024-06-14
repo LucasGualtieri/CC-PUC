@@ -3,3 +3,21 @@ for (int i = pattern.length - 2; i >= 0; i--) {
 		dictionary[pattern[i]] = i;
 	}
 }
+
+int calculateSuffixShift(int i, String suffix, String pattern) {
+	
+	char c = pattern.charAt(i);
+	
+	int shift = -1, len = suffix.length();
+
+	for (int j = i; shift == -1 && j > 0; j--) {
+
+		String str = pattern.substring(j, j + len);
+
+		if (str.equals(suffix) && c != pattern.charAt(j - 1)) {
+			shift = i - j + 1;
+		}
+	}
+
+	return shift;
+}
