@@ -3,11 +3,11 @@ package AEDs.AEDs_III.Materias.PatternMatching;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 
 // clear && javac BoyerMoore.java && java BoyerMoore.java
 
@@ -131,12 +131,11 @@ class BoyerMoore {
 		 */
 		public void printGoodSuffixesArray() {
 			
-			List<Integer> goodSuffixesList = Arrays.
-			stream(goodSuffixes).
-			boxed().
-			collect(Collectors.toList());
+			List<Integer> list = new ArrayList<>(goodSuffixes.length);
 
-			System.out.println(goodSuffixesList);
+			for (int i : goodSuffixes) list.add(i);
+
+			System.out.println(list);
 		}
 
 		/**
