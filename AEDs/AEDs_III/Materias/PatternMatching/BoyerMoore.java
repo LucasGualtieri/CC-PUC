@@ -1,13 +1,7 @@
 package AEDs.AEDs_III.Materias.PatternMatching;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Scanner;
+import java.io.*;
+import java.util.*;
 
 // clear && javac BoyerMoore.java && java BoyerMoore.java
 
