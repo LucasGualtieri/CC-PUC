@@ -13,8 +13,8 @@ class BoyerMoore {
 	static class BoyerMooreMatcher {
 
 		private int[] lastOccurrences, goodSuffixes;
-
 		private byte[] pattern;
+		private int comparisons;
 		
 		/**
 		 * Constructor to create a BoyerMooreMatcher with a pattern byte array.
@@ -39,7 +39,9 @@ class BoyerMoore {
 			}
 
 			this.pattern = pattern;
-				
+
+			comparisons = 0;
+
 			buildSuffixesArray();
 			buildLastOccurrencesTable();
 		}
@@ -172,6 +174,8 @@ class BoyerMoore {
 			}
 		}
 
+		int getComparisons() { return comparisons; }
+
 		/**
 		 * Matches the pattern against the given search text.
 		 *
@@ -209,6 +213,8 @@ class BoyerMoore {
 					i += Math.max(lastOccurrenceShift, goodSuffixes[j]);
 					j = pattern.length;
 				}
+
+				comparisons++;
 			}
 
 			return indices;
