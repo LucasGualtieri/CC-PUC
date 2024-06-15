@@ -49,6 +49,7 @@ public class Concat {
 
 	public static void main(String[] args) {
 
+		@SuppressWarnings("unused")
 		String str = "";
 		StringBuilder builder = new StringBuilder();
 
