@@ -196,22 +196,22 @@ class BoyerMoore {
 
 			List<Integer> indices = new LinkedList<>();
 
-			int lastOccurrenceShift;
+			int lastOccurrenceShift, i = 0, j = pattern.length - 1;
 			int maxIndex = searchSequence.length - pattern.length;
 
-			for (int j = pattern.length - 1, i = 0; i <= maxIndex; j--) {
+			while (i <= maxIndex) {
 
 				if (searchSequence[i + j] == pattern[j]) {
-					if (j == 0) {
+					if (j-- == 0) {
 						indices.add(i++);
-						j = pattern.length;
+						j = pattern.length - 1;
 					}
 				}
 
 				else {
 					lastOccurrenceShift = calcLastOccShift(i, j, searchSequence);
 					i += Math.max(lastOccurrenceShift, goodSuffixes[j]);
-					j = pattern.length;
+					j = pattern.length - 1;
 				}
 
 				comparisons++;
