@@ -4,12 +4,18 @@
 
 using namespace std;
 
+// #define MOD 'Z' - 'A'
+
+int mod(int x, int y) {
+	return x % y >= 0 ? x % y : y + x;
+}
+
 string Viegenere(string msg, const string& key) {
 
 	int len = key.length();
 
 	auto fn = [](char c, char key) {
-		return (((c + key) % 26) + 'A');
+		return 'A' + mod(c + key, 26);
 	};
 
 	for (int i = 0; i < msg.length(); i++) {
@@ -24,7 +30,7 @@ string Decypher(string msg, const string& key) {
 	int len = key.length();
 
 	auto fn = [](char c, char key) {
-		return (((c - key + 26) % 26) + 'A');
+		return 'A' + mod(c - key, 26);
 	};
 
 	for (int i = 0; i < msg.length(); i++) {
