@@ -108,7 +108,7 @@ struct ViegenereModifiedCipher : implements CipherStrategy {
 
 };
 
-// Concrete Strategy B: Cipher with Columns
+// Concrete Strategy C: Cipher with Columns
 struct ColumnsCipher : implements CipherStrategy {
 
 	string cipher(string msg, const string& key) const override {
@@ -226,6 +226,8 @@ class Cipher {
 
 };
 
+void foo();
+
 int main() {
 
 	string key = "CANO";
@@ -253,5 +255,49 @@ int main() {
 	msg = cipher.decipher(msg, key);
 	cout << msg << endl;
 
+	foo();
+
 	return 0;
+}
+
+void foo() {
+
+	// Concrete Strategy Test A: Cipher with Columns
+	struct TesteA : implements CipherStrategy {
+
+		string cipher(string msg, const string& key) const override {
+			return "Teste A";
+		}
+
+		string decipher(string msg, const string& key) const override {
+			return "Decipher logic";
+		}
+
+	};
+
+	// Concrete Strategy Test B: Cipher with Columns
+	struct TesteB : implements CipherStrategy {
+
+		string cipher(string msg, const string& key) const override {
+			return "Teste B";
+		}
+
+		string decipher(string msg, const string& key) const override {
+			return "Decipher logic";
+		}
+
+	};
+
+	CipherStrategy* A = new TesteA;
+	CipherStrategy* B = new TesteB;
+
+	cout << A->cipher("", "") << endl;
+	cout << B->cipher("", "") << endl;
+
+	A = (CipherStrategy*)((long)A ^ (long)B);
+	B = (CipherStrategy*)((long)B ^ (long)A);
+	A = (CipherStrategy*)((long)A ^ (long)B);
+
+	cout << A->cipher("", "") << endl;
+	cout << B->cipher("", "") << endl;
 }
