@@ -54,7 +54,10 @@ class PatternMatcher {
 		 * @return The number of comparisons.
 		 */
 		int getComparisons();
-
+		
+		/**
+		 * Prints any internal auxiliary structures used by the algorithm.
+		 */
 		void printInternalStructures();
 	}
 
@@ -77,7 +80,6 @@ class PatternMatcher {
 		/**
 		 * Gets the pattern byte array to be matched.
 		 *
-		 * @param pattern The pattern byte array to be matched.
 		 */
 		@Override
 		public byte[] getPattern() { return pattern; }
@@ -653,6 +655,7 @@ class PatternMatcher {
 	static final String filePath = "AEDs/AEDs_III/Materias/PatternMatching/";
 
 	// Boyer Moore está com um problema com certas strings longas com caracteres especiais.
+	// Aprender doxygen e arrumar possiveis problemas de documentação
 
 	public static void main(String[] args) throws IllegalArgumentException {
 
@@ -779,6 +782,6 @@ class PatternMatcher {
 	}
 
 	static void append(String ANSI, List<Byte> sequence) {
-        for (byte b : ANSI.getBytes()) sequence.add(b);
-    }
+		for (byte b : ANSI.getBytes()) sequence.add(b);
+	}
 }
