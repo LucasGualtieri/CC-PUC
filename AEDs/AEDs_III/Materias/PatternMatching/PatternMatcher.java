@@ -37,18 +37,16 @@ class PatternMatcher {
 		/**
 		 * Sets the pattern to be matched.
 		 *
-		 * @param pattern The pattern string to be matched.
-		 * @throws IllegalArgumentException If the pattern is empty.
+		 * @param pattern The pattern byte array to be matched.
 		 */
-		void setPattern(String pattern) throws IllegalArgumentException;
+		void setPattern(byte[] pattern);
 
 		/**
-		 * Sets the pattern to be matched.
+		 * Gets the pattern to be matched.
 		 *
 		 * @param pattern The pattern byte array to be matched.
-		 * @throws IllegalArgumentException If the pattern is empty.
 		 */
-		void setPattern(byte[] pattern) throws IllegalArgumentException;
+		byte[] getPattern();
 
 		/**
 		 * Gets the number of comparisons made during the last match.
@@ -77,29 +75,20 @@ class PatternMatcher {
 		}
 
 		/**
-		 * Sets the pattern string to be matched.
+		 * Gets the pattern byte array to be matched.
 		 *
-		 * @param pattern The pattern string to be matched.
-		 * @throws IllegalArgumentException If the pattern is empty.
+		 * @param pattern The pattern byte array to be matched.
 		 */
 		@Override
-		public void setPattern(String pattern) throws IllegalArgumentException {
-			setPattern(pattern.getBytes());
-		}
+		public byte[] getPattern() { return pattern; }
 
 		/**
 		 * Sets the pattern byte array to be matched.
 		 *
 		 * @param pattern The pattern byte array to be matched.
-		 * @throws IllegalArgumentException If the pattern is empty.
 		 */
 		@Override
-		public void setPattern(byte[] pattern) throws IllegalArgumentException {
-
-			if (pattern.length == 0) {
-				throw new IllegalArgumentException("Error: Empty pattern.");
-			}
-
+		public void setPattern(byte[] pattern) {
 			this.pattern = pattern;
 			buildSuffixesArray();
 			buildLastOccurrencesTable();
@@ -316,32 +305,24 @@ class PatternMatcher {
 		}
 
 		/**
-		 * Sets the pattern string to be matched.
+		 * Sets the pattern byte array to be matched.
 		 *
-		 * @param pattern The pattern string to be matched.
-		 * @throws IllegalArgumentException If the pattern is empty.
+		 * @param pattern The pattern byte array to be matched.
 		 */
 		@Override
-		public void setPattern(String pattern) throws IllegalArgumentException {
-			setPattern(pattern.getBytes());
+		public void setPattern(byte[] pattern) {
+
+			this.pattern = pattern;
+			buildPartialMatchTable();
 		}
 
 		/**
 		 * Sets the pattern byte array to be matched.
 		 *
 		 * @param pattern The pattern byte array to be matched.
-		 * @throws IllegalArgumentException If the pattern is empty.
 		 */
 		@Override
-		public void setPattern(byte[] pattern) throws IllegalArgumentException {
-
-			if (pattern.length == 0) {
-				throw new IllegalArgumentException("Error: Empty pattern.");
-			}
-
-			this.pattern = pattern;
-			buildPartialMatchTable();
-		}
+		public byte[] getPattern() { return pattern; }
 
 		/**
 		 * Builds the partial match (or "failure") table for the pattern.
@@ -444,36 +425,23 @@ class PatternMatcher {
 		/**
 		 * Constructor to create a BruteForce Pattern matching strategy.
 		 */
-		public BruteForce() {
-			comparisons = 0;
-		}
-	
-		/**
-		 * Sets the pattern string to be matched.
-		 *
-		 * @param pattern The pattern string to be matched.
-		 * @throws IllegalArgumentException If the pattern is empty.
-		 */
-		@Override
-		public void setPattern(String pattern) throws IllegalArgumentException {
-			setPattern(pattern.getBytes());
-		}
+		public BruteForce() { comparisons = 0; }
 	
 		/**
 		 * Sets the pattern byte array to be matched.
 		 *
 		 * @param pattern The pattern byte array to be matched.
-		 * @throws IllegalArgumentException If the pattern is empty.
 		 */
 		@Override
-		public void setPattern(byte[] pattern) throws IllegalArgumentException {
-
-			if (pattern.length == 0) {
-				throw new IllegalArgumentException("Error: Empty pattern.");
-			}
-
-			this.pattern = pattern;
-		}
+		public void setPattern(byte[] pattern) { this.pattern = pattern; }
+	
+		/**
+		 * Sets the pattern byte array to be matched.
+		 *
+		 * @param pattern The pattern byte array to be matched.
+		 */
+		@Override
+		public byte[] getPattern() { return pattern; }
 	
 		/**
 		 * Retrieves the number of comparisons made during the last match operation.
@@ -542,8 +510,22 @@ class PatternMatcher {
 		/**
 		 * Default constructor for Matcher.
 		 */
-		public Matcher() {
-			this(null);
+		public Matcher() { this(null); }
+
+		/**
+		 * Constructor for Matcher with a specific strategy.
+		 *
+		 * @param matcher The MatcherStrategy to be used.
+		 */
+		public Matcher(MatcherStrategy matcher) { this.matcher = matcher; }
+
+		/**
+		 * Constructor for Matcher with a specific strategy.
+		 *
+		 * @param matcher The MatcherStrategy to be used.
+		 */
+		public Matcher(String pattern, MatcherStrategy matcher) {
+			this(pattern.getBytes(), matcher);
 		}
 
 		/**
@@ -551,8 +533,9 @@ class PatternMatcher {
 		 *
 		 * @param matcher The MatcherStrategy to be used.
 		 */
-		public Matcher(MatcherStrategy matcher) {
+		public Matcher(byte[] pattern, MatcherStrategy matcher) {
 			this.matcher = matcher;
+			setPattern(pattern);
 		}
 
 		/**
@@ -582,7 +565,7 @@ class PatternMatcher {
 		 * @param searchSequence The byte array in which to search for the pattern.
 		 * @return A list of starting indices where the pattern is found in the byte array.
 		 */
-		public List<Integer> match(byte[] pattern, byte[] searchSequence) {
+		public List<Integer> match(byte[] pattern, byte[] searchSequence) throws IllegalStateException {
 
 			if (matcher == null) {
 				throw new IllegalStateException("MatcherStrategy not set.");
@@ -593,6 +576,56 @@ class PatternMatcher {
 			return matcher.match(searchSequence);
 		}
 
+		/**
+		 * Matches the pattern against the given byte array.
+		 *
+		 * @param searchText The byte array in which to search for the pattern.
+		 * @return A list of starting indices where the pattern is found in the byte array.
+		 */
+		public List<Integer> match(String searchText) throws IllegalStateException {
+			return match(searchText.getBytes());
+		}
+
+		/**
+		 * Matches the pattern against the given byte array.
+		 *
+		 * @param searchSequence The byte array in which to search for the pattern.
+		 * @return A list of starting indices where the pattern is found in the byte array.
+		 */
+		public List<Integer> match(byte[] searchSequence) throws IllegalStateException {
+
+			if (matcher.getPattern() == null) {
+				throw new IllegalStateException("Pattern not set.");
+			}
+
+			return matcher.match(searchSequence);
+		}
+		
+		/**
+		 * Sets the pattern string to be matched.
+		 *
+		 * @param pattern The pattern string to be matched.
+		 * @throws IllegalArgumentException If the pattern is empty.
+		 */
+		public void setPattern(String pattern) throws IllegalArgumentException {
+			setPattern(pattern.getBytes());
+		}
+
+		/**
+		 * Sets the pattern byte array to be matched.
+		 *
+		 * @param pattern The pattern byte array to be matched.
+		 * @throws IllegalArgumentException If the pattern is empty.
+		 */
+		public void setPattern(byte[] pattern) throws IllegalArgumentException {
+
+			if (pattern.length == 0) {
+				throw new IllegalArgumentException("Error: Empty pattern.");
+			}
+
+			matcher.setPattern(pattern);
+		}
+		
 		/**
 		 * Prints internal structures used by the KMP algorithm for debugging purposes.
 		 */
@@ -630,13 +663,30 @@ class PatternMatcher {
 
 		String pattern;
 
-		Matcher matcher = new Matcher(new BoyerMoore());
+		Matcher matcher = new Matcher(new BruteForce());
 
 		do {
 
 			System.out.print("Digite o pattern: ");
-
 			pattern = scanner.nextLine();
+
+			// if (pattern.equals("1")) {
+			// 	matcher.setMatcherStrategy(new BruteForce());
+			// 	System.out.print("Digite o pattern: ");
+			// 	pattern = scanner.nextLine();
+			// }
+			
+			// else if (pattern.equals("2")) {
+			// 	matcher.setMatcherStrategy(new KMP());
+			// 	System.out.print("Digite o pattern: ");
+			// 	pattern = scanner.nextLine();
+			// }
+
+			// else if (pattern.equals("3")) {
+			// 	matcher.setMatcherStrategy(new BoyerMoore());
+			// 	System.out.print("Digite o pattern: ");
+			// 	pattern = scanner.nextLine();
+			// }
 
 			List<Integer> list = matcher.match(pattern, text);
 
