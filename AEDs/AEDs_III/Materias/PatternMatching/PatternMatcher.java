@@ -23,25 +23,45 @@ class PatternMatcher {
 		 */
 		List<Integer> match(byte[] searchSequence);
 
+		/**
+		 * Sets the pattern to be matched.
+		 *
+		 * @param pattern The pattern string to be matched.
+		 * @throws IllegalArgumentException If the pattern is empty.
+		 */
 		void setPattern(String pattern) throws IllegalArgumentException;
+
+		/**
+		 * Sets the pattern to be matched.
+		 *
+		 * @param pattern The pattern byte array to be matched.
+		 * @throws IllegalArgumentException If the pattern is empty.
+		 */
 		void setPattern(byte[] pattern) throws IllegalArgumentException;
 
+		/**
+		 * Gets the number of comparisons made during the last match.
+		 *
+		 * @return The number of comparisons.
+		 */
 		int getComparisons();
+
+		void printInternalStructures();
 	}
 
 	/**
-	 * BoyerMooreMatcher class implements the Boyer-Moore pattern search algorithm.
+	 * BoyerMoore class implements the Boyer-Moore pattern search algorithm.
 	 */
-	static class BoyerMooreMatcher implements MatcherStrategy {
+	static class BoyerMoore implements MatcherStrategy {
 
 		private int[] lastOccurrences, goodSuffixes;
 		private byte[] pattern;
 		private int comparisons;
 		
 		/**
-		 * Constructor to create a BoyerMooreMatcher Pattern matching strategy.
+		 * Constructor to create a BoyerMoore Pattern matching strategy.
 		 */
-		public BoyerMooreMatcher() {
+		public BoyerMoore() {
 			comparisons = 0;
 		}
 
@@ -151,7 +171,7 @@ class PatternMatcher {
 		/**
 		 * Prints the Good Suffixes Array for debugging purposes.
 		 */
-		public void printGoodSuffixesArray() {
+		private void printGoodSuffixesArray() {
 			
 			List<Integer> list = new ArrayList<>(goodSuffixes.length);
 
@@ -192,12 +212,17 @@ class PatternMatcher {
 		/**
 		 * Prints the Last Occurrence Table for debugging purposes.
 		 */
-		public void printLastOccurrenceTable() {
+		private void printLastOccurrenceTable() {
 			for (int i = 0; i < lastOccurrences.length; i++) {
 				if (lastOccurrences[i] != -1) {
 					System.out.printf("%c - %d\n", (char)i - 128, lastOccurrences[i]);
 				}
 			}
+		}
+
+		public void printInternalStructures() {
+			printGoodSuffixesArray();
+			printLastOccurrenceTable();
 		}
 
 		public int getComparisons() { return comparisons; }
@@ -247,25 +272,149 @@ class PatternMatcher {
 		}
 	}
 
-	static class Matcher {
+	/**
+	 * KMP class implements the Boyer-Moore pattern search algorithm.
+	 */
+	static class KMP implements MatcherStrategy {
 
-		private MatcherStrategy matcher;
-
-		public Matcher() {
-			this(null);
+		private int[] array;
+		private byte[] pattern;
+		private int comparisons;
+		
+		/**
+		 * Constructor to create a KMP Pattern matching strategy.
+		 */
+		public KMP() {
+			comparisons = 0;
 		}
 
-		public Matcher(MatcherStrategy matcher) {
-			this.matcher = matcher;
+		/**
+		 * Sets the pattern string to be matched.
+		 *
+		 * @param pattern The pattern string to be matched.
+		 * @throws IllegalArgumentException If the pattern is empty.
+		 */
+		public void setPattern(String pattern) throws IllegalArgumentException {
+			setPattern(pattern.getBytes());
 		}
 
-		public void setMatcherStrategy(MatcherStrategy matcher) {
-			this.matcher = matcher;
+		/**
+		 * Sets the pattern string to be matched.
+		 *
+		 * @param pattern The pattern byte array to be matched.
+		 * @throws IllegalArgumentException If the pattern is empty.
+		 */
+		public void setPattern(byte[] pattern) throws IllegalArgumentException {
+
+			if (pattern.length == 0) {
+				throw new IllegalArgumentException("Error: Empty pattern.");
+			}
+
+			this.pattern = pattern;
+			buildArray();
+		}
+
+		private void buildArray() {
+
+			array = new int[pattern.length];
+			array[0] = 0;
+
+			for (int i = 1, j = 0; i < pattern.length; i++) {
+
+				while (j > 0 && pattern[i] != pattern[j]) {
+					j = array[j - 1];
+				}
+
+				if (pattern[i] == pattern[j]) j++;
+
+				array[i] = j;
+			}
+		}
+
+		private void printArray() {
+			System.out.println(Arrays.toString(array));
+ 		}
+
+		public int getComparisons() { return comparisons; }
+
+		public void printInternalStructures() {
+			printArray();
 		}
 
 		/**
 		 * Matches the pattern against the given search text.
 		 *
+		 * @param searchText The text in which to search for the pattern.
+		 * @return A list of starting indices where the pattern is found in the text.
+		 */
+		public List<Integer> match(String searchText) {
+			return match(searchText.getBytes());
+		}
+
+		/**
+		 * Matches the pattern against the given byte array.
+		 *
+		 * @param searchSequence The byte array in which to search for the pattern.
+		 * @return A list of starting indices where the pattern is found in the byte array.
+		 */
+		public List<Integer> match(byte[] searchSequence) {
+
+			List<Integer> indices = new LinkedList<>();
+
+			for (int i = 0, j = 0; i < searchSequence.length; i++) {
+
+				while (j > 0 && searchSequence[i] != pattern[j]) {
+					j = array[j - 1];
+				}
+
+				if (searchSequence[i] == pattern[j]) j++;
+
+				if (j == pattern.length) {
+					indices.add(i - j + 1);
+					j = array[j - 1];
+				}
+			}
+
+			return indices;
+		}
+	}
+
+	/**
+	 * Matcher class that uses a specific MatcherStrategy to perform pattern matching.
+	 */
+	static class Matcher {
+
+		private MatcherStrategy matcher;
+
+		/**
+		 * Default constructor for Matcher.
+		 */
+		public Matcher() {
+			this(null);
+		}
+
+		/**
+		 * Constructor for Matcher with a specific strategy.
+		 *
+		 * @param matcher The MatcherStrategy to be used.
+		 */
+		public Matcher(MatcherStrategy matcher) {
+			this.matcher = matcher;
+		}
+
+		/**
+		 * Sets the MatcherStrategy to be used for pattern matching.
+		 *
+		 * @param matcher The MatcherStrategy to be set.
+		 */
+		public void setMatcherStrategy(MatcherStrategy matcher) {
+			this.matcher = matcher;
+		}
+
+		/**
+		 * Matches the pattern against the given text.
+		 *
+		 * @param pattern The pattern to be matched.
 		 * @param searchText The text in which to search for the pattern.
 		 * @return A list of starting indices where the pattern is found in the text.
 		 */
@@ -276,18 +425,28 @@ class PatternMatcher {
 		/**
 		 * Matches the pattern against the given byte array.
 		 *
+		 * @param pattern The pattern byte array to be matched.
 		 * @param searchSequence The byte array in which to search for the pattern.
 		 * @return A list of starting indices where the pattern is found in the byte array.
 		 */
 		public List<Integer> match(byte[] pattern, byte[] searchSequence) {
 
 			if (matcher == null) {
-				throw new ExceptionInInitializerError("Strategy no set.");
+				throw new IllegalStateException("MatcherStrategy not set.");
 			}
 
 			matcher.setPattern(pattern);
 
 			return matcher.match(searchSequence);
+		}
+
+		public void printInternalStructures() {
+
+			if (matcher == null) {
+				throw new IllegalStateException("MatcherStrategy not set.");
+			}
+
+			matcher.printInternalStructures();
 		}
 	}
 
@@ -304,7 +463,7 @@ class PatternMatcher {
 
 		String pattern;
 
-		Matcher matcher = new Matcher(new BoyerMooreMatcher());
+		Matcher matcher = new Matcher(new BoyerMoore());
 
 		do {
 
@@ -313,6 +472,8 @@ class PatternMatcher {
 			pattern = scanner.nextLine();
 
 			List<Integer> list = matcher.match(pattern, text);
+
+			// matcher.printInternalStructures();
 
 			clearScreen();
 			printHighlighted(pattern, text, list);
