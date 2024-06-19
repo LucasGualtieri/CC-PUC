@@ -270,9 +270,9 @@ class PatternMatcher {
 		@Override
 		public List<Integer> match(byte[] searchSequence) {
 
-			List<Integer> indices = new LinkedList<>();
-
 			comparisons = 0;
+			
+			List<Integer> indices = new LinkedList<>();
 
 			int lastOccurrenceShift, i = 0, j = pattern.length - 1;
 			int maxIndex = searchSequence.length - pattern.length;
@@ -408,9 +408,9 @@ class PatternMatcher {
 		@Override
 		public List<Integer> match(byte[] searchSequence) {
 
-			List<Integer> indices = new LinkedList<>();
-
 			comparisons = 0;
+			
+			List<Integer> indices = new LinkedList<>();
 
 			for (int i = 0, j = 0; i < searchSequence.length; i++) {
 				
@@ -512,20 +512,20 @@ class PatternMatcher {
 		@Override
 		public List<Integer> match(byte[] searchSequence) {
 
-			List<Integer> indices = new ArrayList<>();
-	
 			comparisons = 0;
-			int patternLength = pattern.length;
-			int sequenceLength = searchSequence.length;
-	
-			for (int j, i = 0; i <= sequenceLength - patternLength; i++) {
+			
+			List<Integer> indices = new ArrayList<>();
 
-				for (j = 0; j < patternLength; j++) {
+			int maxIndex = searchSequence.length - pattern.length;
+	
+			for (int j, i = 0; i <= maxIndex; i++) {
+
+				for (j = 0; j < pattern.length; j++) {
 					comparisons++;
 					if (searchSequence[i + j] != pattern[j]) break;
 				}
 
-				if (j == patternLength) indices.add(i);
+				if (j == pattern.length) indices.add(i);
 			}
 	
 			return indices;
@@ -630,7 +630,7 @@ class PatternMatcher {
 
 		String pattern;
 
-		Matcher matcher = new Matcher(new KMP());
+		Matcher matcher = new Matcher(new BoyerMoore());
 
 		do {
 
