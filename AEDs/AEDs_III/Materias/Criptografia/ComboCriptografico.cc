@@ -255,49 +255,104 @@ int main() {
 	msg = cipher.decipher(msg, key);
 	cout << msg << endl;
 
-	foo();
+	// foo();
 
 	return 0;
 }
 
+#define macro(f) ((long)((void*)(&f)))
+
+// void swap(float* a, float* b) {
+// 	*a = 
+// 	*b = 
+// }
+
+void bar() {
+
+	float C = 1.5;
+	float D = 2.5;
+
+	cout << "C: " << C << endl;
+	cout << "D: " << D << endl;
+
+	// float teste = (float)*(float*)macro(C);
+
+	// cout << "macro(C): " << macro(C) << endl;
+	// cout << "macro(D): " << macro(D) << endl;
+
+	// cout << "macro(C) ^ macro(D): " << (macro(C) ^ macro(D)) << endl;
+	cout << "macro(C) ^ macro(D): " << ((macro(C) ^ macro(D)) ^ macro(D)) << endl;
+	
+	// C = (float)*((float*)(((macro(C) ^ macro(D)) ^ macro(D)) ^ (macro(D) ^ macro(C))));
+	// C = (float)*((float*)(((macro(C) ^ macro(D)) ^ macro(D))));
+
+	// (float)*((float*)(macro(D) ^ macro(C)))
+
+	// cout << "C: " << C << endl;
+	// cout << "D: " << D << endl;
+
+	// cout << "macro(C) ^ macro(D): " << (((macro(C) ^ macro(D)) ^ macro(D)) ^ (macro(D) ^ macro(C))) << endl;
+
+	// long TESTEX = (((macro(C) ^ macro(D)) ^ macro(D)) ^ (macro(D) ^ macro(C)));
+	// long TESTEY = ((macro(C) ^ macro(D)) ^ macro(D));
+
+	cout << "C: " << C << endl;
+	cout << "D: " << D << endl;
+
+	cout << "teste: " << (float)*((float*)((macro(D)))) << endl;
+	cout << "teste: " << (float)*((float*)((macro(C)))) << endl;
+
+	// C = (float) *((long*)( macro(C) ^ macro(D) ));
+	// D = (float) *((long*)( macro(D) ^ macro(C) ));
+	// C = (float) *((long*)( macro(C) ^ macro(D) ));
+
+	// // cout << "teste: " << teste << endl;
+
+	// cout << "C: " << C << endl;
+	// cout << "D: " << D << endl;
+
+}
+
 void foo() {
 
-	// Concrete Strategy Test A: Cipher with Columns
-	struct TesteA : implements CipherStrategy {
+	bar();
 
-		string cipher(string msg, const string& key) const override {
-			return "Teste A";
-		}
+	// // Concrete Strategy Test A: Cipher with Columns
+	// struct TesteA : implements CipherStrategy {
 
-		string decipher(string msg, const string& key) const override {
-			return "Decipher logic";
-		}
+	// 	string cipher(string msg, const string& key) const override {
+	// 		return "Teste A";
+	// 	}
 
-	};
+	// 	string decipher(string msg, const string& key) const override {
+	// 		return "Decipher logic";
+	// 	}
 
-	// Concrete Strategy Test B: Cipher with Columns
-	struct TesteB : implements CipherStrategy {
+	// };
 
-		string cipher(string msg, const string& key) const override {
-			return "Teste B";
-		}
+	// // Concrete Strategy Test B: Cipher with Columns
+	// struct TesteB : implements CipherStrategy {
 
-		string decipher(string msg, const string& key) const override {
-			return "Decipher logic";
-		}
+	// 	string cipher(string msg, const string& key) const override {
+	// 		return "Teste B";
+	// 	}
 
-	};
+	// 	string decipher(string msg, const string& key) const override {
+	// 		return "Decipher logic";
+	// 	}
 
-	CipherStrategy* A = new TesteA;
-	CipherStrategy* B = new TesteB;
+	// };
 
-	cout << A->cipher("", "") << endl;
-	cout << B->cipher("", "") << endl;
+	// CipherStrategy* A = new TesteA;
+	// CipherStrategy* B = new TesteB;
 
-	A = (CipherStrategy*)((long)A ^ (long)B);
-	B = (CipherStrategy*)((long)B ^ (long)A);
-	A = (CipherStrategy*)((long)A ^ (long)B);
+	// cout << A->cipher("", "") << endl;
+	// cout << B->cipher("", "") << endl;
 
-	cout << A->cipher("", "") << endl;
-	cout << B->cipher("", "") << endl;
+	// A = (CipherStrategy*)((long)A ^ (long)B);
+	// B = (CipherStrategy*)((long)B ^ (long)A);
+	// A = (CipherStrategy*)((long)A ^ (long)B);
+
+	// cout << A->cipher("", "") << endl;
+	// cout << B->cipher("", "") << endl;
 }
