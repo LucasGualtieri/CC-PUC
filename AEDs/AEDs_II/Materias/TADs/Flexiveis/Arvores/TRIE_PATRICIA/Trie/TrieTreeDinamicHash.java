@@ -87,10 +87,9 @@ public class TrieTreeDinamicHash {
 				if (j != null) {
 					builder.append(j.c);
 					traverse(i + 1, builder, list, node.children.get(j.c));
+					builder.deleteCharAt(builder.length() - 1);
 				}
 			}
-
-			if (builder.length() > 0) builder.deleteCharAt(builder.length() - 1);
 		}
 
 		@Override
