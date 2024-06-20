@@ -70,14 +70,12 @@ public class TrieTree {
 			int i = 0;
 			Node node = root;
 
-			char[] stringArray = string.toCharArray();
-
-			while (node != null && i < stringArray.length) {
-				char c = stringArray[i++];
+			while (node != null && i < string.length()) {
+				char c = string.charAt(i++);
 				node = node.children[c];
 			}
 
-			return i == stringArray.length && node != null && node.getStringEnd();
+			return i == string.length() && node != null && node.getStringEnd();
 		}
 
 		private void traverse(int i, StringBuilder builder, List<String> list, Node node) {
