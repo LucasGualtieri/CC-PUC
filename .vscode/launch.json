@@ -2,6 +2,20 @@
 	"configurations": [
 		{
 			"type": "java",
+			"name": "TrieTreeDinamicHash",
+			"request": "launch",
+			"mainClass": "AEDs.AEDs_II.Materias.TADs.Flexiveis.Arvores.TRIE_PATRICIA.Trie.TrieTreeDinamicHash",
+			"projectName": "CC-PUC_cc5a22eb"
+		},
+		{
+			"type": "java",
+			"name": "TrieTree",
+			"request": "launch",
+			"mainClass": "AEDs.AEDs_II.Materias.TADs.Flexiveis.Arvores.TRIE_PATRICIA.Trie.TrieTree",
+			"projectName": "CC-PUC_cc5a22eb"
+		},
+		{
+			"type": "java",
 			"name": "PatternMatcher",
 			"request": "launch",
 			"mainClass": "AEDs.AEDs_III.Materias.PatternMatching.PatternMatcher",
