@@ -1,6 +1,7 @@
 package AEDs.AEDs_III.Materias.PatternMatching;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 // clear && javac Matcher.java && java Matcher.java
@@ -17,22 +18,6 @@ class PatternMatcher {
 	 * MatcherStrategy interface defines the methods for pattern matching strategies.
 	 */
 	static interface MatcherStrategy {
-
-		/**
-		 * Matches the pattern against the given byte array.
-		 *
-		 * @param searchSequence The byte array in which to search for the pattern.
-		 * @return A list of starting indices where the pattern is found in the byte array.
-		 */
-		List<Integer> match(byte[] searchSequence);
-
-		/**
-		 * Matches the pattern against the given string.
-		 *
-		 * @param searchText The string in which to search for the pattern.
-		 * @return A list of starting indices where the pattern is found in the byte array.
-		 */
-		List<Integer> match(String searchText);
 
 		/**
 		 * Sets the pattern to be matched.
@@ -59,6 +44,23 @@ class PatternMatcher {
 		 * Prints any internal auxiliary structures used by the algorithm.
 		 */
 		void printInternalStructures();
+
+		/**
+		 * Matches the pattern against the given string.
+		 *
+		 * @param searchText The string in which to search for the pattern.
+		 * @return A list of starting indices where the pattern is found in the string.
+		 */
+		List<Integer> match(String searchText);
+
+		/**
+		 * Matches the pattern against the given byte array.
+		 *
+		 * @param searchSequence The byte array in which to search for the pattern.
+		 * @return A list of starting indices where the pattern is found in the byte array.
+		 */
+		List<Integer> match(byte[] searchSequence);
+
 	}
 
 	/**
@@ -74,26 +76,8 @@ class PatternMatcher {
 		 * Constructor to create a BoyerMoore Pattern matching strategy.
 		 */
 		public BoyerMoore() {
+			pattern = null;
 			comparisons = 0;
-		}
-
-		/**
-		 * Gets the pattern byte array to be matched.
-		 *
-		 */
-		@Override
-		public byte[] getPattern() { return pattern; }
-
-		/**
-		 * Sets the pattern byte array to be matched.
-		 *
-		 * @param pattern The pattern byte array to be matched.
-		 */
-		@Override
-		public void setPattern(byte[] pattern) {
-			this.pattern = pattern;
-			buildSuffixesArray();
-			buildLastOccurrencesTable();
 		}
 
 		/**
@@ -108,11 +92,16 @@ class PatternMatcher {
 			goodSuffixes = new int[patternLen];
 			goodSuffixes[patternLen - 1] = 1;
 
-			String patternStr = new String(this.pattern);
+			/*
+			 * This works because ISO-8859-1 is a single-byte character encoding.
+			 * making the string the same lenght as the array since no special
+			 * characters "merge" into a single char.
+			 */
+			String patternStr = new String(this.pattern, StandardCharsets.ISO_8859_1);
 
 			for (int i = patternLen - 2; i >= 0; i--) {
 
-				String suffix = patternStr.substring(i + 1, patternStr.length());
+				String suffix = patternStr.substring(i + 1, patternLen);
 
 				suffixShift = calculateSuffixShift(i, suffix, patternStr);
 
@@ -224,40 +213,30 @@ class PatternMatcher {
 			}
 		}
 
-		/**
-		 * Prints internal structures used by the KMP algorithm for debugging purposes.
-		 */
+		@Override
+		public void setPattern(byte[] pattern) {
+			this.pattern = pattern;
+			buildSuffixesArray();
+			buildLastOccurrencesTable();
+		}
+
+		@Override
+		public byte[] getPattern() { return pattern; }
+
 		@Override
 		public void printInternalStructures() {
 			printGoodSuffixesArray();
 			printLastOccurrenceTable();
 		}
 
-		/**
-		 * Retrieves the number of comparisons made during the last match operation.
-		 *
-		 * @return The number of comparisons.
-		 */
 		@Override
 		public int getComparisons() { return comparisons; }
 
-		/**
-		 * Matches the pattern against the given search text.
-		 *
-		 * @param searchText The text in which to search for the pattern.
-		 * @return A list of starting indices where the pattern is found in the text.
-		 */
 		@Override
 		public List<Integer> match(String searchText) {
 			return match(searchText.getBytes());
 		}
 
-		/**
-		 * Matches the pattern against the given byte array.
-		 *
-		 * @param searchSequence The byte array in which to search for the pattern.
-		 * @return A list of starting indices where the pattern is found in the byte array.
-		 */
 		@Override
 		public List<Integer> match(byte[] searchSequence) {
 
@@ -303,33 +282,14 @@ class PatternMatcher {
 		 * Constructor to create a KMP Pattern matching strategy.
 		 */
 		public KMP() {
+			pattern = null;
 			comparisons = 0;
 		}
 
 		/**
-		 * Sets the pattern byte array to be matched.
-		 *
-		 * @param pattern The pattern byte array to be matched.
-		 */
-		@Override
-		public void setPattern(byte[] pattern) {
-
-			this.pattern = pattern;
-			buildPartialMatchTable();
-		}
-
-		/**
-		 * Sets the pattern byte array to be matched.
-		 *
-		 * @param pattern The pattern byte array to be matched.
-		 */
-		@Override
-		public byte[] getPattern() { return pattern; }
-
-		/**
 		 * Builds the partial match (or "failure") table for the pattern.
-		 * This table stores the length of the longest proper prefix which is also suffix
-		 * for each position in the pattern.
+		 * This table stores the length of the longest proper
+		 * prefix which is also suffix for each position in the pattern.
 		 */
 		private void buildPartialMatchTable() {
 
@@ -355,39 +315,28 @@ class PatternMatcher {
 			System.out.println(Arrays.toString(partialMatchTable));
 		}
 
-		/**
-		 * Retrieves the number of comparisons made during the last match operation.
-		 *
-		 * @return The number of comparisons.
-		 */
+		@Override
+		public void setPattern(byte[] pattern) {
+			this.pattern = pattern;
+			buildPartialMatchTable();
+		}
+
+		@Override
+		public byte[] getPattern() { return pattern; }
+
 		@Override
 		public int getComparisons() { return comparisons; }
 
-		/**
-		 * Prints internal structures used by the KMP algorithm for debugging purposes.
-		 */
 		@Override
 		public void printInternalStructures() {
 			printPartialMatchTable();
 		}
 
-		/**
-		 * Matches the pattern against the given search text.
-		 *
-		 * @param searchText The text in which to search for the pattern.
-		 * @return A list of starting indices where the pattern is found in the text.
-		 */
 		@Override
 		public List<Integer> match(String searchText) {
 			return match(searchText.getBytes());
 		}
 
-		/**
-		 * Matches the pattern against the given byte array.
-		 *
-		 * @param searchSequence The byte array in which to search for the pattern.
-		 * @return A list of starting indices where the pattern is found in the byte array.
-		 */
 		@Override
 		public List<Integer> match(byte[] searchSequence) {
 
@@ -423,62 +372,34 @@ class PatternMatcher {
 
 		private byte[] pattern;
 		private int comparisons;
-	
+
 		/**
 		 * Constructor to create a BruteForce Pattern matching strategy.
 		 */
-		public BruteForce() { comparisons = 0; }
-	
-		/**
-		 * Sets the pattern byte array to be matched.
-		 *
-		 * @param pattern The pattern byte array to be matched.
-		 */
+		public BruteForce() {
+			pattern = null;
+			comparisons = 0;
+		}
+
 		@Override
 		public void setPattern(byte[] pattern) { this.pattern = pattern; }
-	
-		/**
-		 * Sets the pattern byte array to be matched.
-		 *
-		 * @param pattern The pattern byte array to be matched.
-		 */
+
 		@Override
 		public byte[] getPattern() { return pattern; }
-	
-		/**
-		 * Retrieves the number of comparisons made during the last match operation.
-		 *
-		 * @return The number of comparisons.
-		 */
+
 		@Override
 		public int getComparisons() { return comparisons; }
 	
-		/**
-		 * Prints internal structures used by the BruteForce algorithm for debugging purposes.
-		 * For BruteForce, there are no internal structures to print.
-		 */
 		@Override
 		public void printInternalStructures() {
 			System.out.println("No internal structures for BruteForce.");
 		}
-	
-		/**
-		 * Matches the pattern against the given search text.
-		 *
-		 * @param searchText The text in which to search for the pattern.
-		 * @return A list of starting indices where the pattern is found in the text.
-		 */
+
 		@Override
 		public List<Integer> match(String searchText) {
 			return match(searchText.getBytes());
 		}
-	
-		/**
-		 * Matches the pattern against the given byte array.
-		 *
-		 * @param searchSequence The byte array in which to search for the pattern.
-		 * @return A list of starting indices where the pattern is found in the byte array.
-		 */
+
 		@Override
 		public List<Integer> match(byte[] searchSequence) {
 
@@ -522,8 +443,9 @@ class PatternMatcher {
 		public Matcher(MatcherStrategy matcher) { this.matcher = matcher; }
 
 		/**
-		 * Constructor for Matcher with a specific strategy.
+		 * Constructor for Matcher with a specific strategy and pattern.
 		 *
+		 * @param pattern The pattern string to be used.
 		 * @param matcher The MatcherStrategy to be used.
 		 */
 		public Matcher(String pattern, MatcherStrategy matcher) {
@@ -531,8 +453,9 @@ class PatternMatcher {
 		}
 
 		/**
-		 * Constructor for Matcher with a specific strategy.
+		 * Constructor for Matcher with a specific pattern and strategy.
 		 *
+		 * @param pattern The pattern byte array to be used.
 		 * @param matcher The MatcherStrategy to be used.
 		 */
 		public Matcher(byte[] pattern, MatcherStrategy matcher) {
@@ -547,6 +470,35 @@ class PatternMatcher {
 		 */
 		public void setMatcherStrategy(MatcherStrategy matcher) {
 			this.matcher = matcher;
+		}
+
+		/**
+		 * Matches the pattern against the given byte array.
+		 *
+		 * @param searchText The byte array in which to search for the pattern.
+		 * @return A list of starting indices where the pattern is found in the byte array.
+		 */
+		public List<Integer> match(String searchText) throws IllegalStateException {
+			return match(searchText.getBytes());
+		}
+
+		/**
+		 * Matches the pattern against the given byte array.
+		 *
+		 * @param searchSequence The byte array in which to search for the pattern.
+		 * @return A list of starting indices where the pattern is found in the byte array.
+		 */
+		public List<Integer> match(byte[] searchSequence) throws IllegalStateException {
+
+			if (matcher == null) {
+				throw new IllegalStateException("MatcherStrategy not set.");
+			}
+
+			if (matcher.getPattern() == null) {
+				throw new IllegalStateException("Pattern not set.");
+			}
+
+			return matcher.match(searchSequence);
 		}
 
 		/**
@@ -573,32 +525,7 @@ class PatternMatcher {
 				throw new IllegalStateException("MatcherStrategy not set.");
 			}
 
-			matcher.setPattern(pattern);
-
-			return matcher.match(searchSequence);
-		}
-
-		/**
-		 * Matches the pattern against the given byte array.
-		 *
-		 * @param searchText The byte array in which to search for the pattern.
-		 * @return A list of starting indices where the pattern is found in the byte array.
-		 */
-		public List<Integer> match(String searchText) throws IllegalStateException {
-			return match(searchText.getBytes());
-		}
-
-		/**
-		 * Matches the pattern against the given byte array.
-		 *
-		 * @param searchSequence The byte array in which to search for the pattern.
-		 * @return A list of starting indices where the pattern is found in the byte array.
-		 */
-		public List<Integer> match(byte[] searchSequence) throws IllegalStateException {
-
-			if (matcher.getPattern() == null) {
-				throw new IllegalStateException("Pattern not set.");
-			}
+			setPattern(pattern);
 
 			return matcher.match(searchSequence);
 		}
@@ -654,8 +581,8 @@ class PatternMatcher {
 
 	static final String filePath = "AEDs/AEDs_III/Materias/PatternMatching/";
 
-	// Boyer Moore está com um problema com certas strings longas com caracteres especiais.
-	// Aprender doxygen e arrumar possiveis problemas de documentação
+	// Aprender doxygen.
+	// Talvez criar um atributo pattern na classe matcher e remover o getPattern da interface?
 
 	public static void main(String[] args) throws IllegalArgumentException {
 
@@ -666,37 +593,18 @@ class PatternMatcher {
 
 		String pattern;
 
-		Matcher matcher = new Matcher(new BruteForce());
+		Matcher matcher = new Matcher(new BoyerMoore());
 
 		do {
 
 			System.out.print("Digite o pattern: ");
 			pattern = scanner.nextLine();
 
-			// if (pattern.equals("1")) {
-			// 	matcher.setMatcherStrategy(new BruteForce());
-			// 	System.out.print("Digite o pattern: ");
-			// 	pattern = scanner.nextLine();
-			// }
-			
-			// else if (pattern.equals("2")) {
-			// 	matcher.setMatcherStrategy(new KMP());
-			// 	System.out.print("Digite o pattern: ");
-			// 	pattern = scanner.nextLine();
-			// }
-
-			// else if (pattern.equals("3")) {
-			// 	matcher.setMatcherStrategy(new BoyerMoore());
-			// 	System.out.print("Digite o pattern: ");
-			// 	pattern = scanner.nextLine();
-			// }
-
-			List<Integer> list = matcher.match(pattern, text);
+			List<Integer> indices = matcher.match(pattern, text);
 
 			// matcher.printInternalStructures();
 
-			clearScreen();
-			printHighlighted(pattern, text, list);
+			printHighlighted(pattern, text, indices);
 			System.out.printf("Comparisons: %d\n\n", matcher.getComparisons());
 
 		} while (!pattern.toUpperCase().equals("FIM"));
@@ -748,25 +656,27 @@ class PatternMatcher {
 	 */
 	static void printHighlighted(String pattern, String text, List<Integer> indices) {
 
+		clearScreen();
+
 		final byte[] textBytes = text.getBytes();
 		final int patternLength = pattern.getBytes().length;
 		final String GREEN = "\u001B[42m", RESET = "\u001B[0m";
 
 		List<Byte> sequence = new LinkedList<>();
 
-		int counter = 0;
+		int state = 0;
 
 		for (int i = 0; i < textBytes.length; i++) {
 
 			if (!indices.isEmpty() && i == indices.get(0)) {
 				indices.remove(0);
-				if (counter == 0) append(GREEN, sequence);
-				counter = patternLength;
+				if (state == 0) append(GREEN, sequence);
+				state = patternLength;
 			}
 
 			sequence.add(textBytes[i]);
 
-			if (counter > 0 && --counter == 0) {
+			if (state > 0 && --state == 0) {
 				append(RESET, sequence);
 			}
 		}
@@ -784,4 +694,22 @@ class PatternMatcher {
 	static void append(String ANSI, List<Byte> sequence) {
 		for (byte b : ANSI.getBytes()) sequence.add(b);
 	}
+
+	// if (pattern.equals("1")) {
+	// 	matcher.setMatcherStrategy(new BruteForce());
+	// 	System.out.print("Digite o pattern: ");
+	// 	pattern = scanner.nextLine();
+	// }
+	
+	// else if (pattern.equals("2")) {
+	// 	matcher.setMatcherStrategy(new KMP());
+	// 	System.out.print("Digite o pattern: ");
+	// 	pattern = scanner.nextLine();
+	// }
+
+	// else if (pattern.equals("3")) {
+	// 	matcher.setMatcherStrategy(new BoyerMoore());
+	// 	System.out.print("Digite o pattern: ");
+	// 	pattern = scanner.nextLine();
+	// }
 }
