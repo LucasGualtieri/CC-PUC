@@ -1,10 +1,12 @@
 package AEDs.AEDs_II.Materias.TADs.Flexiveis.Arvores.TRIE_PATRICIA.Trie;
 
+import AEDs.AEDs_II.Materias.TADs.Flexiveis.Arvores.TRIE_PATRICIA.Trie.Stategies.*;
+
 class Main {
 	
 	public static void main(String[] args) {
 
-		Trie trie = new Trie(new PerfectHash());
+		Trie trie = new Trie(new ListBased());
 
 		trie.add("BELL");
 		trie.add("BEAR");

@@ -1,16 +1,17 @@
 package AEDs.AEDs_II.Materias.TADs.Flexiveis.Arvores.TRIE_PATRICIA.Trie;
 
-import java.util.LinkedList;
 import java.util.List;
+import java.util.LinkedList;
+import AEDs.AEDs_II.Materias.TADs.Flexiveis.Arvores.TRIE_PATRICIA.Trie.Stategies.HashingStrategy;
 
 public class Trie {
 
 	Node root;
-	HashingStrategy hashingStrategy;
+	HashingStrategy strategy;
 
-	Trie(HashingStrategy hashingStrategy) {
-		this.hashingStrategy = hashingStrategy;
-		this.root = new Node(hashingStrategy);
+	Trie(HashingStrategy strategy) {
+		this.strategy = strategy;
+		this.root = new Node('\0', strategy.newInstance());
 	}
 
 	Trie(HashingStrategy children, String... strings) {
@@ -33,15 +34,15 @@ public class Trie {
 
 		char c = string[i];
 
-		if (node.children.get(c) == null) {
-			node.children.add(c, new Node(hashingStrategy));
+		if (!node.contains(c)) {
+			node.add(c, new Node(c, strategy));
 		}
 
 		if (i + 1 < string.length) {
-			add(i + 1, node.children.get(c), string);
+			add(i + 1, node.get(c), string);
 		}
 
-		else node.children.get(c).setStringEnd();
+		else node.get(c).setStringEnd();
 	}
 
 	public boolean get(String string) {
@@ -51,7 +52,7 @@ public class Trie {
 
 		while (node != null && i < len) {
 			char c = string.charAt(i++);
-			node = node.children.get(c);
+			node = node.get(c);
 		}
 
 		return i == len && node != null && node.stringEnd;
@@ -60,13 +61,11 @@ public class Trie {
 	private void traverse(int i, StringBuilder builder, List<String> list, Node node) {
 
 		if (node.stringEnd) list.add(builder.toString());
-
-		for (char j = 0; j < node.children.length(); j++) {
-			if (node.children.get(j) != null) {
-				builder.append(j);
-				traverse(i + 1, builder, list, node.children.get(j));
-				builder.deleteCharAt(builder.length() - 1);
-			}
+	
+		for (Node child : node) {
+			builder.append(child.value);
+			traverse(i + 1, builder, list, child);
+			builder.deleteCharAt(builder.length() - 1);
 		}
 	}
 
@@ -82,7 +81,11 @@ public class Trie {
 			builder.append(String.format("[%s]\n", s));
 		}
 
-		builder.deleteCharAt(builder.length() - 1);
+		if (!builder.isEmpty()) {
+			builder.deleteCharAt(builder.length() - 1);
+		}
+
+		else builder.append("The Trie is empty.");
 
 		return builder.toString();
 	}
