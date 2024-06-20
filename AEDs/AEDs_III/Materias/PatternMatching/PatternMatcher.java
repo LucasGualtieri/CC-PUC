@@ -582,7 +582,6 @@ class PatternMatcher {
 	static final String filePath = "AEDs/AEDs_III/Materias/PatternMatching/";
 
 	// Aprender doxygen.
-	// Talvez criar um atributo pattern na classe matcher e remover o getPattern da interface?
 
 	public static void main(String[] args) throws IllegalArgumentException {
 
