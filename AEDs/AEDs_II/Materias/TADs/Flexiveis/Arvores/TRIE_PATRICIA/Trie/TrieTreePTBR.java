@@ -80,11 +80,10 @@ public class TrieTreePTBR {
 				if (j != null) {
 					str.append(j.valor);
 					caminhar(i + 1, str, list, no.filhos[j.valor]);
+					// Sempre que estamos voltando na recursão removemos o último caractere
+					str.deleteCharAt(str.length() - 1);
 				}
 			}
-
-			// Sempre que estamos voltando na recursão removemos o último caractere
-			if (!str.isEmpty()) str.deleteCharAt(str.length() - 1);
 		}
 
 		@Override
