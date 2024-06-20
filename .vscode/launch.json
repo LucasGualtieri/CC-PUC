@@ -2,16 +2,9 @@
 	"configurations": [
 		{
 			"type": "java",
-			"name": "TrieTreeDinamicHash",
+			"name": "Main",
 			"request": "launch",
-			"mainClass": "AEDs.AEDs_II.Materias.TADs.Flexiveis.Arvores.TRIE_PATRICIA.Trie.TrieTreeDinamicHash",
-			"projectName": "CC-PUC_cc5a22eb"
-		},
-		{
-			"type": "java",
-			"name": "TrieTree",
-			"request": "launch",
-			"mainClass": "AEDs.AEDs_II.Materias.TADs.Flexiveis.Arvores.TRIE_PATRICIA.Trie.TrieTree",
+			"mainClass": "AEDs.AEDs_II.Materias.TADs.Flexiveis.Arvores.TRIE_PATRICIA.Trie.Main",
 			"projectName": "CC-PUC_cc5a22eb"
 		},
 		{

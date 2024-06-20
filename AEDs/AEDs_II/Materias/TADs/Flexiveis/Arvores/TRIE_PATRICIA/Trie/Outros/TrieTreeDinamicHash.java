@@ -1,4 +1,4 @@
-package AEDs.AEDs_II.Materias.TADs.Flexiveis.Arvores.TRIE_PATRICIA.Trie;
+package AEDs.AEDs_II.Materias.TADs.Flexiveis.Arvores.TRIE_PATRICIA.Trie.Outros;
 
 import java.util.HashMap;
 import java.util.LinkedList;
