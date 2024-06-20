@@ -4,93 +4,87 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-public class TrieTree {
+public class TrieTreePTBR {
 
-	static class Node {
+	static class No {
 
-		char c;
-		Node[] children;
+		char valor;
+		No[] filhos;
 		boolean stringEnd;
 
-		public Node() { this('\0'); }
+		public No() { this('\0'); }
 
-		public Node(char c) {
+		public No(char valor) {
 
-			children = new Node[256];
-			Arrays.fill(children, null);
+			filhos = new No[256];
+			Arrays.fill(filhos, null);
 
-			this.c = c;
+			this.valor = valor;
 
 			stringEnd = false;
 
 		}
 
-		boolean getStringEnd() { return stringEnd; }
 		void setStringEnd() { stringEnd = true; }
 		void resetStringEnd() { stringEnd = false; }
 	}
 
 	static class Trie {
 
-		Node root = new Node();
+		No raiz;
 
-		Trie() {}
+		Trie() { raiz = new No(); }
 
 		Trie(String... strings) {
+			this();
 			for (String s : strings) this.add(s);
 		}
 
-		public boolean add(String string) {
-
-			boolean status = true;
-
-			try { add(0, root, string.toCharArray()); }
-
-			catch (OutOfMemoryError e) { status = false; }
-
-			return status;
+		public void add(String string) {
+			add(0, raiz, string.toCharArray());
 		}
 
-		private void add(int i, Node node, char[] string) {
+		private void add(int i, No no, char[] string) {
 
 			char c = string[i];
 
-			if (node.children[c] == null) {
-				node.children[c] = new Node(c);
+			if (no.filhos[c] == null) {
+				no.filhos[c] = new No(c);
 			}
 
 			if (i + 1 < string.length) {
-				add(i + 1, node.children[c], string);
+				add(i + 1, no.filhos[c], string);
 			}
 
-			else node.children[c].setStringEnd();
+			else no.filhos[c].setStringEnd();
 		}
 
 		public boolean get(String string) {
 
 			int i = 0, len = string.length();
-			Node node = root;
+			No no = raiz;
 
-			while (node != null && i < len) {
+			while (no != null && i < len) {
 				char c = string.charAt(i++);
-				node = node.children[c];
+				no = no.filhos[c];
 			}
 
-			return i == len && node != null && node.getStringEnd();
+			return i == len && no != null && no.stringEnd;
 		}
 
-		private void traverse(int i, StringBuilder builder, List<String> list, Node node) {
+		private void caminhar(int i, StringBuilder str, List<String> list, No no) {
 
-			if (node.getStringEnd()) list.add(builder.toString());
+			if (no.stringEnd) list.add(str.toString());
 
-			for (Node j : node.children) {
+			for (No j : no.filhos) {
 				if (j != null) {
-					builder.append(j.c);
-					traverse(i + 1, builder, list, node.children[j.c]);
+					str.append(j.valor);
+					caminhar(i + 1, str, list, no.filhos[j.valor]);
 				}
 			}
 
-			if (builder.length() > 0) builder.deleteCharAt(builder.length() - 1);
+			// Sempre que estamos voltando na recursão removemos o último caractere
+			if (!str.isEmpty()) str.deleteCharAt(str.length() - 1);
 		}
 
 		@Override
@@ -99,7 +93,7 @@ public class TrieTree {
 			StringBuilder builder = new StringBuilder();
 			List<String> strings = new LinkedList<>();
 
-			traverse(0, builder, strings, root);
+			caminhar(0, builder, strings, raiz);
 
 			for (String s : strings) {
 				builder.append(String.format("[%s]\n", s));
