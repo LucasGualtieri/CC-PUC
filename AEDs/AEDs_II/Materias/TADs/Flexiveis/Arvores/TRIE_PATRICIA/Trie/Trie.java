@@ -64,13 +64,31 @@ public class Trie {
 		return i == len && node != null && node.stringEnd;
 	}
 
-	private void traverse(int i, StringBuilder builder, List<String> list, Node node) {
+	public List<String> startsWith(String string) {
+
+		List<String> list = new LinkedList<>();
+		StringBuilder builder = new StringBuilder();
+
+		Node node = root;
+
+		for (char c : string.toCharArray()) {
+			node = node.get(c);
+			if (node == null) break;
+			builder.append(c);
+		}
+
+		if (node != null) traverse(builder, list, node);
+
+		return list;
+	}
+
+	private void traverse(StringBuilder builder, List<String> list, Node node) {
 
 		if (node.stringEnd) list.add(builder.toString());
 	
 		for (Node child : node) {
 			builder.append(child.value);
-			traverse(i + 1, builder, list, child);
+			traverse(builder, list, child);
 			builder.deleteCharAt(builder.length() - 1);
 		}
 	}
@@ -78,10 +96,10 @@ public class Trie {
 	@Override
 	public String toString() {
 
-		StringBuilder builder = new StringBuilder();
 		List<String> strings = new LinkedList<>();
+		StringBuilder builder = new StringBuilder();
 
-		traverse(0, builder, strings, root);
+		traverse(builder, strings, root);
 
 		for (String s : strings) {
 			builder.append(String.format("[%s]\n", s));

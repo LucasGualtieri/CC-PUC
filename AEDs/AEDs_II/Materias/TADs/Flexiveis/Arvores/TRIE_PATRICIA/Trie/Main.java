@@ -1,5 +1,7 @@
 package AEDs.AEDs_II.Materias.TADs.Flexiveis.Arvores.TRIE_PATRICIA.Trie;
 
+import java.util.List;
+
 import AEDs.AEDs_II.Materias.TADs.Flexiveis.Arvores.TRIE_PATRICIA.Trie.Stategies.*;
 
 class Main {
@@ -29,6 +31,12 @@ class Main {
 		System.out.println(trie.get("SAPO") ? "SIM" : "NÃO");
 		System.out.println(trie.get("SAPATO") ? "SIM" : "NÃO");
 		System.out.println(trie.get("SAPATOS") ? "SIM" : "NÃO");
+
+		List<String> list = trie.startsWith("SAP");
+
+		for (String s : list) {
+			System.out.println(s);
+		}
 
 	}
 }
