@@ -13,10 +13,10 @@ public class MapBased implements HashingStrategy {
 	public int length() { return children.size(); }
 
 	@Override
-	public Node get(char c) { return children.get(c); }
+	public void add(char c, Node node) { children.put(c, node); }
 
 	@Override
-	public void add(char c, Node node) { children.put(c, node); }
+	public Node get(char c) { return children.get(c); }
 
 	@Override
 	public boolean contains(char c) { return children.containsKey(c); }

@@ -6,7 +6,7 @@ class Main {
 	
 	public static void main(String[] args) {
 
-		Trie trie = new Trie(new ListBased());
+		Trie trie = new Trie(new MapBased());
 
 		trie.add("BELL");
 		trie.add("BEAR");

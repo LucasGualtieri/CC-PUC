@@ -14,36 +14,26 @@ public class ListBased implements HashingStrategy {
 	public int length() { return children.size(); }
 
 	@Override
-	public Node get(char c) {
-
-		Node node = null;
-
-		for (Node i : children) {
-			if (i.value == c) {
-				node = i;
-				break;
-			}
-		}
-
-		return node;
-	}
+	public void add(char c, Node node) { children.add(node); }
 
 	@Override
-	public void add(char c, Node node) { children.add(node); }
+	public Node get(char c) {
+
+		for (Node i : children) {
+			if (i.value == c) return i;
+		}
+
+		return null;
+	}
 
 	@Override
 	public boolean contains(char c) {
 
-		boolean contained = false;
-
 		for (Node i : children) {
-			if (i.value == c) {
-				contained = true;
-				break;
-			}
+			if (i.value == c) return true;
 		}
 
-		return contained;
+		return false;
 	}
 
 	@Override
