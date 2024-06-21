@@ -27,10 +27,12 @@ public class Trie {
 
 		catch (OutOfMemoryError e) { status = false; }
 
+		catch (Exception e) { status = false; }
+
 		return status;
 	}
 
-	private void add(int i, Node node, char[] string) {
+	private void add(int i, Node node, char[] string) throws Exception {
 
 		char c = string[i];
 
@@ -40,6 +42,10 @@ public class Trie {
 
 		if (i + 1 < string.length) {
 			add(i + 1, node.get(c), string);
+		}
+
+		else if (node.get(c).stringEnd) {
+			throw new Exception("String already inserted.");
 		}
 
 		else node.get(c).setStringEnd();

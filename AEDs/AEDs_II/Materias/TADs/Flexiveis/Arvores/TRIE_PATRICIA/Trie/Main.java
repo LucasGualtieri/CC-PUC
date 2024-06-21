@@ -6,7 +6,7 @@ class Main {
 	
 	public static void main(String[] args) {
 
-		Trie trie = new Trie(new MapBased());
+		Trie trie = new Trie(new PerfectHash());
 
 		trie.add("BELL");
 		trie.add("BEAR");
@@ -21,6 +21,9 @@ class Main {
 		trie.add("STOP");
 
 		System.out.println(trie);
+
+		boolean b = trie.add("STOP");
+		System.out.println(b ? "Não repetido" : "Repetido");
 
 		System.out.println(trie.get("SAPA") ? "SIM" : "NÃO");
 		System.out.println(trie.get("SAPO") ? "SIM" : "NÃO");
