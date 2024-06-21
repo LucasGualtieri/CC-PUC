@@ -1,7 +1,7 @@
 #ifndef SPLIT_H
 #define SPLIT_H
 
-#include <biblioteca_cpp.h>
+#include <biblioteca_cpp.hpp>
 // #include <string>
 // #include <vector>
 

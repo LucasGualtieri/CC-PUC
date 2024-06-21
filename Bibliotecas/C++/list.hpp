@@ -1,7 +1,7 @@
-#ifndef LIST_H
-#define LIST_H
+#ifndef LIST_HPP
+#define LIST_HPP
 
-#include <biblioteca_cpp.h>
+#include <biblioteca_cpp.hpp>
 
 template <typename T>
 class List {
