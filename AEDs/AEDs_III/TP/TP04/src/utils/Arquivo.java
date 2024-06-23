@@ -1,9 +1,9 @@
-package TP04;
+package TP04.src.utils;
 
 import java.util.List;
 
-import TP04.EstruturasDeDados.*;
-import TP04.EstruturasDeDados.Tuplas.*;
+import TP04.src.EstruturasDeDados.*;
+import TP04.src.EstruturasDeDados.Tuplas.*;
 
 import java.io.IOException;
 import java.util.LinkedList;

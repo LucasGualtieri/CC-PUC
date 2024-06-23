@@ -1,4 +1,4 @@
-package TP04.Algoritmos.Compressao;
+package TP04.src.Algoritmos.Compressao;
 
 import java.util.BitSet;
 

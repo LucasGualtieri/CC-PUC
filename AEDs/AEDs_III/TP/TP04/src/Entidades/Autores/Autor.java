@@ -1,4 +1,4 @@
-package TP04.Entidades.Autores;
+package TP04.src.Entidades.Autores;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -7,8 +7,8 @@ import java.io.DataOutputStream;
 import java.lang.reflect.Constructor;
 import java.util.Locale;
 
-import TP04.Lib;
-import TP04.Registro;
+import TP04.src.utils.Lib;
+import TP04.src.utils.Registro;
 
 // Para fazer um relacionamento 1->N com Autores de Livros precisarei:
 //		Criar uma chave estrangeira em Livro: IDAutor

@@ -1,4 +1,4 @@
-package TP04.Entidades.Livros.Indices;
+package TP04.src.Entidades.Livros.Indices;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -7,7 +7,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 
-import TP04.EstruturasDeDados.RegistroHashExtensivel;
+import TP04.src.EstruturasDeDados.RegistroHashExtensivel;
 
 public class ParTituloID implements RegistroHashExtensivel<ParTituloID> {
 

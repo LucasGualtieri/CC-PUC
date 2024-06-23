@@ -1,4 +1,4 @@
-package TP04;
+package TP04.src.utils;
 
 import java.util.Scanner;
 import java.util.InputMismatchException;

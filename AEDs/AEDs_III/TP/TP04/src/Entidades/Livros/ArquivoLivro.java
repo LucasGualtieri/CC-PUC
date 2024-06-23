@@ -1,4 +1,4 @@
-package TP04.Entidades.Livros;
+package TP04.src.Entidades.Livros;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -11,10 +11,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import TP04.*;
-// import TP04.Entidades.*;
-import TP04.EstruturasDeDados.*;
-import TP04.Entidades.Livros.Indices.*;
+import TP04.src.Entidades.Livros.Indices.*;
+import TP04.src.EstruturasDeDados.*;
+import TP04.src.utils.Arquivo;
+import TP04.src.utils.Lib;
+import TP04.src.utils.Registro;
 
 public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
 

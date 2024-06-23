@@ -1,11 +1,11 @@
-package TP04.EstruturasDeDados;
+package TP04.src.EstruturasDeDados;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.Iterator;
 import java.util.TreeSet;
 
-import TP04.EstruturasDeDados.Tuplas.Tuple;
+import TP04.src.EstruturasDeDados.Tuplas.Tuple;
 
 // Se houverem dois registros excluídos imediatamente um ao lado do outros
 // Idealmente os dois deveriam ser fundidos.

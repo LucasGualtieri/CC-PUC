@@ -1,4 +1,4 @@
-package TP04.EstruturasDeDados.Tuplas;
+package TP04.src.EstruturasDeDados.Tuplas;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -6,7 +6,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-import TP04.EstruturasDeDados.RegistroHashExtensivel;
+import TP04.src.EstruturasDeDados.RegistroHashExtensivel;
 
 // Quando eu for trabalhar com os Indices Indiretos precisarei, acredito eu setar uma tamanho máximo para as strings
 

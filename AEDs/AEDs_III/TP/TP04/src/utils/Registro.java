@@ -1,4 +1,4 @@
-package TP04;
+package TP04.src.utils;
 
 public interface Registro {
 	public int getID();

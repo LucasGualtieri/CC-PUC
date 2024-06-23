@@ -1,11 +1,13 @@
-package TP04.Entidades.Autores;
+package TP04.src.Entidades.Autores;
 
 import java.util.List;
 import java.lang.reflect.Constructor;
 
-import TP04.*;
-import TP04.EstruturasDeDados.*;
-import TP04.Entidades.Autores.Indices.ParCPFId;
+import TP04.src.Entidades.Autores.Indices.ParCPFId;
+import TP04.src.EstruturasDeDados.*;
+import TP04.src.utils.Arquivo;
+import TP04.src.utils.Lib;
+import TP04.src.utils.Registro;
 
 public class ArquivoAutor<T extends Registro> extends Arquivo<T> {
 

@@ -1,4 +1,4 @@
-package TP04.Entidades.Livros.Indices;
+package TP04.src.Entidades.Autores.Indices;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -7,32 +7,33 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 
-import TP04.EstruturasDeDados.RegistroHashExtensivel;
+import TP04.src.EstruturasDeDados.RegistroHashExtensivel;
 
-public class ParIsbnId implements RegistroHashExtensivel<ParIsbnId> {
+public class ParCPFId implements RegistroHashExtensivel<ParCPFId> {
 
-	private String isbn;
+	private String CPF;
 	private int id;
-	private short TAMANHO = 17;
+	private short TAMANHO = 4 + 11;
 
-	public ParIsbnId() {
-		this.isbn = "0000000000000";
+	public ParCPFId() {
+		this.CPF = "00000000000";
 		this.id = -1;
 	}
 
-	public ParIsbnId(String is, int i) {
+	public ParCPFId(String is, int i) {
 		try {
-		if (is.getBytes().length != 13)
-			throw new Exception("O ISBN deve ter exatamente 13 dígitos");
-		this.isbn = is;
-		this.id = i;
+			if (is.getBytes().length != 11) {
+				throw new Exception("O CPF deve ter exatamente 11 dígitos");
+			}
+			this.CPF = is;
+			this.id = i;
 		} catch (Exception e) {
-		e.printStackTrace();
+			e.printStackTrace();
 		}
 	}
 
-	public String getIsbn() {
-		return isbn;
+	public String getCPF() {
+		return CPF;
 	}
 
 	public int getId() {
@@ -43,14 +44,14 @@ public class ParIsbnId implements RegistroHashExtensivel<ParIsbnId> {
 		return this.TAMANHO;
 	}
 
-	public static Constructor<ParIsbnId> getConstructor() throws NoSuchMethodException, SecurityException {
-		return ParIsbnId.class.getConstructor();
+	public static Constructor<ParCPFId> getConstructor() throws NoSuchMethodException, SecurityException {
+		return ParCPFId.class.getConstructor();
 	}
 
 	public byte[] toByteArray() throws IOException {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		DataOutputStream dos = new DataOutputStream(baos);
-		dos.write(this.isbn.getBytes());
+		dos.write(this.CPF.getBytes());
 		dos.writeInt(this.id);
 		return baos.toByteArray();
 	}
@@ -58,19 +59,19 @@ public class ParIsbnId implements RegistroHashExtensivel<ParIsbnId> {
 	public void fromByteArray(byte[] ba) throws IOException {
 		ByteArrayInputStream bais = new ByteArrayInputStream(ba);
 		DataInputStream dis = new DataInputStream(bais);
-		byte[] b = new byte[13];
+		byte[] b = new byte[11];
 		dis.read(b);
-		this.isbn = new String(b);
+		this.CPF = new String(b);
 		this.id = dis.readInt();
 	}
 
 	@Override
 	public int hashCode() {
-		return ParIsbnId.hashIsbn(this.isbn);
+		return ParCPFId.hashCPF(this.CPF);
 	}
 
-	public static int hashIsbn(String isbn) {
-		return Math.abs(isbn.hashCode());
+	public static int hashCPF(String CPF) {
+		return Math.abs(CPF.hashCode());
 	}
 
 }

@@ -12,7 +12,7 @@
  * Implementado pelo Prof. Marcos Kutova
  * v1.0 - 2020
  */
-package TP04.EstruturasDeDados;
+package TP04.src.EstruturasDeDados;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

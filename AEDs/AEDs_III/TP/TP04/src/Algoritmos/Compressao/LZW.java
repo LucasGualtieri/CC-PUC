@@ -1,4 +1,4 @@
-package TP04.Algoritmos.Compressao;
+package TP04.src.Algoritmos.Compressao;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -18,7 +18,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import TP02.Lib;
-import TP04.EstruturasDeDados.Tuplas.Tuple;
+import TP04.src.EstruturasDeDados.Tuplas.Tuple;
 
 public class LZW {
 

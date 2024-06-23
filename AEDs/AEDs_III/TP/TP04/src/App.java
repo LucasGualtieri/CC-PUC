@@ -1,4 +1,4 @@
-package TP04;
+package TP04.src;
 
 import java.util.List;
 import java.nio.file.Path;
@@ -7,11 +7,14 @@ import java.nio.file.Files;
 import java.util.LinkedList;
 import java.nio.file.DirectoryStream;
 
-import TP04.Entidades.Livros.*;
-import TP04.Entidades.Autores.*;
-import TP04.Algoritmos.Compressao.*;
+import TP04.src.Algoritmos.Compressao.*;
+import TP04.src.Entidades.Autores.*;
+import TP04.src.Entidades.Livros.*;
+import TP04.src.utils.Arquivo;
+import TP04.src.utils.Lib;
+import TP04.src.utils.Registro;
 
-class Principal {
+class App {
 
 	static final String path = "AEDs/AEDs_III/TP/TP04/Entidades/";
 
