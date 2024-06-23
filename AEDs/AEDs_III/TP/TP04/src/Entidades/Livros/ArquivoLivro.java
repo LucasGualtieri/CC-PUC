@@ -1,21 +1,21 @@
 package TP04.src.Entidades.Livros;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.lang.reflect.Constructor;
-import java.text.Normalizer;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.HashSet;
+import java.io.FileReader;
+import java.util.ArrayList;
+import java.io.IOException;
+import java.util.LinkedList;
+import java.text.Normalizer;
+import java.io.BufferedReader;
 import java.util.regex.Pattern;
+import java.lang.reflect.Constructor;
 
-import TP04.src.Entidades.Livros.Indices.*;
-import TP04.src.EstruturasDeDados.*;
-import TP04.src.utils.Arquivo;
 import TP04.src.utils.Lib;
+import TP04.src.utils.Arquivo;
 import TP04.src.utils.Registro;
+import TP04.src.EstruturasDeDados.*;
+import TP04.src.Entidades.Livros.Indices.*;
 
 public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
 

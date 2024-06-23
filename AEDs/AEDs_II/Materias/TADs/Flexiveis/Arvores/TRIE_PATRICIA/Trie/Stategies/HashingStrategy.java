@@ -8,6 +8,7 @@ public interface HashingStrategy {
 	int length();
 	Node get(char c);
 	void add(char c, Node node);
+	boolean isEmpty();
 	boolean contains(char c);
 	HashingStrategy newInstance();
 	public Iterator<Node> iterator();

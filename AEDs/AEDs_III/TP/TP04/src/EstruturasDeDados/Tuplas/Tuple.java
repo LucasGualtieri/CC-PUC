@@ -1,11 +1,9 @@
 package TP04.src.EstruturasDeDados.Tuplas;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
 
+import TP04.src.utils.StreamManager;
+import TP04.src.Algoritmos.Criptografia.Cipher;
 import TP04.src.EstruturasDeDados.RegistroHashExtensivel;
 
 // Quando eu for trabalhar com os Indices Indiretos precisarei, acredito eu setar uma tamanho máximo para as strings
@@ -25,78 +23,78 @@ public class Tuple<Key, Value> implements RegistroHashExtensivel<Tuple<Key, Valu
 	public Key getKey() { return key; }
 	public Value getValue() { return value; }
 
-	@SuppressWarnings("unchecked")
-	public void fromByteArray(byte[] array) {
-
-		DataInputStream dis;
-
-		try {
-			dis = new DataInputStream(new ByteArrayInputStream(array));
-
-			if (key.getClass() == Integer.class) {
-				this.key = (Key)Integer.valueOf(dis.readInt());
-			}
-			else if (key.getClass() == Short.class) {
-				this.key = (Key)Short.valueOf(dis.readShort());
-			}
-			else if (key.getClass() == Long.class) {
-				this.key = (Key)Long.valueOf(dis.readLong());
-			}
-			else if (key.getClass() == String.class) {
-				this.key = (Key)String.valueOf(dis.readUTF());
-			}
-			
-			if (value.getClass() == Integer.class) {
-				this.value = (Value)Integer.valueOf(dis.readInt());
-			}
-			else if (value.getClass() == Short.class) {
-				this.value = (Value)Short.valueOf(dis.readShort());
-			}
-			else if (value.getClass() == Long.class) {
-				this.value = (Value)Long.valueOf(dis.readLong());
-			}
-			else if (value.getClass() == String.class) {
-				this.value = (Value)String.valueOf(dis.readUTF());
-			}
-
-			dis.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
 	public byte[] toByteArray() throws IOException {
 
-		ByteArrayOutputStream ba_out = new ByteArrayOutputStream();
-		DataOutputStream dos = new DataOutputStream(ba_out);
+		StreamManager sm = new StreamManager();
 
 		if (key instanceof Integer) {
-			dos.writeInt((Integer)this.key);
+			sm.write((Integer)this.key);
 		}
 		if (key instanceof Short) {
-			dos.writeShort((Short)this.key);
+			sm.write((Short)this.key);
 		}
 		else if (key instanceof Long) {
-			dos.writeLong((Long)this.key);
+			sm.write((Long)this.key);
 		}
 		else if (key instanceof String) {
-			dos.writeUTF((String)this.key);
+			sm.writeUTF((String)this.key);
 		}
 
 		if (value instanceof Integer) {
-			dos.writeInt((Integer)this.value);
+			sm.write((Integer)this.value);
 		}
 		if (value instanceof Short) {
-			dos.writeShort((Short)this.value);
+			sm.write((Short)this.value);
 		}
 		else if (value instanceof Long) {
-			dos.writeLong((Long)this.value);
+			sm.write((Long)this.value);
 		}
 		else if (value instanceof String) {
-			dos.writeUTF((String)this.value);
+			sm.writeUTF((String)this.value);
 		}
 
-		return ba_out.toByteArray();
+		Cipher c = new Cipher();
+		return c.cipher(Cipher.KEY, sm.toByteArray());
+	}
+
+	@SuppressWarnings("unchecked")
+	public void fromByteArray(byte[] array) {
+
+		Cipher c = new Cipher();
+		// StreamManager sm = new StreamManager(array);
+		StreamManager sm = new StreamManager(c.decipher(Cipher.KEY, array));
+
+		try {
+
+			if (key.getClass() == Integer.class) {
+				this.key = (Key)Integer.valueOf(sm.readInt());
+			}
+			else if (key.getClass() == Short.class) {
+				this.key = (Key)Short.valueOf(sm.readShort());
+			}
+			else if (key.getClass() == Long.class) {
+				this.key = (Key)Long.valueOf(sm.readLong());
+			}
+			else if (key.getClass() == String.class) {
+				this.key = (Key)String.valueOf(sm.readUTF());
+			}
+			
+			if (value.getClass() == Integer.class) {
+				this.value = (Value)Integer.valueOf(sm.readInt());
+			}
+			else if (value.getClass() == Short.class) {
+				this.value = (Value)Short.valueOf(sm.readShort());
+			}
+			else if (value.getClass() == Long.class) {
+				this.value = (Value)Long.valueOf(sm.readLong());
+			}
+			else if (value.getClass() == String.class) {
+				this.value = (Value)String.valueOf(sm.readUTF());
+			}
+
+		} 
+
+		catch (IOException e) { e.printStackTrace(); }
 	}
 
 	public String toString() {

@@ -1,12 +1,10 @@
 package TP04.src.Entidades.Livros.Indices;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 
+import TP04.src.utils.StreamManager;
+import TP04.src.Algoritmos.Criptografia.Cipher;
 import TP04.src.EstruturasDeDados.RegistroHashExtensivel;
 
 public class ParTituloID implements RegistroHashExtensivel<ParTituloID> {
@@ -39,18 +37,23 @@ public class ParTituloID implements RegistroHashExtensivel<ParTituloID> {
 	}
 
 	public byte[] toByteArray() throws IOException {
-		ByteArrayOutputStream ba_out = new ByteArrayOutputStream();
-		DataOutputStream dos = new DataOutputStream(new ByteArrayOutputStream());
-	
-		dos.writeUTF(this.titulo);
-		dos.writeInt(this.ID);
-		return ba_out.toByteArray();
+
+		StreamManager sm = new StreamManager();
+
+		sm.writeUTF(this.titulo);
+		sm.write(this.ID);
+
+		Cipher c = new Cipher();
+		return c.cipher(Cipher.KEY, sm.toByteArray());
 	}
 
 	public void fromByteArray(byte[] ba) throws IOException {
-		ByteArrayInputStream ba_in = new ByteArrayInputStream(ba);
-		DataInputStream dis = new DataInputStream(ba_in);
-		this.titulo = dis.readUTF();
-		this.ID = dis.readInt();
+
+		Cipher c = new Cipher();
+		// StreamManager sm = new StreamManager(ba);
+		StreamManager sm = new StreamManager(c.decipher(Cipher.KEY, ba));
+
+		this.titulo = sm.readUTF();
+		this.ID = sm.readInt();
 	}
 }

@@ -19,6 +19,9 @@ public class TreeBased implements HashingStrategy {
 	public Node get(char c) { return children.get(c); }
 
 	@Override
+	public boolean isEmpty() { return children.isEmpty(); }
+
+	@Override
 	public boolean contains(char c) { return children.containsKey(c); }
 
 	@Override

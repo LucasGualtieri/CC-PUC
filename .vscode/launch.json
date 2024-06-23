@@ -2,6 +2,20 @@
 	"configurations": [
 		{
 			"type": "java",
+			"name": "CipherTest",
+			"request": "launch",
+			"mainClass": "TP04.tests.CipherTest",
+			"projectName": "CC-PUC_cc5a22eb"
+		},
+		{
+			"type": "java",
+			"name": "App",
+			"request": "launch",
+			"mainClass": "TP04.src.App",
+			"projectName": "CC-PUC_cc5a22eb"
+		},
+		{
+			"type": "java",
 			"name": "Main",
 			"request": "launch",
 			"mainClass": "AEDs.AEDs_II.Materias.TADs.Flexiveis.Arvores.TRIE_PATRICIA.Trie.Main",

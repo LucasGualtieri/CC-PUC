@@ -1,15 +1,14 @@
 package TP04.src.Entidades.Livros;
 
 import java.util.Locale;
+import java.io.IOException;
 import java.text.NumberFormat;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.lang.reflect.Constructor;
 
 import TP04.src.utils.Lib;
 import TP04.src.utils.Registro;
+import TP04.src.utils.StreamManager;
+import TP04.src.Algoritmos.Criptografia.Cipher;
 
 public class Livro implements Registro {
 	
@@ -41,41 +40,38 @@ public class Livro implements Registro {
 
 	public byte[] toByteArray() throws Exception {
 
-		ByteArrayOutputStream ba_out = null;
+		StreamManager sm = new StreamManager();
 
-		ba_out = new ByteArrayOutputStream();
-		DataOutputStream dos = new DataOutputStream(ba_out);
+		sm.write(this.ID);
+		sm.writeUTF(this.ISBN);
+		sm.writeUTF(this.titulo);
+		sm.writeUTF(this.autor);
+		sm.write(this.preco);
 
-		dos.writeInt(this.ID);
-		dos.writeUTF(this.ISBN);
-		dos.writeUTF(this.titulo);
-		dos.writeUTF(this.autor);
-		dos.writeFloat(this.preco);
-
-		return ba_out.toByteArray();
+		Cipher c = new Cipher();
+		return c.cipher(Cipher.KEY, sm.toByteArray());
 	}
 
 	public void fromByteArray(byte[] ba) {
 
-		ByteArrayInputStream ba_in;
-		
+		Cipher c = new Cipher();
+		// StreamManager sm = new StreamManager(ba);
+		StreamManager sm = new StreamManager(c.decipher(Cipher.KEY, ba));
+
 		try {
-			ba_in= new ByteArrayInputStream(ba);
-			DataInputStream dis = new DataInputStream(ba_in);
-	
-			this.ID = dis.readInt();
-			this.ISBN = dis.readUTF();
-			this.titulo = dis.readUTF();
-			this.autor = dis.readUTF();
-			this.preco = dis.readFloat();
-		} catch (Exception e) {
-			e.printStackTrace();
+			this.ID = sm.readInt();
+			this.ISBN = sm.readUTF();
+			this.titulo = sm.readUTF();
+			this.autor = sm.readUTF();
+			this.preco = sm.readFloat();
 		}
+
+		catch (IOException e) { e.printStackTrace(); }
 	}
 
 	// Função para ler o ISBN e testar se é um ISBN valído (em termos do comprimento da string)
 	public static String readISBN(boolean update) {
-		
+
 		String value = null;
 
 		boolean invalid = false;

@@ -8,20 +8,30 @@ import AEDs.AEDs_II.Materias.TADs.Flexiveis.Arvores.TRIE_PATRICIA.Trie.Node;
 
 public class PerfectHash implements HashingStrategy {
 
-	public Node[] children = new Node[256];
+	private final int CHILDREN_SIZE = 256;
+
+	private int length = 0;
+
+	public Node[] children = new Node[CHILDREN_SIZE];
 
 	public PerfectHash() {
 		Arrays.fill(children, null);
 	}
 
 	@Override
-	public int length() { return children.length; }
+	public int length() { return length; }
 
 	@Override
-	public void add(char c, Node node) { children[c] = node; }
+	public void add(char c, Node node) {
+		children[c] = node;
+		length++;
+	}
 
 	@Override
 	public Node get(char c) { return children[c]; }
+
+	@Override
+	public boolean isEmpty() { return length == 0; }
 
 	@Override
 	public boolean contains(char c) { return children[c] != null; }
@@ -51,4 +61,5 @@ public class PerfectHash implements HashingStrategy {
 			}
 		};
 	}
+
 }

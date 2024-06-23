@@ -51,6 +51,10 @@ public class Trie {
 		else node.get(c).setStringEnd();
 	}
 
+	public void remove(String string) throws Exception {
+		throw new Exception("Método ainda não implementado");
+	}
+
 	public boolean get(String string) {
 
 		int i = 0, len = string.length();
@@ -67,14 +71,13 @@ public class Trie {
 	public List<String> startsWith(String string) {
 
 		List<String> list = new LinkedList<>();
-		StringBuilder builder = new StringBuilder();
+		StringBuilder builder = new StringBuilder(string);
 
 		Node node = root;
 
 		for (char c : string.toCharArray()) {
 			node = node.get(c);
 			if (node == null) break;
-			builder.append(c);
 		}
 
 		if (node != null) traverse(builder, list, node);

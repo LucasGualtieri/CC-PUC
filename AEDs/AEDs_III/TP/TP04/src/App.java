@@ -7,16 +7,16 @@ import java.nio.file.Files;
 import java.util.LinkedList;
 import java.nio.file.DirectoryStream;
 
-import TP04.src.Algoritmos.Compressao.*;
-import TP04.src.Entidades.Autores.*;
-import TP04.src.Entidades.Livros.*;
-import TP04.src.utils.Arquivo;
 import TP04.src.utils.Lib;
+import TP04.src.utils.Arquivo;
 import TP04.src.utils.Registro;
+import TP04.src.Entidades.Livros.*;
+import TP04.src.Entidades.Autores.*;
+import TP04.src.Algoritmos.Compressao.*;
 
 class App {
 
-	static final String path = "AEDs/AEDs_III/TP/TP04/Entidades/";
+	static final String path = "AEDs/AEDs_III/TP/TP04/src/Entidades/";
 
 	static <T extends Registro> void Create(Arquivo<T> arquivo) throws Exception {
 
@@ -45,6 +45,7 @@ class App {
 				System.out.println(object + "\n");
 			}
 			catch (Exception e) {
+				e.printStackTrace();
 				Lib.cprintf("BOLD RED", "Falha ao cadastrar %s.\n\n", arquivo.getNomeLowerCase());
 				// Lib.cprintf("BOLD RED", "Falha ao cadastrar %s: %s\n\n", arquivo.getNomeLowerCase(), e.getMessage());
 			}
@@ -107,7 +108,6 @@ class App {
 		return object;
 	}
 
-	// Quando cancelar a atualização esta mandando mensagem de livro não encontrado
 	static <T extends Registro> void Update(Arquivo<T> arquivo) throws Exception {
 
 		Lib.clearScreen();
@@ -264,7 +264,7 @@ class App {
 
 		Path folderPath = Paths.get(path + arquivo.getNomePlural() + "/Dados");
 
-		LZW compress = new LZW(arquivo.getNomePlural(), path + "../Backups/", true);
+		LZW compress = new LZW(arquivo.getNomePlural(), path + "../../backups/", true);
 
 		try (DirectoryStream<Path> stream = Files.newDirectoryStream(folderPath)) {
 			for (Path filePath : stream) {

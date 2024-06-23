@@ -1,14 +1,13 @@
 package TP04.src.Entidades.Autores;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
+import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.util.Locale;
 
 import TP04.src.utils.Lib;
 import TP04.src.utils.Registro;
+import TP04.src.utils.StreamManager;
+import TP04.src.Algoritmos.Criptografia.Cipher;
 
 // Para fazer um relacionamento 1->N com Autores de Livros precisarei:
 //		Criar uma chave estrangeira em Livro: IDAutor
@@ -51,36 +50,33 @@ public class Autor implements Registro {
 
 	public byte[] toByteArray() throws Exception {
 
-		ByteArrayOutputStream ba_out = null;
+		StreamManager sm = new StreamManager();
 
-		ba_out = new ByteArrayOutputStream();
-		DataOutputStream dos = new DataOutputStream(ba_out);
+		sm.write(this.ID);
+		sm.writeUTF(this.CPF);
+		sm.writeUTF(this.nome);
+		sm.writeUTF(this.sobrenome);
+		sm.write(this.idade);
 
-		dos.writeInt(this.ID);
-		dos.writeUTF(this.CPF);
-		dos.writeUTF(this.nome);
-		dos.writeUTF(this.sobrenome);
-		dos.writeInt(this.idade);
-
-		return ba_out.toByteArray();
+		Cipher c = new Cipher();
+		return c.cipher(Cipher.KEY, sm.toByteArray());
 	}
 
 	public void fromByteArray(byte[] ba) {
 
-		ByteArrayInputStream ba_in;
-		
+		Cipher c = new Cipher();
+		// StreamManager sm = new StreamManager(ba);
+		StreamManager sm = new StreamManager(c.decipher(Cipher.KEY, ba));
+
 		try {
-			ba_in = new ByteArrayInputStream(ba);
-			DataInputStream dis = new DataInputStream(ba_in);
-	
-			this.ID = dis.readInt();
-			this.CPF = dis.readUTF();
-			this.nome = dis.readUTF();
-			this.sobrenome = dis.readUTF();
-			this.idade = dis.readInt();
-		} catch (Exception e) {
-			e.printStackTrace();
+			this.ID = sm.readInt();
+			this.CPF = sm.readUTF();
+			this.nome = sm.readUTF();
+			this.sobrenome = sm.readUTF();
+			this.idade = sm.readInt();
 		}
+
+		catch (IOException e) { e.printStackTrace(); }
 	}
 
 	public void setNome(String nome) { this.nome = nome; }

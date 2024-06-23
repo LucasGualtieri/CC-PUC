@@ -27,6 +27,9 @@ public class ListBased implements HashingStrategy {
 	}
 
 	@Override
+	public boolean isEmpty() { return children.isEmpty(); }
+
+	@Override
 	public boolean contains(char c) {
 
 		for (Node i : children) {

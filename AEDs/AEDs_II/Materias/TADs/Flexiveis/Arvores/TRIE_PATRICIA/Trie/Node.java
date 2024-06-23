@@ -16,14 +16,15 @@ public class Node implements Iterable<Node> {
 		this.children = children.newInstance();
 	}
 
-	int length() { return children.length(); }
-	boolean contains(char c) { return children.contains(c); }
+	public int length() { return children.length(); }
+	public boolean contains(char c) { return children.contains(c); }
 	public Node get(char c) { return children.get(c); }
 	public void add(char c, Node node) { children.add(c, node); }
+	public boolean isEmpty() { return children.isEmpty(); }
 
-	boolean getStringEnd() { return stringEnd; }
-	void setStringEnd() { stringEnd = true; }
-	void resetStringEnd() { stringEnd = false; }
+	public boolean getStringEnd() { return stringEnd; }
+	public void setStringEnd() { stringEnd = true; }
+	public void resetStringEnd() { stringEnd = false; }
 
 	@Override
 	public Iterator<Node> iterator() { return children.iterator(); }
