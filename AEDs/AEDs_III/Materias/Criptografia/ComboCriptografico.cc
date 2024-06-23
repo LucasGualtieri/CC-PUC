@@ -50,12 +50,12 @@ struct ViegenereCipher : implements CipherStrategy {
 
 		int len = key.length();
 
-		auto fn = [*this](char c, char key) {
-			return 'A' + mod(c - key, 26);
+		auto fn = [*this](char c) {
+			return 'A' + mod(c, 26);
 		};
 
 		for (int i = 0; i < msg.length(); i++) {
-			msg[i] = 'A' + mod(msg[i] + key[i % len], 26);
+			msg[i] = fn(msg[i] - key[i % len]);
 		}
 
 		return msg;
@@ -200,14 +200,20 @@ struct ColumnsCipher : implements CipherStrategy {
 class Cipher {
 
   private:
-	unique_ptr<CipherStrategy> strategy;
+	CipherStrategy* strategy;
 
   public:
 
-	Cipher(unique_ptr<CipherStrategy> strategy = nullptr) : strategy(move(strategy)) {}
-	
-	void setStrategy(unique_ptr<CipherStrategy> strategy) {
-		this->strategy = move(strategy);
+	Cipher(CipherStrategy* strategy = nullptr) : strategy(strategy) {}
+
+	// Uma alternativa seria usar Unique Pointers mas achei assim mais legal
+	~Cipher() { if (strategy) delete strategy; }
+
+	void setStrategy(CipherStrategy* strategy) {
+
+		if (strategy) delete this->strategy;
+
+		this->strategy = strategy;
 	}
 
 	string cipher(string msg, const string& key) const {
@@ -230,29 +236,28 @@ void foo();
 
 int main() {
 
-	string key = "CANO";
-	string msg = "O RATO ROEU A ROUPA DO REI DE ROMA";
+	string key = "CARO";
+	string msg = "FIMDESEMANA";
 
 	cout << msg << endl;
 
-	Cipher cipher(make_unique<ColumnsCipher>());
-
+	Cipher cipher(new ViegenereCipher);
 	msg = cipher.cipher(msg, key);
-	// cout << msg << endl;
 
-	cipher.setStrategy(make_unique<ViegenereModifiedCipher>());
-
-	msg = cipher.cipher(msg, key);
 	cout << msg << endl;
 
-	cipher.setStrategy(make_unique<ViegenereModifiedCipher>());
+	cipher.setStrategy(new ColumnsCipher);
+	msg = cipher.cipher(msg, key);
+
+	cout << msg << endl;
 
 	msg = cipher.decipher(msg, key);
+
 	cout << msg << endl;
 
-	cipher.setStrategy(make_unique<ColumnsCipher>());
-
+	cipher.setStrategy(new ViegenereCipher);
 	msg = cipher.decipher(msg, key);
+
 	cout << msg << endl;
 
 	// foo();
