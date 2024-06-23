@@ -31,7 +31,7 @@ static <T extends Registro> void Backup(Arquivo<T> arquivo) throws Exception  {
 
 	Path folderPath = Paths.get(path + arquivo.getNomePlural() + "/Dados");
 
-	LZW compress = new LZW(arquivo.getNomePlural(), path + "../Backups/", true);
+	LZW compress = new LZW(arquivo.getNomePlural(), path + "../../backups/", true);
 
 	DirectoryStream<Path> stream = Files.newDirectoryStream(folderPath);
 
@@ -86,7 +86,7 @@ public void add(String fileName, byte[] fileBytes) throws Exception {
 */
 static <T extends Registro> void RecoverBackup(Arquivo<T> arquivo) throws Exception  {
 
-	Path folderPath = Paths.get(path + "../Backups/");
+	Path folderPath = Paths.get(path + "../../backups/");
 
 	List<Path> files = new LinkedList<>();
 
@@ -110,7 +110,7 @@ static <T extends Registro> void RecoverBackup(Arquivo<T> arquivo) throws Except
 
 	Path backup = files.get(escolha - 1);
 
-	LZW decompress = new LZW(arquivo.getNomePlural(), path + "../Backups/", false);
+	LZW decompress = new LZW(arquivo.getNomePlural(), path + "../../backups/", false);
 	decompress.recover(backup);
 }
 ```
@@ -127,7 +127,7 @@ static <T extends Registro> void RecoverBackup(Arquivo<T> arquivo) throws Except
 */
 public void recover(Path path) throws Exception {
 	String folderName = path.getFileName().toString().substring(0, path.getFileName().toString().length() - 3);
-	File folder = new File(filePath + "../Backups/" + folderName);
+	File folder = new File(filePath + "../../backups/" + folderName);
 	folder.mkdir();
 
 	AbrirArquivoDescomprimir(path);

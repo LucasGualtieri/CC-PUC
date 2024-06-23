@@ -101,7 +101,10 @@ class App {
 		}
 
 		catch (Exception e) {
-			if (print) Lib.cprintf("BOLD RED", "\n%s não encontrado.\n\n", arquivo.getNome());
+			if (print) {
+				e.printStackTrace();
+				Lib.cprintf("BOLD RED", "\n%s não encontrado.\n\n", arquivo.getNome());
+			}
 			else throw new Exception("Registro não encontrado.");
 		}
 
@@ -292,7 +295,7 @@ class App {
 		Lib.clearScreen();
 		Lib.printdiv(1, "Recuperando backup na base de dados: %s", arquivo.getNomePlural());
 
-		Path folderPath = Paths.get(path + "../Backups/");
+		Path folderPath = Paths.get(path + "../../backups/");
 
 		List<Path> files = new LinkedList<>();
 
@@ -304,7 +307,7 @@ class App {
 		}
 
 		catch (Exception e) {
-			// e.printStackTrace();
+			e.printStackTrace();
 			Lib.cprintf("BOLD RED", "Falha ao fazer a recuperação.\n\n");
 			return;
 		}
@@ -346,7 +349,7 @@ class App {
 
 		// System.out.println("File name: " + backup.getFileName());
 
-		LZW decompress = new LZW(arquivo.getNomePlural(), path + "../Backups/", false);
+		LZW decompress = new LZW(arquivo.getNomePlural(), path + "../../backups/", false);
 
 		decompress.recover(backup);
 

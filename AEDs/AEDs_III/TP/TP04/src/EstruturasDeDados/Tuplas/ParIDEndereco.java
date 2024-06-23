@@ -1,13 +1,11 @@
 package TP04.src.EstruturasDeDados.Tuplas;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 
+import TP04.src.Algoritmos.Criptografia.Cipher;
 import TP04.src.EstruturasDeDados.RegistroHashExtensivel;
+import TP04.src.utils.StreamManager;
 
 public class ParIDEndereco implements RegistroHashExtensivel<ParIDEndereco> {
 
@@ -45,17 +43,22 @@ public class ParIDEndereco implements RegistroHashExtensivel<ParIDEndereco> {
 	}
 
 	public byte[] toByteArray() throws IOException {
-		ByteArrayOutputStream ba_out = new ByteArrayOutputStream();
-		DataOutputStream dos = new DataOutputStream(ba_out);
-		dos.writeInt(this.id);
-		dos.writeLong(this.endereco);
-		return ba_out.toByteArray();
+
+		StreamManager sm = new StreamManager();
+
+		sm.write(this.id);
+		sm.write(this.endereco);
+
+		Cipher c = new Cipher();
+		return c.cipher(Cipher.KEY, sm.toByteArray());
 	}
 
 	public void fromByteArray(byte[] ba) throws IOException {
-		ByteArrayInputStream ba_in = new ByteArrayInputStream(ba);
-		DataInputStream dis = new DataInputStream(ba_in);
-		this.id = dis.readInt();
-		this.endereco = dis.readLong();
+		
+		Cipher c = new Cipher();
+		StreamManager sm = new StreamManager(c.decipher(Cipher.KEY, ba));
+
+		this.id = sm.readInt();
+		this.endereco = sm.readLong();
 	}
 }

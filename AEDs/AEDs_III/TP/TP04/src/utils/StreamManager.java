@@ -23,6 +23,7 @@ public class StreamManager {
 	public void write(float val) throws IOException { dos.writeFloat(val); }
 	public void write(double val) throws IOException { dos.writeDouble(val); }
 	public void write(byte b) throws IOException { dos.writeByte(b); }
+	public void write(long val) throws IOException { dos.writeLong(val); }
 	public void write(byte[] byteArray) throws IOException { dos.write(byteArray); }
 
 	public byte[] toByteArray() { return ba_out.toByteArray(); }

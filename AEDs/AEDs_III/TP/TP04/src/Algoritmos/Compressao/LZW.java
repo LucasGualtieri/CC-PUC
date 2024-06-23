@@ -100,8 +100,10 @@ public class LZW {
 	}
 
 	public void recover(Path path) throws Exception {
+
 		String folderName = path.getFileName().toString().substring(0, path.getFileName().toString().length() - 3);
-		File folder = new File(filePath + "../Backups/" + folderName);
+		
+		File folder = new File(filePath + folderName);
 		folder.mkdir();
 
 		AbrirArquivoDescomprimir(path);
