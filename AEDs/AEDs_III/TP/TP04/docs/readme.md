@@ -1,182 +1,272 @@
-# ✍️ TP03 - AEDs III
+# ✍️ TP04 - AEDs III
 
 ## 📝 Descrição
 <ol>
-	<li>Nesta terceira iteração do projeto algumas funcionalidades adicionais foram implementadas:
+	<li>Nesta quarta iteração do projeto algumas funcionalidades adicionais foram implementadas:
 		<ol>
-			<li>O usuário agora pode fazer um backup compactado dos dados das entidades "Livros" e "Autores".</li>
-			<li>Adicionalmente, o usuário pode escolher entre os backups disponíveis e descompactá-los.</li>
+			<li>Métodos de cifragem por Viegenere e por Colunas foram criados.</li>
+			<li>Uma nova classe chamada <strong>StreamManager</strong> foi criada para abstrair o uso das classes ByteArrayOutputStream, DataOutputStream e DataInputStream.</li>
 		</ol>
 </ol>
 
 ## 🔍 Experiência do Grupo
-- Implementamos todos os requisitos, apesar de termos enfrentado dificuldades em alguns momentos com o algoritmo de compressão LZW. Nosso objetivo era modificar o código apresentado em sala para utilizar um HashMap e BITS_POR_INDICE variável e, assim, melhorar a ordem de complexidade do código e a melhorar a taxa de compressão. Isso também exigiu que encontrássemos e corrigíssemos um erro no código original. Alcançamos todos os resultados esperados, exceto pela implementação da compressão em fluxo, ou seja, estamos considerando que todos os arquivos caberão na memória RAM.
+ - Todos os requisitos foram implementados de forma tranquila e rápida, sem grandes problemas. Todos os resultados esperados foram alcançados.
 
 ## ⚙️ Descrição dos métodos implementados
 
 ```java
-/*
-	Esta é uma versão simplificada do código real (por uma questão de facilitar
-	a legibilidade abstraindo partes menos importantes) do novo método CRUD.
+/**
+ * Classe que representa um sistema de cifra utilizando diferentes estratégias de criptografia.
+ */
+public class Cipher {
 
-	Este método faz o backup de arquivos em uma pasta específica. Ele realiza as seguintes etapas:
-	
-	- Define o caminho do diretório que contém os arquivos a serem copiados.
-	- Cria uma instância do compressor LZW para comprimir os arquivos e armazená-los em um diretório de backups.
-	- Itera sobre todos os arquivos no diretório especificado.
-	- Para cada arquivo, lê seu conteúdo em bytes e adiciona ao compressor.
-	- Fecha o compressor após processar todos os arquivos e imprime na tela as taxas de compressão.
-*/
-static <T extends Registro> void Backup(Arquivo<T> arquivo) throws Exception  {
+	/** Array de estratégias de criptografia utilizadas pela classe */
+	CipherStrategy[] strategies;
 
-	Path folderPath = Paths.get(path + arquivo.getNomePlural() + "/Dados");
+	/** Chave padrão utilizada para cifragem */
+	public static final byte[] KEY = "AEDsIII".getBytes();
 
-	LZW compress = new LZW(arquivo.getNomePlural(), path + "../../backups/", true);
+	/**
+	 * Construtor que aceita uma ou mais estratégias de criptografia.
+	 * 
+	 * @param strategies Estratégias de criptografia a serem utilizadas.
+	 */
+	public Cipher(CipherStrategy... strategies) { this.strategies = strategies; }
 
-	DirectoryStream<Path> stream = Files.newDirectoryStream(folderPath);
+	/**
+	 * Construtor padrão que inicializa com as estratégias Viegenere e Colunas.
+	 */
+	public Cipher() {
 
-	for (Path filePath : stream) {
-		String fileName = filePath.getFileName().toString();
-		byte[] fileBytes = Files.readAllBytes(filePath);
-		compress.add(fileName, fileBytes);
+		strategies = new CipherStrategy[2];
+		strategies[0] = new Viegenere();
+		strategies[1] = new Colunas();
 	}
 
-	compress.close();
+	/**
+	 * Método para cifrar os dados utilizando a(s) estratégia(s) definida(s).
+	 * 
+	 * @param key  Chave utilizada para cifrar os dados.
+	 * @param data Dados a serem cifrados.
+	 * @return Dados cifrados.
+	 */
+	public byte[] cipher(byte[] key, byte[] data) {
+
+		byte[] cipheredData = Arrays.copyOf(data, data.length);
+
+		for (CipherStrategy strategy : strategies) {
+			cipheredData = strategy.cipher(key, cipheredData);
+		}
+
+		return cipheredData;
+	}
+
+	/**
+	 * Método para decifrar os dados utilizando a(s) estratégia(s) definida(s).
+	 * 
+	 * @param key          Chave utilizada para decifrar os dados.
+	 * @param cipheredData Dados cifrados a serem decifrados.
+	 * @return Dados decifrados.
+	 */
+	public byte[] decipher(byte[] key, byte[] cipheredData) {
+
+		byte[] decipheredData = Arrays.copyOf(cipheredData, cipheredData.length);
+
+		for (int i = strategies.length - 1; i >= 0; i--) {
+			decipheredData = strategies[i].decipher(key, decipheredData);
+		}
+
+		return decipheredData;
+	}
 }
 ```
 
 ```java
-/*
-	Este método adiciona um arquivo comprimido ao sistema, realizando as seguintes ações:
+/**
+ * Classe que implementa a estratégia de criptografia de Viegenere.
+ */
+public class Viegenere implements CipherStrategy {
 
-	- Comprime o conteúdo do arquivo.
-	- Registra a taxa de compressão (tamanhos antes e depois da compressão) para o arquivo.
-	- Atualiza o total de bytes antes e depois da compressão.
-	- Incrementa o contador de arquivos processados.
-	- Escreve o nome do arquivo, o tamanho do arquivo comprimido e o conteúdo comprimido em um arquivo de destino.
-*/
-public void add(String fileName, byte[] fileBytes) throws Exception {
+	/**
+	 * Método para cifrar os dados utilizando a cifra de Viegenere.
+	 * 
+	 * @param key  Chave utilizada para cifrar os dados.
+	 * @param data Dados a serem cifrados.
+	 * @return Dados cifrados.
+	 */
+	@Override
+	public byte[] cipher(byte[] key, byte[] data) {
 
-	byte[] compressedFile = comprimir(fileBytes);
+		byte[] cipheredData = new byte[data.length];
 
-	Tuple<Integer, Integer> tamanhos = new Tuple<>(fileBytes.length, compressedFile.length);
-	taxasDeCompressao.add(new Tuple<>(fileName, tamanhos));
+		for (int i = 0; i < data.length; i++) {
+			cipheredData[i] = (byte)(data[i] + key[i % key.length]);
+		}
 
-	totalBytes += fileBytes.length;
-	totalComprimido += compressedFile.length;
+		return cipheredData;
+	}
 
-	this.N++;
+	/**
+	 * Método para decifrar os dados utilizando a cifra de Viegenere.
+	 * 
+	 * @param key  Chave utilizada para decifrar os dados.
+	 * @param data Dados a serem decifrados.
+	 * @return Dados decifrados.
+	 */
+	@Override
+	public byte[] decipher(byte[] key, byte[] data) {
 
-	file.writeUTF(fileName);
-	file.writeInt(compressedFile.length);
-	file.writeByte(BITS_POR_INDICE);
-	file.write(compressedFile);
+		byte[] decipheredData = new byte[data.length];
+
+		for (int i = 0; i < data.length; i++) {
+			decipheredData[i] = (byte)(data[i] - key[i % key.length]);
+		}
+
+		return decipheredData;
+	}
 }
+
 ```
 
 ```java
+/**
+ * Classe que implementa a estratégia de criptografia por transposição de colunas.
+ */
+public class Colunas implements CipherStrategy {
 
-/*
-	Este método recupera um backup de arquivos, executando as seguintes operações:
-	
-	- Define o caminho do diretório de backups.
-	- Cria uma lista de arquivos de backup correspondentes ao tipo de registro especificado.
-	- Exibe os arquivos de backup encontrados e permite que o usuário selecione um.
-	- Recupera o backup selecionado utilizando o descompressor LZW.
-*/
-static <T extends Registro> void RecoverBackup(Arquivo<T> arquivo) throws Exception  {
+	/**
+	 * Método para cifrar os dados utilizando a transposição de colunas.
+	 * 
+	 * @param key  Chave utilizada para cifrar os dados.
+	 * @param data Dados a serem cifrados.
+	 * @return Dados cifrados.
+	 */
+	@Override
+	public byte[] cipher(byte[] key, byte[] data) {
 
-	Path folderPath = Paths.get(path + "../../backups/");
+		int width = key.length;
+		int height = (int)Math.ceil((float)data.length / width);
 
-	List<Path> files = new LinkedList<>();
+		char[][] matrix = new char[height][width];
+		int counter = 0;
 
-	DirectoryStream<Path> stream = Files.newDirectoryStream(folderPath)
-	for (Path file : stream) {
-		String str = file.getFileName().toString().substring(0, arquivo.getNomePlural().length());
-		if (Files.isRegularFile(file) && str.equals(arquivo.getNomePlural())) files.add(file);
+		for (int i = 0; i < height; i++) {
+
+			for (int j = 0; j < width; j++) {
+
+				if (counter < data.length) {
+					matrix[i][j] = (char)data[counter++];
+				}
+				
+				else matrix[i][j] = 256;  // Valor que representa espaço vazio na matriz.
+			}
+		}
+
+		byte[] cipheredData = new byte[data.length];
+		counter = 0;
+
+		for (int j = 0; j < key.length; j++) {
+			for (int i = 0; i < height; i++) {
+				if (matrix[i][j] != 256) {
+					cipheredData[counter++] = (byte)matrix[i][j];
+				}
+			}
+		}
+
+		return cipheredData;
 	}
 
-	System.out.println("Backups encontrados:\n");
+	/**
+	 * Método para decifrar os dados utilizando a transposição de colunas.
+	 * 
+	 * @param key  Chave utilizada para decifrar os dados.
+	 * @param data Dados cifrados a serem decifrados.
+	 * @return Dados decifrados.
+	 */
+	@Override
+	public byte[] decipher(byte[] key, byte[] data) {
 
-	int i = 0;
-	for (Path file : files) {
-		String fileName = file.getFileName().toString();
-		System.out.printf("%d - %s\n", ++i, fileName);
+		int width = key.length;
+		int height = (int)Math.ceil((float)data.length / width);
+
+		char[][] matrix = new char[height][width];
+		int counter = 0;
+
+		for (int i = 0; i < height; i++) {
+			for (int j = 0; j < width; j++) {
+				if (counter++ >= data.length) {
+					matrix[i][j] = 256;  // Valor que representa espaço vazio na matriz.
+				}
+			}
+		}
+
+		counter = 0;
+
+		for (int j = 0; j < key.length; j++) {
+			for (int i = 0; i < height; i++) {
+				if (counter >= data.length || matrix[i][j] == 256) {
+					break;
+				}
+				matrix[i][j] = (char)data[counter++];
+			}
+		}
+
+		byte[] decipheredData = new byte[data.length];
+		counter = 0;
+
+		for (int i = 0; i < height; i++) {
+			for (int j = 0; j < width; j++) {
+				if (matrix[i][j] == 256) break;
+				decipheredData[counter++] = (byte)matrix[i][j];
+			}
+		}
+
+		return decipheredData;
 	}
-
-	System.out.print("\nEscolha uma das opções acima: ");
-
-	int escolha = Lib.ReadChoice(i);
-
-	Path backup = files.get(escolha - 1);
-
-	LZW decompress = new LZW(arquivo.getNomePlural(), path + "../../backups/", false);
-	decompress.recover(backup);
 }
+
 ```
 
+## Exemplo do uso dos métodos de cifragem no toByteArray() e fromByteArray().
 ```java
-/*
-	Este método recupera arquivos de um backup descomprimido:
+	public byte[] toByteArray() throws Exception {
 
-	- Determina o nome da pasta a partir do caminho do arquivo de backup e cria essa pasta.
-	- Abre e descomprime o arquivo de backup.
-	- Lê o número total de arquivos no backup.
-	- Para cada arquivo, lê o nome do arquivo, o tamanho, os bytes comprimidos, descomprime-os
-	e os escreve em um novo arquivo dentro da pasta de backup.
-*/
-public void recover(Path path) throws Exception {
-	String folderName = path.getFileName().toString().substring(0, path.getFileName().toString().length() - 3);
-	File folder = new File(filePath + "../../backups/" + folderName);
-	folder.mkdir();
+		StreamManager sm = new StreamManager();
 
-	AbrirArquivoDescomprimir(path);
+		sm.write(this.ID);
+		sm.writeUTF(this.ISBN);
+		sm.writeUTF(this.titulo);
+		sm.writeUTF(this.autor);
+		sm.write(this.preco);
 
-	this.N = file.readInt();
-
-	for (int i = 0 ; i < N; i++) {
-
-		String fileName = file.readUTF();
-
-		System.out.println("file: " + filePath + folderName + "/" + fileName);
-
-		RandomAccessFile backup = new RandomAccessFile(filePath + folderName + "/" + fileName, "rw");
-
-		int fileSize = file.readInt();
-		BITS_POR_INDICE = file.readByte();
-
-		byte[] compressedBytes = new byte[fileSize];
-
-		file.read(compressedBytes);
-
-		backup.write(descomprimir(compressedBytes));
-		backup.close();
+		Cipher c = new Cipher();
+		return c.cipher(Cipher.KEY, sm.toByteArray());
 	}
-}
-```
 
-#### Breve demonstração das novas funcionalidades.
-![image](https://github.com/LucasGualtieri/CC-PUC/assets/42350002/26121f22-9b2d-473e-998a-f5c77d792af3)
-![image](https://github.com/LucasGualtieri/CC-PUC/assets/42350002/1788f147-6022-4387-89c5-31e907aabe82)
-![image](https://github.com/LucasGualtieri/CC-PUC/assets/42350002/ed9aef49-b4bd-49a3-8803-a9c4ef5432ca)
-![image](https://github.com/LucasGualtieri/CC-PUC/assets/42350002/6fac2f29-7a72-408f-ba84-42a41dea6520)
-![image](https://github.com/LucasGualtieri/CC-PUC/assets/42350002/eaa48837-3a50-49f5-8772-f8b395e790fb)
-![image](https://github.com/LucasGualtieri/CC-PUC/assets/42350002/788e2901-62cc-41c5-a09b-e1e4453b9252)
+	public void fromByteArray(byte[] ba) {
+
+		Cipher c = new Cipher();
+		StreamManager sm = new StreamManager(c.decipher(Cipher.KEY, ba));
+
+		try {
+			this.ID = sm.readInt();
+			this.ISBN = sm.readUTF();
+			this.titulo = sm.readUTF();
+			this.autor = sm.readUTF();
+			this.preco = sm.readFloat();
+		}
+
+		catch (IOException e) { e.printStackTrace(); }
+	}
+```
 
 ## ✅ Checklist
 
-1. **Modificação das funções CRUD:**
-	- [X] Há uma rotina de compactação usando o algoritmo LZW para fazer backup dos arquivos?
-	- [X] Há uma rotina de descompactação usando o algoritmo LZW para recuperação dos arquivos?
-	- [X] O usuário pode escolher a versão a recuperar?
-
-3. **Qual foi a taxa de compressão alcançada por esse backup?**
-	- A taxa de compressão alcançada com a compressão LZW, usando *BITS_POR_INDICE* variável, foi em média de 40%.
-
-6. **Funcionamento e Originalidade:**
-	- [X] O trabalho está funcionando corretamente.
-	- [X] O trabalho está completo.
-	- [X] O trabalho é original e não uma cópia de um colega.
+- [X] Há uma função de cifragem em todas as classes de entidades, envolvendo pelo menos duas operações diferentes e usando uma chave criptográfica?
+- [X] Uma das operações de cifragem é baseada na substituição e a outra na transposição?
+- [X] O trabalho está funcionando corretamente?
+- [X] O trabalho está completo?
+- [X] O trabalho é original e não a cópia de um trabalho de um colega?
 
 ## 📝 Integrantes
  - Lucas Gualtieri
