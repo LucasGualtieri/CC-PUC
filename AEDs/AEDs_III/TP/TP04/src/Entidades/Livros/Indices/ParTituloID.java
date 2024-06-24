@@ -50,7 +50,6 @@ public class ParTituloID implements RegistroHashExtensivel<ParTituloID> {
 	public void fromByteArray(byte[] ba) throws IOException {
 
 		Cipher c = new Cipher();
-		// StreamManager sm = new StreamManager(ba);
 		StreamManager sm = new StreamManager(c.decipher(Cipher.KEY, ba));
 
 		this.titulo = sm.readUTF();

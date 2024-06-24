@@ -65,7 +65,6 @@ public class Autor implements Registro {
 	public void fromByteArray(byte[] ba) {
 
 		Cipher c = new Cipher();
-		// StreamManager sm = new StreamManager(ba);
 		StreamManager sm = new StreamManager(c.decipher(Cipher.KEY, ba));
 
 		try {

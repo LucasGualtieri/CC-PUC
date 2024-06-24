@@ -8,8 +8,8 @@ import java.io.IOException;
 
 public class StreamManager {
 	
-	ByteArrayOutputStream ba_out = new ByteArrayOutputStream();
-	DataOutputStream dos = new DataOutputStream(ba_out);
+	ByteArrayOutputStream baos = new ByteArrayOutputStream();
+	DataOutputStream dos = new DataOutputStream(baos);
 	DataInputStream dis;
 
 	public StreamManager() {}
@@ -26,7 +26,7 @@ public class StreamManager {
 	public void write(long val) throws IOException { dos.writeLong(val); }
 	public void write(byte[] byteArray) throws IOException { dos.write(byteArray); }
 
-	public byte[] toByteArray() { return ba_out.toByteArray(); }
+	public byte[] toByteArray() { return baos.toByteArray(); }
 
 	public long readLong() throws IOException { return dis.readLong(); }
 	public int readInt() throws IOException { return dis.readInt(); }
@@ -36,7 +36,7 @@ public class StreamManager {
 	public byte readByte() throws IOException { return dis.readByte(); }
 	public String readUTF() throws IOException { return dis.readUTF(); }
 	public short readShort() throws IOException { return dis.readShort(); }
-	public byte[] readBytes() throws IOException { return dis.readAllBytes(); }
+	// public byte[] readBytes() throws IOException { return dis.readAllBytes(); }
 	public int read(byte[] byteArray) throws IOException { return dis.read(byteArray); }
 	public byte[] read(int size) throws IOException {
 		byte[] byteArray = new byte[size];

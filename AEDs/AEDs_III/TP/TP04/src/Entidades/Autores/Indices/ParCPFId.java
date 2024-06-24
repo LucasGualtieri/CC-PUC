@@ -57,7 +57,6 @@ public class ParCPFId implements RegistroHashExtensivel<ParCPFId> {
 	public void fromByteArray(byte[] ba) throws IOException {
 
 		Cipher c = new Cipher();
-		// StreamManager sm = new StreamManager(ba);
 		StreamManager sm = new StreamManager(c.decipher(Cipher.KEY, ba));
 
 		byte[] b = new byte[11];

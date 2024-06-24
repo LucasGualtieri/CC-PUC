@@ -55,7 +55,6 @@ public class Livro implements Registro {
 	public void fromByteArray(byte[] ba) {
 
 		Cipher c = new Cipher();
-		// StreamManager sm = new StreamManager(ba);
 		StreamManager sm = new StreamManager(c.decipher(Cipher.KEY, ba));
 
 		try {
@@ -99,6 +98,7 @@ public class Livro implements Registro {
 
 	// Função para printar o ISBN com a máscara
 	private String mascaraISBN() {
+
 		StringBuilder builder = new StringBuilder();
         
 		builder.append(ISBN.substring(0, 3))
