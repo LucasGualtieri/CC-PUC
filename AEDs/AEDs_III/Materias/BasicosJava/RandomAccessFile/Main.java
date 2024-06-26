@@ -1,11 +1,8 @@
-package AEDs.AEDs_III.Materias.FluxosEntradaSaida_Construtor;
+package AEDs.AEDs_III.Materias.BasicosJava.RandomAccessFile;
 
 // clear && javac Main.java && java Main
 
-import java.io.FileOutputStream;
-import java.io.FileInputStream;
-import java.io.DataOutputStream;
-import java.io.DataInputStream;
+import java.io.RandomAccessFile;
 
 class Main {
 	public static void main(String[] args) throws Exception {
@@ -18,33 +15,29 @@ class Main {
 		System.out.print(livro2);
 		
 		String filePath = "dados/livros.db";
-		FileOutputStream fileOut = new FileOutputStream(filePath);
-		DataOutputStream dos = new DataOutputStream(fileOut);
+		RandomAccessFile file = new RandomAccessFile(filePath, "rw");
 
+		long livro1StartPos = file.getFilePointer();
 		byte[] arrayLivro1 = livro1.toByteArray();
-		dos.writeInt(arrayLivro1.length);
-		fileOut.write(arrayLivro1);
+		file.writeInt(arrayLivro1.length);
+		file.write(arrayLivro1);
 		
+		long livro2StartPos = file.getFilePointer();
 		byte[] arrayLivro2 = livro2.toByteArray();
-		dos.writeInt(arrayLivro2.length);
-		fileOut.write(arrayLivro2);
-
-		fileOut.close();
+		file.writeInt(arrayLivro2.length);
+		file.write(arrayLivro2);
 
 		System.out.println("=======================");
 		
-		FileInputStream fileIn = new FileInputStream(filePath);
-		DataInputStream dis = new DataInputStream(fileIn);
-
-		int lengthLivro3 = dis.readInt();
-		
+		file.seek(livro2StartPos);
+		int lengthLivro3 = file.readInt();
 		byte[] arrayLivro3 = new byte[lengthLivro3];
-		dis.read(arrayLivro3);
+		file.read(arrayLivro3);
 		
-		int lengthLivro4 = dis.readInt();
-
+		file.seek(livro1StartPos);
+		int lengthLivro4 = file.readInt();
 		byte[] arrayLivro4 = new byte[lengthLivro4];
-		dis.read(arrayLivro4);
+		file.read(arrayLivro4);
 
 		Livro livro3 = new Livro(arrayLivro3);
 		Livro livro4 = new Livro(arrayLivro4);
@@ -52,7 +45,7 @@ class Main {
 		System.out.print(livro3);
 		System.out.println("--------------------");
 		System.out.print(livro4);
-		
-		fileIn.close();
+
+		file.close();
 	}	
 }

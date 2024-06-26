@@ -1,4 +1,4 @@
-package AEDs.AEDs_III.TiposGenericos;
+package AEDs.AEDs_III.Materias.BasicosJava.TiposGenericos;
 
 import java.lang.reflect.Constructor;
 // import java.lang.reflect.InvocationTargetException;

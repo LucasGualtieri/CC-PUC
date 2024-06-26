@@ -1,4 +1,4 @@
-package AEDs.AEDs_III.Materias.FluxosEntradaSaida;
+package AEDs.AEDs_III.Materias.BasicosJava.Fluxos.FluxosEntradaSaida;
 
 import java.text.DecimalFormat;
 

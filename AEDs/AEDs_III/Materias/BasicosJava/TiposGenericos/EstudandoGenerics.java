@@ -1,4 +1,4 @@
-package AEDs.AEDs_III.TiposGenericos;
+package AEDs.AEDs_III.Materias.BasicosJava.TiposGenericos;
 
 // clear && javac Main.java && java Main
 

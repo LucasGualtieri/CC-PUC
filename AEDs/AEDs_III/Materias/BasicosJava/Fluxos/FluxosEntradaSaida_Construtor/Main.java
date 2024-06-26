@@ -1,11 +1,10 @@
-package AEDs.AEDs_III.Materias.FluxosEntradaSaida;
+package AEDs.AEDs_III.Materias.BasicosJava.Fluxos.FluxosEntradaSaida_Construtor;
 
 // clear && javac Main.java && java Main
 
 import java.io.FileOutputStream;
-import java.io.DataOutputStream;
-
 import java.io.FileInputStream;
+import java.io.DataOutputStream;
 import java.io.DataInputStream;
 
 class Main {
@@ -17,49 +16,43 @@ class Main {
 		System.out.print(livro1);
 		System.out.println("--------------------");
 		System.out.print(livro2);
-
+		
 		String filePath = "dados/livros.db";
 		FileOutputStream fileOut = new FileOutputStream(filePath);
 		DataOutputStream dos = new DataOutputStream(fileOut);
 
-		dos.writeInt(livro1.idLivro);
-		dos.writeUTF(livro1.titulo);
-		dos.writeUTF(livro1.autor);
-		dos.writeFloat(livro1.preco);
+		byte[] arrayLivro1 = livro1.toByteArray();
+		dos.writeInt(arrayLivro1.length);
+		fileOut.write(arrayLivro1);
+		
+		byte[] arrayLivro2 = livro2.toByteArray();
+		dos.writeInt(arrayLivro2.length);
+		fileOut.write(arrayLivro2);
 
-		dos.writeInt(livro2.idLivro);
-		dos.writeUTF(livro2.titulo);
-		dos.writeUTF(livro2.autor);
-		dos.writeFloat(livro2.preco);
-
-		// dos.flush();
 		fileOut.close();
-		dos.close();
 
-		System.out.println("================================");
-
+		System.out.println("=======================");
+		
 		FileInputStream fileIn = new FileInputStream(filePath);
 		DataInputStream dis = new DataInputStream(fileIn);
 
-		Livro livro3 = new Livro();
-
-		livro3.idLivro = dis.readInt();
-		livro3.titulo = dis.readUTF();
-		livro3.autor = dis.readUTF();
-		livro3.preco = dis.readFloat();
+		int lengthLivro3 = dis.readInt();
 		
-		Livro livro4 = new Livro();
+		byte[] arrayLivro3 = new byte[lengthLivro3];
+		dis.read(arrayLivro3);
+		
+		int lengthLivro4 = dis.readInt();
 
-		livro4.idLivro = dis.readInt();
-		livro4.titulo = dis.readUTF();
-		livro4.autor = dis.readUTF();
-		livro4.preco = dis.readFloat();
+		byte[] arrayLivro4 = new byte[lengthLivro4];
+		dis.read(arrayLivro4);
+
+		Livro livro3 = new Livro(arrayLivro3);
+		Livro livro4 = new Livro(arrayLivro4);
 
 		System.out.print(livro3);
 		System.out.println("--------------------");
 		System.out.print(livro4);
-
+		
 		fileIn.close();
-		dis.close();
 	}	
 }
