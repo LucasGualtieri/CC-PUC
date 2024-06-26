@@ -11,7 +11,7 @@ import java.io.BufferedReader;
 import java.util.regex.Pattern;
 import java.lang.reflect.Constructor;
 
-import TP04.src.utils.Lib;
+import TP04.src.utils.Utils;
 import TP04.src.utils.Arquivo;
 import TP04.src.utils.Registro;
 import TP04.src.EstruturasDeDados.*;
@@ -32,7 +32,7 @@ public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
 	@SuppressWarnings("unchecked")
 	public ArquivoLivro(String filePath) throws NoSuchMethodException, SecurityException, Exception {
 
-		super((Constructor<T>)Livro.getConstructor(), "Livro", filePath);
+		super((Constructor<T>)RegistroLivro.getConstructor(), "Livro", filePath);
 
 		indiceIndiretoISBN = new HashExtensivel<>(
 			ParIsbnId.getConstructor(), 4,
@@ -49,17 +49,17 @@ public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
 		CriarStopWordsList();
 	}
 
-	public int create(T object) throws Exception {
+	public int create(Registro object) throws Exception {
 		super.create(true, registerMinLength, object);
-	    indiceIndiretoISBN.create(new ParIsbnId(((Livro)object).getISBN(), object.getID()));
-		createInvertida(((Livro)object).getTitulo(), object.getID());
+	    indiceIndiretoISBN.create(new ParIsbnId(((RegistroLivro)object).getISBN(), object.getID()));
+		createInvertida(((RegistroLivro)object).getTitulo(), object.getID());
 		return object.getID();
 	}
 	
 	protected int create(boolean createNewID, T object) throws Exception {
 		super.create(createNewID, registerMinLength, object);
-		indiceIndiretoISBN.create(new ParIsbnId(((Livro)object).getISBN(), object.getID()));
-		createInvertida(((Livro)object).getTitulo(), object.getID());
+		indiceIndiretoISBN.create(new ParIsbnId(((RegistroLivro)object).getISBN(), object.getID()));
+		createInvertida(((RegistroLivro)object).getTitulo(), object.getID());
 		return object.getID();
 	}
 
@@ -75,17 +75,17 @@ public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
 		System.out.println("\n0 - Voltar.");
 		System.out.print("\nEscolha uma das opções acima: ");
 
-		int choice = Lib.ReadChoice(3);
+		int choice = Utils.ReadChoice(3);
 		int ID = 0;
 
 		switch (choice) {
 			case 1:
 				System.out.printf("Insira o ID do livro: ");
-				ID = Lib.readInt();
+				ID = Utils.readInt();
 			break;
 			case 2:
 				System.out.printf("Insira o ISBN do livro: ");
-				String ISBN = Livro.readISBN(false);
+				String ISBN = RegistroLivro.readISBN(false);
 				ParIsbnId pii = indiceIndiretoISBN.read(ParIsbnId.hashIsbn(ISBN));
 				if (pii != null) ID = pii.getId();
 			case 3:
@@ -173,7 +173,7 @@ public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
 	public List<T> readInvertida() throws Exception {
 
 		System.out.printf("Insira o título do livro: ");
-		String titulo = Lib.readString();
+		String titulo = Utils.readString();
 
 		List<String> palavras = LimparString(titulo);
 
@@ -203,14 +203,14 @@ public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
 
 	public void delete(int ID) throws Exception {
 		
-		Livro l = (Livro)super.read(ID);
+		RegistroLivro l = (RegistroLivro)super.read(ID);
 		
 		super.delete(ID);
 		
 		String ISBN = l.getISBN();
 		
 		indiceIndiretoISBN.delete(ParIsbnId.hashIsbn(ISBN));
-		deleteInvertida(((Livro)l).getTitulo(), l.getID());
+		deleteInvertida(((RegistroLivro)l).getTitulo(), l.getID());
 	}
 
 	// Essa função permite que o usuário escolha de que forma gostaria de apresentar os dados na listagem
@@ -226,7 +226,7 @@ public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
 
 		System.out.print("\nEscolha uma das opções acima: ");
 		
-		int choice = Lib.ReadChoice(5);
+		int choice = Utils.ReadChoice(5);
 
 		// System.out.println("\nOrdenar por:");
 		// System.out.println("1 - Ordem crescente");
@@ -244,16 +244,16 @@ public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
 				list.sort((l1, l2) -> Integer.compare(l1.getID(), l2.getID()));
 			break;
 			case 2:
-				list.sort((l1, l2) -> ((Livro)l1).getISBN().compareTo(((Livro)l2).getISBN()));
+				list.sort((l1, l2) -> ((RegistroLivro)l1).getISBN().compareTo(((RegistroLivro)l2).getISBN()));
 			break;
 				case 3:
-				list.sort((l1, l2) -> ((Livro)l1).getTitulo().compareTo(((Livro)l2).getTitulo()));
+				list.sort((l1, l2) -> ((RegistroLivro)l1).getTitulo().compareTo(((RegistroLivro)l2).getTitulo()));
 			break;
 				case 4:
-				list.sort((l1, l2) -> ((Livro)l1).getAutor().compareTo(((Livro)l2).getAutor()));
+				list.sort((l1, l2) -> ((RegistroLivro)l1).getAutor().compareTo(((RegistroLivro)l2).getAutor()));
 			break;
 				case 5:
-				list.sort((l1, l2) -> Float.compare(((Livro)l1).getPreco(), ((Livro)l2).getPreco()));
+				list.sort((l1, l2) -> Float.compare(((RegistroLivro)l1).getPreco(), ((RegistroLivro)l2).getPreco()));
 			break;
 		}
 
@@ -262,7 +262,7 @@ public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
 
 	public int CRUDMenu() {
 
-		Lib.printdiv(1, "Base de dados: Livros");
+		Utils.printdiv(1, "Base de dados: Livros");
 
 		System.out.println("1 - Cadastrar.");
 		System.out.println("2 - Pesquisar.");
@@ -274,7 +274,7 @@ public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
 		System.out.println("0 - Voltar.\n");
 		System.out.print("Escolha uma das opções acima: ");
 
-		return Lib.ReadChoice(7);
+		return Utils.ReadChoice(7);
 	}
 
 	public String getNome() { return nome; }

@@ -3,7 +3,7 @@ package TP04.src.utils;
 import java.util.Scanner;
 import java.util.InputMismatchException;
 
-public class Lib {
+public class Utils {
 
 	// Variáveis usadas para printar mensagens com cores
 
@@ -25,10 +25,10 @@ public class Lib {
 	
 		do {
 			if (invalid) {
-				Lib.cprintf("BOLD RED", "Valor inválido, ");
+				Utils.cprintf("BOLD RED", "Valor inválido, ");
 				System.out.print("tente novamente: ");
 			}
-			choice = Lib.readInt();
+			choice = Utils.readInt();
 		} while (invalid = choice < 0 || choiceCount < choice);
 	
 		return choice;

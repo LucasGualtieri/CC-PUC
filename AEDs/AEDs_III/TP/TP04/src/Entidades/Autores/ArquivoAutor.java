@@ -3,10 +3,10 @@ package TP04.src.Entidades.Autores;
 import java.util.List;
 import java.lang.reflect.Constructor;
 
-import TP04.src.Entidades.Autores.Indices.ParCPFId;
 import TP04.src.EstruturasDeDados.*;
+import TP04.src.Entidades.Autores.Indices.ParCPFId;
 import TP04.src.utils.Arquivo;
-import TP04.src.utils.Lib;
+import TP04.src.utils.Utils;
 import TP04.src.utils.Registro;
 
 public class ArquivoAutor<T extends Registro> extends Arquivo<T> {
@@ -30,7 +30,7 @@ public class ArquivoAutor<T extends Registro> extends Arquivo<T> {
 		);
 	}
 
-	public int create(T object) throws Exception {
+	public int create(Registro object) throws Exception {
 		super.create(true, registerMinLength, object);
 		indiceIndiretoCPF.create(new ParCPFId(((Autor)object).getCPF(), object.getID()));
 		return object.getID();
@@ -50,17 +50,17 @@ public class ArquivoAutor<T extends Registro> extends Arquivo<T> {
 		System.out.println("Buscar por:");
 		System.out.println("1 - ID.");
 		System.out.println("2 - CPF.");
-		Lib.cprintf(Lib.RED, "3 - Nome / Sobrenome. Ainda não implementado.\n");
+		Utils.cprintf(Utils.RED, "3 - Nome / Sobrenome. Ainda não implementado.\n");
 		System.out.println("\n0 - Voltar.");
 		System.out.print("\nEscolha uma das opções acima: ");
 
-		int choice = Lib.ReadChoice(2);
+		int choice = Utils.ReadChoice(2);
 		int ID = 0;
 
 		switch (choice) {
 			case 1:
 				System.out.printf("Insira o ID do autor: ");
-				ID = Lib.readInt();
+				ID = Utils.readInt();
 			break;
 			case 2:
 				System.out.printf("Insira o CPF do autor: ");
@@ -104,7 +104,7 @@ public class ArquivoAutor<T extends Registro> extends Arquivo<T> {
 		System.out.println("\n0 - Voltar.");
 		System.out.print("\nEscolha uma das opções acima: ");
 		
-		int choice = Lib.ReadChoice(4);
+		int choice = Utils.ReadChoice(4);
 		
 		switch (choice) {
 			case 1:
@@ -126,7 +126,7 @@ public class ArquivoAutor<T extends Registro> extends Arquivo<T> {
 
 	public int CRUDMenu() {
 
-		Lib.printdiv(1, "Base de dados: Autores");
+		Utils.printdiv(1, "Base de dados: Autores");
 
 		System.out.println("1 - Cadastrar.");
 		System.out.println("2 - Pesquisar.");
@@ -138,7 +138,7 @@ public class ArquivoAutor<T extends Registro> extends Arquivo<T> {
 		System.out.println("0 - Voltar.\n");
 		System.out.print("Escolha uma das opções acima: ");
 
-		return Lib.ReadChoice(7);
+		return Utils.ReadChoice(7);
 	}
 
 	public String getNome() { return nome; }

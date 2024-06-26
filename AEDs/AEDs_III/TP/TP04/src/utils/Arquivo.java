@@ -44,7 +44,7 @@ public class Arquivo<T extends Registro> {
 		);
 	}
 
-	public int create(T object) throws Exception {
+	public int create(Registro object) throws Exception {
 		return create(true, 0, object);
 	}
 
@@ -52,7 +52,7 @@ public class Arquivo<T extends Registro> {
 		return create(createNewID, 0, object);
 	}
 
-	protected int create(boolean createNewID, int registerLength, T object) throws Exception {
+	protected int create(boolean createNewID, int registerLength, Registro object) throws Exception {
 		int ID = object.getID();
 
 		if (createNewID) {

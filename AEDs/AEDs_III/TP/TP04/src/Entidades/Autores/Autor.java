@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.util.Locale;
 
-import TP04.src.utils.Lib;
+import TP04.src.utils.Utils;
 import TP04.src.utils.Registro;
 import TP04.src.utils.StreamManager;
 import TP04.src.Algoritmos.Criptografia.Cipher;
@@ -89,11 +89,11 @@ public class Autor implements Registro {
 
 		do {
 			if (invalid) {
-				Lib.cprintf(Lib.BOLD + Lib.RED, "Valor inválido, ");
+				Utils.cprintf(Utils.BOLD + Utils.RED, "Valor inválido, ");
 				System.out.print("tente novamente: ");
 			}
 
-			value = Lib.readString();
+			value = Utils.readString();
 
 			if (value.length() != 11 && value.length() != 0
 				|| (value.length() == 0 && !update)
@@ -130,15 +130,15 @@ public class Autor implements Registro {
 		if (aux.length() > 0) this.CPF = aux;
 
 		System.out.print("Insira o nome do autor: ");
-		aux = Lib.readString();
+		aux = Utils.readString();
 		if (aux.length() > 0) this.nome = aux;
 		
 		System.out.print("Insira o sobrenome do autor: ");
-		aux = Lib.readString();
+		aux = Utils.readString();
 		if (aux.length() > 0) this.sobrenome = aux;
 
 		System.out.print("Insira a idade do autor: ");
-		int auxInt = Lib.readInt();
+		int auxInt = Utils.readInt();
 		if (auxInt > 0) this.idade = auxInt;
 
 	}
@@ -160,11 +160,11 @@ public class Autor implements Registro {
 
 	public void printHeaderCSV() {
 		System.out.println(
-			Lib.BOLD + Lib.YELLOW + "ID, " +
-			Lib.CYAN + "CPF, " +
-			Lib.RED + "Nome, " +
-			Lib.BLUE + "Sobrenome, " +
-			Lib.GREEN + "Idade" + Lib.RESET
+			Utils.BOLD + Utils.YELLOW + "ID, " +
+			Utils.CYAN + "CPF, " +
+			Utils.RED + "Nome, " +
+			Utils.BLUE + "Sobrenome, " +
+			Utils.GREEN + "Idade" + Utils.RESET
 		);
 	}
 
@@ -172,12 +172,12 @@ public class Autor implements Registro {
 
 		String str;
 
-		str = Lib.BOLD + Lib.YELLOW + this.ID + ", ";
-		str += Lib.CYAN + mascaraCPF() + ", ";
-		str += Lib.RED + this.nome + ", ";
-		str += Lib.BLUE + this.sobrenome  + ", ";
-		str += Lib.GREEN + this.idade;
-		str += Lib.RESET;
+		str = Utils.BOLD + Utils.YELLOW + this.ID + ", ";
+		str += Utils.CYAN + mascaraCPF() + ", ";
+		str += Utils.RED + this.nome + ", ";
+		str += Utils.BLUE + this.sobrenome  + ", ";
+		str += Utils.GREEN + this.idade;
+		str += Utils.RESET;
 
 		return str + "\n";
 	}
@@ -186,12 +186,12 @@ public class Autor implements Registro {
 
 		String str = "";
 		if (this.ID != -1) {
-			str += Lib.YELLOW + Lib.BOLD + "ID: " + Lib.RESET + this.ID + "\n";
+			str += Utils.YELLOW + Utils.BOLD + "ID: " + Utils.RESET + this.ID + "\n";
 		}
-		str += Lib.CYAN + Lib.BOLD + "CPF: " + Lib.RESET + mascaraCPF();
-		str += Lib.RED + Lib.BOLD + "\nNome: " + Lib.RESET + this.nome;
-		str += Lib.BLUE + Lib.BOLD + "\nSobrenome: " + Lib.RESET + this.sobrenome;
-		str += Lib.GREEN + Lib.BOLD + "\nIdade: " + Lib.RESET + this.idade;
+		str += Utils.CYAN + Utils.BOLD + "CPF: " + Utils.RESET + mascaraCPF();
+		str += Utils.RED + Utils.BOLD + "\nNome: " + Utils.RESET + this.nome;
+		str += Utils.BLUE + Utils.BOLD + "\nSobrenome: " + Utils.RESET + this.sobrenome;
+		str += Utils.GREEN + Utils.BOLD + "\nIdade: " + Utils.RESET + this.idade;
 
 		return str;
 	}
