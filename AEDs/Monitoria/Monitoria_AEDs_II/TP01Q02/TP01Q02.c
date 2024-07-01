@@ -292,9 +292,12 @@ char* readString(char* string) {
 }
 
 Character pesquisaSequencial(char* id, Character* array) {
+
     for (int i = 0; i < 404; i++) {
         if (strcmp(array[i].id, id) == 0) return array[i];
     }
+
+    return (Character) {};
 }
 
 int main()
