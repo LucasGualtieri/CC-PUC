@@ -13,20 +13,23 @@ public class CipherTest {
 
 		StreamManager sm = new StreamManager();
 
+		sm.write(123);
 		sm.writeUTF("Olá mundo!");
+		sm.write('M');
 
 		byte[] cipheredMsg = c.cipher(Cipher.KEY, sm.toByteArray());
 		System.out.println("Ciphered Data: " + new String(cipheredMsg));
 
 		sm = new StreamManager(c.decipher(Cipher.KEY, cipheredMsg));
 
+		System.out.println("Deciphered Data: " + sm.readInt());
 		System.out.println("Deciphered Data: " + sm.readUTF());
+		System.out.println("Deciphered Data: " + sm.readChar());
 
-		byte b = 127;
-
-		System.out.println("b: " + b);
-		System.out.println("b: " + ++b);
-		System.out.println("b: " + --b);
+		// byte b = 127;
+		// System.out.println("b: " + b);
+		// System.out.println("b: " + ++b);
+		// System.out.println("b: " + --b);
 
 	}
 }

@@ -32,7 +32,7 @@ public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
 	@SuppressWarnings("unchecked")
 	public ArquivoLivro(String filePath) throws NoSuchMethodException, SecurityException, Exception {
 
-		super((Constructor<T>)RegistroLivro.getConstructor(), "Livro", filePath);
+		super((Constructor<T>)Livro.getConstructor(), "Livro", filePath);
 
 		indiceIndiretoISBN = new HashExtensivel<>(
 			ParIsbnId.getConstructor(), 4,
@@ -51,15 +51,15 @@ public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
 
 	public int create(Registro object) throws Exception {
 		super.create(true, registerMinLength, object);
-	    indiceIndiretoISBN.create(new ParIsbnId(((RegistroLivro)object).getISBN(), object.getID()));
-		createInvertida(((RegistroLivro)object).getTitulo(), object.getID());
+	    indiceIndiretoISBN.create(new ParIsbnId(((Livro)object).getISBN(), object.getID()));
+		createInvertida(((Livro)object).getTitulo(), object.getID());
 		return object.getID();
 	}
 	
 	protected int create(boolean createNewID, T object) throws Exception {
 		super.create(createNewID, registerMinLength, object);
-		indiceIndiretoISBN.create(new ParIsbnId(((RegistroLivro)object).getISBN(), object.getID()));
-		createInvertida(((RegistroLivro)object).getTitulo(), object.getID());
+		indiceIndiretoISBN.create(new ParIsbnId(((Livro)object).getISBN(), object.getID()));
+		createInvertida(((Livro)object).getTitulo(), object.getID());
 		return object.getID();
 	}
 
@@ -85,7 +85,7 @@ public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
 			break;
 			case 2:
 				System.out.printf("Insira o ISBN do livro: ");
-				String ISBN = RegistroLivro.readISBN(false);
+				String ISBN = Livro.readISBN(false);
 				ParIsbnId pii = indiceIndiretoISBN.read(ParIsbnId.hashIsbn(ISBN));
 				if (pii != null) ID = pii.getId();
 			case 3:
@@ -203,14 +203,14 @@ public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
 
 	public void delete(int ID) throws Exception {
 		
-		RegistroLivro l = (RegistroLivro)super.read(ID);
+		Livro l = (Livro)super.read(ID);
 		
 		super.delete(ID);
 		
 		String ISBN = l.getISBN();
 		
 		indiceIndiretoISBN.delete(ParIsbnId.hashIsbn(ISBN));
-		deleteInvertida(((RegistroLivro)l).getTitulo(), l.getID());
+		deleteInvertida(((Livro)l).getTitulo(), l.getID());
 	}
 
 	// Essa função permite que o usuário escolha de que forma gostaria de apresentar os dados na listagem
@@ -244,16 +244,16 @@ public class ArquivoLivro<T extends Registro> extends Arquivo<T> {
 				list.sort((l1, l2) -> Integer.compare(l1.getID(), l2.getID()));
 			break;
 			case 2:
-				list.sort((l1, l2) -> ((RegistroLivro)l1).getISBN().compareTo(((RegistroLivro)l2).getISBN()));
+				list.sort((l1, l2) -> ((Livro)l1).getISBN().compareTo(((Livro)l2).getISBN()));
 			break;
 				case 3:
-				list.sort((l1, l2) -> ((RegistroLivro)l1).getTitulo().compareTo(((RegistroLivro)l2).getTitulo()));
+				list.sort((l1, l2) -> ((Livro)l1).getTitulo().compareTo(((Livro)l2).getTitulo()));
 			break;
 				case 4:
-				list.sort((l1, l2) -> ((RegistroLivro)l1).getAutor().compareTo(((RegistroLivro)l2).getAutor()));
+				list.sort((l1, l2) -> ((Livro)l1).getAutor().compareTo(((Livro)l2).getAutor()));
 			break;
 				case 5:
-				list.sort((l1, l2) -> Float.compare(((RegistroLivro)l1).getPreco(), ((RegistroLivro)l2).getPreco()));
+				list.sort((l1, l2) -> Float.compare(((Livro)l1).getPreco(), ((Livro)l2).getPreco()));
 			break;
 		}
 

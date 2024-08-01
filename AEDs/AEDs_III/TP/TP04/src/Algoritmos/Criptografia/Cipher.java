@@ -26,6 +26,8 @@ public class Cipher {
 	 */
 	public Cipher() {
 
+		//strategies = new CipherStrategy[]{ new Viegenere(), new Colunas() };
+
 		strategies = new CipherStrategy[2];
 		strategies[0] = new Viegenere();
 		strategies[1] = new Colunas();
