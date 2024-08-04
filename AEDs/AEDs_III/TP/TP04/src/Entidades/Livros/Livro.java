@@ -2,8 +2,6 @@ package TP04.src.Entidades.Livros;
 
 import java.util.Locale;
 import java.text.NumberFormat;
-import java.io.DataInputStream;
-import java.io.ByteArrayInputStream;
 import java.lang.reflect.Constructor;
 
 import TP04.src.Algoritmos.Criptografia.Cipher;
@@ -12,7 +10,7 @@ import TP04.src.utils.StreamManager;
 import TP04.src.utils.Utils;
 
 public class Livro implements Registro {
-	
+
 	private int ID;
 	private String ISBN;
 	private String titulo;
@@ -56,7 +54,7 @@ public class Livro implements Registro {
 
 		byte[] deciphered = new Cipher().decipher(Cipher.KEY, ba);
 		StreamManager sm = new StreamManager(deciphered);
-		
+
 		try {
 			this.ID = sm.readInt();
 			this.ISBN = sm.readUTF();
@@ -70,7 +68,7 @@ public class Livro implements Registro {
 
 	// Função para ler o ISBN e testar se é um ISBN valído (em termos do comprimento da string)
 	public static String readISBN(boolean update) {
-		
+
 		String value = null;
 
 		boolean invalid = false;
@@ -99,7 +97,7 @@ public class Livro implements Registro {
 	// Função para printar o ISBN com a máscara
 	private String mascaraISBN() {
 		StringBuilder builder = new StringBuilder();
-        
+
 		builder.append(ISBN.substring(0, 3))
 		.append("-")
 		.append(ISBN.substring(3, 4))
@@ -115,11 +113,11 @@ public class Livro implements Registro {
 
 	// Método que faz uma interface com o usário e o permite que insira os dados do livro
 	public void setAll(boolean update) {
-		
+
 		System.out.print("Insira o ISBN do livro: ");
 		String aux = readISBN(update);
 		if (aux.length() > 0) this.ISBN = aux;
-		
+
 		System.out.print("Insira o título do livro: ");
 		aux = Utils.readString();
 		if (aux.length() > 0) this.titulo = aux;
@@ -137,7 +135,7 @@ public class Livro implements Registro {
 	public void printHeader() {
 		System.out.println("ID, ISBN, Título, Autor, Preço");
 	}
-	
+
 	// Função que printa um livro em formato CSV
 	public String toTable() {
 		String str;
@@ -146,17 +144,17 @@ public class Livro implements Registro {
 		str += this.titulo  + ", ";
 		str += this.autor + ", ";
 		str += NumberFormat.getCurrencyInstance(localeBR).format(this.preco);
-		
+
 		return str + "\n";
 	}
-	
+
 	// Função que printa o cabeçalho com os dados dos livros em formato CSV com cores
 	public void printHeaderCSV() {
 		System.out.println(
 			Utils.BOLD + Utils.YELLOW + "ID, " +
 			Utils.CYAN + "ISBN, " +
 			Utils.RED + "Título, " +
-			Utils.BLUE + "Autor, " + 
+			Utils.BLUE + "Autor, " +
 			Utils.GREEN + "Preço" + Utils.RESET
 		);
 	}
@@ -191,7 +189,7 @@ public class Livro implements Registro {
 
 	public void setID(int i) { this.ID = i; }
 	public int getID() { return this.ID; }
-	
+
 	public String getISBN() { return this.ISBN; }
 
 	public void setTitulo(String titulo) { this.titulo = titulo; }
