@@ -2,11 +2,6 @@
 #include "linkedList.hpp"
 #include <stdexcept>
 
-// Decisões que precisam ser tomadas:
-// - Usar ou não usar smartpointers
-// - Preciso corrigir a função pop_back
-// - Simplifico as coisas? Uso só hpp, uso a cell publica dentro da lista?
-
 template <typename T>
 void LinkedList<T>::push_front(T value) {
 

@@ -1,0 +1,6 @@
+Decisões que precisam ser tomadas:
+- Usar ou não usar smartpointers
+- Preciso corrigir a função pop_back
+- Simplifico as coisas? Uso só hpp, uso a cell publica dentro da lista?
+
+https://chatgpt.com/share/b443eaca-579b-4d5c-9c43-ad4daa625675
