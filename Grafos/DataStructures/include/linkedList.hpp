@@ -16,29 +16,17 @@ class LinkedList : public List<T> {
 		Cell(T value) : value(value), next(nullptr) {}
 		Cell(T value, Cell *next) : value(value), next(next) {}
 
-		bool operator==(const Cell*& other) const {
-			return value == other->value;
-		}
+		bool operator==(const Cell*& other) const { return value == other->value; }
 
-		bool operator!=(const Cell*& other) const {
-			return value != other->value;
-		}
+		bool operator!=(const Cell*& other) const { return value != other->value; }
 
-		bool operator<(const Cell*& other) const {
-			return value < other->value;
-		}
+		bool operator<(const Cell*& other) const { return value < other->value; }
 
-		bool operator<=(const Cell*& other) const {
-			return value <= other->value;
-		}
+		bool operator<=(const Cell*& other) const { return value <= other->value; }
 
-		bool operator>(const Cell*& other) const {
-			return value > other->value;
-		}
+		bool operator>(const Cell*& other) const { return value > other->value; }
 
-		bool operator>=(const Cell*& other) const {
-			return value >= other->value;
-		}
+		bool operator>=(const Cell*& other) const { return value >= other->value; }
 	};
 
 	size_t _size;
@@ -197,22 +185,6 @@ class LinkedList : public List<T> {
 		return os;
 	}
 
-	// void swap(Cell* a, Cell* b) {
-	// 	T aux = a->value;
-	// 	a->value = b->value;
-	// 	b->value = aux;
-	// }
-
-	// Cell* getLeft(const Cell* j) {
-
-	// 	if (!head || head == j) return nullptr;
-
-	// 	Cell* left = head;
-	// 	while (left->next && left->next != j) left = left->next;
-
-	// 	return left->next == j ? left : nullptr;
-	// }
-
 	// Cell* getMiddle() {
 
 	// 	if (!head) return nullptr;
@@ -228,31 +200,43 @@ class LinkedList : public List<T> {
 	// 	return slow;
 	// }
 
-	// void quicksort(Cell* left, Cell* right) {
-
-	// 	Cell *pivot = getMiddle(), *i = left, *j = right;
-
-	// 	std::cout << "f;laskdj";
-
-	// 	while (j->next != i) {
-
-	// 	// 	while (i < pivot) i = i->next;
-	// 	// 	while (j > pivot) j = getLeft(j);
-
-	// 	// 	if (j->next != i) {
-	// 	// 		swap(i, j);
-	// 	// 		i = i->next;
-	// 	// 		j = getLeft(j);
-	// 	// 	}
-	// 	}
-
-	// 	// swap(pivot, j);
-
-	// 	if (j != left) quicksort(left, getLeft(j));
-	// 	if (i != right) quicksort(j->next, right);
+	// void swap(T& a, T& b) {
+	// 	T aux = a;
+	// 	a = b;
+	// 	b = aux;
 	// }
 
-	// void sort() override {}
+	// Cell* getLeft(const Cell* j) {
+
+	// 	if (!head || head == j) return nullptr;
+
+	// 	Cell* left = head;
+	// 	while (left->next && left->next != j) left = left->next;
+
+	// 	return left->next == j ? left : nullptr;
+	// }
+
+	// void quicksort(Cell* left, Cell* right) {
+
+	// 	Cell *pivot = left, *i = left->next, *j = right;
+
+	// 	while (j->next != i && j->next != getLeft(i)) {
+
+	// 		while (i && i < pivot) i = i->next;
+	// 		while (j > pivot) j = getLeft(j);
+
+	// 		if (j->next != i) {
+	// 			swap(i->value, j->value);
+	// 			i = i->next, j = getLeft(j);
+	// 		}
+	// 	}
+
+	// 	swap(pivot->value, j->value);
+
+	// 	if (j != left) quicksort(left, getLeft(j));
+	// 	if (j != right) quicksort(j->next, right);
+	// }
+
 	// void sort() override { quicksort(head->next, tail); }
 
 	// class Iterator : public List<T>::Iterator {
