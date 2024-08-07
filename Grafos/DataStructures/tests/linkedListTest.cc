@@ -1,9 +1,13 @@
 #include <iostream>
-#include "../include/linkedList.hpp"
 #include <iostream>
 #include <cassert>
+#include "../include/linkedList.hpp"
+#include "../include/list.hpp"
+#include "../util.hpp"
 
 // clear && g++ tests/linkedListTest.cc -o bin/linkedListTest && bin/linkedListTest
+
+using namespace std;
 
 void testLinkedList() {
 
@@ -11,7 +15,7 @@ void testLinkedList() {
 
 	// Test initial state
 	assert(list.size() == 0);
-	assert(list.empty() == true);
+	assert(list.empty());
 
 	// Test push_front
 	list.push_front(10);
@@ -36,7 +40,7 @@ void testLinkedList() {
 	int backValue = list.pop_back();
 	assert(backValue == 20);
 	assert(list.size() == 0);
-	assert(list.empty() == true);
+	assert(list.empty());
 
 	// Test push_back
 	list.push_back(30);
@@ -50,24 +54,27 @@ void testLinkedList() {
 	list.add(35, 1);
 	assert(list.size() == 4);
 	assert(list.front() == 30);
-	assert(list.erase(1) == 35);
+	assert(list.remove(1) == 35);
 	assert(list.size() == 3);
 
-	// // Test erase (remove by position)
-	// assert(list.erase(1) == 40);
-	// assert(list.size() == 2);
-	// assert(list.front() == 30);
-	// assert(list.back() == 50);
+	// Test remove (remove by position)
+	assert(list.remove(1) == 40);
+	assert(list.size() == 2);
+	assert(list.front() == 30);
+	assert(list.back() == 50);
 
-	// // Test edge case of empty list operations
-	// try {
-	// 	list.pop_front();
-	// 	list.pop_back();
-	// }
+	list.erase();
 
-	// catch (const std::runtime_error &e) {
-	// 	std::cout << "Caught expected exception: " << e.what() << std::endl;
-	// }
+	// Test edge case of empty list operations
+	try { list.remove(0); }
+	catch (const std::runtime_error& e) {
+		std::cout << "Caught expected exception: " << e.what() << std::endl;
+	}
+
+	// cout << list << endl;
+	// list.sort();
+
+	// assert(isSorted(list));
 
 	std::cout << "All tests passed!" << std::endl;
 }
