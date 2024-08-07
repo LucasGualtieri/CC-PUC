@@ -1,8 +1,11 @@
 #ifndef LINKED_LIST_HPP
 #define LINKED_LIST_HPP
 
+#include <sstream>
+#include "list.hpp"
+
 template <typename T>
-class LinkedList {
+class LinkedList : public List<T> {
 
 	struct Cell {
 
@@ -12,6 +15,30 @@ class LinkedList {
 		Cell() : value(T()) {}
 		Cell(T value) : value(value), next(nullptr) {}
 		Cell(T value, Cell *next) : value(value), next(next) {}
+
+		bool operator==(const Cell*& other) const {
+			return value == other->value;
+		}
+
+		bool operator!=(const Cell*& other) const {
+			return value != other->value;
+		}
+
+		bool operator<(const Cell*& other) const {
+			return value < other->value;
+		}
+
+		bool operator<=(const Cell*& other) const {
+			return value <= other->value;
+		}
+
+		bool operator>(const Cell*& other) const {
+			return value > other->value;
+		}
+
+		bool operator>=(const Cell*& other) const {
+			return value >= other->value;
+		}
 	};
 
 	size_t _size;
@@ -24,14 +51,14 @@ class LinkedList {
 		_size = 0;
 	}
 
-	~LinkedList() {
+	~LinkedList() override {
 
 		while(!empty()) pop_back();
 
 		delete head;
 	}
 
-	void push_front(T value) {
+	void push_front(const T& value) override {
 
 		head->next = new Cell(value, head->next);
 
@@ -39,17 +66,17 @@ class LinkedList {
 		_size++;
 	}
 
-	void push_back(T value) {
+	void push_back(const T& value) override {
 
 		tail = tail->next = new Cell(value);
 		_size++;
 	}
 
-	T& pop_front() {
+	T pop_front() override {
 
 		if (empty()) throw std::runtime_error("List is empty.");
 
-		T& deleted = head->next->value;
+		T& value = head->next->value;
 
 		Cell* temp = head;
 		head = head->next;
@@ -58,40 +85,40 @@ class LinkedList {
 
 		_size--;
 
-		return deleted;
+		return value;
 	}
 
-	// TODO GPT que fez quero refazer.
-	T& pop_back() {
+	T pop_back() override {
 
 		if (empty()) throw std::runtime_error("List is empty.");
 
-		if (head->next == tail) {
+		Cell* i = head;
+		while (i->next != tail) i = i->next;
 
-			T& value = tail->value;
-			Cell* aux = head;
-			head = head->next;
-			delete aux;
-			_size--;
-			return value;
+		T value = i->next->value;
+
+		Cell* temp = i->next;
+
+		if (i == head) {
+			delete head;
+	 		head = temp;
 		}
 
-		Cell *prev = head;
-		while (prev->next != tail) prev = prev->next;
+		else {
+			i->next = nullptr;
+			tail = i;
+			delete temp;
+		}
 
-		T& value = tail->value;
-		delete tail;
-		tail = prev;
-		tail->next = nullptr;
 
 		_size--;
 
 		return value;
 	}
 
-	void add(T value, int pos = 0) {
+	void add(const T& value, unsigned int pos = 0) override {
 
-		if (pos < 0 || pos > _size) {
+		if (pos < 0 || _size < pos) {
 			throw std::runtime_error("Invalid position.");
 		}
 
@@ -104,59 +131,170 @@ class LinkedList {
 		_size++;
 	}
 
-	// TODO GPT que fez quero refazer.
-	T& erase(int pos) {
-		if (empty()) {
-			throw std::runtime_error("List is empty.");
-		}
+	T remove(unsigned int pos) override {
 
-		if (pos < 0 || static_cast<size_t>(pos) >= _size) {
+		if (empty()) throw std::runtime_error("List is empty.");
+
+		if (pos < 0 || pos >= _size) {
 			throw std::runtime_error("Invalid position.");
 		}
 
 		if (pos == 0) return pop_front();
 
-		if (static_cast<size_t>(pos) == _size - 1) return pop_back();
+		if (pos == _size - 1) return pop_back();
 
-		// Traverse to the node just before the one to be deleted
-		Cell *prev = head;
-		for (int i = 0; i < pos; ++i) { prev = prev->next; }
+		Cell *aux = head;
+		for (int i = 0; i < pos; i++) aux = aux->next;
 
-		// Node to be deleted
-		Cell *temp = prev->next;
-		T& value = temp->value;
-		prev->next = temp->next;
-
-		// Update tail if the last node is deleted
-		if (temp == tail) { tail = prev; }
+		Cell *temp = aux->next;
+		T value = temp->value;
+		aux->next = aux->next->next;
 
 		delete temp;
+
 		_size--;
 
 		return value;
 	}
 
-	size_t size() { return _size; }
+	void erase() { while(!empty()) pop_back(); }
 
-	bool empty() { return _size == 0; }
+	size_t size() const override { return _size; }
 
-	T& front() {
+	bool empty() const override { return _size == 0; }
+
+	T& front() override {
 
 		if (empty()) throw std::runtime_error("List is empty.");
 
 		return head->next->value;
 	}
 
-	T& back() {
+	T& back() override {
 
 		if (empty()) throw std::runtime_error("List is empty.");
 
 		return tail->value;
 	}
 
-	// overload no operador <<
+	std::string str() const {
 
-	// iterator
+		std::ostringstream oss;
+
+		oss << "{ ";
+
+		for (Cell* i = head->next; i; i = i->next) {
+			oss << i->value << ", ";
+		}
+
+		oss << "}";
+
+		return oss.str();
+	}
+
+	friend std::ostream& operator<<(std::ostream& os, const LinkedList& list) {
+		os << list.str();
+		return os;
+	}
+
+	// void swap(Cell* a, Cell* b) {
+	// 	T aux = a->value;
+	// 	a->value = b->value;
+	// 	b->value = aux;
+	// }
+
+	// Cell* getLeft(const Cell* j) {
+
+	// 	if (!head || head == j) return nullptr;
+
+	// 	Cell* left = head;
+	// 	while (left->next && left->next != j) left = left->next;
+
+	// 	return left->next == j ? left : nullptr;
+	// }
+
+	// Cell* getMiddle() {
+
+	// 	if (!head) return nullptr;
+
+	// 	Cell* slow = head;
+	// 	Cell* fast = head;
+
+	// 	while (fast && fast->next) {
+	// 		slow = slow->next;
+	// 		fast = fast->next->next;
+	// 	}
+
+	// 	return slow;
+	// }
+
+	// void quicksort(Cell* left, Cell* right) {
+
+	// 	Cell *pivot = getMiddle(), *i = left, *j = right;
+
+	// 	std::cout << "f;laskdj";
+
+	// 	while (j->next != i) {
+
+	// 	// 	while (i < pivot) i = i->next;
+	// 	// 	while (j > pivot) j = getLeft(j);
+
+	// 	// 	if (j->next != i) {
+	// 	// 		swap(i, j);
+	// 	// 		i = i->next;
+	// 	// 		j = getLeft(j);
+	// 	// 	}
+	// 	}
+
+	// 	// swap(pivot, j);
+
+	// 	if (j != left) quicksort(left, getLeft(j));
+	// 	if (i != right) quicksort(j->next, right);
+	// }
+
+	// void sort() override {}
+	// void sort() override { quicksort(head->next, tail); }
+
+	// class Iterator : public List<T>::Iterator {
+	//   private:
+	// 	Cell* current;
+
+	//   public:
+	// 	Iterator(Cell* start) : current(start) {}
+
+	// 	T& operator*() const override {
+	// 		return current->value;
+	// 	}
+
+	// 	T* operator->() const override {
+	// 		return &(current->value);
+	// 	}
+
+	// 	Iterator& operator++() override {
+	// 		if (current) current = current->next;
+	// 		return *this;
+	// 	}
+
+	// 	Iterator operator++(int) override {
+	// 		Iterator tmp = *this;
+	// 		if (current) current = current->next;
+	// 		return tmp;
+	// 	}
+
+	// 	bool operator==(const List<T>::Iterator& other) const override {
+	// 		const Iterator& other_it = static_cast<const Iterator&>(other);
+	// 		return current == other_it.current;
+	// 	}
+
+	// 	bool operator!=(const List<T>::Iterator& other) const override {
+	// 		const Iterator& other_it = static_cast<const Iterator&>(other);
+	// 		return current != other_it.current;
+	// 	}
+	// };
+
+	// typename List<T>::Iterator begin() const override { return Iterator(head->next); }
+    // typename List<T>::Iterator end() const override { return Iterator(nullptr); }
+
 };
 
 #endif
