@@ -3,6 +3,8 @@
 
 #include <sstream>
 
+// https://chatgpt.com/share/c077a9b1-4d31-45ea-97e9-670ffdd1576d
+
 template <typename T>
 struct Iterable {
 

@@ -6,7 +6,7 @@
 #include "stack.hpp"
 
 template <typename T>
-class LinkedStack : public Stack<T>, public Iterable<T> {
+class LinkedStack : public Stack<T> {
 
 	struct Cell {
 

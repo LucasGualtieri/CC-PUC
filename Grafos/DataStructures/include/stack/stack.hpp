@@ -1,8 +1,10 @@
 #ifndef STACK_HPP
 #define STACK_HPP
 
+#include "../iterable.hpp"
+
 template <typename T>
-class Stack {
+class Stack : public Iterable<T> {
 
   protected:
 	size_t _size;

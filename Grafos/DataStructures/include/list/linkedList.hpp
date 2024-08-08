@@ -5,7 +5,7 @@
 #include "../iterable.hpp"
 
 template <typename T>
-class LinkedList : public List<T>, public Iterable<T> {
+class LinkedList : public List<T> {
 
 	struct Cell {
 

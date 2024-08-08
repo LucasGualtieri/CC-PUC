@@ -6,7 +6,7 @@
 #include "stack.hpp"
 
 template <typename T>
-class LinearStack : public Stack<T>, public Iterable<T> {
+class LinearStack : public Stack<T> {
 
 	size_t maxSize;
 	T* array;

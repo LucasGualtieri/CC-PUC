@@ -1,8 +1,10 @@
 #ifndef LIST_HPP
 #define LIST_HPP
 
+#include "../iterable.hpp"
+
 template <typename T>
-class List {
+class List : public Iterable<T>{
   protected:
 	size_t _size;
 
