@@ -45,7 +45,6 @@ void testLinkedStack() {
 		assert(string(e.what()) == "Stack is empty.");
 	}
 
-	// Testing expansion
 	for (int i = 0; i < 20; i++) stack.push(i);
 	assert(stack.size() == 20);
 
