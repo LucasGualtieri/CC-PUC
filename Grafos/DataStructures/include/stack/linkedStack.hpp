@@ -40,7 +40,9 @@ class LinkedStack : public Stack<T> {
 
 	T pop() override {
 
-		if (this->empty()) throw std::runtime_error("Stack is empty.");
+		if (this->empty()) {
+			throw std::runtime_error("Stack underflow: Attempt to pop from an empty stack.");
+		}
 
 		T value = top->value;
 		Cell* temp = top;
@@ -50,6 +52,15 @@ class LinkedStack : public Stack<T> {
 		this->_size--;
 
 		return value;
+	}
+
+	T& peek() const override {
+
+		if (this->empty()) {
+			throw std::runtime_error("Stack underflow: Attempt to pop from an empty stack.");
+		}
+
+		return top->value;
 	}
 
 	bool search(const T& value) override {
@@ -63,13 +74,6 @@ class LinkedStack : public Stack<T> {
 		while (!aux.empty()) push(aux.pop());
 
 		return found;
-	}
-
-	T& peek() const override {
-
-		if (this->empty()) throw std::runtime_error("Stack is empty.");
-
-		return top->value;
 	}
 
 	friend std::ostream& operator<<(std::ostream& os, const LinkedStack& list) {

@@ -40,16 +40,27 @@ class LinearStack : public Stack<T> {
 
 	void push(const T& value) override {
 
-		if (this->_size + 1 == maxSize) expand();
+		if (this->_size == maxSize) expand();
 
 		array[this->_size++] = value;
 	}
 
 	T pop() override {
 
-		if (this->empty()) throw std::runtime_error("Stack is empty.");
+		if (this->empty()) {
+			throw std::runtime_error("Stack underflow: Attempt to pop from an empty stack.");
+		}
 
 		return array[--this->_size];
+	}
+
+	T& peek() const override {
+
+		if (this->empty()) {
+			throw std::runtime_error("Stack underflow: Attempt to pop from an empty stack.");
+		}
+
+		return array[this->_size - 1];
 	}
 
 	bool search(const T& value) override {
@@ -63,13 +74,6 @@ class LinearStack : public Stack<T> {
 		while (!aux.empty()) push(aux.pop());
 
 		return found;
-	}
-
-	T& peek() const override {
-
-		if (this->empty()) throw std::runtime_error("Stack is empty.");
-
-		return array[this->_size - 1];
 	}
 
 	void shrink_to_fit() {
