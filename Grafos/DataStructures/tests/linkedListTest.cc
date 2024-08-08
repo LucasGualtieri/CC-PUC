@@ -65,9 +65,10 @@ void testLinkedList() {
 	list.erase();
 	assert(list.empty());
 
-	// Test front on empty list
+	// Test front and back on empty list
 	try {
 		list.front();
+		list.back();
 		assert(false); // Should not reach this point
 	}
 
