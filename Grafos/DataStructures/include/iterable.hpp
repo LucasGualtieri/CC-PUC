@@ -8,7 +8,7 @@
 template <typename T>
 struct Iterable {
 
-	virtual std::string str() const final {
+	virtual std::string str() const {
 
 		std::ostringstream oss;
 

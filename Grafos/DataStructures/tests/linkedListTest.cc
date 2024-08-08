@@ -76,11 +76,11 @@ void testLinkedList() {
 		assert(string(e.what()) == "List is empty.");
 	}
 
+	for (int i = 20; i > 0; i--) list.push_back(i);
+	assert(list.size() == 20);
+
 	// list.sort();
 	// assert(isSorted(list));
-
-	for (int i = 0; i < 20; i++) list.push_back(i);
-	assert(list.size() == 20);
 
 	cout << list << endl;
 }
