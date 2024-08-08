@@ -1,9 +1,7 @@
 #include <iostream>
-#include <iostream>
 #include <cassert>
-#include "../include/linkedList.hpp"
-#include "../include/list.hpp"
-#include "../util.hpp"
+#include "../include/list/linkedList.hpp"
+#include "../util/util.hpp"
 
 // clear && g++ tests/linkedListTest.cc -o bin/linkedListTest && bin/linkedListTest
 
@@ -63,25 +61,31 @@ void testLinkedList() {
 	assert(list.front() == 30);
 	assert(list.back() == 50);
 
+	// Test erasing the list
 	list.erase();
+	assert(list.empty());
 
-	// Test edge case of empty list operations
-	try { list.remove(0); }
-	catch (const std::runtime_error& e) {
-		std::cout << "Caught expected exception: " << e.what() << std::endl;
+	// Test front on empty list
+	try {
+		list.front();
+		assert(false); // Should not reach this point
 	}
 
-	// cout << list << endl;
+	catch (const runtime_error& e) {
+		assert(string(e.what()) == "List is empty.");
+	}
+
+	cout << list << endl;
 	// list.sort();
 
 	// assert(isSorted(list));
-
-	std::cout << "All tests passed!" << std::endl;
 }
 
 int main() {
 
 	testLinkedList();
+
+	std::cout << "All tests passed!" << std::endl;
 
 	return 0;
 }

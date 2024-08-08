@@ -1,8 +1,11 @@
-# 💻 CC-PUC 3/8
+# 💻 CC-PUC 4/8
 
 ## 📝 Descrição
 
 Repositório de exercícios / projetos desenvolvidos no curso de Ciência da Computação na PUC Minas.
+
+## 📁 Grafos
+Teoria dos Grafos e Computabilidade - [Grafos](Grafos)
 
 ## 📁 AEDs
 Algoritmos e Estruturas de Dados - [AEDs I](AEDs/AEDs_I) / [AEDs II](AEDs/AEDs_II) / [AEDs III](AEDs/AEDs_III)
