@@ -1,10 +1,8 @@
 #ifndef LIST_HPP
 #define LIST_HPP
 
-#include "../iterable.hpp"
-
 template <typename T>
-class List : public Iterable<T>{
+class List {
   protected:
 	size_t _size;
 
@@ -21,7 +19,8 @@ class List : public Iterable<T>{
 	virtual T& back() const = 0;
 	virtual void sort() = 0;
 
-	virtual void erase() final { while (!empty()) pop_front(); }
+	virtual bool contains(const T& value) const = 0;
+	virtual void clear() final { while (!empty()) pop_front(); }
 	virtual size_t size() const final { return _size; }
 	virtual bool empty() const final { return _size == 0; }
 

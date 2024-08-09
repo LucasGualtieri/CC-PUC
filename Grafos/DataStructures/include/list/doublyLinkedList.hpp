@@ -1,23 +1,38 @@
-#ifndef LINKED_LIST_HPP
-#define LINKED_LIST_HPP
+#ifndef DOUBLY_LINKED_LIST_HPP
+#define DOUBLY_LINKED_LIST_HPP
 
 #include <sstream>
 #include "list.hpp"
-#include "../cell.hpp"
 
 template <typename T>
-class LinkedList : public List<T> {
+class DLinkedList : public List<T> {
 
-	Cell<T> *head, *tail;
+	struct Cell {
+
+		T value;
+		Cell *prev, *next;
+
+		Cell() : value(T()) {}
+		Cell(T value, Cell* prev = nullptr, Cell* next = nullptr) : value(value), prev(prev), next(next) {}
+
+		bool operator==(const Cell*& other) const { return value == other->value; }
+		bool operator!=(const Cell*& other) const { return value != other->value; }
+		bool operator<(const Cell*& other) const { return value < other->value; }
+		bool operator<=(const Cell*& other) const { return value <= other->value; }
+		bool operator>(const Cell*& other) const { return value > other->value; }
+		bool operator>=(const Cell*& other) const { return value >= other->value; }
+	};
+
+	Cell *head, *tail;
 
   public:
 
-	LinkedList() {
-		head = tail = new Cell<T>;
+	DLinkedList() {
+		head = tail = new Cell;
 		this->_size = 0;
 	}
 
-	~LinkedList() override {
+	~DLinkedList() override {
 
 		while(!this->empty()) pop_back();
 
@@ -26,7 +41,7 @@ class LinkedList : public List<T> {
 
 	bool contains(const T& value) const override {
 
-		for (Cell<T>* i = head->next; i; i = i->next) {
+		for (Cell* i = head->next; i; i = i->next) {
 			if (i->value == value) return true;
 		}
 
@@ -35,15 +50,16 @@ class LinkedList : public List<T> {
 
 	void push_front(const T& value) override {
 
-		head->next = new Cell<T>(value, head->next);
+		head->next = new Cell(value, head, head->next);
 
 		if (this->empty()) tail = head->next;
+
 		this->_size++;
 	}
 
 	void push_back(const T& value) override {
 
-		tail = tail->next = new Cell<T>(value);
+		tail = tail->next = new Cell(value, tail);
 		this->_size++;
 	}
 
@@ -53,7 +69,7 @@ class LinkedList : public List<T> {
 
 		T& value = head->next->value;
 
-		Cell<T>* temp = head;
+		Cell* temp = head;
 		head = head->next;
 
 		delete temp;
@@ -67,24 +83,13 @@ class LinkedList : public List<T> {
 
 		if (this->empty()) throw std::runtime_error("List is empty.");
 
-		Cell<T>* i = head;
-		while (i->next != tail) i = i->next;
+		T value = tail->value;
+		tail = tail->prev;
 
-		T value = i->next->value;
+		Cell* temp = tail->next;
+		tail->next = nullptr;
 
-		Cell<T>* temp = i->next;
-
-		if (i == head) {
-			delete head;
-	 		head = temp;
-		}
-
-		else {
-			i->next = nullptr;
-			tail = i;
-			delete temp;
-		}
-
+		delete temp;
 
 		this->_size--;
 
@@ -97,11 +102,11 @@ class LinkedList : public List<T> {
 			throw std::runtime_error("Invalid position.");
 		}
 
-		Cell<T>* cell = head->next;
+		Cell* cell = head->next;
 
 		for (int i = 0; i < pos - 1; i++, cell = cell->next);
 
-		cell->next = new Cell<T>(value, cell->next);
+		cell->next = new Cell(value, cell, cell->next);
 
 		this->_size++;
 	}
@@ -118,12 +123,13 @@ class LinkedList : public List<T> {
 
 		if (pos == this->_size - 1) return pop_back();
 
-		Cell<T> *aux = head;
+		Cell *aux = head;
 		for (int i = 0; i < pos; i++) aux = aux->next;
 
-		Cell<T> *temp = aux->next;
+		Cell *temp = aux->next;
 		T value = temp->value;
 		aux->next = aux->next->next;
+		if (aux->next->next) aux->next->next->prev = aux;
 
 		delete temp;
 
@@ -146,13 +152,13 @@ class LinkedList : public List<T> {
 		return tail->value;
 	}
 
-	virtual std::string str() const {
+	std::string str() const {
 
 		std::ostringstream oss;
 
 		oss << "{ ";
 
-		for (Cell<T>* i = head->next; i; i = i->next) {
+		for (Cell* i = head->next; i; i = i->next) {
 			oss << i->value << " ";
 		}
 
@@ -162,12 +168,28 @@ class LinkedList : public List<T> {
 
 	}
 
-	friend std::ostream& operator<<(std::ostream& os, const LinkedList<T>& list) {
+	std::string reverseTraversal() const {
+
+		std::ostringstream oss;
+
+		oss << "{ ";
+
+		for (Cell* i = tail; i != head; i = i->prev) {
+			oss << i->value << " ";
+		}
+
+		oss << "}";
+
+		return oss.str();
+
+	}
+
+	friend std::ostream& operator<<(std::ostream& os, const DLinkedList<T>& list) {
 		os << list.str();
 		return os;
 	}
 
-	void quicksort(Cell<T>* left, Cell<T>* right) {}
+	void quicksort(Cell* left, Cell* right) {}
 
 	void sort() override { quicksort(head->next, tail); }
 };

@@ -1,15 +1,15 @@
 #include <iostream>
 #include <cassert>
-#include "../include/list/linkedList.hpp"
+#include "../include/list/linearList.hpp"
 #include "../util/util.hpp"
 
-// clear && g++ tests/linkedListTest.cc -o bin/linkedListTest && bin/linkedListTest
+// clear && g++ tests/linearListTest.cc -o bin/linearListTest && bin/linearListTest
 
 using namespace std;
 
-void testLinkedList() {
+void testLinearList() {
 
-	LinkedList<int> list;
+	LinearList<int> list;
 
 	// Test initial state
 	assert(list.size() == 0);
@@ -73,23 +73,28 @@ void testLinkedList() {
 	}
 
 	catch (const runtime_error& e) {
-		assert(string(e.what()) == "List is empty.");
+		assert(string(e.what()) == "List underflow: Attempt to front() an empty list.");
 	}
 
-	for (int i = 0; i < 20; i++) list.push_back(i);
+	// Testing expansion
+	for (int i = 0; i < 20; i++) list.add(i, i);
 	assert(list.size() == 20);
+	assert(list.capacity() >= list.size());
 
-	// list.sort();
-	// assert(isSorted(list));
+	list.shrink_to_fit();
+	assert(list.capacity() == list.size());
 
 	cout << list << endl;
 
-	// for (int i : stack) cout << i << endl;
+	// // list.sort();
+	// // assert(isSorted(list));
+
+	// for (int i : queue) cout << i << endl;
 }
 
 int main() {
 
-	testLinkedList();
+	testLinearList();
 
 	cout << "All tests passed!" << endl;
 

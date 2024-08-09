@@ -1,15 +1,15 @@
 #include <iostream>
 #include <cassert>
-#include "../include/list/linkedList.hpp"
+#include "../include/list/doublyLinkedList.hpp"
 #include "../util/util.hpp"
 
-// clear && g++ tests/linkedListTest.cc -o bin/linkedListTest && bin/linkedListTest
+// clear && g++ tests/doublyLinkedListTest.cc -o bin/doublyLinkedListTest && bin/doublyLinkedListTest
 
 using namespace std;
 
-void testLinkedList() {
+void testDLinkedList() {
 
-	LinkedList<int> list;
+	DLinkedList<int> list;
 
 	// Test initial state
 	assert(list.size() == 0);
@@ -84,12 +84,14 @@ void testLinkedList() {
 
 	cout << list << endl;
 
+	cout << list.reverseTraversal() << endl;
+
 	// for (int i : stack) cout << i << endl;
 }
 
 int main() {
 
-	testLinkedList();
+	testDLinkedList();
 
 	cout << "All tests passed!" << endl;
 

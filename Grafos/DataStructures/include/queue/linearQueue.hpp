@@ -1,41 +1,40 @@
-#ifndef LINEAR_STACK_HPP
-#define LINEAR_STACK_HPP
+#ifndef LINKED_STACK_HPP
+#define LINKED_STACK_HPP
 
 #include <sstream>
-#include "stack.hpp"
+#include "queue.hpp"
 
 template <typename T>
-class LinearStack : public Stack<T> {
+class LinearQueue : public Queue<T> {
 
-	size_t maxSize;
+	size_t maxSize, head, tail;
 	T* array;
 
 	void resize(size_t newSize) {
 
-		maxSize = newSize;
+		maxSize = newSize + 1;
 
 		T* aux = new T[maxSize];
 
-		for (int i = 0; i < this->_size; i++) {
+		for (int i = head; i != tail; i = (i + 1) % maxSize) {
 			aux[i] = array[i];
 		}
 
 		delete[] array;
-
 		array = aux;
 	}
 
   public:
 
-	LinearStack(size_t maxSize = 5) {
+	LinearQueue(size_t maxSize = 5) {
 
-		this->maxSize = maxSize;
-		this->_size = 0;
+		this->maxSize = maxSize + 1;
+		this->_size = head = tail = 0;
 
 		array = new T[maxSize];
 	}
 
-	~LinearStack() override { delete[] array; }
+	~LinearQueue() override { delete[] array; }
 
 	bool contains(const T& value) const override {
 
@@ -48,9 +47,11 @@ class LinearStack : public Stack<T> {
 
 	void push(const T& value) override {
 
-		if (this->_size == maxSize) resize(maxSize * 2);
+		if (((tail + 1) % maxSize) == head) resize((maxSize - 1) * 2);
 
-		array[this->_size++] = value;
+		array[tail] = value;
+		tail = (tail + 1) % maxSize;
+		this->_size++;
 	}
 
 	T pop() override {
@@ -59,16 +60,21 @@ class LinearStack : public Stack<T> {
 			throw std::runtime_error("Stack underflow: Attempt to pop from an empty stack.");
 		}
 
-		return array[--this->_size];
+		T deleted = array[head];
+
+		this->_size--;
+		head = (head + 1) % maxSize;
+
+		return deleted;
 	}
 
 	T& peek() const override {
 
 		if (this->empty()) {
-			throw std::runtime_error("Stack underflow: Attempt to peek an empty stack.");
+			throw std::runtime_error("Queue underflow: Attempt to peek an empty queue.");
 		}
 
-		return array[this->_size - 1];
+		return array[head];
 	}
 
 	void reserve(size_t newCapacity) {
@@ -79,8 +85,8 @@ class LinearStack : public Stack<T> {
 	}
 
 	void shrink_to_fit() { resize(this->_size); }
-	virtual void clear() { this->_size = 0; }
-	size_t capacity() { return maxSize; }
+	virtual void clear() { this->_size = head = tail = 0; }
+	size_t capacity() { return maxSize - 1; }
 
 	virtual std::string str() const {
 
@@ -88,7 +94,7 @@ class LinearStack : public Stack<T> {
 
 		oss << "{ ";
 
-		for (int i = this->_size - 1; i >= 0; i--) {
+		for (int i = head; i != tail; i = (i + 1) % maxSize) {
 			oss << array[i] << " ";
 		}
 
@@ -98,7 +104,7 @@ class LinearStack : public Stack<T> {
 
 	}
 
-	friend std::ostream& operator<<(std::ostream& os, const LinearStack& list) {
+	friend std::ostream& operator<<(std::ostream& os, const LinearQueue& list) {
 		os << list.str();
 		return os;
 	}

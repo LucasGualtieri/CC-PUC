@@ -1,14 +1,16 @@
-#ifndef STACK_HPP
-#define STACK_HPP
+#ifndef QUEUE_HPP
+#define QUEUE_HPP
 
 template <typename T>
-class Stack {
+class Queue {
 
   protected:
+
 	size_t _size;
 
   public:
-	virtual ~Stack() = default;
+
+	virtual ~Queue() = default;
 
 	virtual void push(const T& value) = 0;
 	virtual T pop() = 0;
