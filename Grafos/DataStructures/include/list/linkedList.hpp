@@ -33,7 +33,7 @@ class LinkedList : public List<T> {
 		return false;
 	}
 
-	void push_front(const T& value) override {
+	void push_front(T value) override {
 
 		head->next = new Cell<T>(value, head->next);
 
@@ -41,7 +41,7 @@ class LinkedList : public List<T> {
 		this->_size++;
 	}
 
-	void push_back(const T& value) override {
+	void push_back(T value) override {
 
 		tail = tail->next = new Cell<T>(value);
 		this->_size++;

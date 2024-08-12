@@ -16,11 +16,13 @@ void swap(T& a, T& b) {
 template <typename T>
 bool isSorted(List<T>& list) {
 
-	for (const T& i : list) {
-		std::cout << i << std::endl;
-		// if (true) {
-		// 	return false;
-		// }
+	T previous = list[0];
+
+	for (size_t i = 1; i < list.size(); i++) {
+
+		T current = list[i];
+		if (current < previous) return false;
+		previous = current;
 	}
 
 	return true;

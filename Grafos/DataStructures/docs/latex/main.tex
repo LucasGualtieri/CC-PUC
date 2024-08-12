@@ -1,0 +1,279 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% How to use writeLaTeX: 
+%
+% You edit the source code here on the left, and the preview on the
+% right shows you the result within a few seconds.
+%
+% Bookmark this page and share the URL with your co-authors. They can
+% edit at the same time!
+%
+% You can upload figures, bibliographies, custom classes and
+% styles using the files menu.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[12pt]{article}
+
+\usepackage{sbc-template}
+
+\usepackage{graphicx,url}
+
+%\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+
+\usepackage{minted}
+
+\sloppy
+
+\title{Implementação de Estruturas de Dados em C++}
+
+\author{Lucas Gualtieri F. E.\inst{1} }
+
+\address{
+Pontifical Catholic University of Minas Gerais\\
+Coração Eucarístico -- 30535-901 -- Belo Horizonte -- MG -- Brazil
+\email{lgualtieri@sga.pucminas.br}
+}
+
+\begin{document} 
+
+\maketitle
+
+\begin{resumo}
+Este trabalho apresenta a implementação de diversas estruturas de dados, desenvolvidas em C++ utilizando templates para que as mesmas fossem genéricas. As estruturas desenvolvidas incluem:
+
+\begin{itemize}
+\item Lista
+\item Fila
+\item Pilha
+\item Matriz
+\end{itemize}
+
+Além das implementações genéricas, uma matriz de inteiros foi implementada, conforme especificado nos requisitos do projeto. Para validar as estruturas implementadas, foram criados arquivos de teste para garantir o correto funcionamento de todas as operações de cada estrutura.
+\end{resumo}
+
+\newpage % Inicia uma nova página
+
+\section{Implementação} \label{sec:implementacao}
+Nesta seção, detalho a implementação das estruturas de dados desenvolvidas. As estruturas foram divididas em dois grupos principais: \textit{lineares} e \textit{flexíveis}, como ilustrado na Tabela \ref{tab:estruturas}.
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|c|c|}
+    \hline
+    \textbf{Lineares} & \textbf{Flexíveis} \\ \hline
+    \texttt{LinearList<T>} &  \texttt{LinkedList<T>} \\ \hline
+    \texttt{LinearStack<T>} & \texttt{DoublyLinkedList<T>} \\ \hline
+    \texttt{LinearQueue<T>} & \texttt{LinkedStack<T>} \\ \hline
+    \texttt{Matrix<T>} &      \texttt{LinkedQueue<T>} \\ \hline
+    \texttt{MatrixInt} & \\ \hline
+\end{tabular}
+\caption{Estruturas de dados desenvolvidas.}
+\label{tab:estruturas}
+\end{table}
+
+Cada uma dessas estruturas foi projetada para atender a diferentes necessidades, mas todas compartilham uma interface comum que garante consistência e reusabilidade do código. 
+
+As estruturas lineares, com exceção da \texttt{Matrix<T>} e \texttt{MatrixInt}, possuem métodos adicionais relacionados à manipulação da capacidade de memória reservada. Abaixo, são apresentados esses métodos:
+
+\begin{minted}[linenos, frame=single, fontsize=\footnotesize]{cpp}
+void reserve(size_t newCapacity) {
+    if (newCapacity > maxSize) {
+        resize(newCapacity);
+    }
+}
+
+void shrink_to_fit() {
+    resize(this->_size);
+}
+
+size_t capacity() {
+    return maxSize;
+}
+\end{minted}
+
+\newpage % Inicia uma nova página
+
+\subsection{Listas}
+
+Nesta subseção, discuto as três variações de listas que foram implementadas: a lista linear, a lista simplesmente encadeada e a lista duplamente encadeada. Embora essas estruturas tenham diferentes organizações internas, todas compartilham uma interface comum chamada \texttt{List<T>}. Essa interface define um conjunto de operações básicas que garantem a consistência na manipulação das listas. A seguir, apresento a interface \texttt{List<T>}:
+
+\begin{minted}[linenos, frame=single, fontsize=\footnotesize]{cpp}
+template <typename T>
+class List {
+  protected:
+    size_t _size;
+    
+  public:
+    virtual ~List() = default;
+    
+    virtual void push_front(T value) = 0;
+    virtual void push_back(T value) = 0;
+    virtual T pop_front() = 0;
+    virtual T pop_back() = 0;
+    virtual void add(const T& value, unsigned int pos) = 0;
+    virtual T remove(unsigned int pos) = 0;
+    virtual T& front() const = 0;
+    virtual T& back() const = 0;
+    virtual void sort() = 0;
+    
+    virtual bool contains(const T& value) const = 0;
+    virtual void clear() final { while (!empty()) pop_front(); }
+    virtual size_t size() const final { return _size; }
+    virtual bool empty() const final { return _size == 0; }
+}
+\end{minted}
+
+\newpage % Inicia uma nova página
+
+\subsection{Filas}
+
+Nesta subseção, discuto as duas variações de filas que foram implementadas: a fila linear e a fila simplesmente encadeada. Embora essas estruturas tenham diferentes organizações internas, todas compartilham uma interface comum chamada \texttt{Queue<T>}. Essa interface define um conjunto de operações básicas que garantem a consistência na manipulação das filas. A seguir, apresento a interface \texttt{Queue<T>}:
+
+\begin{minted}[linenos, frame=single, fontsize=\footnotesize]{cpp}
+template <typename T>
+class Queue {
+  protected:
+	size_t _size;
+
+  public:
+	virtual ~Queue() = default;
+
+	virtual void push(const T& value) = 0;
+	virtual T pop() = 0;
+	virtual T& peek() const = 0;
+
+	virtual bool contains(const T& value) const = 0;
+	virtual void clear() { while (!empty()) pop(); }
+	virtual size_t size() const final { return _size; }
+	virtual bool empty() const final { return _size == 0; }
+	virtual std::string str() const = 0;
+};
+\end{minted}
+
+\newpage % Inicia uma nova página
+
+\subsection{Pilhas}
+
+Nesta subseção, discuto as duas variações de pilhas que foram implementadas: a pilha linear e a pilha simplesmente encadeada. Embora essas estruturas tenham diferentes organizações internas, todas compartilham uma interface comum chamada \texttt{Stack<T>}. Essa interface define um conjunto de operações básicas que garantem a consistência na manipulação das pilhas. A seguir, apresento a interface \texttt{Stack<T>}:
+
+\begin{minted}[linenos, frame=single, fontsize=\footnotesize]{cpp}
+template <typename T>
+class Stack {
+  protected:
+	size_t _size;
+
+  public:
+	virtual ~Stack() = default;
+
+	virtual void push(const T& value) = 0;
+	virtual T pop() = 0;
+	virtual T& peek() const = 0;
+
+	virtual bool contains(const T& value) const = 0;
+	virtual void clear() { while (!empty()) pop(); }
+	virtual size_t size() const final { return _size; }
+	virtual bool empty() const final { return _size == 0; }
+	virtual std::string str() const = 0;
+};
+\end{minted}
+
+\newpage % Inicia uma nova página
+
+\subsection{Matrizes}
+
+Nesta subseção, discuto as duas variações de matrizes que foram implementadas: a matriz genérica e a matriz de inteiros. A matriz genérica foi implementada usando uma \texttt{vector<vector<T>>}. Já a matriz de inteiros usou um simples \texttt{int**}. A seguir, apresento os métodos de ambas as classes:
+
+\begin{minted}[linenos, frame=single, fontsize=\footnotesize]{cpp}
+template <typename T>
+class Matrix {
+    std::vector<std::vector<T>> matrix;
+  public:
+    const int height, width;
+
+    Matrix(int height, int width);
+    Matrix(std::initializer_list<std::initializer_list<T>> list);
+    
+    bool inBounds(int i, int j);
+    bool notInBounds(int i, int j);
+    
+    std::vector<T>& operator[](int i);
+    
+    std::string str() const;
+    std::string str(bool flag) const;
+    
+    friend ostream& operator<<ostream& os, const Matrix<T>& m);
+    
+    class Iterator;
+    Iterator begin();
+    Iterator end();
+};
+\end{minted}
+
+\begin{minted}[linenos, frame=single, fontsize=\footnotesize]{cpp}
+class Matrix {
+    int** matrix;
+  public:
+    const int height, width;
+
+    Matrix(int height, int width);
+    
+    bool inBounds(int i, int j);
+    bool notInBounds(int i, int j);
+    
+    int* operator[](int i);
+    
+    std::string str() const;
+    std::string str(bool flag) const;
+    
+    friend ostream& operator<<ostream& os, const Matrix<T>& m);
+};
+\end{minted}
+
+\newpage % Inicia uma nova página
+\section{Estrutura do Projeto}
+Os exemplos de uso das estruturas se encontra nos arquivos de teste
+\begin{verbatim}
+.
+|-- bin
+|   |-- doublyLinkedListTest
+|   |-- linearListTest
+|   |-- linearQueueTest
+|   |-- linearStackTest
+|   |-- linkedListTest
+|   |-- linkedQueueTest
+|   |-- linkedStackTest
+|   |-- matrixTest
+|-- docs
+|   |-- ideias.txt
+|-- include
+|   |-- cell.hpp
+|   |-- list
+|   |   |-- doublyLinkedList.hpp
+|   |   |-- linearList.hpp
+|   |   |-- linkedList.hpp
+|   |   |-- list.hpp
+|   |-- matrix
+|   |   |-- matrix.hpp
+|   |-- queue
+|   |   |-- linearQueue.hpp
+|   |   |-- linkedQueue.hpp
+|   |   |-- queue.hpp
+|   |-- stack
+|       |-- linearStack.hpp
+|       |-- linkedStack.hpp
+|       |-- stack.hpp
+|-- tests
+|   |-- doublyLinkedListTest.cc
+|   |-- linearListTest.cc
+|   |-- linearQueueTest.cc
+|   |-- linearStackTest.cc
+|   |-- linkedListTest.cc
+|   |-- linkedQueueTest.cc
+|   |-- linkedStackTest.cc
+|   |-- matrixTest.cc
+|-- util
+|-- util.hpp
+\end{verbatim}
+
+\end{document}

@@ -34,6 +34,17 @@ class LinearList : public List<T> {
 		array = new T[maxSize];
 	}
 
+	LinearList(const LinearList& other) : maxSize(other.capacity()) {
+
+		this->_size = other.size();
+
+		array = new T[maxSize];
+
+		for (int i = 0; i < this->_size; i++) {
+			array[i] = other.array[i];
+		}
+	}
+
 	~LinearList() override { delete[] array; }
 
 	bool contains(const T& value) const override {
@@ -45,7 +56,7 @@ class LinearList : public List<T> {
 		return false;
 	}
 
-	void push_front(const T& value) override {
+	void push_front(T value) override {
 
 		if (this->_size == maxSize) resize(maxSize * 2);
 
@@ -58,7 +69,7 @@ class LinearList : public List<T> {
 		this->_size++;
 	}
 
-	void push_back(const T& value) override {
+	void push_back(T value) override {
 
 		if (this->_size == maxSize) resize(maxSize * 2);
 
@@ -145,8 +156,15 @@ class LinearList : public List<T> {
 		return array[this->_size - 1];
 	}
 
+	void reserve(size_t newCapacity) {
+
+		if (newCapacity > maxSize) {
+			resize(newCapacity);
+		}
+	}
+
 	void shrink_to_fit() { resize(this->_size); }
-	size_t capacity() { return maxSize; }
+	size_t capacity() const { return maxSize; }
 
 	std::string str() const {
 
@@ -167,6 +185,35 @@ class LinearList : public List<T> {
 	friend std::ostream& operator<<(std::ostream& os, const LinearList<T>& list) {
 		os << list.str();
 		return os;
+	}
+
+	T& operator[](size_t index) const {
+
+		if (index >= this->_size) {
+			throw std::out_of_range("Index out of bounds");
+		}
+
+		return array[index];
+	}
+
+	T& operator[](size_t index) {
+
+		if (index >= this->_size) {
+			throw std::out_of_range("Index out of bounds");
+		}
+
+		return array[index];
+	}
+
+	bool operator==(const LinearList<T> other) const {
+
+		if (this->size() != other.size()) return false;
+
+		for (int i = 0; i < this->size(); i++) {
+			if (array[i] != other[i]) return false;
+		}
+
+		return true;
 	}
 
 	void quicksort(int left, int right) {}

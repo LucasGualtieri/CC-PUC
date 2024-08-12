@@ -9,8 +9,8 @@ class List {
   public:
 	virtual ~List() = default;
 
-	virtual void push_front(const T& value) = 0;
-	virtual void push_back(const T& value) = 0;
+	virtual void push_front(T value) = 0;
+	virtual void push_back(T value) = 0;
 	virtual T pop_front() = 0;
 	virtual T pop_back() = 0;
 	virtual void add(const T& value, unsigned int pos) = 0;
