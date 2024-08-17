@@ -7,70 +7,78 @@ using namespace std;
 
 // clear && g++ subgrafos.cc && ./a.out
 
-int fat(int n) { return n <= 1 ? 1 : n * fat(n - 1); }
+int factorial(int n) { return n <= 1 ? 1 : n * factorial(n - 1); }
 
-int np(int i, int n) {
-	return (fat(n)) / (fat(i) * (fat(n - i)));
+size_t subsetCombinations(int i, int n) {
+	return factorial(n) / (factorial(i) * factorial(n - i));
 }
 
 template <typename T>
-LinearList<LinearList<T>> gerarConjuntoPotencia(LinearList<T> conjunto, size_t min = 0, size_t max = 0x7fffffff) {
+LinearList<LinearList<T>> PowerSet(LinearList<T> set, size_t min = 0, size_t max = 0x7fffffff) {
 
-	if (max == 0x7fffffff) max = conjunto.size();
+	if (max == 0x7fffffff) max = set.size();
 
-	int N = conjunto.size();
+	int N = set.size();
 
-	LinearList<LinearList<T>> conjuntoPotencia(pow(2, N));
+	LinearList<LinearList<T>> powerSet(pow(2, N));
 
-	for (int i = min; i <= max; i++) { // i determina o tamanho do agrupamento
+	for (int i = min; i <= max; i++) {
 
-		LinearList<T> subconjunto(i);
+		LinearList<T> subset(i);
 
 		int setinha = 0;
 
-		int NP = np(i, N); // NP determina a quantidade de agrupamentos
+		size_t combinations = subsetCombinations(i, N);
 
-		for (int j = 0; j < NP; j++) {
+		for (int j = 0; j < combinations; j++) {
 
-			while (subconjunto.size() < i) {
+			while (subset.size() < i) {
 
 				if (setinha >= N) {
-					if (subconjunto.back() == conjunto.back()) subconjunto.pop_back();
-					setinha = conjunto.indexOf(subconjunto.pop_back()) + 1;
+					// O acesso do .back() é O(1) mas a comparação entre sets pode ser custosa...
+					if (subset.back() == set.back()) subset.pop_back();
+					setinha = set.indexOf(subset.pop_back()) + 1;
 				}
 
-				subconjunto.push_back(conjunto[setinha++]);
+				subset.push_back(set[setinha++]);
 			}
 
-			conjuntoPotencia.push_back(subconjunto);
+			powerSet.push_back(subset);
 
-			if (!subconjunto.empty()) subconjunto.pop_back();
+			// foi necessario essa condição, mas não lembro exatamente o pq
+			if (!subset.empty()) subset.pop_back();
 		}
 	}
 
-	return conjuntoPotencia;
+	return powerSet;
 }
+
+typedef LinearList<int> Vertices;
+typedef LinearList<LinearList<int>> Arestas;
 
 int main() {
 
-	const int N = 3;
+	// Além disto, informe o número de subgrafos gerados.
+	// fazer a função que calcula o somatório 2^(...) * np
 
-	LinearList<int> V(1, N);
+	int N;
+
+	cout << "Digite o tamanho do grafo completo: ";
+	cin >> N;
+
+	LinearList<int> set(1, N);
 
 	int i = 1;
 
-	for (LinearList<int> v : gerarConjuntoPotencia(V, 1)) {
+	for (Vertices V : PowerSet(set, 1)) {
 
+		Arestas edgesSet = PowerSet(V, 2, 2);
 
-		LinearList<LinearList<int>> arestas = gerarConjuntoPotencia(v, 2, 2);
-
-		LinearList<LinearList<LinearList<int>>> cpArestas = gerarConjuntoPotencia(arestas);
-
-		for (LinearList<LinearList<int>> aresta : cpArestas) {
+		for (Arestas E : PowerSet(edgesSet)) {
 
 			cout << "Subgrafo " << i++ << ": " << endl;
-			cout << "V = " << v << endl;
-			cout << "E = " << aresta << endl;
+			cout << "V = " << V << endl;
+			cout << "E = " << E << endl;
 		}
 	}
 }
