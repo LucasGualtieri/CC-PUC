@@ -3,6 +3,7 @@
 
 #include <sstream>
 #include "list.hpp"
+#include "../../util/util.hpp"
 
 template <typename T>
 class LinearList : public List<T> {
@@ -34,7 +35,29 @@ class LinearList : public List<T> {
 		array = new T[maxSize];
 	}
 
-	LinearList(const LinearList& other) : maxSize(other.capacity()) {
+	LinearList(std::initializer_list<T> list) {
+
+		this->maxSize = list.size();
+		this->_size = 0;
+
+		array = new T[maxSize];
+
+		for (T i : list) push_back(i);
+	}
+
+	LinearList(size_t first, size_t last) {
+
+		if (first > last) swap(first, last);
+
+		this->maxSize = (last - first) + 1;
+		this->_size = 0;
+
+		array = new T[maxSize];
+
+		for (int i = first; i <= last; i++) push_back(i);
+	}
+
+	LinearList(const LinearList &other) : maxSize(other.capacity()) {
 
 		this->_size = other.size();
 
@@ -43,6 +66,36 @@ class LinearList : public List<T> {
 		for (int i = 0; i < this->_size; i++) {
 			array[i] = other.array[i];
 		}
+	}
+
+	bool operator!=(const LinearList<T>& other) const {
+
+		if (this->size() != other.size()) return true;
+
+		for (int i = 0; i < this->size(); i++) {
+			if (array[i] != other[i]) return true;
+		}
+
+		return false;
+	}
+
+	LinearList<T>& operator=(const LinearList<T>& other) {
+
+		if (this != &other) {
+
+			delete[] array;
+
+			this->_size = other._size;
+			this->maxSize = other.maxSize;
+
+			array = new T[maxSize];
+
+			for (int i = 0; i < this->_size; i++) {
+				array[i] = other.array[i];
+			}
+		}
+
+		return *this;
 	}
 
 	~LinearList() override { delete[] array; }
@@ -96,7 +149,7 @@ class LinearList : public List<T> {
 	T pop_back() override {
 
 		if (this->empty()) {
-			throw std::runtime_error("List underflow: Attempt to pop_front() an empty list.");
+			throw std::runtime_error("List underflow: Attempt to pop_back() an empty list.");
 		}
 
 		return array[--this->_size];
@@ -166,20 +219,31 @@ class LinearList : public List<T> {
 	void shrink_to_fit() { resize(this->_size); }
 	size_t capacity() const { return maxSize; }
 
+	size_t indexOf(T value) {
+
+		for (int i = 0; i < this->_size; i++) {
+			if (array[i] == value) return i;
+		}
+
+		return -1;
+	}
+
 	std::string str() const {
+
+		if (this->size() == 0) return "∅";
 
 		std::ostringstream oss;
 
 		oss << "{ ";
 
 		for (int i = 0; i < this->_size; i++) {
-			oss << array[i] << " ";
+			oss << array[i];
+			if (i < this->_size - 1) oss << ", ";
 		}
 
-		oss << "}";
+		oss << " }";
 
 		return oss.str();
-
 	}
 
 	friend std::ostream& operator<<(std::ostream& os, const LinearList<T>& list) {
@@ -219,6 +283,43 @@ class LinearList : public List<T> {
 	void quicksort(int left, int right) {}
 
 	void sort() override { quicksort(0, this->_size - 1); }
+
+	class Iterator {
+		T* current;
+	public:
+		Iterator(T* ptr) : current(ptr) {}
+
+		T& operator*() const {
+			return *current;
+		}
+
+		Iterator& operator++() {
+			current++;
+			return *this;
+		}
+
+		Iterator operator++(int) {
+			Iterator temp = *this;
+			++(*this);
+			return temp;
+		}
+
+		bool operator==(const Iterator& other) const {
+			return current == other.current;
+		}
+
+		bool operator!=(const Iterator& other) const {
+			return !(*this == other);
+		}
+	};
+
+	Iterator begin() {
+		return Iterator(array);
+	}
+
+	Iterator end() {
+		return Iterator(array + this->_size);
+	}
 };
 
 #endif
