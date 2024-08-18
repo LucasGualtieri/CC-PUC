@@ -91,3 +91,26 @@ int main() {
 
 	cout << "O número de subgrafos gerados foi: " << subgraphs(N) << endl;
 }
+
+// Solução MUITO parecida com a nossa, porém mais eficiente por não precisar de fazer comparação entre conjuntos.
+/* void powerSet(string str, int index = -1, string curr = "") {
+
+	int n = str.length();
+
+	// base case
+	if (index == n) return;
+
+	// First print current subset, or add it to a bigger set.
+	cout << curr << "\n";
+
+	// Try appending remaining characters to current subset
+	for (int i = index + 1; i < n; i++) {
+
+		curr += str[i];
+		powerSet(str, i, curr);
+
+		curr.erase(curr.size() - 1);
+	}
+
+	return;
+} */
