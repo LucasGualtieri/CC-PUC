@@ -1,13 +1,15 @@
 #include <cmath>
 #include <iostream>
 #include "../DataStructures/include/list/linearList.hpp"
-// #include <LinearList>
 
 using namespace std;
 
 // clear && g++ subgrafos.cc && ./a.out
 
-int factorial(int n) { return n <= 1 ? 1 : n * factorial(n - 1); }
+typedef LinearList<int> Vertices;
+typedef LinearList<LinearList<int>> Arestas;
+
+size_t factorial(int n) { return n <= 1 ? 1 : n * factorial(n - 1); }
 
 size_t subsetCombinations(int i, int n) {
 	return factorial(n) / (factorial(i) * factorial(n - i));
@@ -26,7 +28,7 @@ LinearList<LinearList<T>> PowerSet(LinearList<T> set, size_t min = 0, size_t max
 
 		LinearList<T> subset(i);
 
-		int setinha = 0;
+		int currentIndex = 0;
 
 		size_t combinations = subsetCombinations(i, N);
 
@@ -34,18 +36,16 @@ LinearList<LinearList<T>> PowerSet(LinearList<T> set, size_t min = 0, size_t max
 
 			while (subset.size() < i) {
 
-				if (setinha >= N) {
-					// O acesso do .back() é O(1) mas a comparação entre sets pode ser custosa...
+				if (currentIndex >= N) {
 					if (subset.back() == set.back()) subset.pop_back();
-					setinha = set.indexOf(subset.pop_back()) + 1;
+					currentIndex = set.indexOf(subset.pop_back()) + 1;
 				}
 
-				subset.push_back(set[setinha++]);
+				subset.push_back(set[currentIndex++]);
 			}
 
 			powerSet.push_back(subset);
 
-			// foi necessario essa condição, mas não lembro exatamente o pq
 			if (!subset.empty()) subset.pop_back();
 		}
 	}
@@ -53,22 +53,29 @@ LinearList<LinearList<T>> PowerSet(LinearList<T> set, size_t min = 0, size_t max
 	return powerSet;
 }
 
-typedef LinearList<int> Vertices;
-typedef LinearList<LinearList<int>> Arestas;
+size_t subgraphs(int N) {
+
+	size_t number = 0;
+
+	for (int i = 1; i <= N; i++) {
+		number += pow(2, (i * i - i) / 2) * subsetCombinations(i, N);
+	}
+
+	return number;
+}
 
 int main() {
 
-	// Além disto, informe o número de subgrafos gerados.
-	// fazer a função que calcula o somatório 2^(...) * np
-
 	int N;
 
-	cout << "Digite o tamanho do grafo completo: ";
+	cout << "Digite o |V| do grafo completo: ";
 	cin >> N;
 
 	LinearList<int> set(1, N);
 
 	int i = 1;
+
+	cout << endl;
 
 	for (Vertices V : PowerSet(set, 1)) {
 
@@ -78,7 +85,9 @@ int main() {
 
 			cout << "Subgrafo " << i++ << ": " << endl;
 			cout << "V = " << V << endl;
-			cout << "E = " << E << endl;
+			cout << "E = " << E << endl << endl;
 		}
 	}
+
+	cout << "O número de subgrafos gerados foi: " << subgraphs(N) << endl;
 }
