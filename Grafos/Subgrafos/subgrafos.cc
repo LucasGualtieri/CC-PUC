@@ -75,17 +75,15 @@ int main() {
 
 	int i = 1;
 
-	cout << endl;
-
 	for (Vertices V : PowerSet(set, 1)) {
 
 		Arestas edgesSet = PowerSet(V, 2, 2);
 
 		for (Arestas E : PowerSet(edgesSet)) {
 
-			cout << "Subgrafo " << i++ << ": " << endl;
+			cout << endl << "Subgrafo " << i++ << ": " << endl;
 			cout << "V = " << V << endl;
-			cout << "E = " << E << endl << endl;
+			cout << "E = " << E << endl;
 		}
 	}
 
