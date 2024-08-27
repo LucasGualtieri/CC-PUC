@@ -1,0 +1,9 @@
+graph G {
+	// Nodes
+	2[label="Node 2", fillcolor="red", style="filled"];
+	3[label="Node 3", fillcolor="green", style="filled"];
+	4[label="Node 4", fillcolor="orange", style="filled"];
+	2 -- 3;
+	3 -- 4;
+	4 -- 2;
+}
