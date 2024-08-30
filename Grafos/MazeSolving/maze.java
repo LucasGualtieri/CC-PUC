@@ -31,45 +31,96 @@ class Grafo {
 
 	public List<Integer> resolver(int inicio, int destino) {
 
-        // Cria uma fila para a BFS e marca o nó de início como visitado
-        Queue<Integer> fila = new LinkedList<>();
-        Set<Integer> visitados = new HashSet<>();
+		Queue<Integer> fila = new LinkedList<>();
+		fila.add(inicio);
 
-		HashMap<Integer, Integer> antecessor = new HashMap<>();
+		// Map<Integer, Boolean> visitados = new HashMap<>();
 
-        fila.add(inicio);
-        visitados.add(inicio);
+		boolean visitados[] = new boolean[adjList.size()];
+		for (int i = 0; i < visitados.length; i++) visitados[i] = false;
 
-        // Enquanto a fila não estiver vazia, continue processando os nós
-        while (!fila.isEmpty()) {
+		int antecessor[] = new int[adjList.size()];
+		for (int i = 0; i < antecessor.length; i++) antecessor[i] = -1;
 
-            int noAtual = fila.poll();
-			if (noAtual == destino) break;
-            // System.out.print(noAtual + " ");
+		while (!fila.isEmpty()) {
 
-            // Pega todos os vizinhos do nó atual
-            for (int vizinho : adjList.get(noAtual)) {
-                // Se o vizinho ainda não foi visitado, adiciona na fila e marca como visitado
-                if (!visitados.contains(vizinho)) {
-                    fila.add(vizinho);
-                    visitados.add(vizinho);
-					antecessor.put(vizinho, noAtual);
-                }
-            }
-        }
+			int u = fila.remove();
+			visitados[u] = true;
+			
+			if (u == destino) break;
+			
+			for (int v : adjList.get(u)) {
+				if (!visitados[v]) {
+					fila.add(v);
+					antecessor[v] = u;
+				}
+			}
+		}
 
 		// Reconstruir caminho
-		List<Integer> caminho = new ArrayList<>();
+		List<Integer> caminho = new LinkedList<>();
 
 		int passo = destino;
 		while (passo != inicio) {
 			caminho.add(0, passo);
-			passo = antecessor.get(passo);
+			passo = antecessor[passo];
 		}
 
 		caminho.add(0, passo);
 
 		return caminho;
+    }
+
+	public List<Integer> BuscaEm(int u) {
+
+		Stack<Integer> estrutura = new Stack<>();
+		estrutura.add(u);
+
+		boolean descobertos[] = new boolean[adjList.size()];
+		for (int i = 0; i < descobertos.length; i++) descobertos[i] = false;
+
+		List<Integer> fechoTransitivoDireto = new ArrayList<>();
+		descobertos[u] = true;
+
+		while (!estrutura.isEmpty()) {
+
+			int v = estrutura.pop();
+			fechoTransitivoDireto.add(v);
+
+			for (int adj : adjList.get(v)) {
+				if (!descobertos[adj]) estrutura.add(adj);
+				descobertos[adj] = true;
+			}
+		}
+
+		return fechoTransitivoDireto;
+    }
+
+	public List<Integer> BuscaEmTeste(int u) {
+
+		Stack<Integer> estrutura = new Stack<>();
+		estrutura.add(u);
+
+		boolean visitados[] = new boolean[adjList.size()];
+		for (int i = 0; i < visitados.length; i++) visitados[i] = false;
+
+		List<Integer> fechoTransitivoDireto = new ArrayList<>();
+
+		while (!estrutura.isEmpty()) {
+
+			int v = estrutura.pop();
+			fechoTransitivoDireto.add(v);
+
+			visitados[v] = true;
+
+			for (int adj : adjList.get(v)) {
+				if (!visitados[adj]) {
+					estrutura.add(adj);
+				}
+			}
+		}
+
+		return fechoTransitivoDireto;
     }
 
 	public static void main(String[] args) throws InterruptedException {
@@ -92,7 +143,6 @@ class Grafo {
 			grafo.adicionarAresta(11, 10);
 			grafo.adicionarAresta(11, 12);
 			grafo.adicionarAresta(12, 13);
-
 			grafo.adicionarAresta(14, 15);
 			grafo.adicionarAresta(15, 16);
 			grafo.adicionarAresta(16, 17);
@@ -127,7 +177,10 @@ class Grafo {
 		// 	// Thread.sleep(100);
 		// }
 
-		System.out.println(grafo.resolver(1, 0));
+		System.out.println(grafo.BuscaEmTeste(1));
+		// System.out.println(grafo.BuscaEm(1));
+
+		// System.out.println(grafo.resolver(1, 0));
 
 	}
 }
