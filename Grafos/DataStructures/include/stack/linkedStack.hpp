@@ -13,6 +13,13 @@ class LinkedStack : public Stack<T> {
 public:
 
     LinkedStack() : top(nullptr) { this->_size = 0; }
+
+    LinkedStack(T value) : top(nullptr) {
+
+		this->_size = 0;
+		push(value);
+	}
+
     ~LinkedStack() override { this->clear(); }
 
 	bool contains(const T& value) const override {
@@ -24,7 +31,7 @@ public:
 		return false;
 	}
 
-    void push(const T& value) override {
+    void push(T value) override {
         top = new Cell<T>(value, top);
         this->_size++;
     }

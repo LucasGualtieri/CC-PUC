@@ -10,7 +10,7 @@ class Stack {
   public:
 	virtual ~Stack() = default;
 
-	virtual void push(const T& value) = 0;
+	virtual void push(T value) = 0;
 	virtual T pop() = 0;
 	virtual T& peek() const = 0;
 

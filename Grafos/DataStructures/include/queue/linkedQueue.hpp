@@ -17,6 +17,12 @@ public:
 		this->_size = 0;
 	}
 
+	LinkedQueue(T value) {
+		head = tail = new Cell<T>;
+		this->_size = 0;
+		this->push(value);
+	}
+
 	~LinkedQueue() override {
 		this->clear();
 		delete head;

@@ -91,7 +91,7 @@ class LinkedList : public List<T> {
 		return value;
 	}
 
-	void add(const T& value, unsigned int pos = 0) override {
+	void add(T value, unsigned int pos = 0) override {
 
 		if (pos < 0 || this->_size < pos) {
 			throw std::runtime_error("Invalid position.");

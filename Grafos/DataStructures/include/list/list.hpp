@@ -13,7 +13,7 @@ class List {
 	virtual void push_back(T value) = 0;
 	virtual T pop_front() = 0;
 	virtual T pop_back() = 0;
-	virtual void add(const T& value, unsigned int pos) = 0;
+	virtual void add(T value, unsigned int pos) = 0;
 	virtual T remove(unsigned int pos) = 0;
 	virtual T& front() const = 0;
 	virtual T& back() const = 0;

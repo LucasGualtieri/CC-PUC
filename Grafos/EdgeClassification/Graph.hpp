@@ -263,7 +263,7 @@ class Graph {
 		// Write some text to the file
 		outfile << "digraph G {" << std::endl;
 
-		outfile << "size=\"10!\";" << std::endl;
+		outfile << "\tsize=\"10!\";" << std::endl;
 
 		outfile << "\t//Nodes" << std::endl;
 

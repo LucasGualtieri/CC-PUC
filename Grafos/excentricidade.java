@@ -1,18 +1,17 @@
-package Grafos.MazeSolving;
+package Grafos;
 
 import java.util.*;
 
-// clear && javac maze.java && java maze.java
+// clear && javac excentricidade.java && java excentricidade.java
 
 class Grafo {
 
 	private Map<Integer, List<Integer>> adjList;
 
-	public Grafo() {
-		adjList = new HashMap<>();
-	}
+	public Grafo() { adjList = new HashMap<>(); }
 
 	public void adicionarAresta(int origem, int destino) {
+
 		adjList.putIfAbsent(origem, new ArrayList<>());
 		adjList.putIfAbsent(destino, new ArrayList<>());
 		adjList.get(origem).add(destino);
@@ -29,102 +28,42 @@ class Grafo {
 		}
 	}
 
-	public List<Integer> resolver(int inicio, int destino) {
+	public int excentricidade(int u) {
 
 		Queue<Integer> fila = new LinkedList<>();
-		fila.add(inicio);
+		Set<Integer> visitados = new HashSet<>();
+		HashMap<Integer, Integer> antecessor = new HashMap<>();
 
-		// Map<Integer, Boolean> visitados = new HashMap<>();
+		fila.add(u);
+		visitados.add(u);
 
-		boolean descobertos[] = new boolean[adjList.size()];
-		for (int i = 0; i < descobertos.length; i++) descobertos[i] = false;
-
-		int antecessor[] = new int[adjList.size()];
-		for (int i = 0; i < antecessor.length; i++) antecessor[i] = -1;
-
-		descobertos[inicio] = true;
+		int noAtual = 0;
 
 		while (!fila.isEmpty()) {
 
-			int u = fila.poll();
+			noAtual = fila.poll();
 
-			if (u == destino) break;
+			for (int vizinho : adjList.get(noAtual)) {
 
-			for (int v : adjList.get(u)) {
+				if (!visitados.contains(vizinho)) {
 
-				if (!descobertos[v]) {
-					fila.add(v);
-					antecessor[v] = u;
-					descobertos[u] = true;
+					fila.add(vizinho);
+					visitados.add(vizinho);
+					antecessor.put(vizinho, noAtual);
 				}
 			}
 		}
 
-		// Reconstruir caminho
-		List<Integer> caminho = new LinkedList<>();
+		int distancia = 0;
+		int passo = noAtual;
 
-		int passo = destino;
-		while (passo != inicio) {
-			caminho.add(0, passo);
-			passo = antecessor[passo];
+		while (passo != u) {
+			distancia++;
+			passo = antecessor.get(passo);
 		}
 
-		caminho.add(0, passo);
-
-		return caminho;
-    }
-
-	public List<Integer> BuscaEm(int u) {
-
-		Stack<Integer> estrutura = new Stack<>();
-		estrutura.add(u);
-
-		boolean descobertos[] = new boolean[adjList.size()];
-		for (int i = 0; i < descobertos.length; i++) descobertos[i] = false;
-
-		List<Integer> fechoTransitivoDireto = new ArrayList<>();
-		descobertos[u] = true;
-
-		while (!estrutura.isEmpty()) {
-
-			int v = estrutura.pop();
-			fechoTransitivoDireto.add(v);
-
-			for (int adj : adjList.get(v)) {
-				if (!descobertos[adj]) estrutura.add(adj);
-				descobertos[adj] = true;
-			}
-		}
-
-		return fechoTransitivoDireto;
-    }
-
-	public List<Integer> BuscaEmTeste(int u) {
-
-		Stack<Integer> estrutura = new Stack<>();
-		estrutura.add(u);
-
-		boolean visitados[] = new boolean[adjList.size()];
-		for (int i = 0; i < visitados.length; i++) visitados[i] = false;
-
-		List<Integer> fechoTransitivoDireto = new ArrayList<>();
-
-		while (!estrutura.isEmpty()) {
-
-			int v = estrutura.pop();
-			fechoTransitivoDireto.add(v);
-
-			visitados[v] = true;
-
-			for (int adj : adjList.get(v)) {
-				if (!visitados[adj]) {
-					estrutura.add(adj);
-				}
-			}
-		}
-
-		return fechoTransitivoDireto;
-    }
+		return distancia;
+	}
 
 	public static void main(String[] args) throws InterruptedException {
 
@@ -146,6 +85,7 @@ class Grafo {
 			grafo.adicionarAresta(11, 10);
 			grafo.adicionarAresta(11, 12);
 			grafo.adicionarAresta(12, 13);
+
 			grafo.adicionarAresta(14, 15);
 			grafo.adicionarAresta(15, 16);
 			grafo.adicionarAresta(16, 17);
@@ -180,10 +120,23 @@ class Grafo {
 		// 	// Thread.sleep(100);
 		// }
 
-		System.out.println(grafo.BuscaEmTeste(1));
-		// System.out.println(grafo.BuscaEm(1));
-
 		// System.out.println(grafo.resolver(1, 0));
+
+		int raio = Integer.MAX_VALUE;
+		int diametro = Integer.MIN_VALUE;
+
+		for (int i = 0; i <= 35; i++) {
+
+			int value = grafo.excentricidade(i);
+
+			if (value < raio) raio = value;
+			else if (value > diametro) diametro = value;
+
+			System.out.printf("Excentricidade de %d = %d\n", i, value);
+		}
+
+		System.out.println("Raio: " + raio);
+		System.out.println("Diametro: " + diametro);
 
 	}
 }
