@@ -1,18 +1,17 @@
 digraph G {
-	size="10!";
 	//Nodes
-	0[label = "0[1,8]" fillcolor="red", style="filled"]
-	1[label = "1[2,3]" fillcolor="red", style="filled"]
-	2[label = "2[4,7]" fillcolor="red", style="filled"]
-	3[label = "3[5,6]" fillcolor="red", style="filled"]
-	4[label = "4[9,10]" fillcolor="red", style="filled"]
+	0[label = "0[1,8]" fillcolor="red", style="filled"];
+	1[label = "1[2,3]" fillcolor="red", style="filled"];
+	2[label = "2[4,7]" fillcolor="red", style="filled"];
+	3[label = "3[5,6]" fillcolor="red", style="filled"];
+	4[label = "4[9,10]" fillcolor="red", style="filled"];
 
 	//Edges
-	0 -> 1[label="arv"];
-	0 -> 2[label="arv"];
-	0 -> 3[label="ava"];
-	1 -> 0[label="ret"];
-	2 -> 1[label="cruz"];
-	2 -> 3[label="arv"];
-	4 -> 3[label="cruz"];
+	0 -> 1[label=arv];
+	0 -> 2[label=arv];
+	0 -> 3[label=ava];
+	1 -> 0[label=ret];
+	2 -> 1[label=cruz];
+	2 -> 3[label=arv];
+	4 -> 3[label=cruz];
 }

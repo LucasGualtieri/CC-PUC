@@ -16,8 +16,8 @@ int main() {
 
 	cout << g << endl;
 
-	cout << g.BFS(0) << endl;
-	cout << g.DFS(0) << endl;
+	// cout << g.BFS(0) << endl;
+	// cout << g.DFS(0) << endl;
 
-	g.ClassificacaoRec();
+	g.Classificacao();
 }
