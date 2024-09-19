@@ -1,0 +1,67 @@
+#include <iostream>
+#include <iomanip>
+#include <vector>
+#include <cmath>
+
+std::string HSLToHex(int h, double s, double l) {
+    double C = (1 - std::fabs(2 * l - 1)) * s;  // Chroma
+    double X = C * (1 - std::fabs(fmod(h / 60.0, 2) - 1));
+    double m = l - C / 2;
+
+    double r, g, b;
+
+    if (h >= 0 && h < 60) {
+        r = C, g = X, b = 0;
+    } else if (h >= 60 && h < 120) {
+        r = X, g = C, b = 0;
+    } else if (h >= 120 && h < 180) {
+        r = 0, g = C, b = X;
+    } else if (h >= 180 && h < 240) {
+        r = 0, g = X, b = C;
+    } else if (h >= 240 && h < 300) {
+        r = X, g = 0, b = C;
+    } else {
+        r = C, g = 0, b = X;
+    }
+
+    // Convert to 0-255 range
+    int R = static_cast<int>((r + m) * 255);
+    int G = static_cast<int>((g + m) * 255);
+    int B = static_cast<int>((b + m) * 255);
+
+    // Convert to hexadecimal
+    std::ostringstream oss;
+    oss << "#" << std::setfill('0') << std::setw(2) << std::hex << R
+        << std::setfill('0') << std::setw(2) << std::hex << G
+        << std::setfill('0') << std::setw(2) << std::hex << B;
+
+    return oss.str();
+}
+
+std::vector<std::string> generateColors(int n) {
+    std::vector<std::string> colors;
+    double saturation = 0.8; // Saturação fixa
+    double lightness = 0.5;  // Luminosidade fixa
+
+    for (int i = 0; i < n; ++i) {
+        int hue = static_cast<int>((i * (360 / n)) % 360);
+        colors.push_back(HSLToHex(hue, saturation, lightness));
+    }
+
+    return colors;
+}
+
+int main() {
+    int n;
+    std::cout << "Digite o número de cores a serem geradas: ";
+    std::cin >> n;
+
+    std::vector<std::string> colors = generateColors(n);
+    
+    std::cout << "Cores geradas:" << std::endl;
+    for (const auto& color : colors) {
+        std::cout << color << std::endl;
+    }
+
+    return 0;
+}
