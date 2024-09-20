@@ -96,7 +96,7 @@ class Graph {
 		exportar();
 	}
 
-	void Classificacao() {
+	void Classificacao(int v = 0) {
 
 		tInicial = new int[vSize];
 		tFinal = new int[vSize];
@@ -111,6 +111,8 @@ class Graph {
 		int tempo = 1;
 
 		exportar();
+
+		DFS(v, tempo, visitados);
 
 		for (int i = 0; i < vSize; i++) {
 			if (!visitados[i] && V[i] != -1) DFS(i, tempo, visitados);

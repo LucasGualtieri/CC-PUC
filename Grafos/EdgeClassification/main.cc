@@ -19,5 +19,5 @@ int main() {
 	// cout << g.BFS(0) << endl;
 	// cout << g.DFS(0) << endl;
 
-	g.Classificacao();
+	g.Classificacao(); // Se comporta correto quando começa do 3?
 }

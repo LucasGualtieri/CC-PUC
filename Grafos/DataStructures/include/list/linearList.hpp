@@ -155,7 +155,7 @@ class LinearList : public List<T> {
 		return array[--this->_size];
 	}
 
-	void add(const T& value, unsigned int pos) override {
+	void add(T value, unsigned int pos) override {
 
 		if (this->_size == maxSize) resize(this->_size * 2);
 
@@ -280,7 +280,52 @@ class LinearList : public List<T> {
 		return true;
 	}
 
-	void quicksort(int left, int right) {}
+	int compareListsLexicographically(const LinearList& list) {
+
+		int minSize = std::min(this->_size, list.size());
+
+		// If all elements are the same up to the shorter size, compare sizes
+		if (this->_size < list.size()) {
+			return -1;  // arr1 is lexicographically smaller because it's shorter
+		} else if (this->_size > list.size()) {
+			return 1;   // arr1 is lexicographically greater because it's longer
+		}
+
+		// Compare elements one by one
+		for (int i = 0; i < minSize; ++i) {
+
+			if (array[i] < list.array[i]) {
+				return -1;  // arr1 is lexicographically smaller
+			} else if (array[i] > list.array[i]) {
+				return 1;   // arr1 is lexicographically greater
+			}
+		}
+
+		return 0;  // Both arrays are lexicographically equal
+	}
+
+	bool operator<(const LinearList& list) {
+		return compareListsLexicographically(list) < 0;
+	}
+
+	bool operator>(const LinearList& list) {
+		return compareListsLexicographically(list) > 0;
+	}
+
+	void quicksort(int left, int right) {
+
+		int i = left, j = right;
+		T pivo = array[(right + left) / 2];
+
+		while (i <= j) {
+			while (array[i] < pivo) i++;
+			while (array[j] > pivo) j--;
+			if (i <= j) swap(array[i++], array[j--]);
+		}
+
+		if (left < j) quicksort(left, j);
+		if (i < right) quicksort(i, right);
+	}
 
 	void sort() override { quicksort(0, this->_size - 1); }
 

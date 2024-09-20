@@ -11,7 +11,7 @@
 #include "../DataStructures/include/list/linearList.hpp"
 #include "../DataStructures/include/queue/linkedQueue.hpp"
 #include "../DataStructures/include/stack/linkedStack.hpp"
-#include "../DataStructures/include/matrix/matrixInt.hpp"
+#include "../DataStructures/include/matrix/matrix.hpp"
 
 class Graph {
   public:
@@ -119,7 +119,7 @@ class Graph {
 
 		Graph g(vSize, eSize);
 
-		Matrix m(vSize, vSize);
+		Matrix<int> m(vSize, vSize);
 
 		for (int i = 0; i < vSize; i++) {
 

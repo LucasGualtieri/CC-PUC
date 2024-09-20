@@ -4,6 +4,8 @@
 #include <sstream>
 #include <iomanip>
 
+// Ainda tem um bug nessa classe que causou o transpose bugar
+
 class Matrix {
 
 	int** matrix;
@@ -16,14 +18,14 @@ class Matrix {
 
 		matrix = new int*[height];
 
-		for (int i = 0; i < width; i++) {
+		for (int i = 0; i < height; i++) {
 			matrix[i] = new int[width];
 		}
 	}
 
 	~Matrix() {
 
-		for (int i = 0; i < width; i++) {
+		for (int i = 0; i < height; i++) {
 			delete[] matrix[i];
 		}
 
