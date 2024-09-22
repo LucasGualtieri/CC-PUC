@@ -115,22 +115,51 @@ class Graph {
 		if (colors) delete[] colors;
 	}
 
+	// Graph transpose() {
+
+	// 	Graph g(vSize, eSize);
+
+	// 	Matrix<int> m(vSize, vSize);
+
+	// 	for (int i = 0; i < vSize; i++) {
+
+	// 		int ultimaAresta = V[i];
+
+	// 		while (E[ultimaAresta] != -1) {
+	// 			m[E[ultimaAresta++]][i] = 1;
+	// 		}
+	// 	}
+
+	// 	// // std::cout << m << std::endl;
+
+	// 	int ultimaAresta = 0;
+
+	// 	for (int i = 0; i < vSize; i++) {
+
+	// 		g.V[i] = ultimaAresta;
+
+	// 		for (int j = 0; j < vSize; j++) {
+	// 			if (m[i][j]) g.E[ultimaAresta++] = j;
+	// 		}
+
+	// 		g.E[ultimaAresta++] = -1;
+	// 	}
+
+	// 	return g;
+	// }
+
+	bool containsInAdjList(int v, int u) {
+
+		for (int i = V[v]; i != -1 && E[i] != -1; i++) {
+			if (E[i] == u) return true;
+		}
+
+		return false;
+	}
+
 	Graph transpose() {
 
 		Graph g(vSize, eSize);
-
-		Matrix<int> m(vSize, vSize);
-
-		for (int i = 0; i < vSize; i++) {
-
-			int ultimaAresta = V[i];
-
-			while (E[ultimaAresta] != -1) {
-				m[E[ultimaAresta++]][i] = 1;
-			}
-		}
-
-		// // std::cout << m << std::endl;
 
 		int ultimaAresta = 0;
 
@@ -139,7 +168,7 @@ class Graph {
 			g.V[i] = ultimaAresta;
 
 			for (int j = 0; j < vSize; j++) {
-				if (m[i][j]) g.E[ultimaAresta++] = j;
+				if (containsInAdjList(j, i)) g.E[ultimaAresta++] = j;
 			}
 
 			g.E[ultimaAresta++] = -1;
