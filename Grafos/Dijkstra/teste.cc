@@ -17,7 +17,7 @@ using namespace std;
 struct CompareBySecond {
 
 	bool operator()(const pair<int, float>& p1, const pair<int, float>& p2) {
-		return p1.second > p2.second;
+		return p1.second < p2.second;
 	}
 };
 
@@ -52,7 +52,11 @@ LinearList<int> dijkstra(int u, int v, Matrix<float> m) {
 
 		last = w;
 
-		if (w == v) break;
+		if (w == v) {
+			// break;
+			for (int i = 0; i < m.width; i++) visitados[i] = 0;
+			if (pq.empty()) break;
+		}
 
 		for (int i = 0; i < m.width; i++) {
 			if (m[w][i] && !visitados[i]) {
