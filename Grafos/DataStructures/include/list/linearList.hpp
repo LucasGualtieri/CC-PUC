@@ -2,6 +2,7 @@
 #define LINEAR_LIST_HPP
 
 #include <sstream>
+#include <limits>
 #include "list.hpp"
 #include "../../util/util.hpp"
 
@@ -26,6 +27,18 @@ class LinearList : public List<T> {
 	}
 
   public:
+
+	LinearList(int n, T array[]) {
+
+		this->maxSize = n;
+		this->_size = 0;
+
+		this->array = new T[maxSize];
+
+		for (int i = 0; i < n; i++) {
+			push_back(array[i]);
+		}
+	}
 
 	LinearList(size_t maxSize = 5) {
 
@@ -237,7 +250,17 @@ class LinearList : public List<T> {
 		oss << "{ ";
 
 		for (int i = 0; i < this->_size; i++) {
-			oss << array[i];
+
+			if (array[i] == std::numeric_limits<T>::max()) {
+				oss << "∞";
+			}
+
+			else if (array[i] == std::numeric_limits<T>::min()) {
+				oss << "-∞";
+			}
+
+			else oss << array[i];
+
 			if (i < this->_size - 1) oss << ", ";
 		}
 
