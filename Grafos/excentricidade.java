@@ -65,6 +65,45 @@ class Grafo {
 		return distancia;
 	}
 
+	private class Pair<T, K> {
+
+		public T first;
+		public K second;
+
+		public Pair(T first, K second) {
+			this.first = first;
+			this.second = second;
+		}
+	}
+
+	public int excentricidadeVini(int u) {
+
+		Queue<Pair> fila = new LinkedList<>();
+		Set<Integer> visitados = new HashSet<>();
+
+		Pair<Integer, Integer> pair = new Pair<>(u, 0);
+
+		fila.add(pair);
+		visitados.add(u);
+
+		while (!fila.isEmpty()) {
+
+			pair = fila.poll();
+			int noAtual = pair.first;
+
+			for (int vizinho : adjList.get(noAtual)) {
+
+				if (!visitados.contains(vizinho)) {
+
+					fila.add(new Pair<>(vizinho, pair.second + 1));
+					visitados.add(vizinho);
+				}
+			}
+		}
+
+		return pair.second;
+	}
+
 	public static void main(String[] args) throws InterruptedException {
 
 		Grafo grafo = new Grafo();
@@ -127,7 +166,7 @@ class Grafo {
 
 		for (int i = 0; i <= 35; i++) {
 
-			int value = grafo.excentricidade(i);
+			int value = grafo.excentricidadeVini(i);
 
 			if (value < raio) raio = value;
 			else if (value > diametro) diametro = value;
