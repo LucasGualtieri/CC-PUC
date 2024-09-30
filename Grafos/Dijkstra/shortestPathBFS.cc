@@ -22,5 +22,5 @@ int main() {
 
 	// g.BFS(0, 3);
 
-	cout << "ShortestPath(0, 3): " << g.BFS(0, 3) << endl;
+	cout << "ShortestPath(0, 5): " << g.BFS(0, 5) << endl;
 }

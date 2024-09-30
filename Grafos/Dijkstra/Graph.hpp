@@ -7,12 +7,16 @@
 #include <vector>
 #include <cmath>
 #include <limits>
+#include <queue>
+#include <fstream>
 
 #include "../DataStructures/include/list/linkedList.hpp"
 #include "../DataStructures/include/list/linearList.hpp"
 #include "../DataStructures/include/queue/linkedQueue.hpp"
 #include "../DataStructures/include/stack/linkedStack.hpp"
 #include "../DataStructures/include/matrix/matrix.hpp"
+#include "Pair.hpp"
+#include "Triple.hpp"
 
 #define Infinity 0x7FFFFFFF
 
@@ -68,6 +72,67 @@ class Graph {
 
 	inline bool inBounds(int y, int Y) {
 		return 0 <= y && y < eSize && y < abs(V[Y + 1]);
+	}
+
+	LinearList<int> BFS(int v, int destino) {
+
+		LinearList<int> fechoTransitivoDireto;
+
+		LinkedQueue<Triple<int, int, int>> q({v, 0, -1});
+
+		int visitados[vSize], antecessores[vSize];
+
+		for (int i = 0; i < vSize; i++) {
+			visitados[i] = 0;
+			antecessores[i] = -1;
+		}
+
+		while(!q.empty()) {
+
+			// std::cout << q << std::endl;
+
+			auto [u, w, ancestral] = q.pop();
+
+			if (visitados[u]) continue;
+
+			if (w > 1) {
+				q.push({u, w - 1, ancestral});
+				continue;
+			}
+
+			antecessores[u] = ancestral;
+
+			visitados[u] = 1;
+
+			if (u == destino) break;
+
+			fechoTransitivoDireto.push_back(u);
+
+			for (int i = V[u]; inBounds(i, u); i++) {
+				if (!visitados[E[i]]) {
+					q.push({E[i], (int)D[i], u});
+				}
+			}
+		}
+
+		LinearList<int> shortestPath;
+
+		if (antecessores[destino] != -1) {
+
+			while (destino != v) {
+				shortestPath.push_front(destino);
+				destino = antecessores[destino];
+			}
+
+			shortestPath.push_front(v);
+
+			// std::cout << "\nShortest Path: " << shortestPath << std::endl;
+
+		}
+
+		// fechoTransitivoDireto.sort();
+
+		return shortestPath;
 	}
 
 	LinearList<int> DFS(int v) {
@@ -128,6 +193,7 @@ class Graph {
 
 		for (int i = 0; i < vSize; i++) {
 			Lx[i] = std::numeric_limits<float>::max();
+			antecessores[i] = -1;
 			S[i] = true;
 		}
 
@@ -159,6 +225,109 @@ class Graph {
 		// std::cout << destino << std::endl;
 
 		LinearList<float> distances(vSize, Lx);
+
+		return distances;
+	}
+
+	int Min(float dist[], bool visitados[]) {
+
+		float minDist = std::numeric_limits<float>::max();
+		int minElement;
+
+		for (int i = 0; i < vSize; i++) {
+			if (!visitados[i] && dist[i] < minDist) {
+				minDist = dist[i];
+				minElement = i;
+			}
+		}
+
+		return minElement;
+	}
+
+	// Implementação intuitiva feita no quadro pelo Silvio
+	LinearList<float> dijkstra1(int u) {
+
+		float dist[vSize];
+		bool visitados[vSize];
+
+		for (int i = 0; i < vSize; i++) {
+			dist[i] = std::numeric_limits<float>::max();
+			visitados[i] = false;
+		}
+
+		dist[u] = 0;
+
+		for (int i = 0; i < vSize; i++) {
+
+			int Y = Min(dist, visitados);
+
+			visitados[Y] = true;
+
+			for (int y = V[Y]; inBounds(y, Y); y++) {
+				dist[E[y]] = std::min(dist[E[y]], dist[Y] + D[y]);
+			}
+		}
+
+		LinearList<float> distances(vSize, dist);
+
+		return distances;
+	}
+
+	Pair<int, int> Min2(float dist[], bool visitados[]) {
+
+		float minDist = std::numeric_limits<float>::max();
+		int minElement;
+
+		for (int i = 0; i < vSize; i++) {
+			if (visitados[i] && dist[i] < minDist) {
+				minDist = dist[i];
+				minElement = i;
+			}
+		}
+
+		int vertice = std::numeric_limits<int>::max(); // Assume que a primeira aresta é a menor
+		int teste;
+
+		for (int i = V[minElement]; inBounds(i, minElement); i++) {
+			if (!visitados[E[i]] && D[i] < vertice) {
+				vertice = D[i];
+				teste = i;
+			}
+		}
+
+		Pair<int, int> pair(minElement, teste);
+
+		return pair;
+	}
+
+	LinearList<float> dijkstra2(int u) {
+
+		float dist[vSize];
+		bool visitados[vSize];
+
+		for (int i = 0; i < vSize; i++) {
+			dist[i] = std::numeric_limits<float>::max();
+			visitados[i] = false;
+		}
+
+		dist[u] = 0;
+		visitados[u] = true;
+
+		for (int i = 0; i < vSize; i++) {
+
+			auto [v, Y] = Min2(dist, visitados);
+
+			// std::cout << "\nv: " << v << std::endl;
+			// std::cout << "Y: " << Y << std::endl;
+			// std::cout << "E[Y]: " << E[Y] << std::endl;
+			// std::cout << "-------------------" << std::endl;
+
+			visitados[E[Y]] = true;
+
+			dist[E[Y]] = dist[v] + D[Y];
+		}
+
+		LinearList<float> distances(vSize, dist);
 
 		return distances;
 	}

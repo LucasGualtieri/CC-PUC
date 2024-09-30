@@ -20,5 +20,11 @@ int main() {
 
 	// cout << g.DFS(0) << endl;
 
-	cout << "Distances: " << g.dijkstra(0, 4) << endl;
+	// cout << "BFS: " << g.BFS(0, 3) << endl;
+
+	// cout << "Distances: " << g.dijkstra(0, 4) << endl;
+
+	cout << "Distances: " << g.dijkstra1(0) << endl;
+
+	cout << "Distances: " << g.dijkstra2(0) << endl;
 }
