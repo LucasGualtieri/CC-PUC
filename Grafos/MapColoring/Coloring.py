@@ -9,6 +9,66 @@ gdf = gpd.read_file(geojson_file)
 print("Unique state names in GeoDataFrame:")
 print(gdf['NAME_1'].unique())
 
+NumberToString = {
+    0: Acre,
+    1: Alagoas,
+    2: Amapá,
+    3: Amazonas,
+    4: Bahia,
+    5: Ceará,
+    6: DistritoFederal,
+    7: EspíritoSanto,
+    8: Goiás,
+    9: Maranhão,
+    10: MatoGrosso,
+    11: MatoGrossodoSul,
+    12: MinasGerais,
+    13: Pará,
+    14: Paraíba,
+    15: Paraná,
+    16: Pernambuco,
+    17: Piauí,
+    18: RiodeJaneiro,
+    19: RioGrandedoNorte,
+    20: RioGrandedoSul,
+    21: Rondônia,
+    22: Roraima,
+    23: SantaCatarina,
+    24: SãoPaulo,
+    25: Sergipe,
+    26: Tocantins
+}
+
+StringToNumber = {
+    Acre: 0,
+    Alagoas: 1,
+    Amapá: 2,
+    Amazonas: 3,
+    Bahia: 4,
+    Ceará: 5,
+    DistritoFederal: 6,
+    EspíritoSanto: 7,
+    Goiás: 8,
+    Maranhão: 9,
+    MatoGrosso: 10,
+    MatoGrossodoSul: 11,
+    MinasGerais: 12,
+    Pará: 13,
+    Paraíba: 14,
+    Paraná: 15,
+    Pernambuco: 16,
+    Piauí: 17,
+    RiodeJaneiro: 18,
+    RioGrandedoNorte: 19,
+    RioGrandedoSul: 20,
+    Rondônia: 21,
+    Roraima: 22,
+    SantaCatarina: 23,
+    SãoPaulo: 24,
+    Sergipe: 25,
+    Tocantins: 26
+}
+
 # Read the color mapping from the text file
 color_map = {}
 with open("state_colors.txt", "r") as f:  # Replace with your color mapping file path
