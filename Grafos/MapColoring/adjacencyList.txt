@@ -1,0 +1,27 @@
+Acre: Amazonas, Rondônia
+Alagoas: Bahia, Pernambuco, Sergipe
+Amapá: Pará
+Amazonas: Acre, MatoGrosso, Pará, Rondônia, Roraima
+Bahia: Alagoas, EspíritoSanto, Goiás, MinasGerais, Pernambuco, Piauí, Sergipe, Tocantins
+Ceará: Paraíba, Pernambuco, Piauí, RioGrandedoNorte
+DistritoFederal: Goiás, MinasGerais
+EspíritoSanto: Bahia, MinasGerais, RiodeJaneiro
+Goiás: Bahia, DistritoFederal, MatoGrosso, MatoGrossodoSul, MinasGerais, Tocantins
+Maranhão: Pará, Piauí, Tocantins
+MatoGrosso: Amazonas, Goiás, MatoGrossodoSul, Pará, Rondônia, Tocantins
+MatoGrossodoSul: Goiás, MatoGrosso, MinasGerais, Paraná, SãoPaulo
+MinasGerais: Bahia, DistritoFederal, EspíritoSanto, Goiás, MatoGrossodoSul, RiodeJaneiro, SãoPaulo
+Pará: Amapá, Amazonas, Maranhão, MatoGrosso, Tocantins
+Paraíba: Ceará, Pernambuco, RioGrandedoNorte
+Paraná: MatoGrossodoSul, SantaCatarina, SãoPaulo
+Pernambuco: Alagoas, Bahia, Ceará, Paraíba, Piauí
+Piauí: Bahia, Ceará, Maranhão, Pernambuco, Tocantins
+RiodeJaneiro: EspíritoSanto, MinasGerais, SãoPaulo
+RioGrandedoNorte: Ceará, Paraíba
+RioGrandedoSul: SantaCatarina
+Rondônia: Acre, Amazonas, MatoGrosso
+Roraima: Amazonas
+SantaCatarina: Paraná, RioGrandedoSul
+SãoPaulo: MatoGrossodoSul, MinasGerais, Paraná, RiodeJaneiro
+Sergipe: Alagoas, Bahia
+Tocantins: Bahia, Goiás, Maranhão, MatoGrosso, Pará, Piauí
