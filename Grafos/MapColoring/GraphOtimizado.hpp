@@ -15,7 +15,7 @@
 class Graph {
   public:
 
-	int *V, *E, *colors;
+	int *V, *E, *visitados, *colors;
 	int vSize = 0, eSize = 0;
 
 	Graph(std::string filePath) {
@@ -32,12 +32,9 @@ class Graph {
 
 		V = new int[vSize + 1];
 		E = new int[eSize];
-		colors = nullptr;
+		colors = visitados = nullptr;
 
 		for (int i = 0; i < vSize; i++) V[i] = -1;
-
-		// std::cout << vSize << std::endl;
-		// std::cout << eSize << std::endl;
 
 		int u, v;
 
@@ -58,7 +55,7 @@ class Graph {
 
 	Graph(std::initializer_list<std::pair<int, std::initializer_list<int>>> graph) {
 
-		V = E = colors = nullptr;
+		V = E = colors = visitados = nullptr;
 
 		for (auto i : graph) if (i.first > vSize) vSize = i.first;
 		V = new int[++vSize];
@@ -88,7 +85,7 @@ class Graph {
 
 	Graph(int vSize, int eSize) : vSize(vSize), eSize(eSize) {
 
-		V = E = colors = nullptr;
+		V = E = colors = visitados = nullptr;
 
 		V = new int[vSize + 1];
 		E = new int[eSize];
@@ -100,6 +97,7 @@ class Graph {
 		if (V) delete[] V;
 		if (E) delete[] E;
 		if (colors) delete[] colors;
+		if (visitados) delete[] visitados;
 	}
 
 	inline bool inBounds(int j, int i) const {
@@ -177,57 +175,7 @@ class Graph {
 		return set.find(val) != set.end();
 	}
 
-	void updateColor(int visitados[], const int& v) {
-
-		std::unordered_set<int> set;
-
-		int numberOfNeighbors = 0;
-
-		for (int i = V[v]; inBounds(i, v); i++) {
-			if (visitados[E[i]]) {
-				numberOfNeighbors++;
-				set.insert(colors[E[i]]);
-			}
-		}
-
-		for (int i = 0; i < numberOfNeighbors; i++) {
-			if (!contains(set, ++colors[v])) break;
-		}
-	}
-
-	LinearList<std::string> colorVertices() {
-
-		LinkedQueue<int> s(0);
-
-		colors = new int[vSize];
-		int descobertos[vSize];
-		int visitados[vSize];
-
-		for (int i = 0; i < vSize; i++) {
-			descobertos[i] = visitados[i] = colors[i] = 0;
-		}
-
-		descobertos[0] = 1;
-
-		while(!s.empty()) {
-
-			int u = s.pop();
-			visitados[u] = 1;
-
-			for (int i = V[u]; inBounds(i, u); i++) {
-
-				int v = E[i];
-
-				if (!descobertos[v]) {
-					descobertos[v] = 1;
-					s.push(v);
-				}
-
-				if (!visitados[v] && colors[v] == colors[u]) {
-					updateColor(visitados, v);
-				}
-			}
-		}
+	void generateImage() {
 
 		LinearList<std::string> verticeColors;
 
@@ -246,9 +194,66 @@ class Graph {
 		}
 
 		outFile.close();
-		// int result = system("python3 Coloring.py");
 
-		return verticeColors;
+		int result = system("python3 ScriptsPython/Coloring.py");
+	}
+
+	void updateColor(const int& u) {
+
+		std::unordered_set<int> set;
+
+		int numberOfNeighbors = 0;
+
+		for (int i = V[u]; inBounds(i, u); i++) {
+
+			int v = E[i];
+
+			if (visitados[v]) {
+				numberOfNeighbors++;
+				set.insert(colors[v]);
+			}
+		}
+
+		for (int i = 0; i < numberOfNeighbors; i++) {
+			if (!contains(set, colors[u])) break;
+			else colors[u]++;
+		}
+	}
+
+	void colorVertices() {
+
+		colors = new int[vSize];
+		visitados = new int[vSize];
+
+		int descobertos[vSize];
+
+		for (int i = 0; i < vSize; i++) {
+			descobertos[i] = visitados[i] = colors[i] = 0;
+		}
+
+		LinkedQueue<int> s(0);
+
+		descobertos[0] = 1;
+
+		while(!s.empty()) {
+
+			int u = s.pop();
+			visitados[u] = 1;
+
+			updateColor(u);
+
+			for (int i = V[u]; inBounds(i, u); i++) {
+
+				int v = E[i];
+
+				if (!descobertos[v]) {
+					descobertos[v] = 1;
+					s.push(v);
+				}
+			}
+		}
+
+		generateImage();
 	}
 
 	std::string str() const {
