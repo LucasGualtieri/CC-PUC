@@ -84,10 +84,8 @@ class Graph {
 
 	LinearList<int> maxmin(int u, int v) {
 
-		int maxFlow[vSize];
-		int antecessores[vSize];
-		bool visitados[vSize];
-		bool descobertos[vSize];
+		int maxFlow[vSize], antecessores[vSize];
+		bool visitados[vSize], descobertos[vSize];
 
 		for (int i = 0; i < vSize; i++) {
 			maxFlow[i] = std::numeric_limits<int>::max();
@@ -104,12 +102,12 @@ class Graph {
 
 			for (int y = V[w]; inBounds(y, w); y++) {
 
-				int vertice = E[y];
+				int neighbor = E[y];
 
-				descobertos[vertice] = true;
-				if (!visitados[vertice]) {
-					maxFlow[vertice] = std::min(maxFlow[w], C[y]);
-					antecessores[vertice] = w;
+				descobertos[neighbor] = true;
+				if (!visitados[neighbor]) {
+					maxFlow[neighbor] = std::min(maxFlow[w], C[y]);
+					antecessores[neighbor] = w;
 				}
 			}
 

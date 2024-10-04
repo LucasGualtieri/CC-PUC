@@ -8,6 +8,7 @@ using namespace std;
 
 int main() {
 
+	// Lista de adjacencia de cada vértice, com os vizinhos: {vertice, capacidade}
 	Graph g = {
 		{0, {{3,5}, {2,4}, {1,1}}},
 		{1, {{4,3}}},
