@@ -17,8 +17,38 @@ public:
 		return (this->first == other.first) && (this->second == other.second);
 	}
 
+	bool operator<(const Pair& other) const {
+		return (this->first < other.first);
+	}
+
+	bool operator>(const Pair& other) const {
+		return (this->first > other.first);
+	}
+
 	friend std::ostream& operator<<(std::ostream& os, const Pair& pair) {
-		os << "(" << pair.first << ", " << pair.second << ")";
+
+		os << "(";
+
+		if (pair.first == std::numeric_limits<T1>::max()) {
+			os << "∞, ";
+		}
+
+		else if (pair.first == std::numeric_limits<T1>::min()) {
+			os << "-∞";
+		}
+
+		else os << pair.first << ", ";
+
+		if (pair.second == std::numeric_limits<T2>::max()) {
+			os << "∞)";
+		}
+
+		else if (pair.second == std::numeric_limits<T2>::min()) {
+			os << "-∞)";
+		}
+
+		else os << pair.second << ")";
+
 		return os;
 	}
 };
