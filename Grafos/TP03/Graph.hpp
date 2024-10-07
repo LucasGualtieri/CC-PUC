@@ -91,12 +91,8 @@ class Graph {
 			visitados[w] = 1;
 
 			for (int i = V[w]; inBounds(i, w); i++) {
-
 				int u = E[i];
-
 				Q.decreaseKey(u, (float)(D[w] + W[i]));
-
-				// D[u] = std::min((float)D[u], (float)D[w] + W[i]);
 			}
 		}
 

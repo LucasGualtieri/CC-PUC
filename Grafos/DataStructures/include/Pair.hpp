@@ -1,3 +1,6 @@
+#ifndef PAIR
+#define PAIR
+
 template<typename T1, typename T2>
 class Pair {
 public:
@@ -52,3 +55,5 @@ public:
 		return os;
 	}
 };
+
+#endif
