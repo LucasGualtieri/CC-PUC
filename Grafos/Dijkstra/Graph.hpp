@@ -24,13 +24,13 @@ class Graph {
   public:
 
 	int *V, *E;
-	float *D;
+	float *W;
 	int vSize = 0, eSize = 0;
 
 	Graph(std::initializer_list<std::pair<int, std::initializer_list<std::pair<int, float>>>> graph) {
 
 		V = E = nullptr;
-		D = nullptr;
+		W = nullptr;
 
 		for (auto i : graph) if (i.first > vSize) vSize = i.first;
 		vSize++;
@@ -41,7 +41,7 @@ class Graph {
 		for (auto i : graph) eSize += i.second.size();
 		E = new int[eSize];
 
-		D = new float[eSize];
+		W = new float[eSize];
 
 		int adjStart = 0;
 
@@ -53,7 +53,7 @@ class Graph {
 
 			for (auto adj : j.second) {
 				E[adjStart] = adj.first;
-				D[adjStart++] = adj.second;
+				W[adjStart++] = adj.second;
 			}
 		}
 
@@ -67,7 +67,7 @@ class Graph {
 	~Graph() {
 		if (V) delete[] V;
 		if (E) delete[] E;
-		if (D) delete[] D;
+		if (W) delete[] W;
 	}
 
 	inline bool inBounds(int y, int Y) {
@@ -110,7 +110,7 @@ class Graph {
 
 			for (int i = V[u]; inBounds(i, u); i++) {
 				if (!visitados[E[i]]) {
-					q.push({E[i], (int)D[i], u});
+					q.push({E[i], (int)W[i], u});
 				}
 			}
 		}
@@ -210,7 +210,7 @@ class Graph {
 			for (int y = V[Y]; inBounds(y, Y); y++) {
 
 				if (S[E[y]]) {
-					float temp = Lx[Y] + D[y];
+					float temp = Lx[Y] + W[y];
 					if (Lx[E[y]] > temp) antecessores[E[y]] = Y;
 					Lx[E[y]] = std::min(Lx[E[y]], temp);
 				}
@@ -229,14 +229,14 @@ class Graph {
 		return distances;
 	}
 
-	int Min(float dist[], bool visitados[]) {
+	int Min(float D[], bool visitados[]) {
 
 		float minDist = std::numeric_limits<float>::max();
 		int minElement;
 
 		for (int i = 0; i < vSize; i++) {
-			if (!visitados[i] && dist[i] < minDist) {
-				minDist = dist[i];
+			if (!visitados[i] && D[i] < minDist) {
+				minDist = D[i];
 				minElement = i;
 			}
 		}
@@ -247,87 +247,76 @@ class Graph {
 	// Implementação intuitiva feita no quadro pelo Silvio
 	LinearList<float> dijkstra1(int u) {
 
-		float dist[vSize];
+		float D[vSize];
 		bool visitados[vSize];
 
 		for (int i = 0; i < vSize; i++) {
-			dist[i] = std::numeric_limits<float>::max();
+			D[i] = std::numeric_limits<float>::max();
 			visitados[i] = false;
 		}
 
-		dist[u] = 0;
+		D[u] = 0;
 
 		for (int i = 0; i < vSize; i++) {
 
-			int Y = Min(dist, visitados);
+			int Y = Min(D, visitados);
 
 			visitados[Y] = true;
 
 			for (int y = V[Y]; inBounds(y, Y); y++) {
-				dist[E[y]] = std::min(dist[E[y]], dist[Y] + D[y]);
+				D[E[y]] = std::min(D[E[y]], D[Y] + W[y]);
 			}
 		}
 
-		LinearList<float> distances(vSize, dist);
+		LinearList<float> distances(vSize, D);
 
 		return distances;
 	}
 
-	Pair<int, int> Min2(float dist[], bool visitados[]) {
+	Pair<int, int> Min2(float D[], bool visitados[]) {
 
+		Pair<int, int> pair;
 		float minDist = std::numeric_limits<float>::max();
-		int minElement;
 
 		for (int i = 0; i < vSize; i++) {
-			if (visitados[i] && dist[i] < minDist) {
-				minDist = dist[i];
-				minElement = i;
+
+			for (int j = V[i]; visitados[i] && inBounds(j, i); j++) {
+
+				int distance = D[i] + W[j];
+
+				if (!visitados[E[j]] && distance < minDist) {
+					minDist = distance;
+					pair = {j, i};
+				}
 			}
 		}
-
-		int vertice = std::numeric_limits<int>::max(); // Assume que a primeira aresta é a menor
-		int teste;
-
-		for (int i = V[minElement]; inBounds(i, minElement); i++) {
-			if (!visitados[E[i]] && D[i] < vertice) {
-				vertice = D[i];
-				teste = i;
-			}
-		}
-
-		Pair<int, int> pair(minElement, teste);
 
 		return pair;
 	}
 
 	LinearList<float> dijkstra2(int u) {
 
-		float dist[vSize];
+		float D[vSize];
 		bool visitados[vSize];
 
 		for (int i = 0; i < vSize; i++) {
-			dist[i] = std::numeric_limits<float>::max();
+			D[i] = std::numeric_limits<float>::max();
 			visitados[i] = false;
 		}
 
-		dist[u] = 0;
+		D[u] = 0;
 		visitados[u] = true;
 
 		for (int i = 0; i < vSize; i++) {
 
-			auto [v, Y] = Min2(dist, visitados);
+			auto [y, Y] = Min2(D, visitados);
 
-			// std::cout << "\nv: " << v << std::endl;
-			// std::cout << "Y: " << Y << std::endl;
-			// std::cout << "E[Y]: " << E[Y] << std::endl;
-			// std::cout << "-------------------" << std::endl;
+			visitados[E[y]] = true;
 
-			visitados[E[Y]] = true;
-
-			dist[E[Y]] = dist[v] + D[Y];
+			D[E[y]] = D[Y] + W[y];
 		}
 
-		LinearList<float> distances(vSize, dist);
+		LinearList<float> distances(vSize, D);
 
 		return distances;
 	}
@@ -360,7 +349,7 @@ class Graph {
 
 		os << "D = { ";
 		for (int i = 0; i < eSize; i++) {
-			os << D[i];
+			os << W[i];
 			if (i < eSize - 1) os << ", ";
 		}
 		os << " }";

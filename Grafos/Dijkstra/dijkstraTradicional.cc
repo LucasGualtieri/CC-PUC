@@ -4,7 +4,7 @@
 
 using namespace std;
 
-// clear && g++ dijkstraTradicional.cc && ./a.out
+// clear && g++ dijkstraTradicional.cc -std=c++20 && ./a.out
 
 int main() {
 
