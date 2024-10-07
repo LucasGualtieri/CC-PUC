@@ -63,9 +63,9 @@ public:
 
 	T& peek() const override {
 
-        if (this->empty()) {
-            throw std::runtime_error("Queue underflow: Attempt to peek an empty queue.");
-        }
+		if (this->empty()) {
+			throw std::runtime_error("Queue underflow: Attempt to peek an empty queue.");
+		}
 
         return head->next->value;
     }

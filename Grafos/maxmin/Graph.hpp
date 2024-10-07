@@ -88,10 +88,12 @@ class Graph {
 		bool visitados[vSize], descobertos[vSize];
 
 		for (int i = 0; i < vSize; i++) {
-			maxFlow[i] = std::numeric_limits<int>::max();
+			maxFlow[i] = std::numeric_limits<int>::min();
 			visitados[i] = descobertos[i] = false;
 			antecessores[i] = -1;
 		}
+
+		maxFlow[u] = std::numeric_limits<int>::max();
 
 		for (int i = 0; i < vSize; i++) {
 
@@ -106,7 +108,7 @@ class Graph {
 
 				descobertos[neighbor] = true;
 				if (!visitados[neighbor]) {
-					maxFlow[neighbor] = std::min(maxFlow[w], C[y]);
+					maxFlow[neighbor] = std::max(maxFlow[neighbor], std::min(maxFlow[w], C[y]));
 					antecessores[neighbor] = w;
 				}
 			}
@@ -118,6 +120,7 @@ class Graph {
 		// LinearList<int> distances(vSize, maxFlow);
 		// std::cout << distances << std::endl;
 
+		// return distances;
 		return buildPath(u, v, antecessores);
 	}
 
@@ -190,6 +193,7 @@ class Graph {
 		// LinearList<int> distances(vSize, maxCapacity);
 		// std::cout << distances << std::endl;
 
+		// return distances;
 		return buildPath(u, v, antecessores);
 	}
 
