@@ -14,6 +14,8 @@ using namespace std;
 
 // https://chatgpt.com/share/66f2ffed-43d8-8003-8ccd-ca32edc445f9
 
+// https://chatgpt.com/c/67030f88-c914-8003-b588-b0b08771d45e
+
 struct CompareBySecond {
 
 	bool operator()(const pair<int, float>& p1, const pair<int, float>& p2) {
@@ -40,10 +42,14 @@ LinearList<int> dijkstra(int u, int v, Matrix<float> m) {
 
 	int last;
 
-	while (true) {
+	// Também seria interessante um ... && Q.top() != v
+	while (true) { // falta uma condição para caso não haja vértices adjacentes para o vertice de origem -> ... && u != infinito
 
 		auto [w, distance] = pq.top();
 		pq.pop();
+
+		// Essa condição só faz sentido se usarmos essa lógica ineficiente de começar com a fila vazia
+		if (visitados[w]) continue; // Talvez isso esteja errado, mas acho que não!
 
 		visitados[w] = 1;
 
@@ -57,7 +63,7 @@ LinearList<int> dijkstra(int u, int v, Matrix<float> m) {
 		for (int i = 0; i < m.width; i++) {
 			if (m[w][i] && !visitados[i]) {
 				// cout << "i: " << i << endl;
-				pq.push({i, distance + m[w][i]});
+				pq.push({i, distance + m[w][i]}); // Implementação paia essa
 				antecessores[i] = w;
 			}
 		}
