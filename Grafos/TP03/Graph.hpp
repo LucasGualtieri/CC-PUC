@@ -73,30 +73,83 @@ class Graph {
 		if (W) delete[] W;
 	}
 
-	LinearList<int> dijkstra(int u) {
+	LinearList<float> dijkstra(int x) {
 
-		int visitados[vSize], D[vSize];
+		// bool visitados[vSize];
+		float D[vSize];
 
 		MinHeap<int, float> Q(vSize);
 		float infinity = std::numeric_limits<float>::max();
 
 		for (int i = 0; i < vSize; i++) {
-			visitados[i] = 0;
+			// visitados[i] = false;
+			D[i] = infinity;
 			Q.push({i, infinity});
 		}
 
+		D[x] = 0;
+		Q.decreaseKey({x, 0});
+
 		while (!Q.empty() && Q.peek().second != infinity) {
 
-			auto [w, distance] = Q.pop();
-			visitados[w] = 1;
+			int w = Q.pop().first;
+			// visitados[w] = 1;
 
 			for (int i = V[w]; inBounds(i, w); i++) {
+
 				int u = E[i];
-				Q.decreaseKey(u, (float)(D[w] + W[i]));
+
+				// if (visitados[u]) continue;
+
+				Q.decreaseKey({u, D[w] + W[i]});
+				D[u] = std::min(D[u], D[w] + W[i]);
 			}
 		}
 
-		LinearList<int> distances(vSize, D);
+		LinearList<float> distances(vSize, D);
+
+		return distances;
+	}
+
+	LinearList<float> bellmanFord(int x) {
+
+		float D[vSize];
+
+		MinHeap<int, float> Q(vSize);
+		float infinity = std::numeric_limits<float>::max();
+
+		for (int i = 0; i < vSize; i++) {
+			D[i] = infinity;
+			Q.push({i, infinity});
+		}
+
+		D[x] = 0;
+		Q.decreaseKey({x, 0});
+
+		while (!Q.empty() && Q.peek().second != infinity) {
+
+			int w = Q.pop().first;
+
+			for (int i = V[w]; inBounds(i, w); i++) {
+
+				int u = E[i];
+
+				float distance = D[w] + W[i];
+
+				if (distance < D[u]) {
+
+					D[u] = distance;
+
+					if (!Q.contains(u)) {
+						Q.push({u, distance});
+					}
+
+					else Q.decreaseKey({u, distance});
+				}
+			}
+		}
+
+		LinearList<float> distances(vSize, D);
 
 		return distances;
 	}

@@ -5,21 +5,30 @@
 #include <sstream>
 
 #include "queue.hpp"
+#include "../Pair.hpp"
 
-template <typename T>
-class MinHeap : public Queue<T> {
+template <typename Key, typename Value>
+class MinHeap {
 
-	T* heap;
-	size_t maxSize;
+	using pair = Pair<Key, Value>;
+
+	pair* heap;
+	size_t size, maxSize;
+	int* hash;
 
 	int parent(int i) { return (i - 1) / 2; }
 	int leftChild(int i) { return (2 * i) + 1; }
 	int rightChild(int i) { return (2 * i) + 2; }
 
-	void swap(T &x, T &y) {
-		T temp = x;
+	void swap(pair &x, pair &y) {
+
+		pair temp = x;
 		x = y;
 		y = temp;
+
+		int index = hash[x.first];
+		hash[x.first] = hash[y.first];
+		hash[y.first] = index;
 	}
 
 	// Heapify down the heap from index i
@@ -30,12 +39,12 @@ class MinHeap : public Queue<T> {
 		int smallest = i;
 
 		// Check if the left child is smaller than current node
-		if (left < this->_size && heap[left] < heap[smallest]) {
+		if (left < size && heap[left].second < heap[smallest].second) {
 			smallest = left;
 		}
 
 		// Check if the right child is smaller than the smallest found so far
-		if (right < this->_size && heap[right] < heap[smallest]) {
+		if (right < size && heap[right].second < heap[smallest].second) {
 			smallest = right;
 		}
 
@@ -48,7 +57,7 @@ class MinHeap : public Queue<T> {
 
 	void heapifyUp(int i) {
 
-		if (i && heap[parent(i)] > heap[i]) {
+		if (i && heap[parent(i)].second > heap[i].second) {
 			swap(heap[i], heap[parent(i)]);
 			heapifyUp(parent(i));
 		}
@@ -60,7 +69,7 @@ class MinHeap : public Queue<T> {
 
 		maxSize = newSize;
 
-		T* aux = new T[maxSize];
+		pair* aux = new pair[maxSize];
 
 		for (int i = 0; i < maxSize; i++) {
 			aux[i] = heap[i];
@@ -70,79 +79,95 @@ class MinHeap : public Queue<T> {
 		heap = aux;
 	}
 
-
 public:
 
 	MinHeap(size_t maxSize = 10) {
 
-		this->maxSize = maxSize;
+		maxSize = maxSize;
 
-		heap = new T[maxSize];
+		heap = new pair[maxSize];
+		hash = new int[maxSize];
 
-		this->_size = 0;
+		for (int i = 0; i < maxSize; i++) hash[i] = -1;
+
+		size = 0;
 	}
 
-	~MinHeap() { delete[] heap; }
-
-	bool contains(const T& value) const override { return T(); }
-
-	void push(const T& key) override {
-
-		if (this->_size == maxSize) resize(maxSize * 2);
-
-		heap[this->_size] = key;
-
-		heapifyUp(this->_size++);
+	~MinHeap() {
+		delete[] heap;
+		delete[] hash;
 	}
 
-	T pop() override {
+	bool contains(const Key& key) const { return hash[key] != -1; }
 
-		if (this->empty()) {
-			throw std::runtime_error("MinHeap underflow: Attempt to pop an empty heap.");
-		}
+	bool empty() const { return size == 0; }
 
-		T root = heap[0];
 
-		heap[0] = heap[--this->_size];
+	pair& peek() const {
 
-		heapifyDown(0);
-
-		return root;
-	}
-
-	// Decrease the value of the element at index i to new_val.
-    void decreaseKey(int i, const T& new_val) {
-
-        if (i < 0 || i >= this->_size) {
-            throw std::out_of_range("Index out of range for decreaseKey operation.");
-        }
-
-        if (new_val > heap[i]) {
-            throw std::invalid_argument("New value is greater than the current value.");
-        }
-
-        heap[i] = new_val;
-        heapifyUp(i);
-    }
-
-	T& peek() const override {
-
-		if (this->empty()) {
+		if (empty()) {
 			throw std::runtime_error("MinHeap underflow: Attempt to peek an empty heap.");
 		}
 
 		return heap[0];
 	}
 
-	virtual std::string str() const {
+	void push(const pair& pair) {
+
+		if (size == maxSize) resize(maxSize * 2);
+
+		heap[size] = pair;
+		hash[pair.first] = size;
+
+		heapifyUp(size++);
+	}
+
+	pair pop() {
+
+		if (empty()) {
+			throw std::runtime_error("MinHeap underflow: Attempt to pop an empty heap.");
+		}
+
+		pair root = heap[0];
+		hash[root.first] = -1;
+
+		heap[0] = heap[--size];
+		hash[heap[0].first] = 0;
+
+		heapifyDown(0);
+
+		return root;
+	}
+
+	// Decrease the value of the element at index hash[pair.first] to pair.
+	void decreaseKey(pair pair) {
+
+		// if (i < 0 || i >= size) {
+		// 	throw std::out_of_range("Index out of range for decreaseKey operation.");
+		// }
+
+		// if (new_val > heap[i]) {
+		// 	throw std::invalid_argument("New value is greater than the current value.");
+		// }
+
+		int index = hash[pair.first];
+
+		if (index == -1 || heap[hash[pair.first]].second < pair.second) return;
+
+		heap[index] = pair;
+
+		heapifyUp(index);
+	}
+
+	std::string str() const {
 
 		std::ostringstream oss;
 
 		oss << "{ ";
 
-		// for (Cell<T>* i = head->next; i; i = i->next) {
-		// 	oss << i->value << " ";
-		// }
+		for (int i = 0; i < size; i++) {
+			oss << heap[i] << " ";
+		}
 
 		oss << "}";
 
@@ -150,8 +175,8 @@ public:
 
 	}
 
-	friend std::ostream& operator<<(std::ostream& os, const Queue<T>& list) {
-		os << list.str();
+	friend std::ostream& operator<<(std::ostream& os, const MinHeap<Key, Value>& minHeap) {
+		os << minHeap.str();
 		return os;
 	}
 };
