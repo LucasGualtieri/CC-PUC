@@ -93,11 +93,14 @@ class Graph {
 			antecessores[i] = -1;
 		}
 
-		maxFlow[u] = std::numeric_limits<int>::max();
+		maxFlow[0] = std::numeric_limits<int>::max();
 
 		for (int i = 0; i < vSize; i++) {
 
 			int w = Max(maxFlow, visitados, descobertos);
+
+			if (w == v) break;
+
 			visitados[w] = true;
 
 			// std::cout << "w: " << w << std::endl;
@@ -105,11 +108,16 @@ class Graph {
 			for (int y = V[w]; inBounds(y, w); y++) {
 
 				int neighbor = E[y];
-
 				descobertos[neighbor] = true;
+
 				if (!visitados[neighbor]) {
-					maxFlow[neighbor] = std::max(maxFlow[neighbor], std::min(maxFlow[w], C[y]));
-					antecessores[neighbor] = w;
+
+					float distance = std::min(maxFlow[w], C[y]);
+
+					if (maxFlow[neighbor] < distance) {
+						maxFlow[neighbor] = distance;
+						antecessores[neighbor] = w;
+					}
 				}
 			}
 
@@ -118,6 +126,56 @@ class Graph {
 		}
 
 		// LinearList<int> distances(vSize, maxFlow);
+		// std::cout << distances << std::endl;
+
+		// return distances;
+		return buildPath(u, v, antecessores);
+	}
+
+	LinearList<int> minmax(int u, int v) {
+
+		int minFlow[vSize], antecessores[vSize];
+		bool visitados[vSize], descobertos[vSize];
+
+		for (int i = 0; i < vSize; i++) {
+			minFlow[i] = std::numeric_limits<int>::max();
+			visitados[i] = descobertos[i] = false;
+			antecessores[i] = -1;
+		}
+
+		minFlow[u] = 0;
+
+		for (int i = 0; i < vSize; i++) {
+
+			int w = Min(minFlow, visitados, descobertos);
+
+			if (w == v) break;
+
+			visitados[w] = true;
+
+			// std::cout << "w: " << w << std::endl;
+
+			for (int y = V[w]; inBounds(y, w); y++) {
+
+				int neighbor = E[y];
+				descobertos[neighbor] = true;
+
+				if (!visitados[neighbor]) {
+
+					float distance = std::max(minFlow[w], C[y]);
+
+					if (minFlow[neighbor] > distance) {
+						minFlow[neighbor] = distance;
+						antecessores[neighbor] = w;
+					}
+				}
+			}
+
+			// LinearList<int> distances(vSize, minFlow);
+			// std::cout << distances << std::endl;
+		}
+
+		// LinearList<int> distances(vSize, minFlow);
 		// std::cout << distances << std::endl;
 
 		// return distances;
@@ -139,7 +197,7 @@ class Graph {
 		return minElement;
 	}
 
-	LinearList<int> minmax(int u, int v) {
+/* 	LinearList<int> minmax(int u, int v) {
 
 		int maxCapacity[vSize];
 		int antecessores[vSize];
@@ -195,7 +253,7 @@ class Graph {
 
 		// return distances;
 		return buildPath(u, v, antecessores);
-	}
+	} */
 
 	LinearList<int> buildPath(const int& u, int v, int antecessores[]) {
 
