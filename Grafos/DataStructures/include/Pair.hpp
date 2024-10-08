@@ -1,5 +1,7 @@
-#ifndef PAIR
-#define PAIR
+#ifndef PAIR_HPP
+#define PAIR_HPP
+
+#include <limits>
 
 template<typename T1, typename T2>
 class Pair {
