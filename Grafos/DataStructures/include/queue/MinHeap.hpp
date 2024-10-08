@@ -98,7 +98,8 @@ public:
 		delete[] hash;
 	}
 
-	// bool contains(const Value& value) const override { return Value(); }
+	bool contains(const Key& key) const { return hash[key] != -1; }
+
 	bool empty() const { return size == 0; }
 
 
@@ -128,18 +129,17 @@ public:
 		}
 
 		pair root = heap[0];
-
-		heap[0] = heap[size - 1];
 		hash[root.first] = -1;
-		hash[heap[size - 1].first] = 0;
-		--size;
+
+		heap[0] = heap[--size];
+		hash[heap[0].first] = 0;
 
 		heapifyDown(0);
 
 		return root;
 	}
 
-	// Decrease the value of the element at index i to new_val.
+	// Decrease the value of the element at index hash[pair.first] to pair.
 	void decreaseKey(pair pair) {
 
 		// if (i < 0 || i >= size) {

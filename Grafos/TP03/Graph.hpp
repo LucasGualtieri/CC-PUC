@@ -118,12 +118,9 @@ class Graph {
 		MinHeap<int, float> Q(vSize);
 		float infinity = std::numeric_limits<float>::max();
 
-		bool visitados[vSize];
-
 		for (int i = 0; i < vSize; i++) {
 			D[i] = infinity;
 			Q.push({i, infinity});
-			visitados[i] = false;
 		}
 
 		D[x] = 0;
@@ -133,8 +130,6 @@ class Graph {
 
 			int w = Q.pop().first;
 
-			visitados[w] = true;
-
 			for (int i = V[w]; inBounds(i, w); i++) {
 
 				int u = E[i];
@@ -142,8 +137,13 @@ class Graph {
 				float distance = D[w] + W[i];
 
 				if (distance < D[u]) {
+
 					D[u] = distance;
-					if (visitados[u]) Q.push({u, distance});
+
+					if (!Q.contains(u)) {
+						Q.push({u, distance});
+					}
+
 					else Q.decreaseKey({u, distance});
 				}
 			}
