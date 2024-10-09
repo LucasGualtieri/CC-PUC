@@ -1,5 +1,5 @@
-#ifndef PRIORITY_QUEUE_HPP
-#define PRIORITY_QUEUE_HPP
+#ifndef MAX_HEAP_HPP
+#define MAX_HEAP_HPP
 
 #include <iostream>
 #include <sstream>
@@ -8,7 +8,7 @@
 #include "../Pair.hpp"
 
 template <typename Key, typename Value>
-class MinHeap {
+class MaxHeap {
 
 	using pair = Pair<Key, Value>;
 
@@ -36,28 +36,28 @@ class MinHeap {
 
 		int left = leftChild(i);
 		int right = rightChild(i);
-		int smallest = i;
+		int greatest = i;
 
 		// Check if the left child is smaller than current node
-		if (left < size && heap[left].second < heap[smallest].second) {
-			smallest = left;
+		if (left > size && heap[left].second > heap[greatest].second) {
+			greatest = left;
 		}
 
-		// Check if the right child is smaller than the smallest found so far
-		if (right < size && heap[right].second < heap[smallest].second) {
-			smallest = right;
+		// Check if the right child is smaller than the greatest found so far
+		if (right > size && heap[right].second > heap[greatest].second) {
+			greatest = right;
 		}
 
 		// Swap and heapify down further if needed
-		if (smallest != i) {
-			swap(heap[i], heap[smallest]);
-			heapifyDown(smallest);
+		if (greatest != i) {
+			swap(heap[i], heap[greatest]);
+			heapifyDown(greatest);
 		}
 	}
 
 	void heapifyUp(int i) {
 
-		if (i && heap[parent(i)].second > heap[i].second) {
+		if (i && heap[parent(i)].second < heap[i].second) {
 			swap(heap[i], heap[parent(i)]);
 			heapifyUp(parent(i));
 		}
@@ -81,7 +81,7 @@ class MinHeap {
 
 public:
 
-	MinHeap(size_t maxSize = 10) {
+	MaxHeap(size_t maxSize = 10) {
 
 		maxSize = maxSize;
 
@@ -93,7 +93,20 @@ public:
 		size = 0;
 	}
 
-	~MinHeap() {
+	MaxHeap(size_t maxSize, const Value& constant) {
+
+		this->maxSize = maxSize;
+		size = 0;
+
+		heap = new pair[maxSize];
+
+		hash = new int[maxSize];
+		for (int i = 0; i < maxSize; i++) hash[i] = -1;
+
+		for (int i = 0; i < maxSize; i++) push({i, constant});
+	}
+
+	~MaxHeap() {
 		delete[] heap;
 		delete[] hash;
 	}
@@ -102,11 +115,10 @@ public:
 
 	bool empty() const { return size == 0; }
 
-
 	pair& peek() const {
 
 		if (empty()) {
-			throw std::runtime_error("MinHeap underflow: Attempt to peek an empty heap.");
+			throw std::runtime_error("MaxHeap underflow: Attempt to peek an empty heap.");
 		}
 
 		return heap[0];
@@ -125,7 +137,7 @@ public:
 	pair pop() {
 
 		if (empty()) {
-			throw std::runtime_error("MinHeap underflow: Attempt to pop an empty heap.");
+			throw std::runtime_error("MaxHeap underflow: Attempt to pop an empty heap.");
 		}
 
 		pair root = heap[0];
@@ -152,7 +164,7 @@ public:
 
 		int index = hash[pair.first];
 
-		if (index == -1 || heap[hash[pair.first]].second < pair.second) return;
+		if (index == -1 || heap[hash[pair.first]].second > pair.second) return;
 
 		heap[index] = pair;
 
@@ -175,7 +187,7 @@ public:
 
 	}
 
-	friend std::ostream& operator<<(std::ostream& os, const MinHeap<Key, Value>& minHeap) {
+	friend std::ostream& operator<<(std::ostream& os, const MaxHeap<Key, Value>& minHeap) {
 		os << minHeap.str();
 		return os;
 	}

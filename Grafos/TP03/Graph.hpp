@@ -1,180 +1,242 @@
 #include <iostream>
+#include <limits>
+#include <sstream>
+#include <utility>
+#include <initializer_list>
 
 #include "../DataStructures/include/list/linearList.hpp"
 #include "../DataStructures/include/queue/linkedQueue.hpp"
-#include "../DataStructures/include/queue/MinHeap.hpp"
-#include "../DataStructures/include/Pair.hpp"
+#include "../DataStructures/include/queue/maxHeap.hpp"
+#include "../DataStructures/include/queue/minHeap.hpp"
 
-#define Infinity 0x7FFFFFFF
+// Define constants for infinity values
+#define FLOAT_INFINITY std::numeric_limits<float>::max()
+#define INT_INFINITY std::numeric_limits<int>::max()
 
+// Graph class definition
 class Graph {
 
-	inline bool inBounds(int j, int i) const {
-		return 0 <= j && j < eSize && j < abs(V[i + 1]);
+	// Construct the path from source to target using the predecessor array
+	LinearList<int> constructPath(const int& source, int target, LinearList<int> predecessors) {
+
+		LinearList<int> path;
+
+		if (predecessors[target] != -1) {
+			while (target != -1) {
+				path.push_front(target);
+				target = predecessors[target];
+			}
+		}
+
+		return path;
 	}
+
+	// Check if the edge index is within bounds for the given vertex
+	inline bool isEdgeInBounds(int i, int vertex) const {
+		return 0 <= i && i < m && i < abs(V[vertex + 1]);
+	}
+
+	// Return the edge target and weight for a given index
+	std::pair<int, float> getEdge(int index) {
+		return { E[index], edgeWeights[index] };
+	}
+
+	// Max and min helper functions
+	auto max(auto a, auto b) { return a > b ? a : b; }
+	auto min(auto a, auto b) { return a < b ? a : b; }
 
   public:
 
+	// Adjacency list representation: arrays for vertices, edges, and weights
 	int *V, *E;
-	float* W;
-	int vSize = 0, eSize = 0;
+	size_t n = 0, m = 0;
+	float *edgeWeights;
 
+	// Constructor that initializes the graph from an adjacency list
 	Graph(std::initializer_list<std::pair<int, std::initializer_list<std::pair<int, float>>>> graph) {
 
 		V = E = nullptr;
-		W = nullptr;
+		edgeWeights = nullptr;
 
-		for (auto i : graph) if (i.first > vSize) vSize = i.first;
-		vSize++;
-		V = new int[vSize + 1];
+		// Determine the number of vertices (n)
+		for (auto node : graph)
+			if (node.first > n)
+				n = node.first;
 
-		for (int i = 0; i < vSize; i++) V[i] = -1;
+		n++;
+		V = new int[n + 1];
 
-		for (auto i : graph) eSize += i.second.size();
-		E = new int[eSize];
+		// Initialize all vertices with -1
+		for (int i = 0; i < n; i++)
+			V[i] = -1;
 
-		W = new float[eSize];
+		// Determine the number of edges (m)
+		for (auto node : graph)
+			m += node.second.size();
 
-		int adjStart = 0;
+		E = new int[m];
+		edgeWeights = new float[m];
 
-		for (auto j : graph) {
+		int adjStartIndex = 0;
 
-			if (j.second.size() == 0) continue;
+		// Populate the edge list and weights
+		for (auto node : graph) {
 
-			V[j.first] = adjStart;
+			if (node.second.size() == 0)
+				continue;
 
-			for (auto adj : j.second) {
-				E[adjStart] = adj.first;
-				W[adjStart++] = adj.second;
+			V[node.first] = adjStartIndex;
+
+			for (auto edge : node.second) {
+				E[adjStartIndex] = edge.first;
+				edgeWeights[adjStartIndex++] = edge.second;
 			}
 		}
 
-		V[vSize] = -Infinity;
+		V[n] = -INT_INFINITY;
 
-		for (int i = vSize - 1; i >= 0; i--) {
-			if (V[i] == -1) V[i] = -abs(V[i + 1]);
+		// Update the V for vertices without edges
+		for (int i = n - 1; i >= 0; i--) {
+			if (V[i] == -1)
+				V[i] = -abs(V[i + 1]);
 		}
 	}
 
-	Graph(int vSize, int eSize) : vSize(vSize), eSize(eSize) {
+	// Constructor for an empty graph with specified number of vertices and edges
+	Graph(int n, int m) : n(n), m(m) {
 
 		V = E = nullptr;
-		W = nullptr;
+		edgeWeights = nullptr;
 
-		V = new int[vSize + 1];
-		E = new int[eSize];
+		V = new int[n + 1];
+		E = new int[m];
 
-		V[vSize] = -Infinity;
+		V[n] = -INT_INFINITY;
 	}
 
+	// Destructor to deallocate dynamic arrays
 	~Graph() {
 		if (V) delete[] V;
 		if (E) delete[] E;
-		if (W) delete[] W;
+		if (edgeWeights) delete[] edgeWeights;
 	}
 
+	// Um array de visitados é importante para evitar loops infitos quando há ciclo negativo.
 	LinearList<float> dijkstra(int x) {
 
-		// bool visitados[vSize];
-		float D[vSize];
+		LinearList<float> D(n, FLOAT_INFINITY);
+		MinHeap<int, float> Q(n);
 
-		MinHeap<int, float> Q(vSize);
-		float infinity = std::numeric_limits<float>::max();
-
-		for (int i = 0; i < vSize; i++) {
-			// visitados[i] = false;
-			D[i] = infinity;
-			Q.push({i, infinity});
-		}
-
+		Q.push({x, 0});
 		D[x] = 0;
-		Q.decreaseKey({x, 0});
 
-		while (!Q.empty() && Q.peek().second != infinity) {
+		while (!Q.empty()) {
 
-			int w = Q.pop().first;
-			// visitados[w] = 1;
+			int u = Q.pop().first;
 
-			for (int i = V[w]; inBounds(i, w); i++) {
+			for (int i = V[u]; isEdgeInBounds(i, u); i++) {
 
-				int u = E[i];
+				auto [v, weight] = getEdge(i);
 
-				// if (visitados[u]) continue;
+				if (D[u] + weight < D[v]) {
 
-				Q.decreaseKey({u, D[w] + W[i]});
-				D[u] = std::min(D[u], D[w] + W[i]);
-			}
-		}
+					D[v] = D[u] + weight;
 
-		LinearList<float> distances(vSize, D);
+					if (!Q.contains(v)) Q.push({v, D[v]});
 
-		return distances;
-	}
-
-	LinearList<float> bellmanFord(int x) {
-
-		float D[vSize];
-
-		MinHeap<int, float> Q(vSize);
-		float infinity = std::numeric_limits<float>::max();
-
-		for (int i = 0; i < vSize; i++) {
-			D[i] = infinity;
-			Q.push({i, infinity});
-		}
-
-		D[x] = 0;
-		Q.decreaseKey({x, 0});
-
-		while (!Q.empty() && Q.peek().second != infinity) {
-
-			int w = Q.pop().first;
-
-			for (int i = V[w]; inBounds(i, w); i++) {
-
-				int u = E[i];
-
-				float distance = D[w] + W[i];
-
-				if (distance < D[u]) {
-
-					D[u] = distance;
-
-					if (!Q.contains(u)) {
-						Q.push({u, distance});
-					}
-
-					else Q.decreaseKey({u, distance});
+					else Q.decreaseKey({v, D[v]});
 				}
 			}
 		}
 
-		LinearList<float> distances(vSize, D);
-
-		return distances;
+		return D;
 	}
 
-	std::string str() const {
+	// Max-Min Capacity Path Algorithm
+	LinearList<int> maxMinPath(int source, int target) {
 
-		std::stringstream os;
+		LinearList<int> predecessors(n, -1);
+		MaxHeap<int, float> Q(n, -FLOAT_INFINITY);
+		LinearList<float> nodeCapacity(n, -FLOAT_INFINITY);
 
-		for (int i = 0; i < vSize; i++) {
+		nodeCapacity[source] = FLOAT_INFINITY;
 
-			os << i << ": { ";
+		while (!Q.empty()) {
 
-			for (int j = V[i]; inBounds(j, i); j++) {
-				os << "(" << E[j] << ", " << W[j] << ")";
-				if (inBounds(j + 1, i)) os << ", ";
+			int u = Q.pop().first;
+
+			if (u == target) break;
+
+			for (int i = V[u]; isEdgeInBounds(i, u); i++) {
+
+				auto [v, weight] = getEdge(i);
+				float newCapacity = min(nodeCapacity[u], weight);
+
+				if (nodeCapacity[v] < newCapacity) {
+					predecessors[v] = u;
+					nodeCapacity[v] = max(nodeCapacity[v], newCapacity);
+					Q.decreaseKey({v, nodeCapacity[v]});
+				}
 			}
-
-			os << " }";
-
-			if (i < vSize - 1) os << std::endl;
 		}
 
-		return os.str();
+		return constructPath(source, target, predecessors);
 	}
 
+	// Min-Max Capacity Path Algorithm
+	LinearList<int> minMaxPath(int source, int target) {
+
+		LinearList<int> predecessors(n, -1);
+		MinHeap<int, float> Q(n, FLOAT_INFINITY);
+		LinearList<float> nodeCapacity(n, FLOAT_INFINITY);
+
+		nodeCapacity[source] = -FLOAT_INFINITY;
+
+		while (!Q.empty()) {
+
+			int u = Q.pop().first;
+
+			if (u == target) break;
+
+			for (int i = V[u]; isEdgeInBounds(i, u); i++) {
+
+				auto [v, weight] = getEdge(i);
+				float newCapacity = max(nodeCapacity[u], weight);
+
+				if (nodeCapacity[v] > newCapacity) {
+					predecessors[v] = u;
+					nodeCapacity[v] = min(nodeCapacity[v], newCapacity);
+					Q.decreaseKey({v, nodeCapacity[v]});
+				}
+			}
+		}
+
+		return constructPath(source, target, predecessors);
+	}
+
+	// Print the graph as an adjacency list
+	std::string str() const {
+
+		std::stringstream output;
+
+		for (int i = 0; i < n; i++) {
+
+			output << i << ": { ";
+
+			for (int j = V[i]; isEdgeInBounds(j, i); j++) {
+				output << "(" << E[j] << ", " << edgeWeights[j] << ")";
+				if (isEdgeInBounds(j + 1, i)) output << ", ";
+			}
+
+			output << " }";
+
+			if (i < n - 1) output << std::endl;
+		}
+
+		return output.str();
+	}
+
+	// Overload the << operator to print the graph using std::ostream
 	friend std::ostream& operator<<(std::ostream& os, const Graph& g) {
 		os << g.str();
 		return os;

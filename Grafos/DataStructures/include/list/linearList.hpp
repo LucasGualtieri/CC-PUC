@@ -40,6 +40,18 @@ class LinearList : public List<T> {
 		}
 	}
 
+	LinearList(int n, LinearList<T> list) {
+
+		this->maxSize = n;
+		this->_size = 0;
+
+		this->array = new T[maxSize];
+
+		for (int i = 0; i < n; i++) {
+			push_back(list[i]);
+		}
+	}
+
 	LinearList(size_t maxSize = 5) {
 
 		this->maxSize = maxSize;
@@ -58,16 +70,14 @@ class LinearList : public List<T> {
 		for (T i : list) push_back(i);
 	}
 
-	LinearList(size_t first, size_t last) {
+	LinearList(size_t maxSize, T constant) {
 
-		if (first > last) swap(first, last);
-
-		this->maxSize = (last - first) + 1;
+		this->maxSize = maxSize;
 		this->_size = 0;
 
 		array = new T[maxSize];
 
-		for (int i = first; i <= last; i++) push_back(i);
+		for (int i = 0; i < maxSize; i++) push_back(constant);
 	}
 
 	LinearList(const LinearList &other) : maxSize(other.capacity()) {
