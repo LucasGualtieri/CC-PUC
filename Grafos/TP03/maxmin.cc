@@ -9,6 +9,7 @@ using namespace std;
 int main() {
 
 	// Lista de adjacencia de cada vértice, com os vizinhos: {vertice, capacidade}
+
 	// Graph g = {
 	// 	{0, {{1,3}, {3,3}}},
 	// 	{1, {{4,3}}},
@@ -23,23 +24,24 @@ int main() {
 	// 	{4, {{2,4}}},
 	// };
 
-	// Graph g = {
-	// 	{0, {{1,1}, {2,3}, {3,4}}},
-	// 	{1, {{4,3}}},
-	// 	{2, {{5,2}}},
-	// 	{3, {{5,8}}},
-	// 	{4, {{5,4}}},
-	// 	{5, {}},
-	// };
-
 	Graph g = {
-		{0, {{1, 1}, {2, 2}}},
-		{1, {{3, -7}, {4, 7}}},
-		{2, {{3, 5}}},
-		{3, {{5, -30}, /*{0, -30}*/}},
-		{4, {{3, -20}}},
-		{5, {}}
+		{0, {{1,1}, {2,3}, {3,4}}},
+		{1, {{4,3}}},
+		{2, {{5,2}}},
+		{3, {{5,8}}},
+		{4, {{5,4}}},
+		{5, {}},
 	};
+
+	// Deu problema no max-min, tentar entender o que houve.
+	// Graph g = {
+	// 	{0, {{1, 1}, {2, 2}}},
+	// 	{1, {{3, -7}, {4, 7}}},
+	// 	{2, {{3, 5}}},
+	// 	{3, {{5, -30}, /*{0, -30}*/}},
+	// 	{4, {{3, -20}}},
+	// 	{5, {}}
+	// };
 
 	// Graph g = {
 	// 	{0, {{1, 4}, {5, -5}}},
@@ -78,7 +80,7 @@ int main() {
 
 	// cout << g << endl;
 
-	cout << g.maxMinPath(0, 4) << endl;
-	cout << g.minMaxPath(0, 4) << endl;
+	cout << g.maxMinPath(0, 5) << endl;
+	cout << g.minMaxPath(0, 5) << endl;
 	cout << "Distances: " << g.dijkstra(0) << endl;
 }
