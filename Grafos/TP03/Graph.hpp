@@ -59,20 +59,18 @@ class Graph {
 		edgeWeights = nullptr;
 
 		// Determine the number of vertices (n)
-		for (auto node : graph)
-			if (node.first > n)
-				n = node.first;
+		for (auto node : graph) {
+			if (node.first > n) n = node.first;
+		}
 
 		n++;
 		V = new int[n + 1];
 
 		// Initialize all vertices with -1
-		for (int i = 0; i < n; i++)
-			V[i] = -1;
+		for (int i = 0; i < n; i++) V[i] = -1;
 
 		// Determine the number of edges (m)
-		for (auto node : graph)
-			m += node.second.size();
+		for (auto node : graph) m += node.second.size();
 
 		E = new int[m];
 		edgeWeights = new float[m];
@@ -82,8 +80,7 @@ class Graph {
 		// Populate the edge list and weights
 		for (auto node : graph) {
 
-			if (node.second.size() == 0)
-				continue;
+			if (node.second.size() == 0) continue;
 
 			V[node.first] = adjStartIndex;
 
@@ -97,8 +94,7 @@ class Graph {
 
 		// Update the V for vertices without edges
 		for (int i = n - 1; i >= 0; i--) {
-			if (V[i] == -1)
-				V[i] = -abs(V[i + 1]);
+			if (V[i] == -1) V[i] = -abs(V[i + 1]);
 		}
 	}
 
