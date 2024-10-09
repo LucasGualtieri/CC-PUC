@@ -78,7 +78,7 @@ int main() {
 
 	// cout << g << endl;
 
-	// cout << g.maxMinPath(0, 4) << endl;
-	// cout << g.minMaxPath(0, 4) << endl;
+	cout << g.maxMinPath(0, 4) << endl;
+	cout << g.minMaxPath(0, 4) << endl;
 	cout << "Distances: " << g.dijkstra(0) << endl;
 }
