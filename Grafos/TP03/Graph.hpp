@@ -134,7 +134,7 @@ class Graph {
 
 				auto [v, weight] = getEdge(i);
 
-				if (D[u] + weight < D[v]) {
+				if (/*!visited[v] && */ D[u] + weight < D[v]) {
 
 					D[v] = D[u] + weight;
 
