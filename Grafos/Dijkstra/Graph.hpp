@@ -15,8 +15,8 @@
 #include "../DataStructures/include/queue/linkedQueue.hpp"
 #include "../DataStructures/include/stack/linkedStack.hpp"
 #include "../DataStructures/include/matrix/matrix.hpp"
-#include "Pair.hpp"
-#include "Triple.hpp"
+#include "../DataStructures/include/Pair.hpp"
+#include "../DataStructures/include/Triple.hpp"
 
 #define Infinity 0x7FFFFFFF
 
@@ -54,6 +54,42 @@ class Graph {
 			for (auto adj : j.second) {
 				E[adjStart] = adj.first;
 				W[adjStart++] = adj.second;
+			}
+		}
+
+		V[vSize] = -Infinity;
+
+		for (int i = vSize - 1; i >= 0; i--) {
+			if (V[i] == -1) V[i] = -abs(V[i + 1]);
+		}
+	}
+
+	Graph(std::initializer_list<std::pair<int, std::initializer_list<int>>> graph) {
+
+		V = E = nullptr;
+		W = nullptr;
+
+		for (auto i : graph) if (i.first > vSize) vSize = i.first;
+		vSize++;
+		V = new int[vSize + 1];
+
+		for (int i = 0; i < vSize; i++) V[i] = -1;
+
+		for (auto i : graph) eSize += i.second.size();
+		E = new int[eSize];
+
+		W = new float[eSize];
+
+		int adjStart = 0;
+
+		for (auto j : graph) {
+
+			if (j.second.size() == 0) continue;
+
+			V[j.first] = adjStart;
+
+			for (auto adj : j.second) {
+				E[adjStart++] = adj;
 			}
 		}
 
@@ -227,6 +263,44 @@ class Graph {
 		LinearList<float> distances(vSize, Lx);
 
 		return distances;
+	}
+
+	LinearList<int> maiorCaminho(int x) {
+
+		LinearList<int> grauDeEntrada(vSize, 0);
+		LinearList<int> antecessores(vSize, -1);
+		LinearList<bool> visitados(vSize, false);
+		LinkedQueue<int> Q;
+
+		// montar o grau de entrada e inserir os de 0 na fila
+
+		for (int i = 0; i < vSize; i++) {
+
+			for (int j = V[i]; i >= 0 && inBounds(j, i); j++) {
+
+				int v = E[j];
+
+
+			}
+		}
+
+		while (!Q.empty()) {
+
+			int u = Q.pop();
+			visitados[u] = true;
+
+			for (int i = V[u]; inBounds(i, u); i++) {
+
+				int v = E[i];
+
+				if (!visitados[v] && --grauDeEntrada[v] == 0) {
+					Q.push(v);
+					antecessores[v] = u;
+				}
+			}
+		}
+
+		// return buildPath()
 	}
 
 	int Min(float D[], bool visitados[]) {
