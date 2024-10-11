@@ -28,17 +28,17 @@ class LinearList : public List<T> {
 
   public:
 
-	LinearList(int n, T array[]) {
+	// LinearList(int n, T array[]) {
 
-		this->maxSize = n;
-		this->_size = 0;
+	// 	this->maxSize = n;
+	// 	this->_size = 0;
 
-		this->array = new T[maxSize];
+	// 	this->array = new T[maxSize];
 
-		for (int i = 0; i < n; i++) {
-			push_back(array[i]);
-		}
-	}
+	// 	for (int i = 0; i < n; i++) {
+	// 		push_back(array[i]);
+	// 	}
+	// }
 
 	LinearList(int n, LinearList<T> list) {
 
@@ -70,7 +70,7 @@ class LinearList : public List<T> {
 		for (T i : list) push_back(i);
 	}
 
-	LinearList(size_t maxSize, T constant) {
+	LinearList(size_t maxSize, const T& constant) {
 
 		this->maxSize = maxSize;
 		this->_size = 0;
