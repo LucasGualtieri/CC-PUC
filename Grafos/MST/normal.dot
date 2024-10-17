@@ -1,0 +1,12 @@
+graph G {
+    D -- F [label="2"];
+    D -- E [label="1"];
+    C -- F [label="4"];
+    C -- D [label="8"];
+    E -- F [label="3"];
+    B -- C [label="3"];
+    B -- F [label="7"];
+    A -- B [label="1"];
+    A -- E [label="1"];
+    A -- F [label="2"];
+}
