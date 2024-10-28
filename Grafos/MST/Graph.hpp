@@ -14,18 +14,79 @@
 #include <cstdlib>  // For system()
 
 #include "../DataStructures/include/list/linearList.hpp"
+#include "../DataStructures/include/Triple.hpp"
+
+// Union-Find com união por rank e compressão de caminho
+template <typename T>
+class UnionFind {
+
+	std::unordered_map<T, T> parent;
+	// Se os vertices fossem int eu poderia usar o rank como um valor negativo no proprio parent
+	std::unordered_map<T, int> rank;
+
+	size_t sets = 0;
+
+public:
+
+	size_t numberOfSets() { return sets; }
+
+	void insert(T vertex) {
+		parent[vertex] = vertex;
+		rank[vertex] = 0;
+		sets++;
+	}
+
+	bool connected(T u, T v) { return find(u) == find(v); }
+
+	T find(T vertex) { // Como fazer iterativamente?
+
+		if (parent[vertex] != vertex) {
+			// return find(parent[vertex]) // Sem path compression
+			parent[vertex] = find(parent[vertex]); // Path compression
+		}
+
+		return parent[vertex];
+	}
+
+	void join(T u, T v) {
+
+		// parent[find(v)] = find(u); // Sem join por rank
+
+		T rootU = find(u), rootV = find(v);
+
+		if (rootU == rootV) return;
+
+		sets--;
+
+		if (rank[rootU] > rank[rootV]) {
+			parent[rootV] = rootU;
+		}
+
+		else if (rank[rootU] < rank[rootV]) {
+			parent[rootU] = rootV;
+		}
+
+		else {
+			parent[rootV] = rootU;
+			rank[rootU]++;
+		}
+	}
+};
 
 template <typename T>
 class Graph {
 
 	std::unordered_map<T, std::list<std::pair<T, float>>> adjList;
+
 	bool diGraph;
+
+	int n = 0;
 
 public:
 
 	Graph(bool diGraph = false) : diGraph(diGraph) {}
 
-	Graph(std::initializer_list<std::pair<T, std::initializer_list<std::pair<T, float>>>> init, bool isDirected = false) {
+	Graph(std::initializer_list<std::pair<T, std::initializer_list<std::pair<T, float>>>> init, bool diGraph = false) {
 
 		this->diGraph = diGraph;
 
@@ -45,7 +106,7 @@ public:
 		throw std::runtime_error("Graph is empty!");
 	}
 
-	Graph generateMST(T u) {
+	Graph prim(T u) {
 
 		Graph mst;
 
@@ -59,7 +120,7 @@ public:
 
 		visited.insert(u);
 
-		while (!Q.empty() && visited.size() != adjList.size()) { // O !Q.empty() é importante pra grafos desconexos
+		for (int i = 0; i < n - 1 && !Q.empty(); i++) { // O !Q.empty() é importante pra grafos desconexos
 
 			const auto [weight, edge] = Q.top();
 			const auto [u, v] = edge;
@@ -78,11 +139,47 @@ public:
 		return mst;
 	}
 
+	Graph kruskal() {
+
+		Graph mst;
+
+		std::vector<Triple<T, T, float>> edges;
+
+		UnionFind<T> unionFind;
+
+		for (const auto& [u, neighbors] : adjList) {
+			for (const auto& [v, weight] : neighbors) {
+				edges.push_back({u, v, weight});
+			}
+			unionFind.insert(u);
+		}
+
+		std::sort(edges.begin(), edges.end(), [](const auto& a, const auto& b) {
+            return a.third < b.third;
+        });
+
+		int i = 0;
+
+		while (unionFind.numberOfSets() > 1) {
+
+			const auto& [u, v, weight] = edges[i++];
+
+			if (!unionFind.connected(u, v)) {
+				unionFind.join(u, v);
+				mst.addEdge(u, v, weight);
+			}
+		}
+
+		return mst;
+	}
+
 	void addEdge(T u, T v, float weight) {
 
 		if (!edgeExists(u, v)) {
 			adjList[u].push_back({v, weight});
 			if (!diGraph) adjList[v].push_back({u, weight});
+
+			n = adjList.size();
 		}
 	}
 
@@ -122,7 +219,9 @@ public:
 		dotFile << (diGraph ? "digraph" : "graph") << " G {\n";
 
 		for (const auto& [u, neighbors] : adjList) {
+
 			for (const auto& [v, weight] : neighbors) {
+
 				if (!diGraph && u > v) continue;  // Avoid duplicate edges for undirected graphs
 
 				dotFile << "    " << u << (diGraph ? " -> " : " -- ") << v << " [label=\"" << weight << "\"];\n";

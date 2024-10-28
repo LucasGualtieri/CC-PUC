@@ -19,6 +19,14 @@ public:
 		return (this->first == other.first) && (this->second == other.second) && (this->third == other.third);
 	}
 
+	bool operator>(const Triple& other) const {
+		return (this->first > other.first);
+	}
+
+	bool operator<(const Triple& other) const {
+		return (this->first < other.first);
+	}
+
 	friend std::ostream& operator<<(std::ostream& os, const Triple& pair) {
 		os << "(" << pair.first << ", " << pair.second << ", " << pair.third << ")";
 		return os;

@@ -11,9 +11,14 @@
 #include "../DataStructures/include/queue/maxHeap.hpp"
 #include "../DataStructures/include/queue/minHeap.hpp"
 
+#include "timer.hpp"
+
 // Define constants for infinity values
 #define FLOAT_INFINITY std::numeric_limits<float>::max()
 #define INT_INFINITY std::numeric_limits<int>::max()
+
+// #define FLOAT_INFINITY std::numeric_limits<float>::infinity()
+// #define INT_INFINITY std::numeric_limits<int>::infinity()
 
 // Graph class definition
 class Graph {
@@ -40,7 +45,7 @@ class Graph {
 
 	// Return the edge target and weight for a given index
 	std::pair<int, float> getEdge(int index) {
-		return { E[index], edgeWeights[index] };
+		return { E[index], W[index] };
 	}
 
 	// Max and min helper functions
@@ -52,13 +57,13 @@ class Graph {
 	// Adjacency list representation: arrays for vertices, edges, and weights
 	int *V, *E;
 	size_t n = 0, m = 0;
-	float *edgeWeights;
+	float *W;
 
 	// Constructor that initializes the graph from an adjacency list
 	Graph(std::initializer_list<std::pair<int, std::initializer_list<std::pair<int, float>>>> graph) {
 
 		V = E = nullptr;
-		edgeWeights = nullptr;
+		W = nullptr;
 
 		// Determine the number of vertices (n)
 		for (auto node : graph) {
@@ -75,7 +80,7 @@ class Graph {
 		for (auto node : graph) m += node.second.size();
 
 		E = new int[m];
-		edgeWeights = new float[m];
+		W = new float[m];
 
 		int adjStartIndex = 0;
 
@@ -88,7 +93,7 @@ class Graph {
 
 			for (auto edge : node.second) {
 				E[adjStartIndex] = edge.first;
-				edgeWeights[adjStartIndex++] = edge.second;
+				W[adjStartIndex++] = edge.second;
 			}
 		}
 
@@ -103,7 +108,7 @@ class Graph {
 	Graph(std::vector<std::pair<int, std::vector<std::pair<int, float>>>> graph) {
 
 		V = E = nullptr;
-		edgeWeights = nullptr;
+		W = nullptr;
 
 		// Determine the number of vertices (n)
 		for (auto node : graph) {
@@ -120,7 +125,7 @@ class Graph {
 		for (auto node : graph) m += node.second.size();
 
 		E = new int[m];
-		edgeWeights = new float[m];
+		W = new float[m];
 
 		int adjStartIndex = 0;
 
@@ -133,7 +138,7 @@ class Graph {
 
 			for (auto edge : node.second) {
 				E[adjStartIndex] = edge.first;
-				edgeWeights[adjStartIndex++] = edge.second;
+				W[adjStartIndex++] = edge.second;
 			}
 		}
 
@@ -149,7 +154,7 @@ class Graph {
 	Graph(int n, int m) : n(n), m(m) {
 
 		V = E = nullptr;
-		edgeWeights = nullptr;
+		W = nullptr;
 
 		V = new int[n + 1];
 		E = new int[m];
@@ -161,41 +166,41 @@ class Graph {
 
 		n = m = 0;
 		V = E = nullptr;
-		edgeWeights = nullptr;
+		W = nullptr;
 	}
 
 	Graph(const Graph& g) {
 
 		V = E = nullptr;
-		edgeWeights = nullptr;
+		W = nullptr;
 
 		n = g.n;
 		m = g.m;
 
 		V = new int[n];
 		E = new int[m];
-		edgeWeights = new float[m];
+		W = new float[m];
 
 		for (int i = 0; i < n; i++) V[i] = g.V[i];
 		for (int i = 0; i < m; i++) E[i] = g.E[i];
-		for (int i = 0; i < m; i++) edgeWeights[i] = g.edgeWeights[i];
+		for (int i = 0; i < m; i++) W[i] = g.W[i];
 	}
 
 	Graph operator=(const Graph& g) {
 
 		V = E = nullptr;
-		edgeWeights = nullptr;
+		W = nullptr;
 
 		n = g.n;
 		m = g.m;
 
 		V = new int[n];
 		E = new int[m];
-		edgeWeights = new float[m];
+		W = new float[m];
 
 		for (int i = 0; i < n; i++) V[i] = g.V[i];
 		for (int i = 0; i < m; i++) E[i] = g.E[i];
-		for (int i = 0; i < m; i++) edgeWeights[i] = g.edgeWeights[i];
+		for (int i = 0; i < m; i++) W[i] = g.W[i];
 
 		return *this;
 	}
@@ -203,59 +208,25 @@ class Graph {
 	// Graph operator=(Graph g) {
 
 	// 	V = E = nullptr;
-	// 	edgeWeights = nullptr;
+	// 	W = nullptr;
 
 	// 	n = g.n;
 	// 	m = g.m;
 
 	// 	V = new int[n];
 	// 	E = new int[m];
-	// 	edgeWeights = new float[m];
+	// 	W = new float[m];
 
 	// 	for (int i = 0; i < n; i++) V[i] = g.V[i];
 	// 	for (int i = 0; i < m; i++) E[i] = g.E[i];
-	// 	for (int i = 0; i < m; i++) edgeWeights[i] = g.edgeWeights[i];
+	// 	for (int i = 0; i < m; i++) W[i] = g.W[i];
 	// }
 
 	// Destructor to deallocate dynamic arrays
 	~Graph() {
 		if (V) delete[] V;
 		if (E) delete[] E;
-		if (edgeWeights) delete[] edgeWeights;
-	}
-
-	// Um array de visitados é importante para evitar loops infitos quando há ciclo negativo.
-	LinearList<float> dijkstra(int x) {
-
-		LinearList<float> D(n, FLOAT_INFINITY);
-		LinearList<bool> visited(n, false);
-		MinHeap<int, float> Q(n);
-
-		Q.push({x, 0});
-		D[x] = 0;
-
-		while (!Q.empty()) {
-
-			int u = Q.pop().first;
-			visited[u] = true;
-
-			for (int i = V[u]; isEdgeInBounds(i, u); i++) {
-
-				auto [v, weight] = getEdge(i);
-
-				// if (!visited[v]) {
-				if (D[u] + weight < D[v]) {
-
-					D[v] = D[u] + weight;
-
-					if (!Q.contains(v)) Q.push({v, D[v]});
-
-					else Q.decreaseKey({v, D[v]});
-				}
-			}
-		}
-
-		return D;
+		if (W) delete[] W;
 	}
 
 	// Max-Min Capacity Path Algorithm
@@ -320,51 +291,172 @@ class Graph {
 		return constructPath(source, target, predecessors);
 	}
 
+	LinearList<float> dijkstra(int source) {
+
+		LinearList<float> D(n, FLOAT_INFINITY);
+		LinearList<bool> visited(n, false);
+		MinHeap<int, float> Q(n);
+
+		D[source] = 0;
+		Q.push({source, 0});
+
+		while (!Q.empty()) {
+
+			int u = Q.pop().first;
+
+			visited[u] = true;
+
+			for (int j = V[u]; isEdgeInBounds(j, u); j++) {
+
+				const auto& [v, weight] = getEdge(j);
+
+				if (!visited[v] && D[u] + weight < D[v]) {
+
+					D[v] = D[u] + weight;
+
+					if (!Q.contains(v)) {
+						Q.push({v, D[v]});
+					} else {
+						Q.decreaseKey({v, D[v]});
+					}
+				}
+			}
+		}
+
+		return D;
+	}
+
+	LinearList<float> dijkstraMax(int source) {
+
+		LinearList<float> D(n, 0);
+		LinearList<bool> visited(n, false);
+		MaxHeap<int, float> Q(n);
+
+		D[source] = FLOAT_INFINITY;
+		Q.push({source, FLOAT_INFINITY});
+
+		while (!Q.empty()) {
+
+			int u = Q.pop().first;
+
+			visited[u] = true;
+
+			for (int j = V[u]; isEdgeInBounds(j, u); j++) {
+
+				const auto& [v, weight] = getEdge(j);
+
+				if (!visited[v] && D[u] + weight < D[v]) {
+
+					D[v] = D[u] + weight;
+
+					if (!Q.contains(v)) {
+						Q.push({v, D[v]});
+					} else {
+						Q.decreaseKey({v, D[v]});
+					}
+				}
+			}
+		}
+
+		return D;
+	}
+
+	LinearList<float> fasterBellmanFord(int source) {
+
+		LinearList<float> D(n, FLOAT_INFINITY);
+		MinHeap<int, float> Q(n);
+
+		D[source] = 0;
+		Q.push({source, 0});
+
+		for (int i = 0; i < m && !Q.empty(); i++) { // Não sei se m é suficiente, m * n é?
+
+			int u = Q.pop().first;
+
+			for (int j = V[u]; isEdgeInBounds(j, u); j++) {
+
+				const auto& [v, weight] = getEdge(j);
+
+				if (D[u] + weight < D[v]) {
+
+					D[v] = D[u] + weight;
+
+					if (!Q.contains(v)) {
+						Q.push({v, D[v]});
+					} else {
+						Q.decreaseKey({v, D[v]});
+					}
+				}
+			}
+		}
+
+		// If the queue isn't empty, it indicates a negative-weight cycle
+		return Q.empty() ? D : LinearList<float>{};
+	}
+
 	// Bellman-Ford algorithm to detect negative cycles and modify graph
-    LinearList<float> bellmanFord(int source) {
-        LinearList<float> distance(n, FLOAT_INFINITY);
+    LinearList<float> bellmanFord(int source, Timer& timer) {
+
+		timer.start();
+
+        LinearList<float> D(n, FLOAT_INFINITY);
         std::vector<int> predecessors(n, -1);
-        distance[source] = 0;
+        D[source] = 0;
 
-        // Relax edges n-1 times
-        for (int i = 0; i < n - 1; ++i) {
-            for (int u = 0; u < n; ++u) {
-                for (int j = V[u]; isEdgeInBounds(j, u); ++j) {
-                    auto [v, weight] = getEdge(j);
-                    if (distance[u] != FLOAT_INFINITY && distance[u] + weight < distance[v]) {
-                        distance[v] = distance[u] + weight;
-                        predecessors[v] = u;
-                    }
-                }
-            }
-        }
+		bool update = true;
 
-        // Check for negative cycles
-        bool negativeCycleDetected = false;
-        std::vector<int> cycleVertices;
-        for (int u = 0; u < n; ++u) {
-            for (int j = V[u]; isEdgeInBounds(j, u); ++j) {
-                auto [v, weight] = getEdge(j);
-                if (distance[u] != FLOAT_INFINITY && distance[u] + weight < distance[v]) {
-                    // Negative cycle detected
-                    negativeCycleDetected = true;
-                    cycleVertices.push_back(u);
-                }
-            }
-        }
+		// Relax edges n-1 times at most
+		for (int i = 0; update && i < n - 1; ++i) {
 
-        // If a negative cycle is detected, make all edges in the cycle positive
-        if (negativeCycleDetected) {
-            modifyNegativeCycleEdges(cycleVertices);
-            // Re-run Bellman-Ford after modifying the graph
-            return bellmanFord(source);
-        }
+			update = false;
 
-        return distance;
+			for (int u = 0; u < n; ++u) {
+
+				for (int j = V[u]; isEdgeInBounds(j, u); ++j) {
+
+					const auto& [v, weight] = getEdge(j);
+
+					// if (D[u] != FLOAT_INFINITY && D[u] + weight < D[v]) {
+					if (D[u] + weight < D[v]) { // Não sei se isso causa um overflow no infinito
+						D[v] = D[u] + weight;
+						predecessors[v] = u;
+						update = true;
+					}
+				}
+			}
+		}
+
+		timer.stop();
+
+		// Check for negative cycles, nth iteration.
+		bool negativeCycleDetected = false;
+		std::vector<int> cycleVertices;
+		for (int u = 0; update && u < n; ++u) {
+			for (int j = V[u]; isEdgeInBounds(j, u); ++j) {
+				auto [v, weight] = getEdge(j);
+				if (D[u] + weight < D[v]) {
+				// if (D[u] != FLOAT_INFINITY && D[u] + weight < D[v]) {
+					// Negative cycle detected
+					negativeCycleDetected = true;
+					cycleVertices.push_back(u);
+				}
+			}
+		}
+
+		// If a negative cycle is detected, add a bias to all edges in the cycle.
+		if (negativeCycleDetected) {
+			// Re-run Bellman-Ford after modifying the graph
+			// std::cout << "Re running BellmanFord" << std::endl;
+			modifyNegativeCycleEdges(cycleVertices);
+			return bellmanFord(source, timer);
+		}
+
+        return D;
     }
 
     // Function to identify and modify negative cycle edges
     void modifyNegativeCycleEdges(const std::vector<int> &cycleVertices) {
+
         LinkedQueue<int> q;
         std::vector<bool> visited(n, false);
 
@@ -375,14 +467,15 @@ class Graph {
         }
 
         while (!q.empty()) {
+
             int u = q.pop();
 
             for (int j = V[u]; isEdgeInBounds(j, u); ++j) {
                 auto [v, weight] = getEdge(j);
 
                 // Modify the edge weight to a positive value (absolute value)
-                // edgeWeights[j] = std::abs(weight);
-                edgeWeights[j] = weight + 5;
+                // W[j] = std::abs(weight);
+                W[j] = weight + 5;
 
                 if (!visited[v]) {
                     q.push(v);
@@ -435,7 +528,7 @@ class Graph {
 			output << i << ": { ";
 
 			for (int j = V[i]; isEdgeInBounds(j, i); j++) {
-				output << "(" << E[j] << ", " << edgeWeights[j] << ")";
+				output << "(" << E[j] << ", " << W[j] << ")";
 				if (isEdgeInBounds(j + 1, i)) output << ", ";
 			}
 

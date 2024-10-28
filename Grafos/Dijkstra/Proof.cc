@@ -1,32 +1,43 @@
 #include <iostream>
 
 #include "GraphProof.hpp"
+#include "timer.hpp"
 #include "../DataStructures/include/list/linearList.hpp"
 
 using namespace std;
+
+// clear && g++ Proof.cc -std=c++20 && ./a.out
 
 int main() {
 
 	bool equal = true;
 
-	LinearList<float> dijkstra, bellmanFord;
+	LinearList<float> fasterBellmanFord, bellmanFord;
 
 	int count = -1;
 
 	Graph g;
 
-	for (int i = 10; equal && i <= 1000; i += 90) {
+	Timer timer;
 
-		for (int ii = 0; equal && ii < 50; ii++) {
+	for (int i : {10, 100, 200, 300, 400, 500}) {
 
-			cout << "i: " << i << " ii" << ": " << ii << endl;
+		for (int ii = 0; equal && ii < 10; ii++) {
 
-			g = Graph::generateRandom(i, -100, 100);
+			g = Graph::generateRandom(i, -100, 100); // Desabilitar os grafos esparços aumenta a diferença?
 
-			bellmanFord = g.bellmanFord(0);
-			dijkstra = g.dijkstra(0);
+			bellmanFord = g.bellmanFord(0, timer);
+			cout << "BellmanFord time:         " << timer << "s" << endl;
 
-			equal = dijkstra == bellmanFord;
+			timer.start();
+			fasterBellmanFord = g.fasterBellmanFord(0);
+			cout << "Faster Bellman-Ford time: " << timer << "s" << endl;
+
+			equal = fasterBellmanFord == bellmanFord;
+
+			cout << "|V|: " << i << " ii" << ": " << ii << endl;
+
+			cout << "----------------------------" << endl;
 
 			count++;
 		}
@@ -34,7 +45,7 @@ int main() {
 
 	if (!equal) {
 		cout << "The graph number " << count << " produced different results:" << endl;
-		cout << "Dijkstra: " << dijkstra << endl;
+		cout << "Faster Bellman-Ford time: " << fasterBellmanFord << endl;
 		cout << "Bellman-Ford: " << bellmanFord << endl;
 		cout << g << endl;
 	}

@@ -1,12 +1,16 @@
 graph G {
-    D -- F [label="2"];
-    D -- E [label="1"];
-    C -- F [label="4"];
-    C -- D [label="8"];
-    E -- F [label="3"];
-    B -- C [label="3"];
-    B -- F [label="7"];
+    D -- F [label="8"];
+    D -- E [label="9"];
+    D -- G [label="13"];
+    D -- I [label="12"];
+    C -- F [label="6"];
+    C -- D [label="7"];
+    C -- G [label="0"];
+    F -- I [label="11"];
+    E -- F [label="10"];
+    B -- C [label="4"];
+    B -- F [label="5"];
     A -- B [label="1"];
-    A -- E [label="1"];
-    A -- F [label="2"];
+    A -- E [label="2"];
+    A -- F [label="3"];
 }

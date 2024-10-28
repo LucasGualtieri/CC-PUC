@@ -353,22 +353,22 @@ class LinearList : public List<T> {
 		while (i <= j) {
 			while (array[i] < pivo) i++;
 			while (array[j] > pivo) j--;
-			if (i <= j) swap(array[i++], array[j--]);
+			if (i <= j) std::swap(array[i++], array[j--]);
 		}
 
 		if (left < j) quicksort(left, j);
 		if (i < right) quicksort(i, right);
 	}
 
-	void quicksort(int left, int right, auto& compare) {
+	void quicksort(int left, int right, const auto& compare) {
 
 		int i = left, j = right;
-		T pivo = array[(right + left) / 2];
+		T pivot = array[(right + left) / 2];
 
 		while (i <= j) {
-			while (compare(array[i], pivo) < 0) i++;
-			while (compare(array[j], pivo) > 0) j--;
-			if (i <= j) swap(array[i++], array[j--]);
+			while (compare(array[i], pivot)) i++;
+			while (compare(pivot, array[j])) j--;
+			if (i <= j) std::swap(array[i++], array[j--]);
 		}
 
 		if (left < j) quicksort(left, j);
@@ -377,7 +377,7 @@ class LinearList : public List<T> {
 
 	void sort() override { quicksort(0, this->_size - 1); }
 
-	void sort(auto compare) { quicksort(0, this->_size - 1); }
+	void sort(const auto& compare) { quicksort(0, this->_size - 1, compare); }
 
 	class Iterator {
 		T* current;

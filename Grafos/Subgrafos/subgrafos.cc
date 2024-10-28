@@ -4,7 +4,7 @@
 
 using namespace std;
 
-// clear && g++ subgrafos.cc && ./a.out
+// clear && g++ subgrafos.cc -std=c++20 && ./a.out
 
 typedef LinearList<int> Vertices;
 typedef LinearList<LinearList<int>> Arestas;
@@ -58,7 +58,7 @@ size_t subgraphs(int N) {
 	size_t number = 0;
 
 	for (int i = 1; i <= N; i++) {
-		number += pow(2, (i * i - i) / 2) * subsetCombinations(i, N);
+		number += subsetCombinations(i, N) * pow(2, (i * i - i) / 2);
 	}
 
 	return number;
@@ -71,9 +71,12 @@ int main() {
 	cout << "Digite o |V| do grafo completo: ";
 	cin >> N;
 
-	LinearList<int> set(1, N);
+	LinearList<int> set(N);
+	for (int i = 1; i <= N; i++) set.push_back(i);
 
 	int i = 1;
+
+	cout << endl << subgraphs(N) << " subgrafos serão gerados." << endl;
 
 	for (Vertices V : PowerSet(set, 1)) {
 
@@ -86,8 +89,6 @@ int main() {
 			cout << "E = " << E << endl;
 		}
 	}
-
-	cout << "O número de subgrafos gerados foi: " << subgraphs(N) << endl;
 }
 
 // Solução MUITO parecida com a nossa, porém mais eficiente por não precisar de fazer comparação entre conjuntos.

@@ -6,12 +6,12 @@
 #define extends public
 #define implements public
 
-template <typename T>
-void swap(T& a, T& b) {
-	T aux = a;
-	a = b;
-	b = aux;
-}
+// template <typename T>
+// void swap(T& a, T& b) {
+// 	T aux = a;
+// 	a = b;
+// 	b = aux;
+// }
 
 template <typename T>
 bool isSorted(List<T>& list) {
