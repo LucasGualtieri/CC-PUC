@@ -1,18 +1,26 @@
 #ifndef GRAPH_HPP
 #define GRAPH_HPP
 
-#include "DataStructure.hpp"
+#include "../DataStructures/include/list/linearList.hpp"
 
+#include "DataStructure.hpp"
+#include "Edge.hpp"
+
+template <typename T>
 class Graph {
 
-	DataStructure* d;
+	DataStructure<T>* d;
 
 	public:
 
-	Graph(DataStructure* a) : d(d) {}
+	Graph(DataStructure<T>* a) : d(d) {}
 
-	void foo() {
-		d->foo();
+	void foo() { d->foo(); }
+
+	LinearList<Edge> edges() {
+
+		/*return d->edges();*/
+		return {};
 	}
 
 	// export

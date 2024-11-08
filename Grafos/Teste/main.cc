@@ -5,40 +5,31 @@ using namespace std;
 #include "Graph.hpp"
 #include "GraphBuilder.hpp"
 #include "AdjacencyMatrix.hpp"
+#include "Edge.hpp"
 
 // #include "../DataStructures/include/list/linearList.hpp"
 
-// class Edge {
-// 	int u, v, w;
-// };
-
 // clear && g++ main.cc && ./a.out
 
-Graph kruskal(Graph& g) {
-
-	// Graph mst;
+void teste(Graph<int>& G) {
 
 	// for (Vertex e : g) {
 
 	// }
 
-	// for (Edge e : g.edges()) {
+	for (auto e : G.edges()) {
 
-	// }
-	
-	return g;
+		/*cout << e << endl;*/
+	}
 }
 
 int main() {
 
-	// Graph g = GraphBuilder()
-	// .vertices()
-	// .edges()
-	// .build();
-
-	Graph g = GraphBuilder()
-	.dataStructure(new AdjacencyMatrix)
+	Graph<int> G = GraphBuilder<int>()
+	.weighted().directed()
+	.dataStructure(new AdjacencyMatrix<int>())
 	.build();
 
-	g.foo();
+	G.foo();
+
 }

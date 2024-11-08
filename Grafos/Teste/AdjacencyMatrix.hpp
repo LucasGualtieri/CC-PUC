@@ -3,14 +3,22 @@
 
 #include <iostream>
 
-// #include "DataStructure.hpp"
+#include "DataStructure.hpp"
+/*#include "WeightedEdge.hpp"*/
+#include "Edge.hpp"
 
-class AdjacencyMatrix : public DataStructure {
+template <typename T>
+class AdjacencyMatrix : public DataStructure<T> {
 
 	public:
 
 	void foo() const override {
 		std::cout << "Usando AdjacencyMatrix" << std::endl;
+	}
+
+	LinearList<Edge> edges() const override {
+
+		return {};
 	}
 };
 

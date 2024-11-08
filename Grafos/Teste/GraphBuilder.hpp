@@ -3,29 +3,43 @@
 
 #include "Graph.hpp"
 #include "DataStructure.hpp"
+#include <initializer_list>
 
+template <typename T>
 class GraphBuilder {
 
-	DataStructure* d;
+	DataStructure<T>* d = nullptr;
 
 	public:
 
-	GraphBuilder& vertices() {
+	GraphBuilder& vertices() { return *this; }
+
+	GraphBuilder& edges() { return *this; }
+
+	GraphBuilder& weighted() {
+
+
+
 		return *this;
 	}
 
-	GraphBuilder& edges() {
+	GraphBuilder& directed() {
+
+
+
 		return *this;
 	}
 
-	GraphBuilder& dataStructure(DataStructure* d) {
+	GraphBuilder& dataStructure(DataStructure<T>* d) {
 		this->d = d;
 		return *this;
 	}
 
-	Graph build() {
-		return Graph(d);
+	Graph<T> build(std::initializer_list<std::initializer_list<T>>) {
+		return Graph<T>(d);
 	}
+
+	Graph<T> build() { return Graph<T>(d); }
 
 };
 

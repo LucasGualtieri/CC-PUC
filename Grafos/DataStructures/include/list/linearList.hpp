@@ -4,7 +4,6 @@
 #include <sstream>
 #include <limits>
 #include "list.hpp"
-#include "../../util/util.hpp"
 
 template <typename T>
 class LinearList : public List<T> {

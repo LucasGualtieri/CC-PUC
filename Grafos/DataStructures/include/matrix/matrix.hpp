@@ -51,6 +51,15 @@ class Matrix {
         return matrix[i];
     }
 
+    std::vector<T>& operator[](int i) const {
+
+        if (i < 0 || i >= height) {
+            throw std::out_of_range("Index out of range: " + std::to_string(i));
+        }
+
+        return matrix[i];
+    }
+
 	std::string str() const {
 
 		std::ostringstream oss;
