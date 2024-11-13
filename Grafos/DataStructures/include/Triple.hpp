@@ -1,3 +1,5 @@
+#include <ostream>
+
 template<typename T1, typename T2, typename T3>
 class Triple {
 public:

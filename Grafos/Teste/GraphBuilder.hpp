@@ -2,13 +2,14 @@
 #define GRAPH_BUILDER_HPP
 
 #include "Graph.hpp"
-#include "DataStructure.hpp"
-#include <initializer_list>
+#include <cstddef>
+/*#include <initializer_list>*/
 
-template <typename T>
 class GraphBuilder {
 
-	DataStructure<T>* d = nullptr;
+	Graph::DataStructures choice;
+	bool _directed = false, _weighted = false;
+	size_t _n = 0;
 
 	public:
 
@@ -16,30 +17,39 @@ class GraphBuilder {
 
 	GraphBuilder& edges() { return *this; }
 
+	GraphBuilder& n(size_t _n) {
+
+		this->_n = _n;
+
+		return *this;
+	}
+
 	GraphBuilder& weighted() {
 
-
+		_weighted = true;
 
 		return *this;
 	}
 
 	GraphBuilder& directed() {
 
-
+		_directed = true;
 
 		return *this;
 	}
 
-	GraphBuilder& dataStructure(DataStructure<T>* d) {
-		this->d = d;
+	GraphBuilder& dataStructure(Graph::DataStructures choice) {
+		this->choice = choice;
 		return *this;
 	}
 
-	Graph<T> build(std::initializer_list<std::initializer_list<T>>) {
-		return Graph<T>(d);
-	}
+	//
+	// Essa função vai depender do grafo ser ou não ponderado, acho que o apropriado é ter um Overload e lançar uma exceção
+	/*Graph build(std::initializer_list<std::initializer_list<T>>) {*/
+	/*	return Graph(_dataStructure);*/
+	/*}*/
 
-	Graph<T> build() { return Graph<T>(d); }
+	Graph build() { return Graph(choice, _n, _directed, _weighted); }
 
 };
 

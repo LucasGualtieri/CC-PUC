@@ -41,7 +41,6 @@ class Matrix {
 		return !inBounds(i, j);
 	}
 
-    // Const version of operator[]
     std::vector<T>& operator[](int i) {
 
         if (i < 0 || i >= height) {
@@ -51,7 +50,8 @@ class Matrix {
         return matrix[i];
     }
 
-    std::vector<T>& operator[](int i) const {
+    // Const version of operator[]
+    const std::vector<T>& operator[](int i) const {
 
         if (i < 0 || i >= height) {
             throw std::out_of_range("Index out of range: " + std::to_string(i));

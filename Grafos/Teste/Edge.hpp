@@ -1,16 +1,66 @@
 #ifndef EDGE_HPP
 #define EDGE_HPP
 
-class Edge {
-	
-	public:
-	int u, v;
+#include <ostream>
 
-	/*bool operator<(const Edge& e) { return true; }*/
-	/*bool operator<=(const Edge& e) { return true; }*/
-	/**/
-	/*bool operator>(const Edge& e) { return true; }*/
-	/*bool operator>=(const Edge& e) { return true; }*/
+using Vertex = int;
+
+class Edge {
+
+    bool weighted, directed;
+
+public:
+    Vertex u, v;
+    float weight;
+
+    Edge() : u(Vertex()), v(Vertex()), weight(float()), weighted(false), directed(false) { }
+
+	Edge(Vertex u, Vertex v, float weight, bool directed, bool weighted) : u(u), v(v), weight(weight), directed(directed), weighted(weighted) { }
+
+    Vertex getFirst() const { return u; }
+    Vertex getSecond() const { return v; }
+    float getWeight() const { return weight; }
+
+    bool operator==(const Edge& other) const {
+        return (this->u == other.u) && (this->v == other.v) && (this->weight == other.weight);
+    }
+
+    bool operator>(const Edge& other) const {
+        return (this->weight > other.weight);
+    }
+	
+    bool operator>=(const Edge& other) const {
+        return (this->weight >= other.weight);
+    }
+
+    bool operator<(const Edge& other) const {
+        return (this->weight < other.weight);
+    }
+
+    bool operator<=(const Edge& other) const {
+        return (this->weight <= other.weight);
+    }
+
+	friend std::ostream& operator<<(std::ostream& os, const Edge& edge) {
+
+		if (edge.weighted && edge.directed) {
+			os << "(" << edge.u << ", " << edge.v << ", " << edge.weight << ")";
+		}
+
+		else if (edge.weighted && !edge.directed) {
+			os << "{" << edge.u << ", " << edge.v << ", " << edge.weight << "}";
+		}
+
+		else if (!edge.weighted && edge.directed) {
+			os << "(" << edge.u << ", " << edge.v << ")";
+		}
+
+		else {
+			os << "{" << edge.u << ", " << edge.v << "}";
+		}
+
+		return os;
+	}
 };
 
 #endif
