@@ -7,7 +7,10 @@
 #include "../DataStructures/include/list/linearList.hpp"
 #include "../DataStructures/include/Pair.hpp"
 #include <cstddef>
+#include <limits>
 #include <stdexcept>
+
+const float INFINITY = std::numeric_limits<float>::infinity();
 
 class AdjacencyMatrix : public DataStructure {
 
@@ -28,11 +31,11 @@ class AdjacencyMatrix : public DataStructure {
 
 	void addVertex(const Vertex& v) override {
 
-		matrix.push_back(LinearList<float>(matrix.size() + 1, 0.0));
+		matrix.push_back(LinearList<float>(matrix.size() + 1, INFINITY));
 		size_t size = matrix.size();
 
 		for (LinearList<float>& list : matrix) {
-			list.push_back(0.0);
+			list.push_back(INFINITY);
 		}
 	}
 
@@ -40,8 +43,20 @@ class AdjacencyMatrix : public DataStructure {
 		matrix[u][v] = weight;
 	}
 
-	bool hasEdge(const Vertex& u, const Vertex& v, const float& weight = 1.0) const override {
+	void changeEdgeWeight(const Edge& e, const float& weight) override {
+		matrix[e.u][e.v] = weight;
+	}
+
+	virtual Edge getEdge(const Edge& e) const override {
+		return { e.u, e.v, matrix[e.u][e.v] };
+	}
+
+	bool hasEdge(const Vertex& u, const Vertex& v, const float& weight) const override {
 		return matrix[u][v] == weight;
+	}
+
+	bool hasEdge(const Vertex& u, const Vertex& v) const override {
+		return matrix[u][v] != INFINITY;
 	}
 
 	bool hasVertex(const Vertex& v) const override {
@@ -64,7 +79,7 @@ class AdjacencyMatrix : public DataStructure {
 
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j < n; j++) {
-				if (matrix[i][j]) {
+				if (matrix[i][j] != INFINITY) {
 					_edges.push_back({ i, j, matrix[i][j], _directed, _weighted });
 				}
 			}
@@ -86,14 +101,14 @@ class AdjacencyMatrix : public DataStructure {
 		return vertices;
 	}
 
-	LinearList<Pair<Vertex, float>> kneighbors(Vertex u) const override {
+	LinearList<Pair<Vertex, float>> kneighbors(const Vertex& u) const override {
 
 		size_t n = matrix.size();
 
 		LinearList<Pair<Vertex, float>> _kneighbors(n);
 
 		for (int i = 0; i < n; i++) {
-			if (matrix[u][i]) {
+			if (matrix[u][i] != INFINITY) {
 				_kneighbors.push_back({i, matrix[u][i]});
 			}
 		}

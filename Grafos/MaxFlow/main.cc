@@ -13,6 +13,25 @@ using namespace std;
 
 using Path = LinearList<Edge>;
 
+Path buildPath(const Vertex& s, const Vertex& t, LinearList<Pair<Vertex, float>>& predecessor) {
+
+	Path path;
+
+	Vertex v = t;
+
+	if (predecessor[t].first == -1) return {};
+
+	while (v != s) {
+
+		auto [u, w] = predecessor[v];
+
+		path.push_front({ u, v, w });
+		v = predecessor[v].first;
+	}
+
+	return path;
+}
+
 Path DFS(const Vertex& s, const Vertex& t, const Graph& G) {
 
 	LinkedStack<Vertex> stack(s);
@@ -25,26 +44,14 @@ Path DFS(const Vertex& s, const Vertex& t, const Graph& G) {
 		if (u == t) break;
 		
 		for (auto [v, w] : G.kneighbors(u)) {
-			if (predecessor[v].first == -1) {
+			if (w > 0 && predecessor[v].first == -1) {
 				stack.push(v);
 				predecessor[v] = { u, w };
 			}
 		}
 	}
 
-	Path path;
-
-	Vertex v = t;
-
-	while (v != s) {
-
-		auto [u, w] = predecessor[v];
-
-		path.push_front({ u, v, w });
-		v = predecessor[v].first;
-	}
-
-	return path;
+	return buildPath(s, t, predecessor);
 }
 
 Path BFS(const Vertex& s, const Vertex& t, const Graph& G) {
@@ -59,40 +66,36 @@ Path BFS(const Vertex& s, const Vertex& t, const Graph& G) {
 		if (u == t) break;
 		
 		for (auto [v, w] : G.kneighbors(u)) {
-			if (predecessor[v].first == -1) {
+			if (w > 0 && predecessor[v].first == -1) {
 				queue.push(v);
 				predecessor[v] = { u, w };
 			}
 		}
 	}
 
-	Path path;
+	return buildPath(s, t, predecessor);
+}
 
-	Vertex v = t;
+void UpdateResidualGraph(Matrix<int>& flow, Graph& gf, const Graph& G) {
 
-	while (v != s) {
+	float newWeight;
 
-		auto [u, w] = predecessor[v];
+	for (Edge& e : gf.edges()) {
 
-		path.push_front({ u, v, w });
-		v = predecessor[v].first;
+		if (G.hasEdge(e)) {
+			newWeight = G.getEdge(e).weight - flow[e.u][e.v];
+		}
+
+		else {
+			newWeight = flow[e.v][e.u];
+		}
+
+		// e.weight = newWeight; // Tem que fazer a referencia
+		gf.changeEdgeWeight(e, newWeight);
 	}
-
-	return path;
 }
 
-void UpdateResidualGraph(const Graph& gf, const Graph& G, Matrix<int>& flow) {
-
-	// edge [u, v] = e;
-	//
-	// if (G.hasEdge(e)) {
-	// 	return G.capacity(e) - flow[u][v];
-	// }
-	//
-	// else return flow[u][v];
-}
-
-float Bottleneck(Path& P, Matrix<int>& flow, const Graph& gf) {
+float Bottleneck(Path& P, const Graph& gf) {
 
 	float bottleneck = std::numeric_limits<float>::infinity();
 
@@ -113,7 +116,11 @@ int FordFulkerson(const Vertex& s, const Vertex& t, auto FindPath, const Graph& 
 		}
 	}
 
-	Graph gf(G); // Preciso pensar na estrutura de dados, lista com vertices de entrada?
+	Graph gf = G.clone();
+
+	for (Edge& e : G.edges()) {
+		gf.addEdge(e.v, e.u, 0);
+	}
 
 	float b, maxFlow = 0;
 
@@ -121,7 +128,7 @@ int FordFulkerson(const Vertex& s, const Vertex& t, auto FindPath, const Graph& 
 
 	while (!(P = FindPath(s, t, gf)).empty()) {
 
-		maxFlow += b = Bottleneck(P, flow, gf); 
+		maxFlow += b = Bottleneck(P, gf); 
 
 		for (Edge& e : P) {
 
@@ -132,7 +139,7 @@ int FordFulkerson(const Vertex& s, const Vertex& t, auto FindPath, const Graph& 
 			else flow[e.v][e.u] -= b;
 		}
 
-		UpdateResidualGraph(gf, G, flow);
+		UpdateResidualGraph(flow, gf, G);
 	}
 
 	return maxFlow;
@@ -140,24 +147,32 @@ int FordFulkerson(const Vertex& s, const Vertex& t, auto FindPath, const Graph& 
 
 int main() {
 
+	// Preciso pensar na estrutura de dados, lista com vertices de entrada?
 	Graph G = GraphBuilder()
 	.directed()
 	.weighted()
 	.dataStructure(Graph::AdjacencyMatrix)
 	.build();
 
-	G.addEdge(0, 1, 2);
-	G.addEdge(1, 2, 3);
-	G.addEdge(2, 3, 4);
-	G.addEdge(3, 4, 5);
+	G.addEdge(0, 1, 20);
+	G.addEdge(0, 2, 10);
+	G.addEdge(1, 2, 30);
+	G.addEdge(1, 3, 10);
+	G.addEdge(2, 3, 20);
 
-	cout << G << endl;
+	// G.addEdge(0, 1, 100);
+	// G.addEdge(0, 2, 100);
+	// G.addEdge(1, 2, 1);
+	// G.addEdge(1, 3, 100);
+	// G.addEdge(2, 3, 100);
 
-	cout << DFS(0, 4, G) << endl;
-
-	// float flow = FordFulkerson(0, 4, DFS, G);
+	// cout << G << endl;
 	
-	// cout << "Flow: " << flow << endl;
+	// cout << DFS(0, 4, G) << endl;
+
+	float flow = FordFulkerson(0, 3, DFS, G);
+	
+	cout << "Flow: " << flow << endl;
 
 	return 0;
 }

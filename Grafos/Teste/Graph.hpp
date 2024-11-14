@@ -12,21 +12,34 @@
 
 class Graph {
 
-	DataStructure* dataStructure;
-	bool directed, weighted;
-
-	public:
-
-	size_t n;
+public:
 
 	enum DataStructures {
 		AdjacencyMatrix
 	};
 
+private:
+
+	DataStructure* dataStructure;
+	bool directed, weighted;
+	DataStructures choice;
+
+	Graph(DataStructure* dataStructure, size_t n, bool directed, bool weighted) {
+		this->directed = directed;
+		this->weighted = weighted;
+		this->n = n;
+		this->dataStructure = dataStructure;
+	}
+
+public:
+
+	size_t n;
+
 	Graph(DataStructures choice, size_t n, bool directed, bool weighted) {
 
 		this->directed = directed;
 		this->weighted = weighted;
+		this->choice = choice;
 		this->n = n;
 
 		switch (choice) {
@@ -37,6 +50,19 @@ class Graph {
 
 		this->dataStructure->directed(directed);
 		this->dataStructure->weighted(weighted);
+	}
+
+	Graph clone() const {
+
+		// return Graph(dataStructure->clone(), n, directed, weighted);
+
+		Graph G(this->choice, n, directed, weighted);
+
+		for (const Edge& e : this->edges()) {
+			G.addEdge(e);
+		}
+
+		return G;
 	}
 
 	~Graph() { delete dataStructure; }
@@ -67,12 +93,20 @@ class Graph {
 			throw std::runtime_error("You must pass the weight of the edge");
 		}
 
+		if (!dataStructure->hasVertex(u)) addVertex(u);
+
+		if (!dataStructure->hasVertex(v)) addVertex(v);
+
 		dataStructure->addEdge(u, v);
 
 		if (!directed) dataStructure->addEdge(v, u);
 	}
 
 	void addEdge(const Edge& e) {
+
+		if (!dataStructure->hasVertex(e.u)) addVertex(e.u);
+
+		if (!dataStructure->hasVertex(e.v)) addVertex(e.v);
 
 		if (weighted) {
 
@@ -88,6 +122,22 @@ class Graph {
 			if (!directed) dataStructure->addEdge(e.v, e.u);
 		}
 
+	}
+
+	void changeEdgeWeight(const Edge& e, const float& weight) {
+		dataStructure->changeEdgeWeight(e, weight);
+	}
+
+	void changeEdgeWeight(const Vertex& u, const Vertex& v, const float& weight) {
+		dataStructure->changeEdgeWeight({ u, v }, weight);
+	}
+
+	Edge getEdge(const Edge& e) const {
+		return dataStructure->getEdge(e);
+	}
+
+	Edge getEdge(const Vertex& u, const Vertex& v) const {
+		return dataStructure->getEdge({u, v});
 	}
 
 	bool hasEdge(const Edge& e) const {
