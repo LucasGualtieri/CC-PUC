@@ -70,7 +70,7 @@ public:
         return head->next->value;
     }
 
-	virtual std::string str() const {
+	virtual std::string str() const override {
 
 		std::ostringstream oss;
 

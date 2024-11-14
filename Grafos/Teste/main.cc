@@ -75,7 +75,7 @@ Graph kruskal(const Graph& G) {
 	/*G.CloneDT()*/
 	/*G.CloneDataStructure()*/
 
-	Graph mst = GraphBuilder().n(G.n)
+	Graph mst = GraphBuilder()
 	.dataStructure(Graph::AdjacencyMatrix)
 	.weighted()
 	.build();
@@ -108,8 +108,8 @@ int main() {
 
 	// TODO: Fazer a class Graph de tal forma que não seja necessário definir o N, toda estrutura deve ser capaz de crescer
 
-	Graph G = GraphBuilder().n(5)
-	/*.directed()*/
+	Graph G = GraphBuilder()
+	// .directed()
 	.weighted()
 	.dataStructure(Graph::AdjacencyMatrix)
 	.build();
@@ -124,6 +124,6 @@ int main() {
 
 	cout << "---------------------" << endl;
 
-	cout << kruskal(G) << endl;
+	// cout << kruskal(G) << endl;
 
 }

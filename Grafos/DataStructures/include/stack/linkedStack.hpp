@@ -58,7 +58,7 @@ public:
         return top->value;
     }
 
-	virtual std::string str() const {
+	virtual std::string str() const override {
 
 		std::ostringstream oss;
 

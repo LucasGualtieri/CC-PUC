@@ -1,38 +1,109 @@
 #include <iostream>
+#include <algorithm>
+#include <limits>
 
-#include "Graph.hpp"
-#include "../DataStructures/include/matrix/matrix.hpp"
+#include "../Teste/Graph.hpp"
+#include "../Teste/GraphBuilder.hpp"
 #include "../DataStructures/include/Pair.hpp"
+#include "../DataStructures/include/stack/linkedStack.hpp"
+#include "../DataStructures/include/queue/linkedQueue.hpp"
+#include "../DataStructures/include/matrix/matrix.hpp"
 
 using namespace std;
 
-using Edge = Pair<int, int>;
 using Path = LinearList<Edge>;
-#define edge auto
+
+Path DFS(const Vertex& s, const Vertex& t, const Graph& G) {
+
+	LinkedStack<Vertex> stack(s);
+	LinearList<Pair<Vertex, float>> predecessor(G.n, {-1, 0});
+	predecessor[s] = { s, 0 };
+
+	while (!stack.empty()) {
+		
+		const Vertex& u = stack.pop();
+		if (u == t) break;
+		
+		for (auto [v, w] : G.kneighbors(u)) {
+			if (predecessor[v].first == -1) {
+				stack.push(v);
+				predecessor[v] = { u, w };
+			}
+		}
+	}
+
+	Path path;
+
+	Vertex v = t;
+
+	while (v != s) {
+
+		auto [u, w] = predecessor[v];
+
+		path.push_front({ u, v, w });
+		v = predecessor[v].first;
+	}
+
+	return path;
+}
+
+Path BFS(const Vertex& s, const Vertex& t, const Graph& G) {
+
+	LinkedQueue<Vertex> queue(s);
+	LinearList<Pair<Vertex, float>> predecessor(G.n, {-1, 0});
+	predecessor[s] = { s, 0 };
+
+	while (!queue.empty()) {
+		
+		const Vertex& u = queue.pop();
+		if (u == t) break;
+		
+		for (auto [v, w] : G.kneighbors(u)) {
+			if (predecessor[v].first == -1) {
+				queue.push(v);
+				predecessor[v] = { u, w };
+			}
+		}
+	}
+
+	Path path;
+
+	Vertex v = t;
+
+	while (v != s) {
+
+		auto [u, w] = predecessor[v];
+
+		path.push_front({ u, v, w });
+		v = predecessor[v].first;
+	}
+
+	return path;
+}
 
 void UpdateResidualGraph(const Graph& gf, const Graph& G, Matrix<int>& flow) {
 
-	/*edge [u, v] = e;*/
-	/**/
-	/*if (G.hasEdge(e)) {*/
-	/*	return G.capacity(e) - flow[u][v];*/
-	/*}*/
-	/**/
-	/*else return flow[u][v];*/
+	// edge [u, v] = e;
+	//
+	// if (G.hasEdge(e)) {
+	// 	return G.capacity(e) - flow[u][v];
+	// }
+	//
+	// else return flow[u][v];
 }
 
-int Bottleneck(Path& P, const Graph& gf, Matrix<int>& flow) {
+float Bottleneck(Path& P, Matrix<int>& flow, const Graph& gf) {
 
-	int bottleneck = 0;
+	float bottleneck = std::numeric_limits<float>::infinity();
 
-	for (edge [u, v] : P) {
-		bottleneck = std::min(bottleneck, gf.capacity({u, v}));
+	for (const Edge& e : P) {
+		bottleneck = std::min(bottleneck, e.weight);
 	}
 
 	return bottleneck;
 }
 
-int FordFulkerson(int s, int t, auto FindPath, Graph G) {
+int FordFulkerson(const Vertex& s, const Vertex& t, auto FindPath, const Graph& G) {
 
 	Matrix<int> flow(G.n, G.n);
 
@@ -44,21 +115,21 @@ int FordFulkerson(int s, int t, auto FindPath, Graph G) {
 
 	Graph gf(G); // Preciso pensar na estrutura de dados, lista com vertices de entrada?
 
-	int b, maxFlow = 0;
+	float b, maxFlow = 0;
 
 	Path P;
 
 	while (!(P = FindPath(s, t, gf)).empty()) {
-		
-		maxFlow += b = Bottleneck(P, G, flow); 
 
-		for (edge [u, v] : P) {
+		maxFlow += b = Bottleneck(P, flow, gf); 
 
-			if (G.hasEdge({u, v})) {
-				flow[u][v] += b;
+		for (Edge& e : P) {
+
+			if (G.hasEdge(e)) {
+				flow[e.u][e.v] += b;
 			}
 
-			else flow[v][u] -= b;
+			else flow[e.v][e.u] -= b;
 		}
 
 		UpdateResidualGraph(gf, G, flow);
@@ -67,22 +138,26 @@ int FordFulkerson(int s, int t, auto FindPath, Graph G) {
 	return maxFlow;
 }
 
-Path DFS(int s, int t, Graph gf) {
-
-	return {};
-}
-
 int main() {
 
-	Graph G = {
-		{0, {{1, 0}}},
-	};
+	Graph G = GraphBuilder()
+	.directed()
+	.weighted()
+	.dataStructure(Graph::AdjacencyMatrix)
+	.build();
+
+	G.addEdge(0, 1, 2);
+	G.addEdge(1, 2, 3);
+	G.addEdge(2, 3, 4);
+	G.addEdge(3, 4, 5);
 
 	cout << G << endl;
 
-	int flow = FordFulkerson(0, 1, DFS, G);
+	cout << DFS(0, 4, G) << endl;
 
-	cout << "Flow: " << flow << endl;
+	// float flow = FordFulkerson(0, 4, DFS, G);
+	
+	// cout << "Flow: " << flow << endl;
 
 	return 0;
 }

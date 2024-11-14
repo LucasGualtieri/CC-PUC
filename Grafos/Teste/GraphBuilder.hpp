@@ -13,16 +13,17 @@ class GraphBuilder {
 
 	public:
 
-	GraphBuilder& vertices() { return *this; }
+	// GraphBuilder& vertices() { return *this; }
+	//
+	// GraphBuilder& edges() { return *this; }
 
-	GraphBuilder& edges() { return *this; }
-
-	GraphBuilder& n(size_t _n) {
-
-		this->_n = _n;
-
-		return *this;
-	}
+	// This should serve to avoid unecessary reallocs if the number of vertices and edges is pre known
+	// GraphBuilder& n(size_t _n) {
+	//
+	// 	this->_n = _n;
+	//
+	// 	return *this;
+	// }
 
 	GraphBuilder& weighted() {
 

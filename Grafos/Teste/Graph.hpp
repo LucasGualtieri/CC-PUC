@@ -7,6 +7,7 @@
 #include "AdjacencyMatrix.hpp"
 #include "DataStructure.hpp"
 #include "Edge.hpp"
+#include <iostream>
 #include <stdexcept>
 
 class Graph {
@@ -30,7 +31,7 @@ class Graph {
 
 		switch (choice) {
 			case AdjacencyMatrix:
-				dataStructure = new class AdjacencyMatrix(n);
+				dataStructure = new class AdjacencyMatrix;
 			break;
 		}
 
@@ -40,18 +41,27 @@ class Graph {
 
 	~Graph() { delete dataStructure; }
 
-	void addEdge(int u, int v, float weight) {
+	void addVertex(const Vertex& v) {
+		n++;
+		dataStructure->addVertex(v);
+	}
+
+	void addEdge(const Vertex& u, const Vertex& v, const float& weight) {
 
 		if (!weighted) {
 			throw std::runtime_error("You should not pass the weight of the edge");
 		}
+
+		if (!dataStructure->hasVertex(u)) addVertex(u);
+
+		if (!dataStructure->hasVertex(v)) addVertex(v);
 
 		dataStructure->addEdge(u, v, weight);
 
 		if (!directed) dataStructure->addEdge(v, u, weight);
 	}
 	
-	void addEdge(int u, int v) {
+	void addEdge(const Vertex& u, const Vertex& v) {
 
 		if (weighted) {
 			throw std::runtime_error("You must pass the weight of the edge");
@@ -78,6 +88,14 @@ class Graph {
 			if (!directed) dataStructure->addEdge(e.v, e.u);
 		}
 
+	}
+
+	bool hasEdge(const Edge& e) const {
+		return dataStructure->hasEdge(e.u, e.v);
+	}
+
+	bool hasEdge(const Vertex& u, const Vertex& v) const {
+		return dataStructure->hasEdge(u, v);
 	}
 
 	LinearList<Edge> edges() const {
