@@ -3,6 +3,7 @@
 
 #include "DataStructure.hpp"
 #include "Edge.hpp"
+#include <iostream>
 
 #include "../DataStructures/include/list/linearList.hpp"
 #include "../DataStructures/include/Pair.hpp"
@@ -21,6 +22,15 @@ class AdjacencyMatrix : public DataStructure {
 
 	AdjacencyMatrix() { }
 
+	AdjacencyMatrix(size_t n) {
+
+		LinearList<float> row(n, INFINITY);
+
+		for (int i = 0; i < n; i++) {
+			matrix.push_back(row);
+		}
+	}
+
 	void directed(bool _directed) override {
 		this->_directed = _directed;
 	}
@@ -29,17 +39,19 @@ class AdjacencyMatrix : public DataStructure {
 		this->_weighted = _weighted;
 	}
 
+	// WARNING: esse metodo tem um problema se eu adicionar o vertice 5 ante do 1, tenho que criar uma matriz 5x5!
 	void addVertex(const Vertex& v) override {
-
-		matrix.push_back(LinearList<float>(matrix.size() + 1, INFINITY));
-		size_t size = matrix.size();
 
 		for (LinearList<float>& list : matrix) {
 			list.push_back(INFINITY);
 		}
+
+		matrix.push_back(LinearList<float>(matrix.size() + 1, INFINITY));
 	}
 
-	void addEdge(const Vertex& u, const Vertex& v, float weight = 1.0) override {
+	// WARNING: The function as it is will override edges
+	// NOTE: It makes sense to check first and maybe throw an exception?
+	void addEdge(const Vertex& u, const Vertex& v, float weight) override {
 		matrix[u][v] = weight;
 	}
 
@@ -114,6 +126,17 @@ class AdjacencyMatrix : public DataStructure {
 		}
 
 		return _kneighbors;
+	}
+
+	void print() override {
+
+		for (LinearList<float>& list : matrix) {
+			std::cout << "{ ";
+			for (float w : list) {
+				std::cout << w << " ";
+			}
+			std::cout << "}" << std::endl;
+		}
 	}
 };
 

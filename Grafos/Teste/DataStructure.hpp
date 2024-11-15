@@ -21,6 +21,7 @@ class DataStructure {
 	virtual LinearList<Edge> edges() const = 0;
 	virtual LinearList<Vertex> vertices() const = 0;
 	virtual LinearList<Pair<Vertex, float>> kneighbors(const Vertex& u) const = 0;
+	virtual void print() = 0;
 	virtual ~DataStructure() {}
 };
 

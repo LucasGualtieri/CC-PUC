@@ -44,7 +44,7 @@ Path DFS(const Vertex& s, const Vertex& t, const Graph& G) {
 		if (u == t) break;
 		
 		for (auto [v, w] : G.kneighbors(u)) {
-			if (w > 0 && predecessor[v].first == -1) {
+			if (predecessor[v].first == -1) {
 				stack.push(v);
 				predecessor[v] = { u, w };
 			}
@@ -66,7 +66,7 @@ Path BFS(const Vertex& s, const Vertex& t, const Graph& G) {
 		if (u == t) break;
 		
 		for (auto [v, w] : G.kneighbors(u)) {
-			if (w > 0 && predecessor[v].first == -1) {
+			if (predecessor[v].first == -1) {
 				queue.push(v);
 				predecessor[v] = { u, w };
 			}
@@ -74,25 +74,6 @@ Path BFS(const Vertex& s, const Vertex& t, const Graph& G) {
 	}
 
 	return buildPath(s, t, predecessor);
-}
-
-void UpdateResidualGraph(Matrix<int>& flow, Graph& gf, const Graph& G) {
-
-	float newWeight;
-
-	for (Edge& e : gf.edges()) {
-
-		if (G.hasEdge(e)) {
-			newWeight = G.getEdge(e).weight - flow[e.u][e.v];
-		}
-
-		else {
-			newWeight = flow[e.v][e.u];
-		}
-
-		// e.weight = newWeight; // Tem que fazer a referencia
-		gf.changeEdgeWeight(e, newWeight);
-	}
 }
 
 float Bottleneck(Path& P, const Graph& gf) {
@@ -106,6 +87,29 @@ float Bottleneck(Path& P, const Graph& gf) {
 	return bottleneck;
 }
 
+Graph CreateResidualGraph(Matrix<int>& flow, const Graph& G) {
+
+	Graph gf = G.cloneDataStructure(G.n);
+	float newWeight;
+
+	for (const Edge& e : G.edges()) {
+
+		newWeight = e.weight - flow[e.u][e.v];
+
+		if (newWeight > 0) {
+			gf.addEdge({ e.u, e.v, newWeight });
+		}
+
+		newWeight = flow[e.u][e.v];
+
+		if (newWeight > 0) {
+			gf.addEdge({ e.v, e.u, newWeight });
+		}
+	}
+
+	return gf;
+}
+
 int FordFulkerson(const Vertex& s, const Vertex& t, auto FindPath, const Graph& G) {
 
 	Matrix<int> flow(G.n, G.n);
@@ -116,11 +120,10 @@ int FordFulkerson(const Vertex& s, const Vertex& t, auto FindPath, const Graph& 
 		}
 	}
 
-	Graph gf = G.clone();
+	int i = 0;
 
-	for (Edge& e : G.edges()) {
-		gf.addEdge(e.v, e.u, 0);
-	}
+	Graph gf = CreateResidualGraph(flow, G);
+	gf.export_to(format("images/teste{}", i++), "circo");
 
 	float b, maxFlow = 0;
 
@@ -139,7 +142,8 @@ int FordFulkerson(const Vertex& s, const Vertex& t, auto FindPath, const Graph& 
 			else flow[e.v][e.u] -= b;
 		}
 
-		UpdateResidualGraph(flow, gf, G);
+		gf = CreateResidualGraph(flow, G);
+		gf.export_to(format("images/teste{}", i++), "circo");
 	}
 
 	return maxFlow;

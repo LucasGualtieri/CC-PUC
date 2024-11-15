@@ -7,8 +7,11 @@
 #include "AdjacencyMatrix.hpp"
 #include "DataStructure.hpp"
 #include "Edge.hpp"
+#include <fstream>
 #include <iostream>
+#include <ostream>
 #include <stdexcept>
+#include <format>
 
 class Graph {
 
@@ -44,32 +47,79 @@ public:
 
 		switch (choice) {
 			case AdjacencyMatrix:
-				dataStructure = new class AdjacencyMatrix;
+				dataStructure = new class AdjacencyMatrix(n);
 			break;
+			// case AdjacencyList
+			// 	dataStructure = new class AdjacencyList;
+			// break;
 		}
 
 		this->dataStructure->directed(directed);
 		this->dataStructure->weighted(weighted);
 	}
 
-	Graph clone() const {
+	Graph (const Graph& clone) {
 
-		// return Graph(dataStructure->clone(), n, directed, weighted);
+		directed = clone.directed;
+		weighted = clone.weighted;
+		choice = clone.choice;
+		n = clone.n;
 
-		Graph G(this->choice, n, directed, weighted);
-
-		for (const Edge& e : this->edges()) {
-			G.addEdge(e);
+		switch (choice) {
+			case AdjacencyMatrix:
+				dataStructure = new class AdjacencyMatrix;
+			break;
 		}
 
-		return G;
+		this->dataStructure->directed(directed);
+		this->dataStructure->weighted(weighted);
+
+		for (const Edge& e : clone.edges()) {
+			addEdge(e);
+		}
 	}
+
+	Graph& operator=(const Graph& G) {
+
+		// NOTE: This is the function called by the "return graph;" context
+
+		if (this != &G) {
+
+			directed = G.directed;
+			weighted = G.weighted;
+			choice = G.choice;
+			n = G.n;
+
+			delete dataStructure;
+
+			switch (choice) {
+				case AdjacencyMatrix:
+					dataStructure = new class AdjacencyMatrix(n);
+				break;
+			}
+
+			dataStructure->directed(directed);
+			dataStructure->weighted(weighted);
+
+			for (const Edge& e : G.edges()) {
+				addEdge(e);
+			}
+        }
+
+		return *this;
+	}	
+
+	Graph cloneDataStructure(size_t n = 0) const {
+		return { choice, n, directed, weighted };
+	}
+
+	void printDataStructure() { dataStructure->print(); }
 
 	~Graph() { delete dataStructure; }
 
 	void addVertex(const Vertex& v) {
-		n++;
 		dataStructure->addVertex(v);
+		n++;
 	}
 
 	void addEdge(const Vertex& u, const Vertex& v, const float& weight) {
@@ -121,7 +171,6 @@ public:
 
 			if (!directed) dataStructure->addEdge(e.v, e.u);
 		}
-
 	}
 
 	void changeEdgeWeight(const Edge& e, const float& weight) {
@@ -164,6 +213,39 @@ public:
 		return dataStructure->kneighbors(u);
 	}
 
+	// Function to export the graph to a PNG image using Graphviz
+	void export_to(const std::string& filename, const std::string& engine = "dot") const {
+
+		// 1. Create a DOT file representing the graph
+		std::string dotFilename = filename + ".dot";
+		std::ofstream dotFile(dotFilename);
+
+		if (!dotFile) {
+			throw std::runtime_error("Could not create the DOT file.");
+		}
+
+		dotFile << (directed ? "digraph" : "graph") << " G {\n";
+
+		for (const Edge& e : edges()) {
+
+			if (!directed && e.u > e.v) continue;  // Avoid duplicate edges for undirected graphs
+
+			dotFile << "    " << e.u << (directed ? " -> " : " -- ") << e.v << " [label=\"" << (weighted ? std::format("{:.6g}", e.weight) : "") << "\"];\n";
+		}
+
+		dotFile << "}\n";
+		dotFile.close();
+
+		// 2. Use the system() function to run the Graphviz command
+		std::string command = engine + " -Tpng " + dotFilename + " -o " + filename + ".png";
+
+		if (system(command.c_str()) != 0) {
+			throw std::runtime_error("Failed to execute Graphviz command.");
+		}
+
+		std::cout << "Graph exported successfully to " << filename << ".png\n";
+	}
+
 	std::string str() const {
 
 		std::stringstream os;
@@ -194,8 +276,7 @@ public:
 		return os;
 	}
 
-	// export
-	// import
+	// TODO: import function
 };
 
 #endif
