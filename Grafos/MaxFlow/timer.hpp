@@ -32,8 +32,8 @@ public:
 
 	double result() {
 		if (running) stop();
-		// duration<double, std::milli> duration = end - beginning;
-		duration<double> duration = end - beginning;
+		duration<double, std::milli> duration = end - beginning;
+		// duration<double> duration = end - beginning;
 		return duration.count();
 	}
 

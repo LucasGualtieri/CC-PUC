@@ -276,6 +276,19 @@ public:
 		return os;
 	}
 
+	float density(const int& x = 5) const {
+		
+		float m = edges().size();
+		float n = vertices().size();
+
+		float density = m / (directed ? n * n - n : (n * n - n) / 2);
+
+		return density; // Arredondar isso pra x casas decimais
+
+	}
+
+	float sparsness() const { return 1 - density(); }
+
 	// TODO: import function
 };
 

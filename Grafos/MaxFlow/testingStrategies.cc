@@ -1,12 +1,15 @@
 #include <iostream>
 #include <algorithm>
+#include <ostream>
+#include <sstream>
 
+#include "timer.hpp"
 #include "../Teste/Graph.hpp"
 #include "../Teste/GraphBuilder.hpp"
 #include "../DataStructures/include/Pair.hpp"
+#include "../DataStructures/include/matrix/matrix.hpp"
 #include "../DataStructures/include/stack/linkedStack.hpp"
 #include "../DataStructures/include/queue/linkedQueue.hpp"
-#include "../DataStructures/include/matrix/matrix.hpp"
 
 using namespace std;
 
@@ -75,6 +78,8 @@ Path BFS(const Vertex& s, const Vertex& t, const Graph& G) {
 	return buildPath(s, t, predecessor);
 }
 
+Path MaxMin(const Vertex& s, const Vertex& t, const Graph& G) { return {}; }
+
 float Bottleneck(Path& P, const Graph& gf) {
 
 	float bottleneck = P[0].weight;
@@ -109,7 +114,10 @@ Graph CreateResidualGraph(Matrix<int>& flow, const Graph& G) {
 	return gf;
 }
 
-float FordFulkerson(const Vertex& s, const Vertex& t, auto FindPath, const Graph& G) {
+string FordFulkerson(const Vertex& s, const Vertex& t, auto FindPath, const Graph& G) {
+
+	Timer totalTime;
+	totalTime.start();
 
 	Matrix<int> flow(G.n, G.n);
 
@@ -119,16 +127,28 @@ float FordFulkerson(const Vertex& s, const Vertex& t, auto FindPath, const Graph
 		}
 	}
 
-	int i = 0;
+	int i = 0, pathsFound = 0;
 
 	Graph gf = CreateResidualGraph(flow, G);
-	gf.export_to(format("images/teste{}", i++), "circo");
 
-	float b, maxFlow = 0;
+	float avgTimePerPathFind = 0, b, maxFlow = 0;
 
 	Path P;
 
-	while (!(P = FindPath(s, t, gf)).empty()) {
+	do {
+
+		Timer timer;
+		timer.start();
+		P = FindPath(s, t, gf);
+		timer.stop();
+
+		// cout << "P: " << P << endl;
+
+		avgTimePerPathFind += timer.result();
+
+		if (P.empty()) break;
+
+		pathsFound++;
 
 		maxFlow += b = Bottleneck(P, gf); 
 
@@ -142,36 +162,52 @@ float FordFulkerson(const Vertex& s, const Vertex& t, auto FindPath, const Graph
 		}
 
 		gf = CreateResidualGraph(flow, G);
-		gf.export_to(format("images/teste{}", i++), "circo");
-	}
 
-	return maxFlow;
+	} while (!P.empty());
+
+	totalTime.stop();
+
+	ostringstream os;
+
+	os << "{" << endl;
+	os << "    " << format("Flow: {}", maxFlow) << endl;
+	os << "    " << format("Time Elapsed: {:.4f}ms", totalTime.result()) << endl;
+	os << "    " << format("Number of paths found: {}", pathsFound) << endl;
+	os << "    " << format("Average time per PathFind(): {:.4f}ms", (avgTimePerPathFind / pathsFound)) << endl;
+	os << "}" << endl;
+
+	return os.str();
 }
 
 int main() {
 
-	// Preciso pensar na estrutura de dados, lista com vertices de entrada?
 	Graph G = GraphBuilder()
-	.directed()
-	.weighted()
-	.dataStructure(Graph::AdjacencyMatrix)
+		.directed()
+		.weighted()
+		.dataStructure(Graph::AdjacencyMatrix)
 	.build();
 
-	G.addEdge(0, 1, 20);
-	G.addEdge(0, 2, 10);
-	G.addEdge(1, 2, 30);
-	G.addEdge(1, 3, 10);
-	G.addEdge(2, 3, 20);
+	G.addEdge(0, 1, 100);
+	G.addEdge(0, 2, 100);
+	G.addEdge(1, 2, 1);
+	G.addEdge(1, 3, 100);
+	G.addEdge(2, 3, 100);
 
-	// G.addEdge(0, 1, 100);
-	// G.addEdge(0, 2, 100);
-	// G.addEdge(1, 2, 1);
-	// G.addEdge(1, 3, 100);
-	// G.addEdge(2, 3, 100);
+	string stats;
 
-	float flow = FordFulkerson(0, 3, DFS, G);
-	
-	cout << "Flow: " << flow << endl;
+	for (;;) {
+
+	  stats = FordFulkerson(0, 3, DFS, G);
+	  cout << "Stats " << stats << endl;
+
+	  stats = FordFulkerson(0, 3, BFS, G);
+	  cout << "Stats " << stats << endl;
+
+	  stats = FordFulkerson(0, 3, MaxMin, G);
+	  cout << "Stats " << stats << endl;
+
+	}
+
 
 	return 0;
 }
