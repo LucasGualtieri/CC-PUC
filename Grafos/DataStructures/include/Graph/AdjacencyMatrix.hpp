@@ -5,15 +5,15 @@
 #include "Edge.hpp"
 #include <iostream>
 
-#include "../DataStructures/include/list/linearList.hpp"
-#include "../DataStructures/include/Pair.hpp"
+#include "../list/linearList.hpp"
+#include "../../utils/Pair.hpp"
 #include <cstddef>
 #include <limits>
-#include <stdexcept>
 
-const float INFINITY = std::numeric_limits<float>::infinity();
-
+// NOTE: Performance can be improved if we use LinearList<LinearList<float>*> matrix;
 class AdjacencyMatrix : public DataStructure {
+
+	const float INFINITY = std::numeric_limits<float>::infinity();
 
 	LinearList<LinearList<float>> matrix;
 	bool _weighted, _directed;
@@ -72,15 +72,7 @@ class AdjacencyMatrix : public DataStructure {
 	}
 
 	bool hasVertex(const Vertex& v) const override {
-
-		try {
-			matrix[v];
-			return true;
-		}
-
-		catch (std::out_of_range e) {
-			return false;
-		}
+		return v < matrix.size();
 	}
 
 	LinearList<Edge> edges() const override {
@@ -90,7 +82,7 @@ class AdjacencyMatrix : public DataStructure {
 		size_t n = matrix.size();
 
 		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < n; j++) {
+			for (int j = _directed ? 0 : i; j < n; j++) {
 				if (matrix[i][j] != INFINITY) {
 					_edges.push_back({ i, j, matrix[i][j], _directed, _weighted });
 				}

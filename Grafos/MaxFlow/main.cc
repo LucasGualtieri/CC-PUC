@@ -1,9 +1,9 @@
 #include <iostream>
 #include <algorithm>
 
-#include "../Teste/Graph.hpp"
-#include "../Teste/GraphBuilder.hpp"
-#include "../DataStructures/include/Pair.hpp"
+#include "../DataStructures/include/Graph/Graph.hpp"
+#include "../DataStructures/include/Graph/GraphBuilder.hpp"
+#include "../DataStructures/utils/Pair.hpp"
 #include "../DataStructures/include/stack/linkedStack.hpp"
 #include "../DataStructures/include/queue/linkedQueue.hpp"
 #include "../DataStructures/include/matrix/matrix.hpp"
@@ -11,6 +11,8 @@
 using namespace std;
 
 using Path = LinearList<Edge>;
+
+// clear && g++ main.cc -std=c++20 && ./a.out
 
 Path buildPath(const Vertex& s, const Vertex& t, LinearList<Pair<Vertex, float>>& predecessor) {
 
@@ -152,9 +154,9 @@ int main() {
 
 	// Preciso pensar na estrutura de dados, lista com vertices de entrada?
 	Graph G = GraphBuilder()
-	.directed()
-	.weighted()
-	.dataStructure(Graph::AdjacencyMatrix)
+		.directed()
+		.weighted()
+		.dataStructure(Graph::AdjacencyMatrix)
 	.build();
 
 	G.addEdge(0, 1, 20);
@@ -170,8 +172,10 @@ int main() {
 	// G.addEdge(2, 3, 100);
 
 	float flow = FordFulkerson(0, 3, DFS, G);
-	
+
 	cout << "Flow: " << flow << endl;
+
+	cout << "Density: " << G.density() << endl;
 
 	return 0;
 }

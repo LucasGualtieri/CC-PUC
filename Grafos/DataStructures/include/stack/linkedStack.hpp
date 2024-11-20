@@ -3,7 +3,7 @@
 
 #include <sstream>
 #include "stack.hpp"
-#include "../cell.hpp"
+#include "../../utils/cell.hpp"
 
 template <typename T>
 class LinkedStack : public Stack<T> {

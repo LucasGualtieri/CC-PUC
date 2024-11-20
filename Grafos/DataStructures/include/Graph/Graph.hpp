@@ -1,24 +1,27 @@
 #ifndef GRAPH_HPP
 #define GRAPH_HPP
 
-#include "../DataStructures/include/list/linearList.hpp"
-#include "../DataStructures/include/Pair.hpp"
+#include "../list/linearList.hpp"
+#include "../../utils/Pair.hpp"
 
 #include "AdjacencyMatrix.hpp"
+#include "AdjacencyMatrixPointers.hpp"
 #include "DataStructure.hpp"
 #include "Edge.hpp"
+#include <cmath>
 #include <fstream>
 #include <iostream>
 #include <ostream>
 #include <stdexcept>
 #include <format>
 
+// TODO: Incluir m para keep count do numero de arestas em O(1)
 class Graph {
 
 public:
 
 	enum DataStructures {
-		AdjacencyMatrix
+		AdjacencyMatrix, AdjacencyMatrixPointers
 	};
 
 private:
@@ -28,10 +31,28 @@ private:
 	DataStructures choice;
 
 	Graph(DataStructure* dataStructure, size_t n, bool directed, bool weighted) {
+
 		this->directed = directed;
 		this->weighted = weighted;
 		this->n = n;
 		this->dataStructure = dataStructure;
+	}
+
+	DataStructure* dataStructureChoice(DataStructures choice) {
+
+		switch (choice) {
+			case AdjacencyMatrix:
+				return new class AdjacencyMatrix(n);
+			break;
+			case AdjacencyMatrixPointers:
+				return new class AdjacencyMatrixPointers(n);
+			break;
+			// case AdjacencyList
+			// 	dataStructure = new class AdjacencyList;
+			// break;
+		}
+
+		return nullptr;
 	}
 
 public:
@@ -45,14 +66,7 @@ public:
 		this->choice = choice;
 		this->n = n;
 
-		switch (choice) {
-			case AdjacencyMatrix:
-				dataStructure = new class AdjacencyMatrix(n);
-			break;
-			// case AdjacencyList
-			// 	dataStructure = new class AdjacencyList;
-			// break;
-		}
+		dataStructure = dataStructureChoice(choice);
 
 		this->dataStructure->directed(directed);
 		this->dataStructure->weighted(weighted);
@@ -65,11 +79,7 @@ public:
 		choice = clone.choice;
 		n = clone.n;
 
-		switch (choice) {
-			case AdjacencyMatrix:
-				dataStructure = new class AdjacencyMatrix;
-			break;
-		}
+		dataStructure = dataStructureChoice(choice);
 
 		this->dataStructure->directed(directed);
 		this->dataStructure->weighted(weighted);
@@ -81,7 +91,7 @@ public:
 
 	Graph& operator=(const Graph& G) {
 
-		// NOTE: This is the function called by the "return graph;" context
+		// NOTE: This is the function called by the "return graph;" "context".
 
 		if (this != &G) {
 
@@ -92,11 +102,7 @@ public:
 
 			delete dataStructure;
 
-			switch (choice) {
-				case AdjacencyMatrix:
-					dataStructure = new class AdjacencyMatrix(n);
-				break;
-			}
+			dataStructure = dataStructureChoice(choice);
 
 			dataStructure->directed(directed);
 			dataStructure->weighted(weighted);
@@ -197,9 +203,7 @@ public:
 		return dataStructure->hasEdge(u, v);
 	}
 
-	LinearList<Edge> edges() const {
-		return dataStructure->edges();
-	}
+	LinearList<Edge> edges() const { return dataStructure->edges(); }
 
 	LinearList<Vertex> vertices() const {
 		return dataStructure->vertices();
@@ -246,15 +250,16 @@ public:
 		std::cout << "Graph exported successfully to " << filename << ".png\n";
 	}
 
+	// TODO: Separar as arestas por virgulas
 	std::string str() const {
 
 		std::stringstream os;
 
-		for (Vertex u : this->vertices()) {
+		for (Vertex& u : vertices()) {
 
 			os << u << ": { ";
 
-			for (const auto& [v, w] : this->kneighbors(u)) {
+			for (auto& [v, w] : kneighbors(u)) {
 
 				if (weighted) {
 					os << "(" << v << ", " << w << ") ";
@@ -276,15 +281,15 @@ public:
 		return os;
 	}
 
-	float density(const int& x = 5) const {
+	float density(const int& precision = 3) const {
 		
 		float m = edges().size();
-		float n = vertices().size();
+		float n = this->n;
 
-		float density = m / (directed ? n * n - n : (n * n - n) / 2);
+		float density = m / ((n * n - n) / (directed ? 1 : 2));
 
-		return density; // Arredondar isso pra x casas decimais
-
+		float factor = std::pow(10, precision);
+		return std::round(density * factor) / factor;
 	}
 
 	float sparsness() const { return 1 - density(); }

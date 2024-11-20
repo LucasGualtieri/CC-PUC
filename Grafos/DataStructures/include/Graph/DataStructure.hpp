@@ -1,8 +1,8 @@
 #ifndef DATA_STRUCTURE_HPP
 #define DATA_STRUCTURE_HPP
 
-#include "../DataStructures/include/list/linearList.hpp"
-#include "../DataStructures/include/Pair.hpp"
+#include "../list/linearList.hpp"
+#include "../../utils/Pair.hpp"
 
 #include "Edge.hpp"
 

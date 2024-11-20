@@ -151,6 +151,13 @@ class LinearList : public List<T> {
 		array[this->_size++] = value;
 	}
 
+	LinearList<T>& operator+=(T value) {
+
+		push_back(value);
+		
+		return *this;
+	}
+
 	T pop_front() override {
 
 		if (this->empty()) {

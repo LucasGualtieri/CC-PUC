@@ -3,7 +3,7 @@
 
 #include <sstream>
 #include "queue.hpp"
-#include "../cell.hpp"
+#include "../../utils/cell.hpp"
 
 template <typename T>
 class LinkedQueue : public Queue<T> {
