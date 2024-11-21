@@ -9,7 +9,7 @@
 
 using namespace std;
 
-LinearList<Vertex> DFS(const Vertex& x, const Graph& G, LinearList<bool>& descobertos) {
+LinearList<Vertex> DFS(const Vertex& x, LinearList<bool>& descobertos, const Graph& G) {
 
 	LinearList<Vertex> FTD; // Fecho Transitivo Direto
 
@@ -42,7 +42,7 @@ LinearList<LinearList<Vertex>> Componentes(const Graph& G) {
 	for (Vertex& v : G.vertices()) {
 
 		if (!descobertos[v]) {
-			componentes += DFS(v, G, descobertos);
+			componentes += DFS(v, descobertos, G);
 		}
 	}
 
