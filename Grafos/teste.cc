@@ -1,5 +1,4 @@
 #include <iostream>
-#include <variant>
 
 #include "DataStructures/include/Graph/Graph.hpp"
 #include "DataStructures/include/Graph/GraphBuilder.hpp"
@@ -21,7 +20,7 @@ LinearList<Vertex> DFS(const Vertex& x, const Graph& G, LinearList<bool>& descob
 	while (!stack.empty()) {
 
 		Vertex u = stack.pop();
-		FTD.push_back(u);
+		FTD += u;
 
 		for (auto [v, w] : G.kneighbors(u)) {
 			if (!descobertos[v]) {
@@ -37,7 +36,7 @@ LinearList<Vertex> DFS(const Vertex& x, const Graph& G, LinearList<bool>& descob
 LinearList<LinearList<Vertex>> Componentes(const Graph& G) {
 
 	LinearList<LinearList<Vertex>> componentes;
-	
+
 	LinearList<bool> descobertos(G.n, false);
 
 	for (Vertex& v : G.vertices()) {
@@ -61,7 +60,7 @@ int main() {
 	G.addEdge(3, 4);
 	G.addEdge(3, 5);
 
-	cout << G << endl;
+	// cout << G << endl;
 
 	cout << Componentes(G) << endl;
 }
