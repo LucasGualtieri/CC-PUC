@@ -158,6 +158,19 @@ class LinearList : public List<T> {
 		return *this;
 	}
 
+	LinearList<T> operator+(T value) const {
+
+		LinearList<T> copy(*this);
+		copy.push_back(value);
+
+		return copy;
+	}
+
+	friend LinearList<T> operator+(const T value, LinearList<T> list) {
+		list.push_front(value);
+		return list;
+	}
+
 	T pop_front() override {
 
 		if (this->empty()) {
@@ -377,8 +390,8 @@ class LinearList : public List<T> {
 			if (i <= j) std::swap(array[i++], array[j--]);
 		}
 
-		if (left < j) quicksort(left, j);
-		if (i < right) quicksort(i, right);
+		if (left < j) quicksort(left, j, compare);
+		if (i < right) quicksort(i, right, compare);
 	}
 
 	void sort() override { quicksort(0, this->_size - 1); }
@@ -418,7 +431,15 @@ class LinearList : public List<T> {
 		return Iterator(array);
 	}
 
+	Iterator begin() const {
+		return Iterator(array);
+	}
+
 	Iterator end() {
+		return Iterator(array + this->_size);
+	}
+
+	Iterator end() const {
 		return Iterator(array + this->_size);
 	}
 };

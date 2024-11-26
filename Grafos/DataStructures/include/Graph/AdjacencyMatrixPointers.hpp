@@ -78,6 +78,20 @@ public:
         return v < matrix.size();
     }
 
+	size_t degree(const Vertex& v) const override {
+
+		size_t _degree = 0;
+		int n = matrix.size();
+
+		for (int i = 0; i < n; i++) {
+			if (matrix[v][i] != INFINITY) {
+				_degree++;
+			}
+		}
+
+		return _degree;
+	}
+
     LinearList<Edge> edges() const override {
 
         LinearList<Edge> _edges;
@@ -107,7 +121,7 @@ public:
         return vertices;
     }
 
-    LinearList<Pair<Vertex, float>> kneighbors(const Vertex& u) const override {
+    LinearList<Pair<Vertex, float>> neighbors(const Vertex& u) const override {
 
         LinearList<Pair<Vertex, float>> _kneighbors;
 

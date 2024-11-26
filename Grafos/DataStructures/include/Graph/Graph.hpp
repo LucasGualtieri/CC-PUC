@@ -203,18 +203,33 @@ public:
 		return dataStructure->hasEdge(u, v);
 	}
 
+	size_t degree(const Vertex& v) const {
+		return dataStructure->degree(v);
+	}
+
 	LinearList<Edge> edges() const { return dataStructure->edges(); }
 
 	LinearList<Vertex> vertices() const {
 		return dataStructure->vertices();
 	}
 
-	LinearList<Pair<Vertex, float>> kneighbors(Vertex u) const {
-		return dataStructure->kneighbors(u);
+	LinearList<Pair<Vertex, float>> neighbors(const Vertex& u) const {
+		return dataStructure->neighbors(u);
 	}
 
-	LinearList<Pair<Vertex, float>> operator[](Vertex u) {
-		return dataStructure->kneighbors(u);
+	LinearList<Vertex> neighbors(const Vertex& u, const bool& b) const {
+
+		LinearList<Vertex> _kneighbors;
+
+		for (Pair<Vertex, float> p : dataStructure->neighbors(u)) {
+			_kneighbors.push_back(p.first);
+		}
+
+		return _kneighbors;
+	}
+
+	LinearList<Pair<Vertex, float>> operator[](const Vertex& u) {
+		return dataStructure->neighbors(u);
 	}
 
 	// Function to export the graph to a PNG image using Graphviz
@@ -259,7 +274,7 @@ public:
 
 			os << u << ": { ";
 
-			for (auto& [v, w] : kneighbors(u)) {
+			for (auto& [v, w] : neighbors(u)) {
 
 				if (weighted) {
 					os << "(" << v << ", " << w << ") ";
