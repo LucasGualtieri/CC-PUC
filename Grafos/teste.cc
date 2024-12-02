@@ -22,7 +22,7 @@ LinearList<Vertex> DFS(const Vertex& x, LinearList<bool>& descobertos, const Gra
 		Vertex u = stack.pop();
 		FTD += u;
 
-		for (auto [v, w] : G.kneighbors(u)) {
+		for (auto [v, w] : G.neighbors(u)) {
 			if (!descobertos[v]) {
 				stack.push(v);
 				descobertos[v] = true;

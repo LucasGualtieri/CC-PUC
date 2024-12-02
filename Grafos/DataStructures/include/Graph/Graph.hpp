@@ -14,6 +14,17 @@
 #include <ostream>
 #include <stdexcept>
 #include <format>
+#include <unordered_map>
+
+// Custom hash specialization for std::pair
+namespace std {
+	template <>
+	struct hash<Pair<Vertex, Vertex>> {
+		size_t operator()(const Pair<Vertex, Vertex>& p) const {
+			return hash<int>()(p.first) ^ (hash<int>()(p.second) << 1);
+		}
+	};
+}
 
 // TODO: Incluir m para keep count do numero de arestas em O(1)
 class Graph {
@@ -24,11 +35,35 @@ public:
 		AdjacencyMatrix, AdjacencyMatrixPointers
 	};
 
+	using Prop = Pair<std::string, std::string>;
+
 private:
+
+	Pair<std::string, std::string> base = {"", ""};
+
+	class EdgeMap : public std::unordered_map<Pair<Vertex, Vertex>, Pair<std::string, std::string>> {
+		Pair<std::string, std::string> base = {"", ""};
+	public:
+		Pair<std::string, std::string> Find(const Pair<Vertex, Vertex>& edge) const {
+			auto it = find(edge);
+			return it != end() ? it->second : base;
+		}
+	};
+
+	class VertexMap : public std::unordered_map<Vertex, Pair<std::string, std::string>> {
+		Pair<std::string, std::string> base = {"", ""};
+	public:
+		Pair<std::string, std::string> Find(const Vertex& v) const {
+			auto it = find(v);
+			return it != end() ? it->second : base;
+		}
+	};
 
 	DataStructure* dataStructure;
 	bool directed, weighted;
 	DataStructures choice;
+	EdgeMap edgeMap;
+	VertexMap vertexMap;
 
 	Graph(DataStructure* dataStructure, size_t n, bool directed, bool weighted) {
 
@@ -43,10 +78,10 @@ private:
 		switch (choice) {
 			case AdjacencyMatrix:
 				return new class AdjacencyMatrix(n);
-			break;
+				break;
 			case AdjacencyMatrixPointers:
 				return new class AdjacencyMatrixPointers(n);
-			break;
+				break;
 			// case AdjacencyList
 			// 	dataStructure = new class AdjacencyList;
 			// break;
@@ -110,7 +145,7 @@ public:
 			for (const Edge& e : G.edges()) {
 				addEdge(e);
 			}
-        }
+		}
 
 		return *this;
 	}	
@@ -128,6 +163,11 @@ public:
 		n++;
 	}
 
+	void addVertex(const Vertex& v, const Pair<std::string, std::string>& props) {
+		addVertex(v);
+		vertexMap.insert({v, props});
+	}
+
 	void addEdge(const Vertex& u, const Vertex& v, const float& weight) {
 
 		if (!weighted) {
@@ -142,7 +182,7 @@ public:
 
 		if (!directed) dataStructure->addEdge(v, u, weight);
 	}
-	
+
 	void addEdge(const Vertex& u, const Vertex& v) {
 
 		if (weighted) {
@@ -156,6 +196,11 @@ public:
 		dataStructure->addEdge(u, v);
 
 		if (!directed) dataStructure->addEdge(v, u);
+	}
+
+	void addEdge(const Vertex& u, const Vertex& v, const Pair<std::string, std::string>& props) {
+		addEdge(u, v);
+		edgeMap.insert({{u, v}, props});
 	}
 
 	void addEdge(const Edge& e) {
@@ -177,6 +222,28 @@ public:
 
 			if (!directed) dataStructure->addEdge(e.v, e.u);
 		}
+	}
+
+	void addEdge(const Edge& e, const Pair<std::string, std::string>& props) {
+		addEdge(e);
+		edgeMap.insert({{e.u, e.v}, props});
+	}
+
+	void changeEdgeProps(const Vertex& u, const Vertex& v, const Prop prop) {
+		if (hasEdge(u, v)) {
+			edgeMap[{u, v}] = prop;
+		}
+	}
+
+	void changeEdgeProps(const Edge& e, const Prop prop) {
+		if (hasEdge(e.u, e.v)) {
+			edgeMap[{e.u, e.v}] = prop;
+		}
+	}
+
+	// NOTE: There probably should be a check if there is the vertex
+	void changeVertexProps(const Vertex& v, const Prop& prop) {
+		vertexMap[v] = prop;
 	}
 
 	void changeEdgeWeight(const Edge& e, const float& weight) {
@@ -233,7 +300,11 @@ public:
 	}
 
 	// Function to export the graph to a PNG image using Graphviz
-	void export_to(const std::string& filename, const std::string& engine = "dot") const {
+	void export_to(const std::string& filename, const std::string& engine = "dot", size_t dpi = 300) const {
+
+		// NOTE: This is possible to define all nodes and edges at once
+		// node [shape=ellipse, style=filled, fillcolor=lightblue];
+		// edge [color=gray, style=dotted];
 
 		// 1. Create a DOT file representing the graph
 		std::string dotFilename = filename + ".dot";
@@ -245,11 +316,26 @@ public:
 
 		dotFile << (directed ? "digraph" : "graph") << " G {\n";
 
+		dotFile << std::format("    dpi = {};", dpi) << std::endl;
+
+		for (const auto& [v, propsObject] : vertexMap) {
+			auto [color, line] = propsObject;
+			std::string props = "color = \"" + color + "\", style = \"" + line;
+			dotFile << "    " << v << " [ " << props << "\"];\n";
+		}
+
+		dotFile << std::endl;
+
 		for (const Edge& e : edges()) {
 
 			if (!directed && e.u > e.v) continue;  // Avoid duplicate edges for undirected graphs
+			
+			Prop prop = edgeMap.Find({e.u, e.v});
+			auto [color, line] = prop == base && !directed ? edgeMap.Find({e.v, e.u}) : prop;
 
-			dotFile << "    " << e.u << (directed ? " -> " : " -- ") << e.v << " [label=\"" << (weighted ? std::format("{:.6g}", e.weight) : "") << "\"];\n";
+			std::string props = "color = \"" + color + "\", style = \"" + line;
+
+			dotFile << "    " << e.u << (directed ? " -> " : " -- ") << e.v << " [label=\"" << (weighted ? std::format("{:.6g}", e.weight) : "") << "\", " << props << "\"];\n";
 		}
 
 		dotFile << "}\n";
@@ -297,7 +383,7 @@ public:
 	}
 
 	float density(const int& precision = 3) const {
-		
+
 		float m = edges().size();
 		float n = this->n;
 
