@@ -77,7 +77,7 @@ Path BFS(const Vertex& s, const Vertex& t, const Graph& G) {
 	return buildPath(s, t, predecessor);
 }
 
-float Bottleneck(Path& P, const Graph& gf) {
+float Bottleneck(Path& P) {
 
 	float bottleneck = P[0].weight;
 
@@ -91,20 +91,20 @@ float Bottleneck(Path& P, const Graph& gf) {
 Graph CreateResidualGraph(Matrix<int>& flow, const Graph& G) {
 
 	Graph gf = G.cloneDataStructure(G.n);
-	float newWeight;
+	float newCapacity;
 
 	for (const Edge& e : G.edges()) {
 
-		newWeight = e.weight - flow[e.u][e.v];
+		newCapacity = e.weight - flow[e.u][e.v];
 
-		if (newWeight > 0) {
-			gf.addEdge({ e.u, e.v, newWeight });
+		if (newCapacity > 0) {
+			gf.addEdge({ e.u, e.v, newCapacity });
 		}
 
-		newWeight = flow[e.u][e.v];
+		newCapacity = flow[e.u][e.v];
 
-		if (newWeight > 0) {
-			gf.addEdge({ e.v, e.u, newWeight });
+		if (newCapacity > 0) {
+			gf.addEdge({ e.v, e.u, newCapacity });
 		}
 	}
 
@@ -132,7 +132,7 @@ float FordFulkerson(const Vertex& s, const Vertex& t, auto FindPath, const Graph
 
 	while (!(P = FindPath(s, t, gf)).empty()) {
 
-		maxFlow += b = Bottleneck(P, gf); 
+		maxFlow += b = Bottleneck(P); 
 
 		for (Edge& e : P) {
 
