@@ -318,8 +318,10 @@ public:
 
 		dotFile << std::format("    dpi = {};", dpi) << std::endl;
 
-		for (const auto& [v, propsObject] : vertexMap) {
-			auto [color, line] = propsObject;
+		// for (const auto& [v, propsObject] : vertexMap) {
+		for (const Vertex& v : vertices()) {
+			// auto [color, line] = propsObject;
+			auto [color, line] = vertexMap.Find(v);
 			std::string props = "color = \"" + color + "\", style = \"" + line;
 			dotFile << "    " << v << " [ " << props << "\"];\n";
 		}
