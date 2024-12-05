@@ -44,7 +44,7 @@ Path DFS(const Vertex& s, const Vertex& t, const Graph& G) {
 		const Vertex& u = stack.pop();
 		if (u == t) break;
 		
-		for (auto [v, w] : G.kneighbors(u)) {
+		for (auto [v, w] : G.neighbors(u)) {
 			if (predecessor[v].first == -1) {
 				stack.push(v);
 				predecessor[v] = { u, w };
@@ -66,7 +66,7 @@ Path BFS(const Vertex& s, const Vertex& t, const Graph& G) {
 		const Vertex& u = queue.pop();
 		if (u == t) break;
 		
-		for (auto [v, w] : G.kneighbors(u)) {
+		for (auto [v, w] : G.neighbors(u)) {
 			if (predecessor[v].first == -1) {
 				queue.push(v);
 				predecessor[v] = { u, w };
@@ -130,7 +130,7 @@ float FordFulkerson(const Vertex& s, const Vertex& t, auto FindPath, const Graph
 
 	Path P;
 
-	while (!(P = FindPath(s, t, gf)).empty()) {
+	while ((P = FindPath(s, t, gf)).empty()) {
 
 		maxFlow += b = Bottleneck(P); 
 
