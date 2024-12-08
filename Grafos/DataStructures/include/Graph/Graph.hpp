@@ -39,21 +39,21 @@ public:
 
 private:
 
-	Pair<std::string, std::string> base = {"", ""};
+	Prop base = {"", ""};
 
-	class EdgeMap : public std::unordered_map<Pair<Vertex, Vertex>, Pair<std::string, std::string>> {
-		Pair<std::string, std::string> base = {"", ""};
+	class EdgeMap : public std::unordered_map<Pair<Vertex, Vertex>, Prop> {
+		Prop base = {"", ""};
 	public:
-		Pair<std::string, std::string> Find(const Pair<Vertex, Vertex>& edge) const {
+		Prop Find(const Pair<Vertex, Vertex>& edge) const {
 			auto it = find(edge);
 			return it != end() ? it->second : base;
 		}
 	};
 
-	class VertexMap : public std::unordered_map<Vertex, Pair<std::string, std::string>> {
-		Pair<std::string, std::string> base = {"", ""};
+	class VertexMap : public std::unordered_map<Vertex, Prop> {
+		Prop base = {"", ""};
 	public:
-		Pair<std::string, std::string> Find(const Vertex& v) const {
+		Prop Find(const Vertex& v) const {
 			auto it = find(v);
 			return it != end() ? it->second : base;
 		}
@@ -163,7 +163,7 @@ public:
 		n++;
 	}
 
-	void addVertex(const Vertex& v, const Pair<std::string, std::string>& props) {
+	void addVertex(const Vertex& v, const Prop& props) {
 		addVertex(v);
 		vertexMap.insert({v, props});
 	}
@@ -198,7 +198,7 @@ public:
 		if (!directed) dataStructure->addEdge(v, u);
 	}
 
-	void addEdge(const Vertex& u, const Vertex& v, const Pair<std::string, std::string>& props) {
+	void addEdge(const Vertex& u, const Vertex& v, const Prop& props) {
 		addEdge(u, v);
 		edgeMap.insert({{u, v}, props});
 	}
@@ -224,7 +224,7 @@ public:
 		}
 	}
 
-	void addEdge(const Edge& e, const Pair<std::string, std::string>& props) {
+	void addEdge(const Edge& e, const Prop& props) {
 		addEdge(e);
 		edgeMap.insert({{e.u, e.v}, props});
 	}
@@ -243,7 +243,7 @@ public:
 
 	// NOTE: There probably should be a check if there is the vertex
 	void changeVertexProps(const Vertex& v, const Prop& prop) {
-		vertexMap[v] = prop;
+		if (v <= n) vertexMap[v] = prop;
 	}
 
 	void changeEdgeWeight(const Edge& e, const float& weight) {
@@ -286,13 +286,13 @@ public:
 
 	LinearList<Vertex> neighbors(const Vertex& u, const bool& b) const {
 
-		LinearList<Vertex> _kneighbors;
+		LinearList<Vertex> kneighbors;
 
 		for (Pair<Vertex, float> p : dataStructure->neighbors(u)) {
-			_kneighbors.push_back(p.first);
+			kneighbors.push_back(p.first);
 		}
 
-		return _kneighbors;
+		return kneighbors;
 	}
 
 	LinearList<Pair<Vertex, float>> operator[](const Vertex& u) {
@@ -322,8 +322,8 @@ public:
 		for (const Vertex& v : vertices()) {
 			// auto [color, line] = propsObject;
 			auto [color, line] = vertexMap.Find(v);
-			std::string props = "color = \"" + color + "\", style = \"" + line;
-			dotFile << "    " << v << " [ " << props << "\"];\n";
+			std::string props = format("color = \"{}\", style = \"{}\"", color, line);
+			dotFile << "    " << v << " [" << props << "];\n";
 		}
 
 		dotFile << std::endl;
