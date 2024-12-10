@@ -1,3 +1,6 @@
+#ifndef IMAGE_TO_MATRIX
+#define IMAGE_TO_MATRIX
+
 #include <format>
 #include <iostream>
 #include <fstream>
@@ -14,6 +17,21 @@ typedef unsigned char Byte;
 struct Pixel {
 
 	Byte R, G, B;
+
+	// Pixel& operator=(const Pixel& p) {
+	//
+	// 	this->G = p.R;
+	// 	this->G = p.G;
+	// 	this->G = p.B;
+	//
+	// 	return *this;
+	// }
+	
+	bool operator<(const Pixel& p) { return true; }
+	bool operator>(const Pixel& p) { return true; }
+	bool operator == (const Pixel& p) {
+		return this->R == p.R && this->G == p.G && this->B == p.B;
+	}
 
 	friend ostream& operator<<(ostream& os, const Pixel& pixel) {
 		// NOTE: This is just to make the Matrix print prettier
@@ -75,7 +93,7 @@ Matrix<int> loadPGM(const string& filename) {
 }
 
 // Function to load PPM file
-Matrix<Pixel> loadPPM(const string& filename) {
+Matrix<Pixel> loadPPM(const string& filename, bool debug = false) {
 
     ifstream file(filename, ios::binary);
 
@@ -102,7 +120,7 @@ Matrix<Pixel> loadPPM(const string& filename) {
     file.ignore();
 
     // Prepare a matrix to hold the pixel data
-    Matrix<Pixel> image(width, height);
+    Matrix<Pixel> image(height, width);
 
 	if (magicNumber == "P3") {
 
@@ -138,10 +156,14 @@ Matrix<Pixel> loadPPM(const string& filename) {
 
 	file.close();
 
+	if (debug) {
+		cout << "imagePGM loaded successfully: " << image.width << "x" << image.height << "\n";
+	}
+	
 	return image;
 }
 
-int main() {
+void testing() {
 
 	try {
 		Matrix<int> imagePGM = loadPGM("exemplo.pgm");
@@ -156,6 +178,6 @@ int main() {
 	catch (const exception& e) {
 		cerr << e.what() << '\n';
 	}
-
-	return 0;
 }
+
+#endif
