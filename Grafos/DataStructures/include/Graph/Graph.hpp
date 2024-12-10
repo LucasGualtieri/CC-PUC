@@ -5,9 +5,12 @@
 #include "../../utils/Pair.hpp"
 
 #include "AdjacencyMatrix.hpp"
+#include "FastAdjacencyList.hpp"
 #include "AdjacencyMatrixPointers.hpp"
+#include "AdjacencyList.hpp"
 #include "DataStructure.hpp"
 #include "Edge.hpp"
+#include "FastAdjacencyList.hpp"
 #include <cmath>
 #include <fstream>
 #include <iostream>
@@ -32,7 +35,8 @@ class Graph {
 public:
 
 	enum DataStructures {
-		AdjacencyMatrix, AdjacencyMatrixPointers
+		AdjacencyMatrix, AdjacencyMatrixPointers,
+		AdjacencyList, FastAdjacencyList
 	};
 
 	using Prop = Pair<std::string, std::string>;
@@ -78,13 +82,13 @@ private:
 		switch (choice) {
 			case AdjacencyMatrix:
 				return new class AdjacencyMatrix(n);
-				break;
 			case AdjacencyMatrixPointers:
 				return new class AdjacencyMatrixPointers(n);
-				break;
-			// case AdjacencyList
-			// 	dataStructure = new class AdjacencyList;
-			// break;
+			case AdjacencyList:
+				return new class AdjacencyList;
+			case FastAdjacencyList:
+				return new class FastAdjacencyList;
+			break;
 		}
 
 		return nullptr;
@@ -112,7 +116,8 @@ public:
 		directed = clone.directed;
 		weighted = clone.weighted;
 		choice = clone.choice;
-		n = clone.n;
+		// n = clone.n; // WARNING: I think this is the right call...
+		n = 0;
 
 		dataStructure = dataStructureChoice(choice);
 

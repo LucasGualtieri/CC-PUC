@@ -1,0 +1,9 @@
+graph G {
+    dpi = 300;
+    2 [ color = "", style = ""];
+    1 [ color = "", style = ""];
+    0 [ color = "", style = ""];
+
+    1 -- 2 [label="20.5", color = "", style = ""];
+    0 -- 1 [label="10.5", color = "", style = ""];
+}

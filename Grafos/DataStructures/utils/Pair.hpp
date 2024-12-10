@@ -2,6 +2,7 @@
 #define PAIR_HPP
 
 #include <limits>
+#include <ostream>
 
 template<typename T1, typename T2>
 class Pair {

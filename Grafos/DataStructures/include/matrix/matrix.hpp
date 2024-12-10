@@ -33,11 +33,11 @@ class Matrix {
 		}
 	}
 
-	bool inBounds(int i, int j) {
+	bool inBounds(int i, int j) const {
 		return 0 <= i && i < height && 0 <= j && j < width;
 	}
 
-	bool notInBounds(int i, int j) {
+	bool notInBounds(int i, int j) const {
 		return !inBounds(i, j);
 	}
 

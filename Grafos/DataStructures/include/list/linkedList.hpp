@@ -3,7 +3,7 @@
 
 #include <sstream>
 #include "list.hpp"
-#include "../cell.hpp"
+#include "../../utils/cell.hpp"
 
 template <typename T>
 class LinkedList : public List<T> {

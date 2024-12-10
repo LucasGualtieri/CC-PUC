@@ -237,6 +237,19 @@ class LinearList : public List<T> {
 		return value;
 	}
 
+	bool remove(const T& element) {
+
+		for (int i = 0; i < this->size(); i++) {
+
+			if (array[i] == element) {
+				remove(i);
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	T& front() const override {
 
 		if (this->empty()) throw std::runtime_error("List underflow: Attempt to front() an empty list.");
