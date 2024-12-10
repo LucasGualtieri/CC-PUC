@@ -50,7 +50,6 @@ Graph createGraph(const Matrix<Pixel>& m, const bool& eightConnected = false) {
 	Graph G = GraphBuilder()
 		.dataStructure(Graph::FastAdjacencyList)
 		.weighted()
-		.n(m.width * m.width)
 	.build();
 
 	// for (auto& [i, j] : m) {
