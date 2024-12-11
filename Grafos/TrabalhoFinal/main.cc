@@ -12,7 +12,7 @@
 
 using namespace std;
 
-using Segmentation = LinearList<LinearList<Vertex>>;
+using Segmentation = unordered_map<Vertex, LinearList<Vertex>>;
 using Component = LinearList<Vertex>;
 using PriorityQueue = priority_queue<pair<float, pair<Vertex, Vertex>>, vector<pair<float, pair<Vertex, Vertex>>>, greater<>>;
 
@@ -92,12 +92,8 @@ class UnionFind {
 LinearList<Pair<int, int>> getNeighbors(int i, int j, const Matrix<Pixel>& m, bool eightConnected = false);
 float dissimilarity(const Pixel& a, const Pixel& b);
 Graph createGraph(const Matrix<Pixel>& m, const bool& eightConnected = false);
-void saveSegmentedImage(const string& outputFilename, const LinearList<LinearList<Vertex>>& segment, Matrix<Pixel>& image);
+void saveSegmentedImage(const string& outputFilename, const Segmentation& segment, Matrix<Pixel>& image);
 void convertPpmToPng(const string& inputFile, const string& outputFile);
-
-float Int(Vertex x, UnionFind& unionFind) {
-	return unionFind.getMaxWeight(x);
-}
 
 Component DFS(Vertex& x, const Graph& G, LinearList<bool>& descobertos) {
 
@@ -122,20 +118,21 @@ Component DFS(Vertex& x, const Graph& G, LinearList<bool>& descobertos) {
 	return FTD;
 }
 
+float Int(Vertex x, UnionFind& unionFind) {
+	return unionFind.getMaxWeight(x);
+}
+
 int threshold(Vertex& v, const int K, UnionFind& unionFind) {
-	// cout << "unionFind.setSize(v): " << unionFind.setSize(v) << endl;
 	return K / unionFind.setSize(v);
-};
+}
 
-float MInt(Vertex& u, Vertex& v, const int& K, UnionFind& unionFind, const Graph& G) {
+float MInt(Vertex& u, Vertex& v, const int& K, UnionFind& unionFind) {
 	return min(Int(u, unionFind) + threshold(u, K, unionFind), Int(v, unionFind) + threshold(v, K, unionFind));
-};
+}
 
-bool D(const float& weight, Vertex& u, Vertex& v, const int& K, UnionFind& unionFind, const Graph& G) {
-	float valor = MInt(u, v, K, unionFind, G);
-	// cout << "valor: " << valor << endl;
-	return weight > valor;
-};
+bool D(const float& weight, Vertex& u, Vertex& v, const int& K, UnionFind& unionFind) {
+	return weight > MInt(u, v, K, unionFind);
+}
 
 Segmentation ImageSegmentation(const int K, const Graph& G) {
 
@@ -144,35 +141,25 @@ Segmentation ImageSegmentation(const int K, const Graph& G) {
 
 	UnionFind unionFind;
 
-	Graph aux = GraphBuilder()
-		.dataStructure(Graph::FastAdjacencyList)
-		.weighted()
-	.build();
-
 	for (Vertex& v : G.vertices()) {
 		unionFind.insert(v);
-		aux.addVertex(v);
 	}
 	
 	for (Edge& e : sortedEdges) {
 
 		if (!unionFind.connected(e.u, e.v)) {
 
-			if (!D(e.weight, e.u, e.v, K, unionFind, aux)) {
+			if (!D(e.weight, e.u, e.v, K, unionFind)) {
 				unionFind.join(e.u, e.v, e.weight);
-				aux.addEdge(e);
 			}
 		}
 	}
 
-	Segmentation segmentation(unionFind.numberOfSets());
-
-	LinearList<bool> descobertos(G.n, false);
+	Segmentation segmentation;
 
 	for (Vertex& v : G.vertices()) {
-		if (!descobertos[v]) {
-			segmentation += DFS(v, aux, descobertos);
-		}
+		Vertex root = unionFind.find(v);
+		segmentation[root] += v;
 	}
 
 	return segmentation;
@@ -181,18 +168,18 @@ Segmentation ImageSegmentation(const int K, const Graph& G) {
 // NOTE: HERE IS MAIN
 int main() {
 
-	Matrix<Pixel> image = loadPPM("inputImages/dog", 0.8);
+	Matrix<Pixel> image = loadPPM("inputImages/faixaBranca", 0.8);
 
 	Graph G = createGraph(image, true);
 
-	Segmentation segment = ImageSegmentation(1'500'000, G);
-	// cout << segment << endl;
+	Segmentation segment = ImageSegmentation(50'000, G);
 	cout << "Seg size: " << segment.size() << endl;
 
-	saveSegmentedImage("outputImages/dog.ppm", segment, image);
-	
-	// WARNING: This will attempt to call a python script
-	convertPpmToPng("outputImages/dog", "outputImages/dog");
+	// for (auto [v, C] : segment) {
+	// 	cout << C << endl;
+	// }
+
+	saveSegmentedImage("outputImages/faixaBranca.ppm", segment, image);
 
 	return 0;
 }
@@ -285,13 +272,6 @@ Pixel HSLToHex(int h, double s, double l) {
 	int G = static_cast<int>((g + m) * 255);
 	int B = static_cast<int>((b + m) * 255);
 
-	// // Convert to hexadecimal
-	// ostringstream oss;
-	// oss << "#" << setfill('0') << setw(2) << hex << R
-	// 	<< setfill('0') << setw(2) << hex << G
-	// 	<< setfill('0') << setw(2) << hex << B;
-	//
-	// return oss.str();
 	return {
 		.R = static_cast<Byte>(R),
 		.G = static_cast<Byte>(G),
@@ -313,18 +293,17 @@ LinearList<Pixel> generateColors(int n) {
 	return colors;
 }
 
-void saveSegmentedImage(const string& outputFilename, const LinearList<LinearList<Vertex>>& segment, Matrix<Pixel>& image) {
+void saveSegmentedImage(const string& outputFilename, const Segmentation& segment, Matrix<Pixel>& image) {
 
 	// Paint the pixels
 	LinearList<Pixel> color = generateColors(segment.size());
 
 	int index = 0;
-    for (LinearList<Vertex> C : segment) {
+	for (auto& [v, C] : segment) {
 
 		for (Vertex v : C) {
 
-			int i = v / image.width;
-			int j = v % image.width;
+			int i = v / image.width, j = v % image.width;
 
 			if (image.inBounds(i, j)) { // Ensure pixel is within image bounds
 				image[i][j] = color[index];
@@ -332,42 +311,44 @@ void saveSegmentedImage(const string& outputFilename, const LinearList<LinearLis
 		}
 
 		index++;
-    }
+	}
 
-    // Save the updated image as a new PPM file
-    ofstream outFile(outputFilename, ios::binary);
-    if (!outFile.is_open()) {
-        throw runtime_error("Cannot open file: " + outputFilename);
-    }
+	// Save the updated image as a new PPM file
+	ofstream outFile(outputFilename, ios::binary);
+	if (!outFile.is_open()) {
+		throw runtime_error("Cannot open file: " + outputFilename);
+	}
 
-    // Write PPM header
-    outFile << "P6\n";
-    outFile << image.width << " " << image.height << "\n";
-    outFile << "255\n";
+	// Write PPM header
+	outFile << "P6\n";
+	outFile << image.width << " " << image.height << "\n";
+	outFile << "255\n";
 
-    // Write pixel data
-    for (int i = 0; i < image.height; ++i) {
+	// Write pixel data
+	for (int i = 0; i < image.height; ++i) {
 
-        for (int j = 0; j < image.width; ++j) {
+		for (int j = 0; j < image.width; ++j) {
 
-            const Pixel& pixel = image[i][j];
+			const Pixel& pixel = image[i][j];
 
-            outFile.put(pixel.R);
-            outFile.put(pixel.G);
-            outFile.put(pixel.B);
-        }
-    }
+			outFile.put(pixel.R);
+			outFile.put(pixel.G);
+			outFile.put(pixel.B);
+		}
+	}
 
-    outFile.close();
+	outFile.close();
+	
+	convertPpmToPng("outputImages/faixaBranca", "outputImages/faixaBranca");
 }
 
 void convertPpmToPng(const string& inputFile, const string& outputFile) {
 
-    // Construct the Python command
-    string command = "python3 ppmToPng.py \"" + inputFile + ".ppm\" \"" + outputFile + ".png\"";
+	// Construct the Python command
+	string command = "python3 ppmToPng.py \"" + inputFile + ".ppm\" \"" + outputFile + ".png\"";
 
-    // Execute the command
-    int result = system(command.c_str());
+	// Execute the command
+	int result = system(command.c_str());
 
 	// Check if the command executed successfully
 	if (result != 0) {
