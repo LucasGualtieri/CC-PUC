@@ -5,6 +5,7 @@
 #include <iostream>
 #include <fstream>
 #include <stdexcept>
+#include <tuple>
 
 #include "../DataStructures/include/matrix/matrix.hpp"
 
@@ -92,10 +93,42 @@ Matrix<int> loadPGM(const string& filename) {
 	return image;
 }
 
-// Function to load PPM file
-Matrix<Pixel> loadPPM(const string& filename, bool debug = false) {
+void convertPngToPpm(const string& inputFile, const string& outputFile) {
 
-    ifstream file(filename, ios::binary);
+    // Construct the Python command
+    string command = "python3 pngToPpm.py \"" + inputFile + ".png\" \"" + outputFile + ".ppm\"";
+
+    // Execute the command
+    int result = system(command.c_str());
+
+	// Check if the command executed successfully
+	if (result != 0) {
+		cerr << "Error occurred while attempting to convert the file." << endl;
+	}
+}
+
+void applyGaussian(const string& inputFile, const string& outputFile, float sigma) {
+
+    // Construct the Python command
+    string command = "python3 applyGaussian.py \"" + inputFile + ".ppm\" \"" + outputFile + ".ppm\" " + to_string(sigma);
+
+    // Execute the command
+    int result = system(command.c_str());
+
+	// Check if the command executed successfully
+	if (result != 0) {
+		cerr << "Error occurred while attempting to convert the file." << endl;
+	}
+}
+
+// Function to load PPM file
+Matrix<Pixel> loadPPM(const string& filename, float sigma, bool debug = false) {
+
+	convertPngToPpm(filename, filename);
+
+	applyGaussian(filename, filename, sigma);
+
+    ifstream file(filename + ".ppm", ios::binary);
 
     if (!file.is_open()) {
         throw runtime_error("Cannot open file: " + filename);
@@ -170,7 +203,7 @@ void testing() {
 		cout << "imagePGM loaded successfully: " << imagePGM.height << "x" << imagePGM.width << "\n";
 		cout << imagePGM << endl;
 
-		Matrix<Pixel> imagemPPM = loadPPM("exemplo.ppm");
+		Matrix<Pixel> imagemPPM = loadPPM("exemplo.ppm", 0.8);
 		cout << "imagemPPM loaded successfully: " << imagemPPM.height << "x" << imagemPPM.width << "\n";
 		cout << imagemPPM << endl;
 	}
