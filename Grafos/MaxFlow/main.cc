@@ -44,7 +44,7 @@ Path DFS(const Vertex& s, const Vertex& t, const Graph& G) {
 		const Vertex& u = stack.pop();
 		if (u == t) break;
 		
-		for (auto [v, w] : G.kneighbors(u)) {
+		for (auto [v, w] : G.neighbors(u)) {
 			if (predecessor[v].first == -1) {
 				stack.push(v);
 				predecessor[v] = { u, w };
@@ -66,7 +66,7 @@ Path BFS(const Vertex& s, const Vertex& t, const Graph& G) {
 		const Vertex& u = queue.pop();
 		if (u == t) break;
 		
-		for (auto [v, w] : G.kneighbors(u)) {
+		for (auto [v, w] : G.neighbors(u)) {
 			if (predecessor[v].first == -1) {
 				queue.push(v);
 				predecessor[v] = { u, w };
@@ -156,14 +156,23 @@ int main() {
 	Graph G = GraphBuilder()
 		.directed()
 		.weighted()
-		.dataStructure(Graph::AdjacencyMatrix)
+		.dataStructure(Graph::FastAdjacencyList)
 	.build();
 
-	G.addEdge(0, 1, 20);
-	G.addEdge(0, 2, 10);
-	G.addEdge(1, 2, 30);
-	G.addEdge(1, 3, 10);
-	G.addEdge(2, 3, 20);
+	G.addEdge(0, 1, 4);
+	G.addEdge(0, 2, 4);
+	G.addEdge(0, 3, 7);
+	G.addEdge(1, 2, 7);
+	G.addEdge(1, 5, 9);
+	G.addEdge(2, 4, 7);
+	G.addEdge(3, 4, 7);
+	G.addEdge(4, 5, 12);
+
+	// G.addEdge(0, 1, 20);
+	// G.addEdge(0, 2, 10);
+	// G.addEdge(1, 2, 30);
+	// G.addEdge(1, 3, 10);
+	// G.addEdge(2, 3, 20);
 
 	// G.addEdge(0, 1, 100);
 	// G.addEdge(0, 2, 100);
@@ -171,7 +180,7 @@ int main() {
 	// G.addEdge(1, 3, 100);
 	// G.addEdge(2, 3, 100);
 
-	float flow = FordFulkerson(0, 3, DFS, G);
+	float flow = FordFulkerson(0, 5, DFS, G);
 
 	cout << "Flow: " << flow << endl;
 

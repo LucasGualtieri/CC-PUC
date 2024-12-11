@@ -116,8 +116,7 @@ public:
 		directed = clone.directed;
 		weighted = clone.weighted;
 		choice = clone.choice;
-		// n = clone.n; // WARNING: I think this is the right call...
-		n = 0;
+		n = 0; // WARNING: I think this is the right call...
 
 		dataStructure = dataStructureChoice(choice);
 
