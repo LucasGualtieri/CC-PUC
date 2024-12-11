@@ -1,8 +1,8 @@
+#include <algorithm>
+#include <cstddef>
 #include <iostream>
-#include <queue>
 
 #include "../DataStructures/utils/Pair.hpp"
-#include "../DataStructures/include/stack/linkedStack.hpp"
 #include "../DataStructures/include/Graph/Graph.hpp"
 #include "../DataStructures/include/matrix/matrix.hpp"
 #include "../DataStructures/include/list/linearList.hpp"
@@ -13,28 +13,36 @@
 using namespace std;
 
 using Segmentation = unordered_map<Vertex, LinearList<Vertex>>;
-using Component = LinearList<Vertex>;
-using PriorityQueue = priority_queue<pair<float, pair<Vertex, Vertex>>, vector<pair<float, pair<Vertex, Vertex>>>, greater<>>;
 
 // clear && g++ main.cc -std=c++20 && ./a.out
 
 class UnionFind {
 
-	unordered_map<Vertex, int> parent;
-	unordered_map<Vertex, float> maxWeight; // Store the maximum weight for each set root
+	// unordered_map<Vertex, int> parent;
+	// unordered_map<Vertex, float> maxWeight; // Store the maximum weight for each set root
+	LinearList<int> parent;
+	LinearList<float> maxWeight; // Store the maximum weight for each set root
 	size_t sets = 0;
 
   public:
+
+	UnionFind(size_t n) : parent(n, 0), maxWeight(n, 0) { }
 
 	size_t numberOfSets() { return sets; }
 
 	void insert(Vertex vertex) {
 
-		if (parent.find(vertex) == parent.end()) {
+		if (parent[vertex] == 0) {
 			parent[vertex] = -1; // Initialize as its own root with size 1
 			maxWeight[vertex] = 0; // Initially no edges, so max weight is 0
 			sets++;
 		}
+
+		// if (parent[vertex] == parent.end()) {
+		// 	parent[vertex] = -1; // Initialize as its own root with size 1
+		// 	maxWeight[vertex] = 0; // Initially no edges, so max weight is 0
+		// 	sets++;
+		// }
 	}
 
 	bool connected(Vertex u, Vertex v) { return find(u) == find(v); }
@@ -61,31 +69,36 @@ class UnionFind {
 		sets--;
 
 		// Union by size: Attach the smaller tree under the larger tree
-		if (parent[rootU] < parent[rootV]) { // rootU has larger size
+
+		// rootU has larger size
+		if (parent[rootU] < parent[rootV]) {
+
 			parent[rootU] += parent[rootV]; // Update size of rootU
 			parent[rootV] = rootU;
+
 			// Update max weight for the new root
-			maxWeight[rootU] = max(maxWeight[rootU], maxWeight[rootV]);
-			maxWeight[rootU] = max(maxWeight[rootU], weight);
-			maxWeight.erase(rootV);
-		} else { // rootV has larger or equal size
+			maxWeight[rootU] = max({ maxWeight[rootU], maxWeight[rootV], weight });
+			// maxWeight.erase(rootV);
+		}
+
+		// rootV has larger or equal size
+		else {
+
 			parent[rootV] += parent[rootU]; // Update size of rootV
 			parent[rootU] = rootV;
+
 			// Update max weight for the new root
-			maxWeight[rootV] = max(maxWeight[rootV], maxWeight[rootU]);
-			maxWeight[rootU] = max(maxWeight[rootV], weight);
-			maxWeight.erase(rootU);
+			maxWeight[rootV] = max({ maxWeight[rootV], maxWeight[rootU], weight });
+			// maxWeight.erase(rootU);
 		}
 	}
 
 	int setSize(Vertex vertex) {
-		Vertex root = find(vertex);
-		return -parent[root];
+		return -parent[find(vertex)];
 	}
 
 	int getMaxWeight(Vertex vertex) {
-		Vertex root = find(vertex);
-		return maxWeight[root];
+		return maxWeight[find(vertex)];
 	}
 };
 
@@ -94,29 +107,6 @@ float dissimilarity(const Pixel& a, const Pixel& b);
 Graph createGraph(const Matrix<Pixel>& m, const bool& eightConnected = false);
 void saveSegmentedImage(const string& outputFilename, const Segmentation& segment, Matrix<Pixel>& image);
 void convertPpmToPng(const string& inputFile, const string& outputFile);
-
-Component DFS(Vertex& x, const Graph& G, LinearList<bool>& descobertos) {
-
-	LinearList<Vertex> FTD; // Fecho Transitivo Direto
-
-	LinkedStack<Vertex> stack = {x};
-	descobertos[x] = true;
-
-	while (!stack.empty()) {
-
-		Vertex u = stack.pop();
-		FTD += u;
-
-		for (auto [v, w] : G.neighbors(u)) {
-			if (!descobertos[v]) {
-				stack.push(v);
-				descobertos[v] = true;
-			}
-		}
-	}
-
-	return FTD;
-}
 
 float Int(Vertex x, UnionFind& unionFind) {
 	return unionFind.getMaxWeight(x);
@@ -139,12 +129,14 @@ Segmentation ImageSegmentation(const int K, const Graph& G) {
 	LinearList<Edge> sortedEdges = G.edges();
 	sortedEdges.sort();
 
-	UnionFind unionFind;
+	cout << "3" << endl;
+	UnionFind unionFind(G.n);
 
 	for (Vertex& v : G.vertices()) {
 		unionFind.insert(v);
 	}
 	
+	cout << "4" << endl;
 	for (Edge& e : sortedEdges) {
 
 		if (!unionFind.connected(e.u, e.v)) {
@@ -157,6 +149,7 @@ Segmentation ImageSegmentation(const int K, const Graph& G) {
 
 	Segmentation segmentation;
 
+	cout << "5" << endl;
 	for (Vertex& v : G.vertices()) {
 		Vertex root = unionFind.find(v);
 		segmentation[root] += v;
@@ -165,22 +158,88 @@ Segmentation ImageSegmentation(const int K, const Graph& G) {
 	return segmentation;
 }
 
+Segmentation ImageSegmentation(const int K, const Matrix<Pixel>& m) {
+
+	int n = m.width * m.height;
+
+	// NOTE: if eightConnected * 8 else * 4
+	LinearList<Pair<Pair<Vertex, Vertex>, float>> sortedEdges(n * 8);
+
+	for (int i = 0; i < m.height; i++) {
+
+		for (int j = 0; j < m.width; j++) {
+
+			// NOTE: Um array de visitados aqui nos permitiria não "re inserir" certas arestas
+
+			for (auto& [x, y] : getNeighbors(i, j, m, true)) {
+
+				float weight = dissimilarity(m[i][j], m[x][y]);
+
+				Vertex u = i * m.width + j;
+				Vertex v = x * m.width + y;
+
+				sortedEdges += {{ u, v }, weight};
+			}
+		}
+	}
+
+	sortedEdges.sort([](auto& a, auto& b) {
+		return a.second < b.second;
+	});
+
+	cout << "3" << endl;
+	UnionFind unionFind(n);
+
+	for (int i = 0; i < n; i++) {
+		unionFind.insert(i);
+	}
+	
+	cout << "4" << endl;
+	for (auto [edge, w] : sortedEdges) {
+
+		auto [u, v] = edge;
+
+		if (!unionFind.connected(u, v)) {
+
+			if (!D(w, u, v, K, unionFind)) {
+				unionFind.join(u, v, w);
+			}
+		}
+	}
+
+	Segmentation segmentation;
+
+	cout << "5" << endl;
+	for (int i = 0; i < n; i++) {
+		Vertex root = unionFind.find(i);
+		segmentation[root] += i;
+	}
+
+	return segmentation;
+}
+
 // NOTE: HERE IS MAIN
 int main() {
 
-	Matrix<Pixel> image = loadPPM("inputImages/faixaBranca", 0.8);
+	cout << "0" << endl;
+	Matrix<Pixel> image = loadPPM("inputImages/cavaloGray", 0.8);
 
-	Graph G = createGraph(image, true);
+	cout << "1" << endl;
+	// Graph G = createGraph(image, true);
 
-	Segmentation segment = ImageSegmentation(50'000, G);
+	cout << "2" << endl;
+	// Segmentation segment = ImageSegmentation(500'000, G);
+	Segmentation segment = ImageSegmentation(500'000, image);
 	cout << "Seg size: " << segment.size() << endl;
 
 	// for (auto [v, C] : segment) {
 	// 	cout << C << endl;
 	// }
 
-	saveSegmentedImage("outputImages/faixaBranca.ppm", segment, image);
+	cout << "6" << endl;
+	saveSegmentedImage("outputImages/cavaloGray", segment, image);
 
+	cout << "7" << endl;
 	return 0;
 }
 
@@ -314,9 +373,9 @@ void saveSegmentedImage(const string& outputFilename, const Segmentation& segmen
 	}
 
 	// Save the updated image as a new PPM file
-	ofstream outFile(outputFilename, ios::binary);
+	ofstream outFile(outputFilename + ".ppm", ios::binary);
 	if (!outFile.is_open()) {
-		throw runtime_error("Cannot open file: " + outputFilename);
+		throw runtime_error("Cannot open file: " + outputFilename + ".ppm");
 	}
 
 	// Write PPM header
@@ -339,7 +398,7 @@ void saveSegmentedImage(const string& outputFilename, const Segmentation& segmen
 
 	outFile.close();
 	
-	convertPpmToPng("outputImages/faixaBranca", "outputImages/faixaBranca");
+	convertPpmToPng(outputFilename, outputFilename);
 }
 
 void convertPpmToPng(const string& inputFile, const string& outputFile) {
