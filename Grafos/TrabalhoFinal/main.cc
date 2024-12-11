@@ -1,5 +1,4 @@
 #include <iostream>
-#include <limits>
 #include <queue>
 
 #include "../DataStructures/utils/Pair.hpp"
@@ -166,14 +165,13 @@ Segmentation ImageSegmentation(const int K, const Graph& G) {
 		}
 	}
 
-	Segmentation segmentation;
+	Segmentation segmentation(unionFind.numberOfSets());
 
 	LinearList<bool> descobertos(G.n, false);
 
 	for (Vertex& v : G.vertices()) {
 		if (!descobertos[v]) {
-			LinearList<Vertex> FTD = DFS(v, aux, descobertos);
-			segmentation += FTD;
+			segmentation += DFS(v, aux, descobertos);
 		}
 	}
 
