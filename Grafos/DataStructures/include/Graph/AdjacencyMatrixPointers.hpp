@@ -8,12 +8,12 @@
 #include "../list/linearList.hpp"
 #include "../../utils/Pair.hpp"
 #include <cstddef>
-#include <limits>
-
+// #include <limits>
+#include <cmath>
 
 class AdjacencyMatrixPointers : public DataStructure {
 
-	const float INFINITY = std::numeric_limits<float>::infinity();
+	// const float INFINITY = std::numeric_limits<float>::infinity();
 
     LinearList<LinearList<float>*> matrix;
     bool _weighted, _directed;
@@ -84,7 +84,7 @@ public:
 		int n = matrix.size();
 
 		for (int i = 0; i < n; i++) {
-			if (matrix[v][i] != INFINITY) {
+			if (matrix[v][i] != (size_t)INFINITY) {
 				_degree++;
 			}
 		}

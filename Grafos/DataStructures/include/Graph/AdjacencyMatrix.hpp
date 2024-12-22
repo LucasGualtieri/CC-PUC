@@ -8,12 +8,13 @@
 #include "../list/linearList.hpp"
 #include "../../utils/Pair.hpp"
 #include <cstddef>
-#include <limits>
+// #include <limits>
+#include <cmath>
 
 // NOTE: Performance can be improved if we use LinearList<LinearList<float>*> matrix;
 class AdjacencyMatrix : public DataStructure {
 
-	const float INFINITY = std::numeric_limits<float>::infinity();
+	// const float INFINITY = std::numeric_limits<float>::infinity();
 
 	LinearList<LinearList<float>> matrix;
 	bool _weighted, _directed;
