@@ -1,0 +1,22 @@
+graph G {
+    dpi = 300;
+    8 [ color = "", style = ""];
+    7 [ color = "", style = ""];
+    6 [ color = "", style = ""];
+    5 [ color = "", style = ""];
+    3 [ color = "", style = ""];
+    2 [ color = "", style = ""];
+    1 [ color = "", style = ""];
+    0 [ color = "", style = ""];
+
+    2 -- 3 [label="", color = "", style = ""];
+    1 -- 3 [label="", color = "", style = ""];
+    1 -- 2 [label="", color = "", style = ""];
+    0 -- 8 [label="", color = "", style = ""];
+    0 -- 7 [label="", color = "", style = ""];
+    0 -- 6 [label="", color = "", style = ""];
+    0 -- 5 [label="", color = "", style = ""];
+    0 -- 3 [label="", color = "", style = ""];
+    0 -- 2 [label="", color = "", style = ""];
+    0 -- 1 [label="", color = "", style = ""];
+}
