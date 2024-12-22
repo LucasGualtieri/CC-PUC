@@ -1,0 +1,5 @@
+https://chatgpt.com/share/b443eaca-579b-4d5c-9c43-ad4daa625675
+
+Quero que todas as estruturas tenham iterators mesmo que não compartilhem de uma mesma interface
+Quero que as listas todas tenham ordenação, mesmo que não usem o iterator no processo.
+Quero que todos os métodos estejam bem documentados. (Usar GPT)

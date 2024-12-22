@@ -8,6 +8,7 @@
 #include <tuple>
 
 #include "../DataStructures/include/matrix/matrix.hpp"
+// #include "utils.hpp"
 
 using namespace std;
 
@@ -122,7 +123,7 @@ void applyGaussian(const string& inputFile, const string& outputFile, float sigm
 }
 
 // Function to load PPM file
-Matrix<Pixel> loadPPM(const string& filename, float sigma, bool debug = false) {
+Matrix<Pixel> loadPPM(const string& filename, float sigma = 0, bool debug = false) {
 
 	convertPngToPpm(filename, filename);
 
