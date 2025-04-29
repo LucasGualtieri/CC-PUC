@@ -1,0 +1,10 @@
+Grafo transpor(Graph G = (V, E)) {
+
+	Grafo T = (V, E');
+
+	for (e = (u, v) ∈ E) {
+		E' = E' ∪ (v, u);
+	}
+
+	return T;
+}
