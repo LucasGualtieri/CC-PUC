@@ -1,0 +1,28 @@
+------------------------------
+---       Statistics       ---
+------------------------------
+
+Unified Cache - Level 1
+  Read Access: 10
+  Read Cycles: 10
+  Read Time: 10
+  Write Access: 0
+  Write Cycles: 0
+  Write Time: 0
+  Total Access: 10
+  Total Hit: 8
+  Total Miss: 2
+  Hit/rate: 0.8
+  Total Time: 10
+
+Main Memory
+  Read Access: 2
+  Read Cycles: 2
+  Read Time: 20
+  Write Access: 0
+  Write Cycles: 0
+  Write Time: 0
+  Total Access: 2
+  Total Time: 20
+
+ Total Time: 30
