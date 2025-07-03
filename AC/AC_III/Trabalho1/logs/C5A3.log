@@ -1,0 +1,35 @@
+------------------------------
+---       Statistics       ---
+------------------------------
+
+Main Memory
+  Read Access: 75
+  Read Cycles: 75
+  Read Time: 750
+  Write Access: 55
+  Write Cycles: 110
+  Write Time: 1100
+  Total Access: 130
+  Total Time: 1850
+
+Disk
+  Read Access: 5
+  Read Cycles: 5
+  Read Time: 500
+  Write Access: 5
+  Write Cycles: 10
+  Write Time: 1000
+  Total Time: 1500
+
+Page Table
+  Read Access: 20
+  Read Cycles: 20
+  Read Time: 200
+  Write Access: 10
+  Write Cycles: 20
+  Write Time: 200
+  Total Access: 20
+  Page Fault: 5
+  Total Time: 400
+
+ Total Time: 3350
