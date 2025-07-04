@@ -1,20 +1,22 @@
-# The order of stuff is relevant
+# Ignora tudo por padrão
+# *
 
-*
-!/**/
-!*.*
-# a.out
+# Mas permite pastas
+# !/**/
+
+# E arquivos com extensão
+# !*.*
+
+# Permite especificamente o submódulo
+# !external/
+# !external/cpp-ds-lib/
+
+# Ignora arquivos de build
 *.out
 *.exe
 *.o
 *.class
 *.Identifier
 
-# *replay_pid*
-# *tempCodeRunnerFile.c
-
-# # Ignore all
-# *
-# # Unignore all with extensions
-# !*.*
-!pub.out
+# Exceções específicas
+# !pub.out
