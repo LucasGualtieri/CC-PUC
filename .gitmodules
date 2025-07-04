@@ -1,0 +1,9 @@
+[submodule "PAA/DP/external/cpp-ds-lib"]
+	path = PAA/DP/external/cpp-ds-lib
+	url = git@github.com:LucasGualtieri/cpp-datastructures.git
+[submodule "PAA/DP/cpp-ds-lib"]
+	path = PAA/DP/cpp-ds-lib
+	url = git@github.com:LucasGualtieri/cpp-datastructures.git
+[submodule "PAA/DP/cpp-datastructures"]
+	path = PAA/DP/cpp-datastructures
+	url = git@github.com:LucasGualtieri/cpp-datastructures.git
