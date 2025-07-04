@@ -21,5 +21,8 @@ Arquitetura de Computadores - [AC I](AC/AC_I) / [AC II](AC/AC_II) / [AC III](AC/
 ## 📁 DIW
 [Desenvolvimento de Interfaces Web](DIW)
 
+## 📁 Outros
+[Outras matérias](Outros)
+
 ## ⚙️ Bibliotecas
 [Minhas Bibliotecas personalizadas](Bibliotecas)
