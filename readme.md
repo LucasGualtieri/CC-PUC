@@ -1,8 +1,11 @@
-# 💻 CC-PUC 4/8
+# 💻 CC-PUC 6/8
 
 ## 📝 Descrição
 
 Repositório de exercícios / projetos desenvolvidos no curso de Ciência da Computação na PUC Minas.
+
+## 📁 PAA
+Projeto e Análise de Algoritmos - [Paa](Paa)
 
 ## 📁 Grafos
 Teoria dos Grafos e Computabilidade - [Grafos](Grafos)
